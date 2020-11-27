@@ -1,10 +1,730 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2020-11-27T16:08:10+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
-</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">New Blog</title><link href="http://localhost:4000/slam/2020-11-27-Blog_Update/" rel="alternate" type="text/html" title="New Blog" /><published>2020-11-27T00:00:00+09:00</published><updated>2020-11-27T00:00:00+09:00</updated><id>http://localhost:4000/slam/Blog_Update</id><content type="html" xml:base="http://localhost:4000/slam/2020-11-27-Blog_Update/">&lt;p&gt;Not really sure why, but my previous blog stopped supporting mathjax.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2020-11-27T17:33:45+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
+</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">New Blog</title><link href="http://localhost:4000/test/2020-11-27-Blog_Update/" rel="alternate" type="text/html" title="New Blog" /><published>2020-11-27T00:00:00+09:00</published><updated>2020-11-27T00:00:00+09:00</updated><id>http://localhost:4000/test/Blog_Update</id><content type="html" xml:base="http://localhost:4000/test/2020-11-27-Blog_Update/">&lt;p&gt;Not really sure why, but my previous blog stopped supporting mathjax.&lt;/p&gt;
 
 &lt;p&gt;So, I made a new one.&lt;/p&gt;
 
-&lt;p&gt;End of the story.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><category term="slam" /><summary type="html">Not really sure why, but my previous blog stopped supporting mathjax.</summary></entry><entry><title type="html">New Blog</title><link href="http://localhost:4000/test/2020-11-27-Blog_Update/" rel="alternate" type="text/html" title="New Blog" /><published>2020-11-27T00:00:00+09:00</published><updated>2020-11-27T00:00:00+09:00</updated><id>http://localhost:4000/test/Blog_Update</id><content type="html" xml:base="http://localhost:4000/test/2020-11-27-Blog_Update/">&lt;p&gt;Not really sure why, but my previous blog stopped supporting mathjax.&lt;/p&gt;
+&lt;p&gt;End of the story.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="test" /><category term="test" /><summary type="html">Not really sure why, but my previous blog stopped supporting mathjax.</summary></entry><entry><title type="html">[GTSAM] Odometry Factor</title><link href="http://localhost:4000/slam/2020-11-19-Factor/" rel="alternate" type="text/html" title="[GTSAM] Odometry Factor" /><published>2020-11-19T00:00:00+09:00</published><updated>2020-11-19T00:00:00+09:00</updated><id>http://localhost:4000/slam/Factor</id><content type="html" xml:base="http://localhost:4000/slam/2020-11-19-Factor/"></content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html"></summary></entry><entry><title type="html">[GTSAM] Making simple custom node and factor</title><link href="http://localhost:4000/slam/2020-11-12-gtsam_custom/" rel="alternate" type="text/html" title="[GTSAM] Making simple custom node and factor" /><published>2020-11-12T00:00:00+09:00</published><updated>2020-11-12T00:00:00+09:00</updated><id>http://localhost:4000/slam/gtsam_custom</id><content type="html" xml:base="http://localhost:4000/slam/2020-11-12-gtsam_custom/">&lt;p&gt;Graph SLAM에서의 노드(state)를 다음과 같이 N dimensional vector로 정의하자 :&lt;/p&gt;
 
-&lt;p&gt;So, I made a new one.&lt;/p&gt;
+\[\begin{bmatrix}
+s_1\\
+s_2\\
+s_3\\
+\vdots\\
+s_N
+\end{bmatrix}\]</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html">Graph SLAM에서의 노드(state)를 다음과 같이 N dimensional vector로 정의하자 :</summary></entry><entry><title type="html">[Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…)</title><link href="http://localhost:4000/slam/paper_review/2020-10-03-p_review/" rel="alternate" type="text/html" title="[Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…)" /><published>2020-10-03T00:00:00+09:00</published><updated>2020-10-03T00:00:00+09:00</updated><id>http://localhost:4000/slam/paper_review/p_review</id><content type="html" xml:base="http://localhost:4000/slam/paper_review/2020-10-03-p_review/">&lt;p&gt;ElasticFusion: Dense SLAM Without A Pose Graph&lt;/p&gt;
 
-&lt;p&gt;End of the story.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="test" /><category term="test" /><summary type="html">Not really sure why, but my previous blog stopped supporting mathjax.</summary></entry></feed>
+&lt;p&gt;Thomas Whelan et al. (Dyson Robotics Laboratory at Imperial College London)&lt;/p&gt;
+
+&lt;h2 id=&quot;abstract&quot;&gt;Abstract&lt;/h2&gt;
+
+&lt;p&gt;We present a novel approach to real-time &lt;strong&gt;dense visual SLAM&lt;/strong&gt;. Our system is capable of capturing comprehensive &lt;strong&gt;dense globally consistent surfel-based maps&lt;/strong&gt; of room scale envi-ronments explored using an &lt;strong&gt;RGB-D camera&lt;/strong&gt; in an incremental online fashion, &lt;strong&gt;without pose graph optimisation&lt;/strong&gt; or any post-processing steps. This is accomplished by using dense &lt;strong&gt;frame-to-model camera tracking and windowed surfel-based fusion&lt;/strong&gt; coupled with &lt;strong&gt;frequent model refinement&lt;/strong&gt; through &lt;strong&gt;non-rigid surface deformations&lt;/strong&gt;. Our approach applies local &lt;strong&gt;model-to-model surface loop closure optimisations&lt;/strong&gt; as often as possible to stay close to the
+mode of the map distribution, while utilising global loop closure to recover from arbitrary drift and maintain global consistency.&lt;/p&gt;
+
+&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Existing dense SLAM methods suitable for iincremental, real-time operation struggle when the sensor makes movements which are both of&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;extended duration and often&lt;/li&gt;
+  &lt;li&gt;criss-cross loop back on themselves (painting motion)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;SLAM algorithms have too often targeted one of two extrems:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;either extremely loopy motion in a very small area&lt;/li&gt;
+  &lt;li&gt;corridor like motion on much larger scales but with fewer loop closures&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;이러한 SLAM Scenario들은 Dense vision frontend을 가진 SLAM에서는 문제가 될 수 있다!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Dense vision frontend -&amp;gt; No. of points matched is much hier than feature-based systems:&lt;br /&gt;
+Makes joint filtering or bundle adjustment computationally infeasible:&lt;br /&gt;
+Dense frontend have relied on alternation and effectively per-surface-element-independent filtering&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Enormous weight of data serves to overpower the approximations to joint filtering which this assumes&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;This also raises the question as to whether it is optimal to attach a dense frontend to a sparse pose graph structure like its feature-based visual SLAM counterpart&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Pose graph SLAM systems primarily focus on: &lt;strong&gt;Optimising the camera trajectory&lt;/strong&gt;&lt;br /&gt;
+Whereas our approach (&lt;strong&gt;utilising a deformation graph&lt;/strong&gt;): &lt;strong&gt;Focus on optimising the map&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;기존의 Pose graph system은 Pose estimation (trajectory)에 집중한 반면, 여기선 Map optimisation에 집중한다&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;related-work&quot;&gt;Related work&lt;/h3&gt;
+&lt;p&gt;Utilising pose graphs&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Whelan et al., parameteries a non-rigid surface deformation with an optimised pose graph to perform occasional loop closures in corridor-like trajectories
+    &lt;ul&gt;
+      &lt;li&gt;Scale well, but perform poorly given locally loopy trajectories while being &lt;strong&gt;unable to re-use revisited areas of the map&lt;/strong&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;DVO SLAM, keyfromae-based pose graph optimisation
+    &lt;ul&gt;
+      &lt;li&gt;Performs no explicit map reconstruction and functions off of raw keyframes alone&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Meilland and Comport, unified keyframes: utilises fused predicted 2.5D keyframes of mapped environtments while employing pose graph optimization to close large loops and align keyframes
+    &lt;ul&gt;
+      &lt;li&gt;not creating an explicit continuous 3D surface&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;MRSMap, registers octree encoded surfel maps together for pose estimation
+    &lt;ul&gt;
+      &lt;li&gt;After pose graph optimisation the final map is created by merging key surfel views&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;in-our-system&quot;&gt;In our system&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Move away from the focus of pose graph originally grounded in sparse methods&lt;/li&gt;
+  &lt;li&gt;Move towards a more map-centric approach&lt;/li&gt;
+  &lt;li&gt;Similar to Zhou et al, but runs in real time&lt;/li&gt;
+  &lt;li&gt;Attempt to apply &lt;strong&gt;surface loop closure optimisations early and often&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Always stay near to the &lt;strong&gt;mode of the map distribution&lt;/strong&gt;
+        &lt;ul&gt;
+          &lt;li&gt;Allow to employ a &lt;em&gt;non-rigid space deformation&lt;/em&gt; of the map using a sparse &lt;em&gt;deformation graph&lt;/em&gt; embedded in the surface itself&lt;/li&gt;
+          &lt;li&gt;Rather than a probabilistic pose graph which &lt;em&gt;rigidly transforming independent keyframes&lt;/em&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;At the time of writing, this approach is the first of its kind of&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Use photometric and geometric frame-to-model predictive tracking in a fused surfel-based dense map&lt;/li&gt;
+  &lt;li&gt;Perform dense model-to-model local surface loop closures with a non-rigid space deformation&lt;/li&gt;
+  &lt;li&gt;Utilise a predicted surface appearance based place recognition method&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;approach-overview&quot;&gt;Approach overview&lt;/h2&gt;
+&lt;p&gt;Significant usage of GPU&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;CUDA to implement tracking&lt;/li&gt;
+  &lt;li&gt;OpenGL Shading Language for view prediction and map management&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Key elements&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Estimate a fused surfel-based model of the environment
+    &lt;ul&gt;
+      &lt;li&gt;Inspired by the surfel-based fusion system of Keller et al.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Segment older parts of the map which have not been observed into the inactive area
+    &lt;ul&gt;
+      &lt;li&gt;not used for tracking or data fusion&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Every frame attempt to register the portion of the active model within the current estimated camera frame&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="paper_review" /><summary type="html">ElasticFusion: Dense SLAM Without A Pose Graph</summary></entry><entry><title type="html">[Paper Review] Square Root SAM (writing..)</title><link href="http://localhost:4000/slam/2020-04-29-p_review/" rel="alternate" type="text/html" title="[Paper Review] Square Root SAM (writing..)" /><published>2020-04-29T00:00:00+09:00</published><updated>2020-04-29T00:00:00+09:00</updated><id>http://localhost:4000/slam/p_review</id><content type="html" xml:base="http://localhost:4000/slam/2020-04-29-p_review/">&lt;p&gt;Square Root SAM&lt;/p&gt;
+
+&lt;p&gt;Frank Dellaert and Michael Kaess (2006), Square Root SAM - Simultaneous Localization and Mapping via Square Root Information Smoothing. Intl. Journal of Robotics Research, 2006&lt;/p&gt;
+
+&lt;h2 id=&quot;abstract&quot;&gt;Abstract&lt;/h2&gt;
+
+&lt;p&gt;Solving the SLAM problem is one way to enable a robot to explore, map, and navigate in a previously unknown environment. We investigate smoothing approaches as a viable alternative to extended Kalman filter-based solutions to the problem. In particular, we look at approaches that factorize either the associated information matrix or the measurement Jacobian into square root form. Such techniques have several significant advantages over the EKF: they are faster yet exact, they can be used in either batch or incremental mode, are better equipped to deal with non-linear process and measurement models, and yield the entire robot trajectory, at lower cost for a large class of SLAM problems. In addition, in an indirect but dramatic way, column ordering heuristics automatically exploit the locality inherent in the geographic nature of the SLAM problem. In this paper we present the theory underlying these methods, along with an interpretation of factorization in terms of the graphical model associated with the SLAM problem. We present both simulation results and actual SLAM experiments in large-scale environments that underscore the potential of these methods as an alternative to EKF-based approaches.&lt;/p&gt;
+
+&lt;h2 id=&quot;2-slam-and-its-graphs&quot;&gt;2. SLAM and its Graphs&lt;/h2&gt;
+
+&lt;h3 id=&quot;slam-as-a-belief-net&quot;&gt;SLAM As a Belief Net&lt;/h3&gt;
+&lt;h4 id=&quot;figure-1&quot;&gt;Figure 1&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/Square_Root_SAM/SSAM_1.png&quot; alt=&quot;SLAM_AS_A_BELIEF_NET&quot; width=&quot;200&quot; height=&quot;200&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;“A belief net is as directed &lt;strong&gt;acyclic graph&lt;/strong&gt; that encodes the &lt;strong&gt;conditional independesnce structure&lt;/strong&gt; of a set of variables, where each variable &lt;strong&gt;only directly depends on its predecessors in the graph&lt;/strong&gt;.”&lt;/p&gt;
+
+\[P(X, L, Z) = P(x_0) \prod_{i=1}^{M}{P(x_i|x_{i-1}, u_i)} \prod_{k=1}^{K}{P(z_k|x_{i_k},l_{j_k})}\]
+
+&lt;p&gt;\(P(x_0)\) is a prior on the initial state &lt;br /&gt;
+\(P(x_i|x_{i-1}, u_i)\) is the motion model &lt;br /&gt;
+\(P(z|x,l)\) is the landmark measurement model \&lt;/p&gt;
+
+&lt;p&gt;이들은 모두 landmark \(l\)에 대한 uniform prior를 가지고 있다고 가정한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;slam-as-a-factor-graph&quot;&gt;SLAM As a Factor Graph&lt;/h3&gt;
+&lt;h4 id=&quot;figure-2&quot;&gt;Figure 2&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/Square_Root_SAM/SSAM_2.png&quot; alt=&quot;SLAM_AS_A_FACTOR_GRAPH&quot; width=&quot;200&quot; height=&quot;200&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;좌측 상단의 Graph를 보면, Measurement \(z\) 가 사라진 것을 볼 수 있다.&lt;/p&gt;
+
+&lt;p&gt;“While belief nets are a &lt;strong&gt;very natural representation to think about the generative aspect of the SLAM problem&lt;/strong&gt;, &lt;em&gt;factor graphs&lt;/em&gt; have a much &lt;strong&gt;tighter connection with the underlying optimization problem&lt;/strong&gt;. As the measurements \(z_k\) in Figure 1 are known, we are free to &lt;strong&gt;eliminate them as variables&lt;/strong&gt;. Instead we consider them as &lt;strong&gt;parameters of the joint probabliity factors&lt;/strong&gt; over the &lt;em&gt;actual&lt;/em&gt; unknowns”&lt;/p&gt;
+
+&lt;p&gt;측정값을 식에 넣는 대신 실제 구하고자 하는 값들에 대한 joint probability factor의 parameter로 넣음으로서 bipartite graph로 변경.&lt;/p&gt;
+
+\[P(\Theta) \propto \prod_{i}{\phi_i(\theta_i)} \prod_{\{i, j\}, i&amp;lt;j} {\psi_{ij}(\theta_i, \theta_j)}\]
+
+&lt;p&gt;\(\phi(\theta_i)\) : encode a prior or a single measurement constraint at an unknown \(\theta \in \Theta\)&lt;/p&gt;
+
+&lt;p&gt;\(\psi_{i,j}(\theta_i, \theta_j)\) : pairwise potentials relate to measurements or constraints that involve the relationship between two unknowns.&lt;/p&gt;
+
+&lt;p&gt;“Note that the second product is over pairwise cliques \(\{i,j\}\), counted once.”&lt;/p&gt;
+
+&lt;p&gt;Belief net 식과의 관게는 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;\(\phi_0(x_0) \propto P(x_0)\) : Initial state에 대한 uncertainty &lt;br /&gt;
+\(\psi_{(i-1)_i}(x_{i-1}, x_i) \propto P(x_i|x_{i-1}, u_i)\) : Motion model &lt;br /&gt;
+\(\psi_{i_k, j_k}(x_{i_k}, l_{j_k}) \propto P(z_k|x_{i_k}, l_{j,k})\) : Landmark measurement model \&lt;/p&gt;
+
+&lt;h3 id=&quot;slam-as-a-markov-random-field&quot;&gt;SLAM as a Markov Random FIeld&lt;/h3&gt;
+&lt;h4 id=&quot;figure-3&quot;&gt;Figure 3&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/Square_Root_SAM/SSAM_3.png&quot; alt=&quot;SLAM_AS_A_FACTOR_GRAPH&quot; width=&quot;200&quot; height=&quot;200&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;“factor nodes themselves are eliminated” &lt;br /&gt;
+“MRF is a fundamentally different structure from the factor graph (undirected vs bipartite)”&lt;/p&gt;
+&lt;h2 id=&quot;3-slam-as-a-least-squares-problem&quot;&gt;3. SLAM as a Least Squares Problem&lt;/h2&gt;
+&lt;p&gt;이전까지는 모델링에 대한 내용이고, 지금부터 inference에 대해 다뤄보자.&lt;/p&gt;
+
+&lt;p&gt;“We are concerned with &lt;em&gt;smoothing&lt;/em&gt; rather than &lt;em&gt;filtering&lt;/em&gt;, i.e., we would like to &lt;em&gt;recover the maximum a posteriori (MAP) estimate&lt;/em&gt; for the &lt;strong&gt;entire trajectory&lt;/strong&gt; and the &lt;strong&gt;map&lt;/strong&gt;, given the measurements, and control inputs.”&lt;/p&gt;
+
+&lt;p&gt;“Let us collect all unknowns in \(X\) and \(L\) in the vector \(\Theta\).&lt;/p&gt;
+
+&lt;p&gt;\(\Theta \overset{\Delta}{=} (X, L)\) &lt;br /&gt;
+Entire trajectory : \(X \overset{\Delta}{=}\{x_i\}\) &lt;br /&gt;
+Map : \(L \overset{\Delta}{=} \{l_j\}\) &lt;br /&gt;
+Measurements : \(Z \overset{\Delta}{=} \{z_k\}\) &lt;br /&gt;
+Control Inputs : \(U \overset{\Delta}{=} \{u_i\}\)&lt;/p&gt;
+
+&lt;p&gt;MAP는 Belief net에서 다룬 식을 이용해서 다음과 같이 나타낼 수 있다.&lt;/p&gt;
+
+&lt;h4 id=&quot;equation-5&quot;&gt;Equation 5&lt;/h4&gt;
+&lt;p&gt;\(\Theta^{*} = \underset{\Theta}{argmax} \Bigg\{\sum_{i=1}^{M} \left\lVert f_i(x_{i-1}, u_i)-x_i \right\rVert_{\Lambda_i}^2 + \sum_{k=1}^{K} \left\lVert h_k(x_{i_k}, l_{j_k})-z_k \right\rVert_{\Sigma_k}^2 \Bigg\}\)&lt;/p&gt;
+
+&lt;p&gt;위의 Least squares problem에서 Linearization이 불가능 한 경우 Gausse-Newton 또는 Levenberg-Marquardt method를 사용하여 풀게 된다. 하지만, 만약 위의 식에서 각 parameter들이 좋은 linearization point에 있다면, Taylor’s first approximation을 통해 해를 구할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;위의 식의 첫번째 항:&lt;/p&gt;
+
+\[f_i(x_{i-1}, u_i)-x_i \approx \big\{f_i (x_{i-1}^0, u_i)+F_i^{i-1}\delta x_{i-1} \big\} - \{x_i^0 + \delta x_i\} = \big\{ F_i^{i-1}\delta x_{i-1} - \delta x_i \big\}-a_i\]
+
+&lt;p&gt;여기서 \(F_i^{i-1}\)은 \(x_{i-1}^0\)에서의 \(f_i(.)\)의 Jacobian matrix :&lt;/p&gt;
+
+\[F_i^{i-1} \overset{\Delta}{=}  \frac{\partial f_i(x_{i-1}, u_i)}{\partial x_{i-1}}\bigg|_{x_{i-1}^0}\]
+
+&lt;p&gt;그리고 \(a_i\) 는 odometry prediction error:&lt;/p&gt;
+
+\[a_i = x_i^0 - f_i(x_{i-1}^0, u_i)\]
+
+&lt;p&gt;두번째 항도 마찬가지로 :&lt;/p&gt;
+
+\[h_k(x_{i_k}, l_{j_k}) - z_k \approx \big\{h_k(x_{i_k}^0, l_{j_k}^0) + H_k^{i_k}\delta x_{i_k} + J_k^{j_k}\delta l_{j_k} \big\} - z_k = \big\{H_k^{i_k} \delta x_{i_k} + J_k^{j_k} \delta l_{j_k} \big\} - c_k\]
+
+&lt;p&gt;여기서 \(H_k^{i_k}\) 와 \(J_k^{j_k}\)는 \(h_k(.)에 대한\)각각 \(x_{i_k}^0\) 와 \(l_{j_k}^0\) 에서의 \(x_{i_k}\) 와 \(l_{j_k}\)에 대한 Jacobian :&lt;/p&gt;
+
+\[H_k^{i_k} \overset{\Delta}{=} \frac{\partial h_k(x_{i_j},l_{j_k})}{\partial x_{i_k}}\bigg|_{(x_{i_k}^0, l_{j_k}^0)},~~ J_k^{j_k} \overset {\Delta}{=} \frac{\partial h_k(x_{i_j},l_{j_k})}{\partial l_{j_k}}\bigg|_{(x_{i_k}^0, l_{j_k}^0)}\]
+
+&lt;p&gt;그리고 \(c_k\)는 measurement prediction error :&lt;/p&gt;
+
+\[c_k \overset {\Delta}{=} z_k - h_k(x_{i_k}^0, l_{j_k}^0)\]
+
+&lt;p&gt;이와 같이 linearlization을 통해 식이 다음과 같이 변하게 된다.&lt;/p&gt;
+
+&lt;p&gt;원래식 :&lt;/p&gt;
+
+\[\Theta^{*} = \underset{\Theta}{argmax} \Bigg\{\sum_{i=1}^{M} \left\lVert f_i(x_{i-1}, u_i)-x_i \right\rVert_{\Lambda_i}^2 + \sum_{k=1}^{K} \left\lVert h_k(x_{i_k}, l_{j_k})-z_k \right\rVert_{\Sigma_k}^2 \Bigg\}\]
+
+&lt;p&gt;linearlization :&lt;/p&gt;
+
+\[\delta^{*} = \underset{\delta}{argmax} \Bigg\{\sum_{i=1}^{M} \left\lVert F_i^{i-1} \delta x_{i-1} + G_i^i \delta x_i - a_i \right\rVert_{\Lambda_i}^2 + \sum_{k=1}^{K} \left\lVert H_k^{i_k} \delta x_{i_k} + J_k^{j_k} \delta l_{j_k} - c_k \right\rVert_{\Sigma_k}^2 \Bigg\}\]
+
+&lt;p&gt;(여기서 \(\Theta\)를 왜 안쓰고 \(\delta\)를 사용했는지는 모르겠다..)&lt;/p&gt;
+
+&lt;p&gt;여기서 \(G_i^i = -I_{d \times d}\)로 \(d\)는 \(x_i\)의 dimension이며, 추후 matrix computation을 위해 넣은 것 같다.&lt;/p&gt;
+
+&lt;p&gt;여기서 신경쓰이는게 바로 \(\Lambda\) 와 \(\Sigma\) 인데, 이는 Mahalanobis distance를 표현하는 것으로 각각 Covariance matrix를 나타낸다. Matrix square root term인 \(\Sigma^{-1/2}\)로 Mahalanobis diatance를 다시 쓰면 :&lt;/p&gt;
+
+\[\left\lVert e \right\rVert_{\Sigma}^2 \overset {\Delta}{=} e^T\Sigma^{-1}e =  (\Sigma^{-T/2}e)^T(\Sigma^{-T/2}e) = \left\lVert \Sigma^{-T/2}e \right\rVert_2^2\]
+
+&lt;p&gt;(중간에 Covariance matrix가 symmetric 하다는 성질을 이용한 것 같다.)&lt;/p&gt;
+
+&lt;p&gt;가 되며, 각 \(F_i^{i-1}, G_i^i, a_i, H_k^{i_k}, J_k^{j_k}\)에 \(\Lambda_i^{-T/2}\)와 \(\Sigma_k^{-T/2}\)를 미리 곱해줌으로서 \(\Lambda\)와 \(\Sigma\)을 제거할 수 있다:&lt;/p&gt;
+
+&lt;p&gt;(위의 식을 바꿔본다면… 아마 이렇게 되지 않을까?)&lt;/p&gt;
+
+&lt;p&gt;\delta^{*} = \underset{\delta}{argmin} \Bigg{\sum_{i=1}^M \left\lVert \Lambda_i^{-T/2} F_i^{i-1} \delta x_{i-1} + \Lambda_i^{-T/2} G_i^i \delta x_i - \Lambda_i^{-T/2} a_i \right\rVert_2^2 + \sum_{k=1}^K \left\lVert \Sigma_k^{-T/2}H_k^{i_k} \delta x_{i_k} + \Sigma_k^{-T/2} J_k^{j_k} \delta l_{j_k} - \Sigma_k^{-T/2} c_k \right\rVert_2^2 \Bigg}
+$$&lt;/p&gt;
+
+&lt;p&gt;어쨌든, 각 Jacobian matrix를 A로 표현하고, prediction error, measurement prediction error인 \(a_i\)와 \(c_k\)를 b로 표현한다면, 다음과 같은 Matrix 형태의 표준 Least squares problem으로 나타낼 수 있다 :&lt;/p&gt;
+
+\[\delta^{*} = \underset{\delta}{argmin} \left\lVert A\delta - b \right\rVert_2^2\]
+
+&lt;p&gt;여기서 \(A\)는 굉장히 빠르게 커질 수 있으나, 동시에 매우 sparse하다. 예로 state와 landmark, 그리고 measurement의 dimension이 \(d_x\), \(d_l\) 그리고 \(d_z\)라면, \(A\)의 크기는 \((Nd_x + Kd_z) \times (Nd_x + Md_l)\)이 되며, 여기서 unknown \(\delta\)는 각 state와 landmark 이므로 \((Nd_x + Md_l)\times 1\)임이 자명하고, \(b\)는 각 \(a_i\)와 \(c_k\) vector를 하나의 column으로 나열한 것으로  \((Nd_x + Kd_z) \times 1\)의 크기를 갖게 된다.&lt;/p&gt;
+
+&lt;p&gt;예로, \(M = 3\), \(N=2\), \(K=4\)일 때 matrix 구조는 다음과 같다. (여기서 \(F, G, H, J\) matrix들은 원래의 값이 아니라 위와 같이 각각 \(\Lambda\)와 \(\Sigma\)가 \(-T/2\) 제곱되어 곱해져 있다는 것을 생각해야된다.)&lt;/p&gt;
+
+\[A=\begin{bmatrix}
+G_1^1 \\
+F_2^1 &amp;amp;&amp;amp; G_2^2\\
+&amp;amp;&amp;amp; F_3^2 &amp;amp;&amp;amp; G_3^3\\
+H_1^1 &amp;amp;&amp;amp; &amp;amp;&amp;amp;&amp;amp;&amp;amp; J_1^1 \\
+H_2^1 &amp;amp;&amp;amp; &amp;amp;&amp;amp; &amp;amp;&amp;amp; &amp;amp;&amp;amp; J_2^2 \\
+&amp;amp;&amp;amp; H_3^2 &amp;amp;&amp;amp; &amp;amp;&amp;amp; J_3^1 \\
+&amp;amp;&amp;amp; &amp;amp;&amp;amp; H_4^3 &amp;amp;&amp;amp; &amp;amp;&amp;amp; J_4^2
+\end{bmatrix}, ~ b = \begin{bmatrix}
+a_1\\
+a_2\\
+a_3\\
+c_1\\
+c_2\\
+c_3\\
+c_4
+\end{bmatrix}\]
+
+&lt;h4 id=&quot;figure-4&quot;&gt;Figure 4&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/Square_Root_SAM/SSAM_4.png&quot; alt=&quot;A Matrix &amp;amp; its information matrix&quot; width=&quot;200&quot; height=&quot;200&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위의 그림은 95개의 state, 24개의 landmark에 대한 그림이며, 왼쪽 그림은 A matrix를 나타낸다. 오른쪽의 맨 위의 그림은 information matrix \(\mathcal{I} \overset{\Delta}{=} A^TA\)를 나타낸 그림이며, 가운데는 Cholesky triangle \(R\), 그리고 아래는 &lt;strong&gt;better variable ordering&lt;/strong&gt; 으로 나타낸 R matrix 이다. 그렇다면 왜 이 &lt;em&gt;better variable ordering&lt;/em&gt; 이 필요할까? 아래에 서술되어있지만, \(R\)은 Junction tree와 연관되어있으며, 이런 Junction tree를 생성하는데 있어 더욱 효율적으로 나타낼 수 있다(라고 이해했다..).&lt;/p&gt;
+
+&lt;h2 id=&quot;4-a-linear-algebra-perspective&quot;&gt;4. A Linear Algebra Perspective&lt;/h2&gt;
+&lt;p&gt;Full-rank \(m\times n\) (\(m \geq n\)인) matrix A에 대해 unique한 Least squares 풀이는 normal equation으로 나타낼 수 있다:&lt;/p&gt;
+
+\[A^T A \delta ^{*} = A^T b\]
+
+&lt;p&gt;이는 보통 Information matrix \(\mathcal{I}\)를 Cholesky factorization:&lt;/p&gt;
+
+\[\mathcal{I} \overset{\Delta}{=} A^T A = R^T R\]
+
+&lt;p&gt;을 통해 구해지며, 여기서 \(R\)은 Cholesky triangle로 \(n\times n\)의 upper triangular matrix이다. 이를 구하기 위한 Cholesky factorization은  symmetric positive definite matrix에 대해서만 행해지는 LU factorization의 변형으로 볼 수 있다. Dense matrix에 대해서는 \(n^3 /3\) flop의 계산량이 필요되며, 이를 통해 \(\delta^{*}\)는 다음과 같이 back substituion으로 구할 수 있다:&lt;/p&gt;
+
+\[first~R^Ty=A^Tb ~ and~then~R\delta^{*} = y\]
+
+&lt;p&gt;\(A^T A\)를 게산하는 것 포함 전체 알고리즘은 \((m+n/3)n^2\) flops의 계산량이 필요된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#figure-4&quot;&gt;Figure 4&lt;/a&gt;는 &lt;a href=&quot;#figure-1&quot;&gt;Figure 1&lt;/a&gt; 모델의 \(\mathcal{I}\)와 그 Cholesky triangle \(R\)이 \(A\)와 함께 나타나있다. \(A\)가 \(XL\) ordering, 즉 trajectory \(X\)와 landmark \(L\) 순으로 나열된 경우 $$\mathcal{I}의 모습은 주로 &lt;a href=&quot;#figure-4&quot;&gt;Figure 4&lt;/a&gt;와 같이 block structure를 나타낸다. :&lt;/p&gt;
+
+\[\mathcal{I}=
+\begin{bmatrix}
+A_X^T A_X &amp;amp;&amp;amp; \mathcal{I}_{XL} \\
+\mathcal{I}_{XL}^T &amp;amp;&amp;amp; A_L^T A_L
+\end{bmatrix}\]
+
+&lt;p&gt;여기서 \(\mathcal{I}_{XL} \overset{\Delta}{=} A_X^T A_L\)은 robot state들 \(X\)와 map \(L\)간의 correlation을 나타내며, diagonal block들은 &lt;a href=&quot;https://en.wikipedia.org/wiki/Band_matrix&quot;&gt;band-diagonal&lt;/a&gt;하다.&lt;/p&gt;
+
+&lt;p&gt;Square root 계산을 피하는 Cholesky factorization의 변형된 방법은 lower triangular matrix \(L\)과 Diagonal matrix \(D\)를 계산하는 LDL factorization이다:&lt;/p&gt;
+
+\[\mathcal{I} = R^T R = LDL^T\]
+
+&lt;p&gt;Cholesky decomposition보다 더 정확하고 수치적으로 더욱 안정적인 방법은 \(\mathcal{I}\)를 계산하지 않는 QR factorization이다. :&lt;/p&gt;
+
+\[Q^T A = \begin{bmatrix}
+R \\
+0
+\end{bmatrix}
+~~
+Q^T b = \begin{bmatrix}
+d \\
+e
+\end{bmatrix}\]
+
+&lt;p&gt;여기서 \(Q\)는 \(m\times m\)의 orthogonal matrix이며, \(R\)은 upper-trianguler cholesky triangle이다. &lt;a href=&quot;#a1-qr-factorization&quot;&gt;계산방법&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Orthogonal matrix \(Q\)는 대체로 형성되지 않는다. (The orthogonal matrix \(Q\) is not usually formed를 직역한건데, 일정하지 않다는 것인지, QR Factorization이 안될수도 있다는 뜻인지 잘 모르겠다.) 대신, 우항의 \(Q^T b\)는 \(b\)를 \(A\)의 extra column으로 붙여 계산한다. \(Q\)가 orthogonal matrix이므로 다음과 같은 식이 형성된다.&lt;/p&gt;
+
+\[\left\lVert A\delta-b \right\rVert_2^2 =
+\left\lVert Q^T A \delta -Q^T b\right\rVert_2^2 =
+\left\lVert R \delta - d\right\rVert_2^2 +\left\lVert e \right\rVert_2^2\]
+
+&lt;p&gt;여기서 \(\left\lVert e \right\rVert_2^2\)는 least-squares residual이며, least squares의 솔루션 \(\delta^*\)는 \(R\delta = d\)를 back-substitution으로 풀 수 있다.&lt;/p&gt;
+
+&lt;p&gt;이 QR factorization으로 푸는 방법의 계산량은 Householder reflection에 대부분 쓰인다. (\(2(m-n/3)n^2\)).&lt;/p&gt;
+
+&lt;p&gt;\(m \gg n\)일때는 QR과 Cholesky factorization 모두 \(O(mn^2)\)의 계산량이 필요하지만, QR이 2배 느리다. 하지만, &lt;strong&gt;sparse matrix에&lt;/strong&gt; 대해서는 &lt;strong&gt;LDL과 Cholesky factorization이 QR 보다 훨씬 성능이 좋음을&lt;/strong&gt; 알 수 있었다고 한다.&lt;/p&gt;
+
+&lt;h2 id=&quot;5-a-graphical-model-perspective&quot;&gt;5. A Graphical Model Perspective&lt;/h2&gt;
+
+&lt;h3 id=&quot;matrices---graphs&quot;&gt;Matrices &amp;lt;-&amp;gt; Graphs&lt;/h3&gt;
+&lt;p&gt;위의 설명에서 우리는 Jacobian \(A\)가 SLAM과 관련된 factor graph의 matrix임을 알 수 있다. 이는 다음 두가지로 설명이 가능하다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;\(A\)의 모든 block은 least-squares의 각 term을 나타낸다&lt;/strong&gt; : 
+landmark measurement이나 odometry constraint이나, 각 block-row는 factor graph의 하나의 factor와 연결된다. 때문에 sparcity pattern은 알지 못하는 pose와 landmark간의 factor를 나타낸다. 따라서 \(A\)의 block structure는 factor graph의 adjancency matrix에 해당된다. (무슨 소리인지 모르겠다)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Scalar level에서, \(A\)의 각 row \(A_i\)는 scalar term \(\left\lVert A_i\delta - b_i\right\rVert_2^2\)에 해당된다&lt;/strong&gt; :&lt;/li&gt;
+&lt;/ol&gt;
+
+\[\left\lVert A\delta-b\right\rVert_2^2 = \sum_i \left\lVert A_i\delta - b_i \right\rVert_2^2\]
+
+&lt;p&gt;따라서, 이는 &lt;em&gt;finely structured factor graph&lt;/em&gt; 를 다음과 같이 형성한다.&lt;/p&gt;
+
+\[P(\delta) \propto exp -\frac{1}{2} \left\lVert A\delta-b\right\rVert_2^2 = 
+\prod_i exp -\frac{1}{2}\left\lVert A_i\delta - b_i\right\rVert_2^2\]
+
+&lt;p&gt;(정확히 말한다면 \(\left\lVert A_i\delta_i - b_i\right\rVert_2^2\) 아닌가..?)&lt;/p&gt;
+
+&lt;p&gt;이 finer view에서 &lt;strong&gt;SLAM의 block structure가 버려지고, 이 graph가 일반적인 linear algebra 방법으로&lt;/strong&gt; 바뀌었다는 점이 중요하다.&lt;/p&gt;
+
+&lt;p&gt;Information matrix \(\mathcal{I}\)는 SLAM 문제를 다룬 Markov random field의 matrix이다. 서술한 바와 같이 \(A^TA\)의 sparsity pattern은 MRF의 _adjacency matrix_이다. &lt;a href=&quot;#equation-5&quot;&gt;Equation 5&lt;/a&gt;의 objective function은 Hammersley-Clifford theorem으로 pairwise Markov random field에 해당되며, MRF상의 node들은 robot state들과 landmark들에 해당되고, link들은 odometry나 measurement에 해당된다.&lt;/p&gt;
+
+&lt;p&gt;기존 논문들(본문의 [65, 78] reference)에서는 MRF graph를 &lt;strong&gt;filtering version of SLAM의&lt;/strong&gt; 에 내지된 correlation structure 를 부각시키는 것으로 보여졌으며, 여기서 기존 trajectory \(X_{1:M-1}\)를 marginalizing (네이버는 소외시키다로 나오는데, 수학적으로는 확률적으로 포함하다로 해석하면 될 것 같다. 다른 의미가 아닌가 싶을텐데, 이 확률적으로 포함하는 과정에서 세세한 부분을 버리고 기존 값들을 마지막 state에 포함시킨다던가.. 그런 식으로 ‘소외’ 시키는 것으로 보면 될 것 같다.)할 경우, information matrix는 굉장히 dense해진다. 그래서 이 논문들은 link를 제거하여 computational cost를 줄이는 방법에 대해 강조한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;그 반대로, 이 논문에서는 MRF를 sparcity를 유지하는 smoothing information matrix \(I\)로 해석하여 기존 state들이 marginalized out되지도 않는 방법을 제안한다.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;factorization---variable-elimination&quot;&gt;Factorization &amp;lt;-&amp;gt; Variable Elimination&lt;/h3&gt;
+
+&lt;h4 id=&quot;figure-5&quot;&gt;Figure 5&lt;/h4&gt;
+
+&lt;p&gt;그렇다면 \(R\)은 어떤 graph에 해당되는 것일까?&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../assets/images/Square_Root_SAM/SSAM_5.png&quot; alt=&quot;TRIANGULATED_GRAPH_FOR_A_GOOD_ORDERING&quot; width=&quot;200&quot; height=&quot;200&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;improving-performance---reducing-fill-in&quot;&gt;Improving Performance &amp;lt;-&amp;gt; Reducing Fill-in&lt;/h3&gt;
+
+&lt;h2 id=&quot;square-root-sam&quot;&gt;Square Root SAM&lt;/h2&gt;
+
+&lt;h3 id=&quot;batch-sqrtsam&quot;&gt;Batch \(\sqrt{SAM}\)&lt;/h3&gt;
+
+&lt;h3 id=&quot;linear-incremental-sqrtsam&quot;&gt;Linear Incremental \(\sqrt{SAM}\)&lt;/h3&gt;
+
+&lt;h3 id=&quot;non-linear-incremental-sqrtsam&quot;&gt;Non-linear Incremental \(\sqrt{SAM}\)&lt;/h3&gt;
+
+&lt;h3 id=&quot;a1-qr-factorization&quot;&gt;A1 QR factorization&lt;/h3&gt;
+
+&lt;p&gt;Dense matrix \(A\)에 대하여 \(R\)을 좌에서 우로 column별로 계산한다. Column \(j\)에 대하여 모든 diagonal 아래의 non-zero element들은 \(A\)의 좌측에 &lt;em&gt;Householder reflection matrix&lt;/em&gt; \(H_j\)를 곱합으로서 0으로 만든다:&lt;/p&gt;
+
+\[H_n ... H_2 H_1 A = Q^T A = \begin{bmatrix}
+R\\
+0
+\end{bmatrix}\]</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html">Square Root SAM</summary></entry><entry><title type="html">[Paper Review] Estimating Uncertain Spatial Relationships in Robotics</title><link href="http://localhost:4000/slam/2020-04-09-p_review/" rel="alternate" type="text/html" title="[Paper Review] Estimating Uncertain Spatial Relationships in Robotics" /><published>2020-04-09T00:00:00+09:00</published><updated>2020-04-09T00:00:00+09:00</updated><id>http://localhost:4000/slam/p_review</id><content type="html" xml:base="http://localhost:4000/slam/2020-04-09-p_review/">&lt;p&gt;Estimating Uncertain Spatial Relationships in Robotics&lt;/p&gt;
+
+&lt;p&gt;Smith R., Self M., Cheeseman P. (1990) Estimating Uncertain Spatial Relationships in Robotics. In: Cox I.J., Wilfong G.T. (eds) Autonomous Robot Vehicles. Springer, New York, NY&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+SLAM 수업 들으면서 초반에 나오는 논문인데, 로봇 이동간에 coordinate system의 변화에 따라 Covarinace matrix가 어떻게 Propagation 되는지 잘 설명해주는 논문인 것 같다.&lt;/p&gt;
+
+&lt;h2 id=&quot;abstract&quot;&gt;Abstract&lt;/h2&gt;
+
+&lt;p&gt;In this paper, we describe a representation for spatial information, called the stochastic map, and associated procedures for building it, reading information from it, and revising it incrementally as new information is obtained. The map contains the estimates of relationships among objects in the map, and their uncertainties, given all the available information. The procedures provide a general solution to the problem of estimating uncertain relative spatial relationships. The estimates are probabilistic in nature, an advance over the previous, very conservative, worst-case approaches to the problem. Finally, the procedures are developed in the context of state-estimation and filtering theory, which provides a solid basis for numerous extensions.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-stochastic-map&quot;&gt;The Stochastic Map&lt;/h2&gt;
+&lt;p&gt;`` In this paper, uncertain spatial relationships will be tied together in a representation called the &lt;em&gt;stochastic map&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;representations&quot;&gt;Representations&lt;/h3&gt;
+
+&lt;p&gt;Spatial variable (x coordinate, y coordinate, yaw) (2D):&lt;/p&gt;
+
+\[\mathbf{x} = \begin{bmatrix} x \\ y \\ \phi \end{bmatrix}\]
+
+&lt;p&gt;Probability distribution :&lt;/p&gt;
+
+\[P(\mathbf{x}) = f(\mathbf{x})d\mathbf{x}\]
+
+&lt;p&gt;Mean :&lt;/p&gt;
+
+\[\hat{\mathbf{x}} \overset{\Delta}{=} E(\mathbf{x}) = \begin{bmatrix} \hat{\mathbf{x}} \\ \hat{\mathbf{y}} \\ \hat{\mathbf{\phi}} \end{bmatrix}\]
+
+&lt;p&gt;Error :&lt;/p&gt;
+
+\[\tilde{\mathbf{x}} \overset{\Delta}{=} \mathbf{x} - \hat{\mathbf{x}}\]
+
+&lt;p&gt;Covariance :&lt;/p&gt;
+
+\[\mathbf{C(x)} \overset{\Delta}{=} E(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^{T}) = 
+\begin{bmatrix}
+\sigma_x^2 &amp;amp;&amp;amp; \sigma_{xy} &amp;amp;&amp;amp; \sigma{x\phi} \\
+\sigma_{yx} &amp;amp;&amp;amp; \sigma_{y}^2 &amp;amp;&amp;amp; \sigma_{y\phi}\\
+\sigma_{\phi x} &amp;amp;&amp;amp; \sigma_{\phi y} &amp;amp;&amp;amp; \sigma_{\phi}^2
+\end{bmatrix}\]
+
+&lt;p&gt;Correlation coefficients :&lt;/p&gt;
+
+\[\rho_{ij} \overset{\Delta}{=} \frac{\sigma_{ij}}{\sigma_i \sigma_j} = \frac{E(\tilde{x_i}\tilde{x_j})}{\sqrt{E(\tilde{x_i}^2)E(\tilde{x_j}^2)}}\]
+
+&lt;p&gt;where \(-1 &amp;lt;=\rho_{ij} &amp;lt;= 1\)&lt;/p&gt;
+
+&lt;p&gt;State vector and mean of state vectors:&lt;/p&gt;
+
+\[\mathbf{x} = \begin{bmatrix} \mathbf{x}_1 \\ \vdots \\ \mathbf{x}_n \end{bmatrix}, \hat{\mathbf{x}} = \begin{bmatrix} \hat{\mathbf{x}_1} \\ \vdots \\ \hat{\mathbf{x}_n} \end{bmatrix}\]
+
+&lt;p&gt;State vector covariance :&lt;/p&gt;
+
+\[\mathbf{C(x)} = \begin{bmatrix}
+\mathbf{C}(\mathbf{x}_1) &amp;amp;&amp;amp; \mathbf{C}(\mathbf{x}_1, \mathbf{x}_2)&amp;amp;&amp;amp; \dots &amp;amp;&amp;amp; \mathbf{C}(\mathbf{x}_1, \mathbf{x}_n)\\
+\mathbf{C}(\mathbf{x}_2, \mathbf{x}_1) &amp;amp;&amp;amp; \mathbf{C}(\mathbf{x}_2) &amp;amp;&amp;amp; \dots &amp;amp;&amp;amp; \mathbf{C}(\mathbf{x}_2, \mathbf{x}_n)\\
+\vdots &amp;amp;&amp;amp; \vdots &amp;amp;&amp;amp; \ddots &amp;amp;&amp;amp; \vdots\\
+\mathbf{C}(\mathbf{x}_n, \mathbf{x}_1) &amp;amp;&amp;amp; \mathbf{C}(\mathbf{x}_n, \mathbf{x}_2) &amp;amp;&amp;amp; \dots &amp;amp;&amp;amp; \mathbf{C}(\mathbf{x}_n)
+\end{bmatrix}\]
+
+&lt;p&gt;where&lt;/p&gt;
+
+\[\mathbf{C}(\mathbf{x}_i, \mathbf{x}_j) \overset{\Delta}{=} E(\tilde{\mathbf{x}}_i, \tilde{\mathbf{x}}_j)
+\\
+\mathbf{C}(\mathbf{x}_i, \mathbf{x}_j) = \mathbf{C}(\mathbf{x}_i, \mathbf{x}_j)^T\]
+
+&lt;p&gt;and with centeral limit theorem, resulting distribution will be as in Gaussian:&lt;/p&gt;
+
+\[P(\mathbf{x}) = 
+\frac{exp([-\frac{1}{2}(\mathbf{x} - \hat{\mathbf{x}})^T\mathbf{C}^{-1}(\mathbf{x})(\mathbf{x} - \hat{\mathbf{x}})])}
+{\sqrt{(2\pi)^m|\mathbf{C}(\mathbf{x})|}}d\mathbf{x}\]
+
+&lt;p&gt;여기서 \(m\) 은 \(\mathbf{x}\)의 dimension&lt;/p&gt;
+
+&lt;h2 id=&quot;reading-the-map&quot;&gt;Reading the Map&lt;/h2&gt;
+
+&lt;h3 id=&quot;uncertain-relationship&quot;&gt;Uncertain Relationship&lt;/h3&gt;
+
+&lt;h4 id=&quot;linear-relationships&quot;&gt;Linear Relationships&lt;/h4&gt;
+
+\[\mathbf{y} = \mathbf{Mx} + \mathbf{b}
+\\
+\hat{\mathbf{y}} = \mathbf{M}\hat{\mathbf{x}} + \mathbf{b}\]
+
+&lt;p&gt;Covariance&lt;/p&gt;
+
+\[\mathbf{C}(\mathbf{y}) = \mathbf{MC}(\mathbf{x})\mathbf{M}^T
+\\
+\mathbf{C}(\mathbf{y}, \mathbf{z}) = \mathbf{MC}(\mathbf{x}, \mathbf{z})
+\\
+\mathbf{C}(\mathbf{z}, \mathbf{y}) = \mathbf{C}(\mathbf{z}, \mathbf{x})\mathbf{M}^T\]
+
+&lt;p&gt;이들은 Covariance matrix의 계산방법 (\(\mathbf{C}(\mathbf{y}) = E((\mathbf{y}-\hat{\mathbf{y}})(\mathbf{y}-\hat{\mathbf{y}})^T), \mathbf{C}(x,y) = E((\mathbf{x}-\hat{\mathbf{x}})(\mathbf{y}-\hat{\mathbf{y}})^T)\))를 따라가면 쉽게 유도할 수 있다.&lt;/p&gt;
+
+&lt;h4 id=&quot;nonlinear-relationships&quot;&gt;Nonlinear Relationships&lt;/h4&gt;
+
+\[\mathbf{y} = \mathbf{f}(\mathbf{x})\]
+
+&lt;p&gt;Taylor series expansion about esimtated mean \(\hat{\mathbf{x}}\)&lt;/p&gt;
+
+\[\mathbf{y} = \mathbf{f}(\hat{\mathbf{x}}) + \mathbf{F_x}\tilde{\mathbf{x}} + \dots\]
+
+&lt;p&gt;where \(\mathbf{F_x}\) is the matrix of partials, or Jacobian of \(\mathbf{f}\) evaluated at \(\hat{\mathbf{x}}\) :&lt;/p&gt;
+
+\[\mathbf{F_x} \overset{\Delta}{=} 
+\frac{\partial \mathbf{f}(\mathbf{x})}{\partial \mathbf{x}}
+\overset{\Delta}{=} 
+\begin{bmatrix}
+\frac{\partial f_1}{\partial x_1} &amp;amp;&amp;amp; \frac{\partial f_1}{\partial x_2} &amp;amp;&amp;amp; \dots &amp;amp;&amp;amp; \frac{\partial f_1}{\partial x_n} \\
+\frac{\partial f_2}{\partial x_1} &amp;amp;&amp;amp; \frac{\partial f_2}{\partial x_2} &amp;amp;&amp;amp; \dots &amp;amp;&amp;amp; \frac{\partial f_2}{\partial x_n} \\
+\vdots &amp;amp;&amp;amp; \vdots &amp;amp;&amp;amp; \ddots &amp;amp;&amp;amp; \vdots \\
+\frac{\partial f_r}{\partial x_1} &amp;amp;&amp;amp; \frac{\partial f_r}{\partial x_2} &amp;amp;&amp;amp; \dots &amp;amp;&amp;amp; \frac{\partial f_r}{\partial x_n}
+\end{bmatrix}_{\mathbf{x} = \hat{\mathbf{x}}}\]
+
+\[\mathbf{C}(\mathbf{y}) \approx \mathbf{F_x C}(\mathbf{x})\mathbf{F_x}^T 
+\\
+\mathbf{C}(\mathbf{y}, \mathbf{z}) \approx \mathbf{F_x C}(\mathbf{x}, \mathbf{z})
+\\
+\mathbf{C}(\mathbf{z}, \mathbf{y}) \approx \mathbf{C}(\mathbf{z}, \mathbf{x})\mathbf{F_x}^T\]
+
+&lt;p&gt;If we need to include second order term,&lt;/p&gt;
+
+\[\mathbf{y} = \mathbf{f}(\hat{\mathbf{x}}) + \mathbf{F_x}\tilde{\mathbf{x}} + \frac{1}{2}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T) + \dots\]
+
+\[\hat{\mathbf{y}} \approx \mathbf{f}(\hat{\mathbf{x}}) + \frac{1}{2}\mathbf{F_x}E(\hat{\mathbf{x}}\hat{\mathbf{x}}^T) = \mathbf{f}(\hat{\mathbf{x}}) + \frac{1}{2}\mathbf{F_x}\mathbf{C}(\mathbf{x})\]
+
+&lt;p&gt;Then&lt;/p&gt;
+
+\[\mathbf{C}(\mathbf{y}) = E((\mathbf{y} - \hat{\mathbf{y}})(\mathbf{y} - \hat{\mathbf{y}})^T) \approx
+E((\mathbf{f}(\hat{\mathbf{x}}) + \mathbf{F_x}\tilde{\mathbf{x}} + \frac{1}{2}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)- 
+\mathbf{f}(\hat{\mathbf{x}}) - \frac{1}{2}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x}))(\mathbf{f}(\hat{\mathbf{x}}) + \mathbf{F_x}\tilde{\mathbf{x}} + \frac{1}{2}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)- 
+\mathbf{f}(\hat{\mathbf{x}}) - \frac{1}{2}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x}))^T)
+\\
+=E((\mathbf{F_x}\tilde{\mathbf{x}} + \frac{1}{2}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)
+- \frac{1}{2}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x}))
+(\mathbf{F_x}\tilde{\mathbf{x}} + \frac{1}{2}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)
+- \frac{1}{2}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x}))^T
+)
+\\
+=E(
+\mathbf{F_x}\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T\mathbf{F_x}^T +
+\frac{1}{2}\mathbf{F_x}\tilde{\mathbf{x}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)\mathbf{F_{xx}}^T - 
+\frac{1}{2}\mathbf{F_x}\tilde{\mathbf{x}}\mathbf{C}(\mathbf{x})^T\mathbf{F_{xx}}^T+
+
+\frac{1}{2}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)\tilde{\mathbf{x}}^T\mathbf{F_x}^T +
+\frac{1}{4}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)\mathbf{F_{xx}}^T -
+\frac{1}{4}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)\mathbf{C}(\mathbf{x})^T\mathbf{F_{xx}}^T - 
+\frac{1}{2}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x})\tilde{\mathbf{x}}^T\mathbf{F_x}^T - \frac{1}{4}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x})(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)\mathbf{F_{xx}}^T + \frac{1}{4}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x})\mathbf{C}(\mathbf{x})^T\mathbf{F_{xx}}^T
+)
+\\
+\approx
+E(
+\mathbf{F_x}\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T\mathbf{F_x}^T
+-\frac{1}{4}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)\mathbf{C}(\mathbf{x})^T\mathbf{F_{xx}}^T
+- \frac{1}{4}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x})(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)\mathbf{F_{xx}}^T 
++ \frac{1}{4}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x})\mathbf{C}(\mathbf{x})^T\mathbf{F_{xx}}^T
+)
+\\
+= \mathbf{F_x}\mathbf{C}(\mathbf{x})\mathbf{F_x}^T
+-\frac{1}{4}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x})\mathbf{C}(\mathbf{x})^T\mathbf{F_{xx}}^T
+-\frac{1}{4}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x})\mathbf{C}(\mathbf{x})^T\mathbf{F_{xx}}^T
++\frac{1}{4}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x})\mathbf{C}(\mathbf{x})^T\mathbf{F_{xx}}^T\]
+
+\[\mathbf{C}(\mathbf{y})= \mathbf{F_x}\mathbf{C}(\mathbf{x})\mathbf{F_x}^T
+-\frac{1}{4}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x})\mathbf{C}(\mathbf{x})^T\mathbf{F_{xx}}^T\]
+
+&lt;p&gt;논문에는 따로 유도하는 식이 없어 내가 했는데, 하면서 2차 항들은 무시할 수 있다고 가정하고 삭제하니 식이 유도되었다.&lt;/p&gt;
+
+&lt;h3 id=&quot;spatial-relationships&quot;&gt;Spatial Relationships&lt;/h3&gt;
+
+&lt;h4 id=&quot;compounding&quot;&gt;Compounding&lt;/h4&gt;
+
+\[\mathbf{x}_{ik} \overset{\Delta}{=} \mathbf{x}_{ij} \oplus \mathbf{x}_{jk}
+= \begin{bmatrix}
+x_{jk}cos(\phi_{ij}) - y_{jk}sin(\phi_{ij})+ x_{ij} \\
+x_{jk}sin(\phi_{ij}) + y_{jk}cos(\phi_{ij})+ y_{ij} \\
+\phi_{ij} + \phi_{jk}
+\end{bmatrix}\]
+
+&lt;p&gt;First order approximation&lt;/p&gt;
+
+&lt;p&gt;Mean :&lt;/p&gt;
+
+\[\hat{\mathbf{x}}_{ik} \approx \hat{\mathbf{x}}_{ij} \oplus \hat{\mathbf{x}}_{jk}\]
+
+&lt;p&gt;Covariance :&lt;/p&gt;
+
+\[\mathbf{C}(\mathbf{x}_{ik}) = \mathbf{J}_{\oplus}
+\begin{bmatrix}
+\mathbf{C}(\mathbf{x}_{ij}) &amp;amp;&amp;amp; \mathbf{C}(\mathbf{x}_{ij}, \mathbf{x}_{jk}) \\
+\mathbf{C}(\mathbf{x}_{jk}, \mathbf{x}_{ij}) &amp;amp;&amp;amp; \mathbf{C}(\mathbf{x}_{jk})
+
+\end{bmatrix}
+\mathbf{J}_{\oplus}^T\]
+
+&lt;p&gt;where&lt;/p&gt;
+
+\[\mathbf{J}_{\oplus} = \overset{\Delta}{=}
+\frac{\partial (\mathbf{x}_{ij} \oplus \mathbf{x}_{jk})}{\partial (\mathbf{x}_{ij}, \mathbf{x}_{jk})} = 
+\frac{\partial \mathbf{x}_{ik}}{\partial (\mathbf{x}_{ij}, \mathbf{x}_{jk})} =
+\begin{bmatrix}
+1 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; -x_{jk}sin(\phi_{ij})-y_{jk}cos(\phi_{ij}) &amp;amp;&amp;amp; cos(\phi_{ij}) &amp;amp;&amp;amp; -sin(\phi_{ij}) &amp;amp;&amp;amp; 0 \\
+0 &amp;amp;&amp;amp; 1 &amp;amp;&amp;amp; x_{jk}cos(\phi_{ij})-y_{jk}sin(\phi_{ij}) &amp;amp;&amp;amp; sin(\phi_{ij}) &amp;amp;&amp;amp; cos(\phi_{ij}) &amp;amp;&amp;amp; 0 \\
+0 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; 1 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; 1
+\end{bmatrix}
+
+=\begin{bmatrix}
+1 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; -(y_{ik} - y_{ij}) &amp;amp;&amp;amp; cos(\phi_{ij}) &amp;amp;&amp;amp; -sin(\phi_{ij}) &amp;amp;&amp;amp; 0 \\
+0 &amp;amp;&amp;amp; 1 &amp;amp;&amp;amp; (x_{ik} - x_{ij}) &amp;amp;&amp;amp; sin(\phi_{ij}) &amp;amp;&amp;amp; cos(\phi_{ij}) &amp;amp;&amp;amp; 0 \\
+0 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; 1 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; 1
+\end{bmatrix}\]
+
+&lt;p&gt;if the two relationships being compounded are independent (\(\mathbf{C}(\mathbf{x}_ij, \mathbf{x}_{jk}) = \mathbf{0}\)), the first-order estimate of the covariance is :&lt;/p&gt;
+
+\[\mathbf{C}(\mathbf{x}_{ik}) \approx
+\mathbf{J}_{1\oplus} \mathbf{C}(\mathbf{x}_ij)\mathbf{J}_{1\oplus}^T +
+\mathbf{J}_{2\oplus} \mathbf{C}(\mathbf{x}_jk)\mathbf{J}_{2\oplus}^T\]
+
+&lt;p&gt;where&lt;/p&gt;
+
+\[\mathbf{J}_{\oplus} = \begin{bmatrix}
+\mathbf{J}_{1\oplus} &amp;amp;&amp;amp; \mathbf{J}_{2\oplus}
+\end{bmatrix}\]
+
+&lt;h4 id=&quot;the-inverse-relationship&quot;&gt;The inverse Relationship&lt;/h4&gt;
+
+\[\mathbf{x}_{ji} \overset{\Delta}{=} \ominus \mathbf{x}_{ij} \overset{\Delta}{=}
+\begin{bmatrix}
+-x_{ij}cos(\phi_ij) - y_{ij}sin(\phi_ij)\\
+x_{ij}sin(\phi_ij) - y_{ij}cos(\phi_ij)\\
+-\phi_{ij}
+\end{bmatrix}\]
+
+\[\hat{\mathbf{x}}_{ji} \approx \ominus \hat{\mathbf{x}}_{ij}\]
+
+\[\mathbf{C}(\mathbf{x_{ji}}) \approx \mathbf{J}_{\ominus}\mathbf{C}(\mathbf{x_{ij}})\mathbf{J}_{\ominus}^T\]
+
+&lt;p&gt;where&lt;/p&gt;
+
+\[\mathbf{J}_{\ominus} \overset{\Delta}{=} \frac{\partial \mathbf{x}_{ji}}{\partial \mathbf{x}_{ij}} =
+\begin{bmatrix}
+-cos(\phi_{ij}) &amp;amp;&amp;amp; -sin(\phi_{ij}) &amp;amp;&amp;amp; y_{ji}\\
+sin(\phi_{ij}) &amp;amp;&amp;amp; -cos(\phi_{ij}) &amp;amp;&amp;amp; -x_{ji}\\
+0 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; -1
+\end{bmatrix}\]
+
+&lt;h4 id=&quot;composite-relationships&quot;&gt;Composite Relationships&lt;/h4&gt;
+
+\[\mathbf{x}_{il} = \mathbf{x}_{ij} \oplus \mathbf{x}_{jl} = \mathbf{x}_{ij} \oplus (\mathbf{x}_{jk} \oplus \mathbf{x}_{kl})\\
+= \mathbf{x}_{ik} \oplus \mathbf{x}_{kl} = (\mathbf{x}_{ij} \oplus \mathbf{x}_{jk}) \oplus \mathbf{x}_{kl}\]
+
+\[\mathbf{x}_{ij} \ominus \mathbf{x}_{kj} \overset{\Delta}{=} \mathbf{x}_{ij} \oplus(\ominus\mathbf{x}_{kj}) \\
+\mathbf{x}_{jk} = \ominus\mathbf{x}_{ij} \oplus \mathbf{x}_{ik}\\
+\hat{\mathbf{x}}_{jk} = \hat{\mathbf{x}}_{ji} \oplus \hat{\mathbf{x}}_{ik} = \ominus \hat{\mathbf{x}}_{ij} \oplus \hat{\mathbf{x}}_{ik}\]
+
+&lt;p&gt;and the covariance matrix is as:&lt;/p&gt;
+
+\[\mathbf{C}(\mathbf{x}_{jk}) \approx \mathbf{J}_{\oplus}
+\begin{bmatrix}
+\mathbf{C}(\mathbf{x}_{ji}) &amp;amp;&amp;amp; \mathbf{C}(\mathbf{x}_{ji}, \mathbf{x}_{ik}) \\
+\mathbf{C}(\mathbf{x}_{ik}, \mathbf{x}_{ji}) &amp;amp;&amp;amp; \mathbf{C}(\mathbf{x}_{ik})
+\end{bmatrix} \\~\\
+
+\approx
+\mathbf{J}_{\oplus}
+\begin{bmatrix}
+\mathbf{J}_{\ominus}\mathbf{C}(\mathbf{x}_{ji})\mathbf{J}_{\ominus}^T &amp;amp;&amp;amp; \mathbf{J}_{\ominus}\mathbf{C}(\mathbf{x}_{ji}, \mathbf{x}_{ik}) \\
+\mathbf{C}(\mathbf{x}_{ik}, \mathbf{x}_{ji})\mathbf{J}_{\ominus}^T &amp;amp;&amp;amp; \mathbf{C}(\mathbf{x}_{ik})
+\end{bmatrix}\]
+
+\[_{\ominus}\mathbf{J}_{\oplus} \overset{\Delta}{=} 
+\frac{\partial \mathbf{x}_{jk}}{\partial(\mathbf{x}_{ij}\mathbf{x}_{ik})} = 
+\frac{\partial\mathbf{x}_{jk}}{\partial(\mathbf{x}_{ji}, \mathbf{x}_{ik})}\frac{\partial(\mathbf{x}_{ji}, \mathbf{x}_{ik})}{\partial(\mathbf{x}_{ij}, \mathbf{x}_{ik})} =
+\mathbf{J}_{\oplus}\begin{bmatrix}
+\mathbf{J}_{\ominus} &amp;amp;&amp;amp; \mathbf{0} \\
+\mathbf{0} &amp;amp;&amp;amp; \mathbf{I}
+\end{bmatrix}=
+\begin{bmatrix}
+\mathbf{J}_{1\oplus}\mathbf{J}_{\ominus} &amp;amp;&amp;amp; \mathbf{J}_{2\oplus}
+\end{bmatrix}\]
+
+&lt;p&gt;if the cross covariance terms are zero,&lt;/p&gt;
+
+\[\mathbf{C}(\mathbf{x}_{jk}) \approx \mathbf{J}_{1\oplus}\mathbf{J}_{\ominus}\mathbf{C}(\mathbf{x}_{ij})\mathbf{J}_{\ominus}^T\mathbf{J}_{1\oplus}^T +
+\mathbf{J}_{2\oplus}\mathbf{C}(\mathbf{x}_{ik})\mathbf{J}_{2\oplus}^T\]
+
+&lt;h2 id=&quot;building-the-map&quot;&gt;Building the Map&lt;/h2&gt;
+
+&lt;p&gt;Map : represent uncertian spatial relationships among the objects referenced to a common world frame
+Entries in the map may change for two reasons:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;An object moves&lt;/li&gt;
+  &lt;li&gt;New spatial information is observed&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../assets/images/rsmith_1990/fig4_1.png&quot; alt=&quot;The Changing Map&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;moving-objects&quot;&gt;Moving Objects&lt;/h3&gt;
+
+&lt;p&gt;System dynamics models, or process model&lt;/p&gt;
+
+\[\mathbf{x}_k^{(-)} = \mathbf{f}(\mathbf{x}_{k-1}^{(+)}, \mathbf{y}_{k-1})\]
+
+&lt;p&gt;where&lt;/p&gt;
+
+\[\mathbf{y} = \mathbf{u} + \mathbf{w}\]
+
+&lt;p&gt;\(\mathbf{u}\) : Control variables&lt;/p&gt;
+
+&lt;p&gt;\(\mathbf{w}\) : mean-zero process noise with covariance \(\mathbf{C}(\mathbf{w})\)&lt;/p&gt;
+
+\[\hat{\mathbf{x}}_K^{(-)} \approx \mathbf{f}(\hat{\mathbf{x}}_{k-1}^{(+)}, \hat{\mathbf{y}}_{k-1}) \\ ~ \\
+\mathbf{C}(\mathbf{x}_k^{-}) \approx \mathbf{F}_{(x,y)}\begin{bmatrix}
+\mathbf{C}(\mathbf{x}_{k-1}^{(+)}) &amp;amp;&amp;amp; \mathbf{C}(\mathbf{x}_{k-1}^{(+)}, \mathbf{y}_{k-1}) \\
+\mathbf{C}(\mathbf{y}_{k-1}, \mathbf{x}_{k-1}^{(+)}) &amp;amp;&amp;amp; \mathbf{C}(\mathbf{y}_{k-1})
+\end{bmatrix} \mathbf{F}_{(x,y)}^{T}\]
+
+&lt;p&gt;where&lt;/p&gt;
+
+\[\mathbf{F}_{(x,y)} = \begin{bmatrix}
+\mathbf{F}_{x} &amp;amp;&amp;amp; \mathbf{F}_{y}
+\end{bmatrix}\overset{\Delta}{=}
+\frac{\partial \mathbf{f}(\mathbf{x}, \mathbf{y})}{\partial (\mathbf{x}, \mathbf{y})}(\hat{\mathbf{x}}_{k-1}^{(-)}, \hat{\mathbf{y}}_{k-1})\]
+
+&lt;p&gt;Process noise가 State와 무관하다면 (i.e. \(\mathbf{C}(\mathbf{x}_{k-1}^{(+)}, \mathbf{y}_{k-1}) = \mathbf{0}\)), covariance matrix는 다음과 같이 표현이 가능하다.&lt;/p&gt;
+
+\[\mathbf{C}(\mathbf{x}_k^{(-)}) = \mathbf{F}_{x} \mathbf{C}(\mathbf{x}_{k-1}^{(+)}) \mathbf{F}_{x}^T + \mathbf{F}_{y} \mathbf{C}(\mathbf{y}_{k-1}) \mathbf{F}_{y}^T\]
+
+&lt;p&gt;마지막으로 논문에는 로봇이 처음 위치에서 어떠한 object에 대한 measurement 값을 받고, 이동했을 때&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;원점에서 바라본 로봇의 위치 및 Cov Matrix,&lt;/li&gt;
+  &lt;li&gt;원점에서 바라본 object의 위치 및 Cov Matrix,&lt;/li&gt;
+  &lt;li&gt;로봇에서 바라본 원점의 위치 및 Cov Matrix&lt;/li&gt;
+  &lt;li&gt;로봇에서 바라본 object의 위치 및 Cov Matrix&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;에 대한 식을 위와 같이 \(\oplus\) 와 \(\ominus\) 식으로 나타낸다.&lt;/p&gt;
+
+&lt;p&gt;움직인 위치에서 또다른 object를 measure 하고 원래 object를 다시 measure하는 시나리오도 있는데, 이는 Kalman Filter로 update 한다는 식으로 하고 넘긴듯.. 자세히 읽어보진 않았다.&lt;/p&gt;
+
+&lt;p&gt;추가적으로 3차원에서의 formulation 또한 부록 형식으로 실어놔서 필요한 경우 쓰면 좋을 듯 하다.&lt;/p&gt;
+
+&lt;p&gt;ps)&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Paper review가 아니라 거의 뭐 paper copy 수준이다. 논문 요약하는 것도 기술이구나.&lt;/li&gt;
+  &lt;li&gt;mathjax써서 편하긴 한데… 시간이 너무 오래 걸린다.&lt;/li&gt;
+  &lt;li&gt;차라리 그냥 써서 이미지로 첨부할까..&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html">Estimating Uncertain Spatial Relationships in Robotics</summary></entry></feed>
