@@ -1,17 +1,90 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2020-11-27T17:33:45+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
-</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">New Blog</title><link href="http://localhost:4000/test/2020-11-27-Blog_Update/" rel="alternate" type="text/html" title="New Blog" /><published>2020-11-27T00:00:00+09:00</published><updated>2020-11-27T00:00:00+09:00</updated><id>http://localhost:4000/test/Blog_Update</id><content type="html" xml:base="http://localhost:4000/test/2020-11-27-Blog_Update/">&lt;p&gt;Not really sure why, but my previous blog stopped supporting mathjax.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2020-11-28T15:04:43+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
+</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">[GTSAM] Making simple custom node and factor</title><link href="http://localhost:4000/slam/2020-11-12-gtsam_custom/" rel="alternate" type="text/html" title="[GTSAM] Making simple custom node and factor" /><published>2020-11-12T00:00:00+09:00</published><updated>2020-11-12T00:00:00+09:00</updated><id>http://localhost:4000/slam/gtsam_custom</id><content type="html" xml:base="http://localhost:4000/slam/2020-11-12-gtsam_custom/">&lt;h2 id=&quot;defining-a-node&quot;&gt;Defining a node&lt;/h2&gt;
+&lt;p&gt;GTSAM objects:
+LieGroup \(\subset\) Manifold \(\subset\) Testble&lt;/p&gt;
 
-&lt;p&gt;So, I made a new one.&lt;/p&gt;
+&lt;p&gt;Required functions for each sets:&lt;/p&gt;
 
-&lt;p&gt;End of the story.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="test" /><category term="test" /><summary type="html">Not really sure why, but my previous blog stopped supporting mathjax.</summary></entry><entry><title type="html">[GTSAM] Odometry Factor</title><link href="http://localhost:4000/slam/2020-11-19-Factor/" rel="alternate" type="text/html" title="[GTSAM] Odometry Factor" /><published>2020-11-19T00:00:00+09:00</published><updated>2020-11-19T00:00:00+09:00</updated><id>http://localhost:4000/slam/Factor</id><content type="html" xml:base="http://localhost:4000/slam/2020-11-19-Factor/"></content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html"></summary></entry><entry><title type="html">[GTSAM] Making simple custom node and factor</title><link href="http://localhost:4000/slam/2020-11-12-gtsam_custom/" rel="alternate" type="text/html" title="[GTSAM] Making simple custom node and factor" /><published>2020-11-12T00:00:00+09:00</published><updated>2020-11-12T00:00:00+09:00</updated><id>http://localhost:4000/slam/gtsam_custom</id><content type="html" xml:base="http://localhost:4000/slam/2020-11-12-gtsam_custom/">&lt;p&gt;Graph SLAM에서의 노드(state)를 다음과 같이 N dimensional vector로 정의하자 :&lt;/p&gt;
+&lt;p&gt;LieGroup:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Identity, Logmap, Expmap, Compose, Between, Inverse&lt;/li&gt;
+&lt;/ul&gt;
 
-\[\begin{bmatrix}
-s_1\\
-s_2\\
-s_3\\
-\vdots\\
-s_N
-\end{bmatrix}\]</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html">Graph SLAM에서의 노드(state)를 다음과 같이 N dimensional vector로 정의하자 :</summary></entry><entry><title type="html">[Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…)</title><link href="http://localhost:4000/slam/paper_review/2020-10-03-p_review/" rel="alternate" type="text/html" title="[Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…)" /><published>2020-10-03T00:00:00+09:00</published><updated>2020-10-03T00:00:00+09:00</updated><id>http://localhost:4000/slam/paper_review/p_review</id><content type="html" xml:base="http://localhost:4000/slam/paper_review/2020-10-03-p_review/">&lt;p&gt;ElasticFusion: Dense SLAM Without A Pose Graph&lt;/p&gt;
+&lt;p&gt;Manifold:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;dimension, GetDimension, Local, Retract&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Testble:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Equal, Print&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Custom node which we are going to make is in Manifold set, so we need to define&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Equal, Print, dimension, GetDimension, Local, Retract&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;defining-a-factor&quot;&gt;Defining a factor&lt;/h2&gt;
+
+&lt;p&gt;Let’s say the state is a N dimensional vector, \(\begin{bmatrix}
+s_1&amp;amp;s_2&amp;amp;s_3&amp;amp;\dots&amp;amp;s_N
+\end{bmatrix}^\top\)&lt;/p&gt;
+
+&lt;p&gt;and a measurement is a M dimensional vector:\(\begin{bmatrix}
+m_1&amp;amp;m_2&amp;amp;m_3&amp;amp;\dots&amp;amp;m_M
+\end{bmatrix}^\top\)&lt;/p&gt;
+
+&lt;p&gt;Let’s say that the measurement is a between factor which relates two states:&lt;/p&gt;
+
+\[\mathbf{m_k} = h(\mathbf{s_i}, \mathbf{s_j})\]
+
+&lt;p&gt;For graph SLAM, we need to define the jacobian of measurement with respect to both states, and error between the expected measurement and actual measurement (kinda similar to ‘innovation’ term in Kalman filter).&lt;/p&gt;
+
+&lt;p&gt;So, for the jacobian of the measurement for the base state:&lt;/p&gt;
+
+\[H_1 =\begin{bmatrix}
+\frac{\partial m_{k1}}{\partial s_{i1}} &amp;amp; \frac{\partial m_{k1}}{\partial s_{i2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{k1}}{\partial s_{iN}} \\
+\frac{\partial m_{k2}}{\partial s_{i1}} &amp;amp; \frac{\partial m_{k2}}{\partial s_{i2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{k2}}{\partial s_{iN}} \\
+\vdots &amp;amp; \vdots &amp;amp;  &amp;amp; \vdots \\
+\frac{\partial m_{kM}}{\partial s_{i1}} &amp;amp; \frac{\partial m_{kM}}{\partial s_{i2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{kM}}{\partial s_{iN}}
+\end{bmatrix}_{M \times N}\]
+
+&lt;p&gt;and the jacobian for the target state:&lt;/p&gt;
+
+\[H_2 =\begin{bmatrix}
+\frac{\partial m_{k1}}{\partial s_{j1}} &amp;amp; \frac{\partial m_{k1}}{\partial s_{j2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{k1}}{\partial s_{jN}} \\
+\frac{\partial m_{k2}}{\partial s_{j1}} &amp;amp; \frac{\partial m_{k2}}{\partial s_{j2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{k2}}{\partial s_{jN}} \\
+\vdots &amp;amp; \vdots &amp;amp;  &amp;amp; \vdots \\
+\frac{\partial m_{kM}}{\partial s_{j1}} &amp;amp; \frac{\partial m_{kM}}{\partial s_{j2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{kM}}{\partial s_{jN}}
+\end{bmatrix}_{M \times N}\]
+
+&lt;p&gt;And the error is defined as:&lt;/p&gt;
+
+\[\mathbf{v} = h(\mathbf{s_i}, \mathbf{s_j}) - \mathbf{m_k}\]
+
+&lt;p&gt;Per optimization step, each jacobian matrix indicates which direction should the values be changed, and the error vector indicates how much should the values be changed.&lt;/p&gt;
+
+&lt;p&gt;This can be adapted to connect between any nodes; let’s say there’s a N dimensional node \(\mathbf{s}\), K dimensional node \(\mathbf{r}\) and a M dimensional measurement which connect between those nodes \(\mathbf{m}\) (e.g. \(\mathbf{s}\) is a state, \(\mathbf{m}\) is a measurement and \(\mathbf{r}\) is a corresponding landmark).&lt;/p&gt;
+
+&lt;p&gt;Similarly:&lt;/p&gt;
+
+\[H_1 =\begin{bmatrix}
+\frac{\partial m_{k1}}{\partial s_{i1}} &amp;amp; \frac{\partial m_{k1}}{\partial s_{i2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{k1}}{\partial s_{iN}} \\
+\frac{\partial m_{k2}}{\partial s_{i1}} &amp;amp; \frac{\partial m_{k2}}{\partial s_{i2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{k2}}{\partial s_{iN}} \\
+\vdots &amp;amp; \vdots &amp;amp;  &amp;amp; \vdots \\
+\frac{\partial m_{kM}}{\partial s_{i1}} &amp;amp; \frac{\partial m_{kM}}{\partial s_{i2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{kM}}{\partial s_{iN}}
+\end{bmatrix}_{M \times N}, 
+H_2 =\begin{bmatrix}
+\frac{\partial m_{k1}}{\partial r_{j1}} &amp;amp; \frac{\partial m_{k1}}{\partial r_{j2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{k1}}{\partial r_{jK}} \\
+\frac{\partial m_{k2}}{\partial r_{j1}} &amp;amp; \frac{\partial m_{k2}}{\partial r_{j2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{k2}}{\partial r_{jK}} \\
+\vdots &amp;amp; \vdots &amp;amp;  &amp;amp; \vdots \\
+\frac{\partial m_{kM}}{\partial r_{j1}} &amp;amp; \frac{\partial m_{kM}}{\partial r_{j2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{kM}}{\partial r_{jK}}
+\end{bmatrix}_{M \times K}\]
+
+&lt;p&gt;and error:&lt;/p&gt;
+
+\[\mathbf{v} = f(\mathbf{s_i}, \mathbf{r_j}) - \mathbf{m_k}\]</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html">Defining a node GTSAM objects: LieGroup \(\subset\) Manifold \(\subset\) Testble</summary></entry><entry><title type="html">[Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…)</title><link href="http://localhost:4000/slam/paper_review/2020-10-03-p_review/" rel="alternate" type="text/html" title="[Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…)" /><published>2020-10-03T00:00:00+09:00</published><updated>2020-10-03T00:00:00+09:00</updated><id>http://localhost:4000/slam/paper_review/p_review</id><content type="html" xml:base="http://localhost:4000/slam/paper_review/2020-10-03-p_review/">&lt;p&gt;ElasticFusion: Dense SLAM Without A Pose Graph&lt;/p&gt;
 
 &lt;p&gt;Thomas Whelan et al. (Dyson Robotics Laboratory at Imperial College London)&lt;/p&gt;
 
@@ -128,7 +201,7 @@ Whereas our approach (&lt;strong&gt;utilising a deformation graph&lt;/strong&gt;
 
 &lt;h3 id=&quot;slam-as-a-belief-net&quot;&gt;SLAM As a Belief Net&lt;/h3&gt;
 &lt;h4 id=&quot;figure-1&quot;&gt;Figure 1&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&quot;../../assets/images/Square_Root_SAM/SSAM_1.png&quot; alt=&quot;SLAM_AS_A_BELIEF_NET&quot; width=&quot;200&quot; height=&quot;200&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/Square_Root_SAM/SSAM_1.png&quot; alt=&quot;SLAM_AS_A_BELIEF_NET&quot; width=&quot;200&quot; height=&quot;200&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;“A belief net is as directed &lt;strong&gt;acyclic graph&lt;/strong&gt; that encodes the &lt;strong&gt;conditional independesnce structure&lt;/strong&gt; of a set of variables, where each variable &lt;strong&gt;only directly depends on its predecessors in the graph&lt;/strong&gt;.”&lt;/p&gt;
 
@@ -142,7 +215,7 @@ Whereas our approach (&lt;strong&gt;utilising a deformation graph&lt;/strong&gt;
 
 &lt;h3 id=&quot;slam-as-a-factor-graph&quot;&gt;SLAM As a Factor Graph&lt;/h3&gt;
 &lt;h4 id=&quot;figure-2&quot;&gt;Figure 2&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&quot;../../assets/images/Square_Root_SAM/SSAM_2.png&quot; alt=&quot;SLAM_AS_A_FACTOR_GRAPH&quot; width=&quot;200&quot; height=&quot;200&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/Square_Root_SAM/SSAM_2.png&quot; alt=&quot;SLAM_AS_A_FACTOR_GRAPH&quot; width=&quot;200&quot; height=&quot;200&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;좌측 상단의 Graph를 보면, Measurement \(z\) 가 사라진 것을 볼 수 있다.&lt;/p&gt;
 
@@ -166,7 +239,7 @@ Whereas our approach (&lt;strong&gt;utilising a deformation graph&lt;/strong&gt;
 
 &lt;h3 id=&quot;slam-as-a-markov-random-field&quot;&gt;SLAM as a Markov Random FIeld&lt;/h3&gt;
 &lt;h4 id=&quot;figure-3&quot;&gt;Figure 3&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&quot;../../assets/images/Square_Root_SAM/SSAM_3.png&quot; alt=&quot;SLAM_AS_A_FACTOR_GRAPH&quot; width=&quot;200&quot; height=&quot;200&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/Square_Root_SAM/SSAM_3.png&quot; alt=&quot;SLAM_AS_A_FACTOR_GRAPH&quot; width=&quot;200&quot; height=&quot;200&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;“factor nodes themselves are eliminated” &lt;br /&gt;
 “MRF is a fundamentally different structure from the factor graph (undirected vs bipartite)”&lt;/p&gt;
@@ -268,7 +341,7 @@ c_4
 \end{bmatrix}\]
 
 &lt;h4 id=&quot;figure-4&quot;&gt;Figure 4&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&quot;../../assets/images/Square_Root_SAM/SSAM_4.png&quot; alt=&quot;A Matrix &amp;amp; its information matrix&quot; width=&quot;200&quot; height=&quot;200&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/Square_Root_SAM/SSAM_4.png&quot; alt=&quot;A Matrix &amp;amp; its information matrix&quot; width=&quot;200&quot; height=&quot;200&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;위의 그림은 95개의 state, 24개의 landmark에 대한 그림이며, 왼쪽 그림은 A matrix를 나타낸다. 오른쪽의 맨 위의 그림은 information matrix \(\mathcal{I} \overset{\Delta}{=} A^TA\)를 나타낸 그림이며, 가운데는 Cholesky triangle \(R\), 그리고 아래는 &lt;strong&gt;better variable ordering&lt;/strong&gt; 으로 나타낸 R matrix 이다. 그렇다면 왜 이 &lt;em&gt;better variable ordering&lt;/em&gt; 이 필요할까? 아래에 서술되어있지만, \(R\)은 Junction tree와 연관되어있으며, 이런 Junction tree를 생성하는데 있어 더욱 효율적으로 나타낼 수 있다(라고 이해했다..).&lt;/p&gt;
 
@@ -361,7 +434,7 @@ landmark measurement이나 odometry constraint이나, 각 block-row는 factor gr
 
 &lt;p&gt;그렇다면 \(R\)은 어떤 graph에 해당되는 것일까?&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;../../assets/images/Square_Root_SAM/SSAM_5.png&quot; alt=&quot;TRIANGULATED_GRAPH_FOR_A_GOOD_ORDERING&quot; width=&quot;200&quot; height=&quot;200&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/Square_Root_SAM/SSAM_5.png&quot; alt=&quot;TRIANGULATED_GRAPH_FOR_A_GOOD_ORDERING&quot; width=&quot;200&quot; height=&quot;200&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;improving-performance---reducing-fill-in&quot;&gt;Improving Performance &amp;lt;-&amp;gt; Reducing Fill-in&lt;/h3&gt;
 
@@ -675,7 +748,7 @@ Entries in the map may change for two reasons:&lt;/p&gt;
   &lt;li&gt;New spatial information is observed&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;../../assets/images/rsmith_1990/fig4_1.png&quot; alt=&quot;The Changing Map&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/rsmith_1990/fig4_1.png&quot; alt=&quot;The Changing Map&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;moving-objects&quot;&gt;Moving Objects&lt;/h3&gt;
 

@@ -44,15 +44,15 @@ Powered by Hydejack v9.0.5 <https://hydejack.com/>
 <meta property="og:title" content="[GTSAM] Making simple custom node and factor" />
 <meta name="author" content="<Dongha> <Chung>" />
 <meta property="og:locale" content="en" />
-<meta name="description" content="Graph SLAM에서의 노드(state)를 다음과 같이 N dimensional vector로 정의하자 :" />
-<meta property="og:description" content="Graph SLAM에서의 노드(state)를 다음과 같이 N dimensional vector로 정의하자 :" />
+<meta name="description" content="How to make a custom node and factor for GTSAM c++" />
+<meta property="og:description" content="How to make a custom node and factor for GTSAM c++" />
 <link rel="canonical" href="http://localhost:4000/slam/2020-11-12-gtsam_custom/" />
 <meta property="og:url" content="http://localhost:4000/slam/2020-11-12-gtsam_custom/" />
 <meta property="og:site_name" content="Dongha Chung" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-11-12T00:00:00+09:00" />
 <script type="application/ld+json">
-{"description":"Graph SLAM에서의 노드(state)를 다음과 같이 N dimensional vector로 정의하자 :","@type":"BlogPosting","headline":"[GTSAM] Making simple custom node and factor","dateModified":"2020-11-12T00:00:00+09:00","datePublished":"2020-11-12T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/slam/2020-11-12-gtsam_custom/"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/slam/2020-11-12-gtsam_custom/","author":{"@type":"Person","name":"<Dongha> <Chung>"},"@context":"https://schema.org"}</script>
+{"description":"How to make a custom node and factor for GTSAM c++","@type":"BlogPosting","headline":"[GTSAM] Making simple custom node and factor","dateModified":"2020-11-12T00:00:00+09:00","datePublished":"2020-11-12T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/slam/2020-11-12-gtsam_custom/"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/slam/2020-11-12-gtsam_custom/","author":{"@type":"Person","name":"<Dongha> <Chung>"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -283,21 +283,103 @@ in <a href="/slam/" class="flip-title">SLAM</a>
 
 
 
-  <div class="hr pb0"></div>
+  
+    <p class="note-sm" >
+      How to make a custom node and factor for GTSAM c++
+
+    </p>
+  
 
 
   </header>
 
   
-    <p>Graph SLAM에서의 노드(state)를 다음과 같이 N dimensional vector로 정의하자 :</p>
+    <h2 id="defining-a-node">Defining a node</h2>
+<p>GTSAM objects:
+LieGroup \(\subset\) Manifold \(\subset\) Testble</p>
 
-\[\begin{bmatrix}
-s_1\\
-s_2\\
-s_3\\
-\vdots\\
-s_N
-\end{bmatrix}\]
+<p>Required functions for each sets:</p>
+
+<p>LieGroup:</p>
+<ul>
+  <li>Identity, Logmap, Expmap, Compose, Between, Inverse</li>
+</ul>
+
+<p>Manifold:</p>
+<ul>
+  <li>dimension, GetDimension, Local, Retract</li>
+</ul>
+
+<p>Testble:</p>
+<ul>
+  <li>Equal, Print</li>
+</ul>
+
+<p>Custom node which we are going to make is in Manifold set, so we need to define</p>
+<ul>
+  <li>Equal, Print, dimension, GetDimension, Local, Retract</li>
+</ul>
+
+<h2 id="defining-a-factor">Defining a factor</h2>
+
+<p>Let’s say the state is a N dimensional vector, \(\begin{bmatrix}
+s_1&amp;s_2&amp;s_3&amp;\dots&amp;s_N
+\end{bmatrix}^\top\)</p>
+
+<p>and a measurement is a M dimensional vector:\(\begin{bmatrix}
+m_1&amp;m_2&amp;m_3&amp;\dots&amp;m_M
+\end{bmatrix}^\top\)</p>
+
+<p>Let’s say that the measurement is a between factor which relates two states:</p>
+
+\[\mathbf{m_k} = h(\mathbf{s_i}, \mathbf{s_j})\]
+
+<p>For graph SLAM, we need to define the jacobian of measurement with respect to both states, and error between the expected measurement and actual measurement (kinda similar to ‘innovation’ term in Kalman filter).</p>
+
+<p>So, for the jacobian of the measurement for the base state:</p>
+
+\[H_1 =\begin{bmatrix}
+\frac{\partial m_{k1}}{\partial s_{i1}} &amp; \frac{\partial m_{k1}}{\partial s_{i2}} &amp; \dots &amp; \frac{\partial m_{k1}}{\partial s_{iN}} \\
+\frac{\partial m_{k2}}{\partial s_{i1}} &amp; \frac{\partial m_{k2}}{\partial s_{i2}} &amp; \dots &amp; \frac{\partial m_{k2}}{\partial s_{iN}} \\
+\vdots &amp; \vdots &amp;  &amp; \vdots \\
+\frac{\partial m_{kM}}{\partial s_{i1}} &amp; \frac{\partial m_{kM}}{\partial s_{i2}} &amp; \dots &amp; \frac{\partial m_{kM}}{\partial s_{iN}}
+\end{bmatrix}_{M \times N}\]
+
+<p>and the jacobian for the target state:</p>
+
+\[H_2 =\begin{bmatrix}
+\frac{\partial m_{k1}}{\partial s_{j1}} &amp; \frac{\partial m_{k1}}{\partial s_{j2}} &amp; \dots &amp; \frac{\partial m_{k1}}{\partial s_{jN}} \\
+\frac{\partial m_{k2}}{\partial s_{j1}} &amp; \frac{\partial m_{k2}}{\partial s_{j2}} &amp; \dots &amp; \frac{\partial m_{k2}}{\partial s_{jN}} \\
+\vdots &amp; \vdots &amp;  &amp; \vdots \\
+\frac{\partial m_{kM}}{\partial s_{j1}} &amp; \frac{\partial m_{kM}}{\partial s_{j2}} &amp; \dots &amp; \frac{\partial m_{kM}}{\partial s_{jN}}
+\end{bmatrix}_{M \times N}\]
+
+<p>And the error is defined as:</p>
+
+\[\mathbf{v} = h(\mathbf{s_i}, \mathbf{s_j}) - \mathbf{m_k}\]
+
+<p>Per optimization step, each jacobian matrix indicates which direction should the values be changed, and the error vector indicates how much should the values be changed.</p>
+
+<p>This can be adapted to connect between any nodes; let’s say there’s a N dimensional node \(\mathbf{s}\), K dimensional node \(\mathbf{r}\) and a M dimensional measurement which connect between those nodes \(\mathbf{m}\) (e.g. \(\mathbf{s}\) is a state, \(\mathbf{m}\) is a measurement and \(\mathbf{r}\) is a corresponding landmark).</p>
+
+<p>Similarly:</p>
+
+\[H_1 =\begin{bmatrix}
+\frac{\partial m_{k1}}{\partial s_{i1}} &amp; \frac{\partial m_{k1}}{\partial s_{i2}} &amp; \dots &amp; \frac{\partial m_{k1}}{\partial s_{iN}} \\
+\frac{\partial m_{k2}}{\partial s_{i1}} &amp; \frac{\partial m_{k2}}{\partial s_{i2}} &amp; \dots &amp; \frac{\partial m_{k2}}{\partial s_{iN}} \\
+\vdots &amp; \vdots &amp;  &amp; \vdots \\
+\frac{\partial m_{kM}}{\partial s_{i1}} &amp; \frac{\partial m_{kM}}{\partial s_{i2}} &amp; \dots &amp; \frac{\partial m_{kM}}{\partial s_{iN}}
+\end{bmatrix}_{M \times N}, 
+H_2 =\begin{bmatrix}
+\frac{\partial m_{k1}}{\partial r_{j1}} &amp; \frac{\partial m_{k1}}{\partial r_{j2}} &amp; \dots &amp; \frac{\partial m_{k1}}{\partial r_{jK}} \\
+\frac{\partial m_{k2}}{\partial r_{j1}} &amp; \frac{\partial m_{k2}}{\partial r_{j2}} &amp; \dots &amp; \frac{\partial m_{k2}}{\partial r_{jK}} \\
+\vdots &amp; \vdots &amp;  &amp; \vdots \\
+\frac{\partial m_{kM}}{\partial r_{j1}} &amp; \frac{\partial m_{kM}}{\partial r_{j2}} &amp; \dots &amp; \frac{\partial m_{kM}}{\partial r_{jK}}
+\end{bmatrix}_{M \times K}\]
+
+<p>and error:</p>
+
+\[\mathbf{v} = f(\mathbf{s_i}, \mathbf{r_j}) - \mathbf{m_k}\]
 
   
 </article>
@@ -421,7 +503,7 @@ s_N
     
 
 
-  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/test/2020-11-27-Blog_Update/" class="flip-title"><span>New Blog</span></a>  <time class="faded fine" datetime="2020-11-27T00:00:00+09:00">27 Nov 2020</time></li>                        <li class="h4">  <a href="/slam/2020-11-19-Factor/" class="flip-title"><span>[GTSAM] Odometry Factor</span></a>  <time class="faded fine" datetime="2020-11-19T00:00:00+09:00">19 Nov 2020</time></li>                        <li class="h4">  <a href="/slam/paper_review/2020-10-03-p_review/" class="flip-title"><span>[Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…)</span></a>  <time class="faded fine" datetime="2020-10-03T00:00:00+09:00">03 Oct 2020</time></li>            </ul></aside>
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/slam/paper_review/2020-10-03-p_review/" class="flip-title"><span>[Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…)</span></a>  <time class="faded fine" datetime="2020-10-03T00:00:00+09:00">03 Oct 2020</time></li>                        <li class="h4">  <a href="/slam/2020-04-29-p_review/" class="flip-title"><span>[Paper Review] Square Root SAM (writing..)</span></a>  <time class="faded fine" datetime="2020-04-29T00:00:00+09:00">29 Apr 2020</time></li>                        <li class="h4">  <a href="/slam/2020-04-09-p_review/" class="flip-title"><span>[Paper Review] Estimating Uncertain Spatial Relationships in Robotics</span></a>  <time class="faded fine" datetime="2020-04-09T00:00:00+09:00">09 Apr 2020</time></li>            </ul></aside>
 
   
 

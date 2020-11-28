@@ -301,7 +301,7 @@ in <a href="/slam/" class="flip-title">SLAM</a>
 
 <h3 id="slam-as-a-belief-net">SLAM As a Belief Net</h3>
 <h4 id="figure-1">Figure 1</h4>
-<p><img src="../../assets/images/Square_Root_SAM/SSAM_1.png" alt="SLAM_AS_A_BELIEF_NET" width="200" height="200" class="center" /></p>
+<p><img src="/assets/images/Square_Root_SAM/SSAM_1.png" alt="SLAM_AS_A_BELIEF_NET" width="200" height="200" class="center" /></p>
 
 <p>“A belief net is as directed <strong>acyclic graph</strong> that encodes the <strong>conditional independesnce structure</strong> of a set of variables, where each variable <strong>only directly depends on its predecessors in the graph</strong>.”</p>
 
@@ -315,7 +315,7 @@ in <a href="/slam/" class="flip-title">SLAM</a>
 
 <h3 id="slam-as-a-factor-graph">SLAM As a Factor Graph</h3>
 <h4 id="figure-2">Figure 2</h4>
-<p><img src="../../assets/images/Square_Root_SAM/SSAM_2.png" alt="SLAM_AS_A_FACTOR_GRAPH" width="200" height="200" class="center" /></p>
+<p><img src="/assets/images/Square_Root_SAM/SSAM_2.png" alt="SLAM_AS_A_FACTOR_GRAPH" width="200" height="200" class="center" /></p>
 
 <p>좌측 상단의 Graph를 보면, Measurement \(z\) 가 사라진 것을 볼 수 있다.</p>
 
@@ -339,7 +339,7 @@ in <a href="/slam/" class="flip-title">SLAM</a>
 
 <h3 id="slam-as-a-markov-random-field">SLAM as a Markov Random FIeld</h3>
 <h4 id="figure-3">Figure 3</h4>
-<p><img src="../../assets/images/Square_Root_SAM/SSAM_3.png" alt="SLAM_AS_A_FACTOR_GRAPH" width="200" height="200" class="center" /></p>
+<p><img src="/assets/images/Square_Root_SAM/SSAM_3.png" alt="SLAM_AS_A_FACTOR_GRAPH" width="200" height="200" class="center" /></p>
 
 <p>“factor nodes themselves are eliminated” <br />
 “MRF is a fundamentally different structure from the factor graph (undirected vs bipartite)”</p>
@@ -441,7 +441,7 @@ c_4
 \end{bmatrix}\]
 
 <h4 id="figure-4">Figure 4</h4>
-<p><img src="../../assets/images/Square_Root_SAM/SSAM_4.png" alt="A Matrix &amp; its information matrix" width="200" height="200" class="center" /></p>
+<p><img src="/assets/images/Square_Root_SAM/SSAM_4.png" alt="A Matrix &amp; its information matrix" width="200" height="200" class="center" /></p>
 
 <p>위의 그림은 95개의 state, 24개의 landmark에 대한 그림이며, 왼쪽 그림은 A matrix를 나타낸다. 오른쪽의 맨 위의 그림은 information matrix \(\mathcal{I} \overset{\Delta}{=} A^TA\)를 나타낸 그림이며, 가운데는 Cholesky triangle \(R\), 그리고 아래는 <strong>better variable ordering</strong> 으로 나타낸 R matrix 이다. 그렇다면 왜 이 <em>better variable ordering</em> 이 필요할까? 아래에 서술되어있지만, \(R\)은 Junction tree와 연관되어있으며, 이런 Junction tree를 생성하는데 있어 더욱 효율적으로 나타낼 수 있다(라고 이해했다..).</p>
 
@@ -534,7 +534,7 @@ landmark measurement이나 odometry constraint이나, 각 block-row는 factor gr
 
 <p>그렇다면 \(R\)은 어떤 graph에 해당되는 것일까?</p>
 
-<p><img src="../../assets/images/Square_Root_SAM/SSAM_5.png" alt="TRIANGULATED_GRAPH_FOR_A_GOOD_ORDERING" width="200" height="200" class="center" /></p>
+<p><img src="/assets/images/Square_Root_SAM/SSAM_5.png" alt="TRIANGULATED_GRAPH_FOR_A_GOOD_ORDERING" width="200" height="200" class="center" /></p>
 
 <h3 id="improving-performance---reducing-fill-in">Improving Performance &lt;-&gt; Reducing Fill-in</h3>
 
@@ -677,7 +677,7 @@ R\\
     
 
 
-  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/test/2020-11-27-Blog_Update/" class="flip-title"><span>New Blog</span></a>  <time class="faded fine" datetime="2020-11-27T00:00:00+09:00">27 Nov 2020</time></li>                        <li class="h4">  <a href="/slam/2020-11-19-Factor/" class="flip-title"><span>[GTSAM] Odometry Factor</span></a>  <time class="faded fine" datetime="2020-11-19T00:00:00+09:00">19 Nov 2020</time></li>                        <li class="h4">  <a href="/slam/2020-11-12-gtsam_custom/" class="flip-title"><span>[GTSAM] Making simple custom node and factor</span></a>  <time class="faded fine" datetime="2020-11-12T00:00:00+09:00">12 Nov 2020</time></li>            </ul></aside>
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/slam/2020-11-12-gtsam_custom/" class="flip-title"><span>[GTSAM] Making simple custom node and factor</span></a>  <time class="faded fine" datetime="2020-11-12T00:00:00+09:00">12 Nov 2020</time></li>                        <li class="h4">  <a href="/slam/paper_review/2020-10-03-p_review/" class="flip-title"><span>[Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…)</span></a>  <time class="faded fine" datetime="2020-10-03T00:00:00+09:00">03 Oct 2020</time></li>                        <li class="h4">  <a href="/slam/2020-04-09-p_review/" class="flip-title"><span>[Paper Review] Estimating Uncertain Spatial Relationships in Robotics</span></a>  <time class="faded fine" datetime="2020-04-09T00:00:00+09:00">09 Apr 2020</time></li>            </ul></aside>
 
   
 

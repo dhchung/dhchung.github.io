@@ -238,162 +238,6 @@ Left here for reference, feel free to delete.
 
 
 
-<article id="post-test-Blog_Update" class="page post mb6" role="article">
-  <header>
-    <h1 class="post-title flip-project-title">
-      <a href="/test/2020-11-27-Blog_Update/" class="flip-title">
-        New Blog
-      </a>
-    </h1>
-
-    <div class="post-date">
-      
-      <time datetime="2020-11-27T00:00:00+09:00">27 Nov 2020</time>
-      
-      
-      
-      
-      
-
-
-
-
-
-
-
-
-
-in <a href="/test/" class="flip-title">Test</a>
-
-      
-
-
-
-
-
-
-
-
-
-on <span>Test</span>
-
-    </div>
-
-    
-    
-
-    
-
-
-
-  
-    <p class="note-sm" >
-      배고프당
-
-    </p>
-  
-
-
-  </header>
-
-  
-    <p>Not really sure why, but my previous blog stopped supporting mathjax.</p>
-
-
-
-    
-    
-    <footer>
-      <p class="read-more">
-        Continue reading <a class="heading flip-title" href="/test/2020-11-27-Blog_Update/">New Blog</a>
-
-      </p>
-    </footer>
-  
-</article>
-
-
-  
-
-
-
-
-
-<article id="post-slam-Factor" class="page post mb6" role="article">
-  <header>
-    <h1 class="post-title flip-project-title">
-      <a href="/slam/2020-11-19-Factor/" class="flip-title">
-        [GTSAM] Odometry Factor
-      </a>
-    </h1>
-
-    <div class="post-date">
-      
-      <time datetime="2020-11-19T00:00:00+09:00">19 Nov 2020</time>
-      
-      
-      
-      
-      
-
-
-
-
-
-
-
-
-
-in <a href="/slam/" class="flip-title">SLAM</a>
-
-      
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-
-    
-    
-
-    
-
-
-
-  <div class="hr pb0"></div>
-
-
-  </header>
-
-  
-    
-
-
-    
-    
-    <footer>
-      <p class="read-more">
-        Continue reading <a class="heading flip-title" href="/slam/2020-11-19-Factor/">[GTSAM] Odometry Factor</a>
-
-      </p>
-    </footer>
-  
-</article>
-
-
-  
-
-
-
-
-
 <article id="post-slam-gtsam_custom" class="page post mb6" role="article">
   <header>
     <h1 class="post-title flip-project-title">
@@ -442,13 +286,20 @@ in <a href="/slam/" class="flip-title">SLAM</a>
 
 
 
-  <div class="hr pb0"></div>
+  
+    <p class="note-sm" >
+      How to make a custom node and factor for GTSAM c++
+
+    </p>
+  
 
 
   </header>
 
   
-    <p>Graph SLAM에서의 노드(state)를 다음과 같이 N dimensional vector로 정의하자 :</p>
+    <h2 id="defining-a-node">Defining a node</h2>
+<p>GTSAM objects:
+LieGroup \(\subset\) Manifold \(\subset\) Testble</p>
 
 
 
