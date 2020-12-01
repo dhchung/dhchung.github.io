@@ -1,5 +1,309 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2020-11-28T15:19:22+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
-</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">[GTSAM] Making simple custom node and factor</title><link href="http://localhost:4000/slam/2020-11-12-gtsam_custom/" rel="alternate" type="text/html" title="[GTSAM] Making simple custom node and factor" /><published>2020-11-12T00:00:00+09:00</published><updated>2020-11-12T00:00:00+09:00</updated><id>http://localhost:4000/slam/gtsam_custom</id><content type="html" xml:base="http://localhost:4000/slam/2020-11-12-gtsam_custom/">&lt;h2 id=&quot;defining-a-node&quot;&gt;Defining a node&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2020-12-01T12:50:10+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
+</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">[Computer Vision] Bundle Adjustment PT2</title><link href="http://localhost:4000/computer%20vision/slam/2020-12-01-Bundle_Adjustment_PT2/" rel="alternate" type="text/html" title="[Computer Vision] Bundle Adjustment PT2" /><published>2020-12-01T00:00:00+09:00</published><updated>2020-12-01T00:00:00+09:00</updated><id>http://localhost:4000/computer%20vision/slam/Bundle_Adjustment_PT2</id><content type="html" xml:base="http://localhost:4000/computer%20vision/slam/2020-12-01-Bundle_Adjustment_PT2/">&lt;p&gt;Source &lt;a href=&quot;https://www.youtube.com/watch?v=LKDLcKrWOIU&quot;&gt;Lecture by Cyrill Stachniss&lt;/a&gt;&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html">Source Lecture by Cyrill Stachniss</summary></entry><entry><title type="html">[Computer Vision] Bundle Adjustment PT1</title><link href="http://localhost:4000/computer%20vision/slam/2020-11-30-Bundle_Adjustment_PT1/" rel="alternate" type="text/html" title="[Computer Vision] Bundle Adjustment PT1" /><published>2020-11-30T00:00:00+09:00</published><updated>2020-11-30T00:00:00+09:00</updated><id>http://localhost:4000/computer%20vision/slam/Bundle_Adjustment_PT1</id><content type="html" xml:base="http://localhost:4000/computer%20vision/slam/2020-11-30-Bundle_Adjustment_PT1/">&lt;p&gt;Source &lt;a href=&quot;https://www.youtube.com/watch?v=sobyKHwgB0Y&quot;&gt;Lecture by Cyrill Stachniss&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Bundle adjustment is an optimization process which minimizes the &lt;a href=&quot;#reprojection-error&quot;&gt;Reprojection Error&lt;/a&gt; to get the &lt;a href=&quot;#unknonwns&quot;&gt;Unknowns&lt;/a&gt; by solving the &lt;a href=&quot;#setting-up-and-solving-the-system-of-normal-equations&quot;&gt;Normal Equations&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;3D reconstruction with multiple images&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Feature extraction at each image&lt;/li&gt;
+  &lt;li&gt;Least squares approach to estimating camera poses and 3D points
+    &lt;ul&gt;
+      &lt;li&gt;Start with an initial guess&lt;/li&gt;
+      &lt;li&gt;Project the estimated 3D points into the estimated camera images&lt;/li&gt;
+      &lt;li&gt;Compare locations of the projected 3D points with measured (2D) ones&lt;/li&gt;
+      &lt;li&gt;Adjust to minimize error in the images&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;reprojection-error&quot;&gt;Reprojection Error&lt;/h2&gt;
+
+\[^a\mathbf{x}_{ij}'+^a\hat{\mathbf{v}}_{x_{ij}'}=\hat{\lambda}_{ij} ^a\hat{P}_j(x_{ij}, \mathbf{p}, \mathbf{q})\hat{\mathbf{X}}_i\]
+
+&lt;ul&gt;
+  &lt;li&gt;Left hand side : Point’s actual coordinates in the image coordinate system + error&lt;/li&gt;
+  &lt;li&gt;Right hand side : Projection of estimated 3D point in the image coordinate system&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;with&lt;/p&gt;
+
+\[\Sigma_{x_{ij}, x_{ij}}, i=1, \dots, I_j; j=1, \dots, J\]
+
+&lt;ul&gt;
+  &lt;li&gt;\(^a\) : arbitrary frame&lt;/li&gt;
+  &lt;li&gt;\(_{ij}\) : point \(i\) observed in image \(j\)&lt;/li&gt;
+  &lt;li&gt;\(\hat{\mathbf{v}}\) : corrections (error)&lt;/li&gt;
+  &lt;li&gt;\(\hat{\mathbf{X}}_i\) : Estimated 3D location of the point \(i\) (guess) in homogeneous coordinate&lt;/li&gt;
+  &lt;li&gt;\(^a\hat{P}_j\) : Projection matrix
+    &lt;ul&gt;
+      &lt;li&gt;\(\mathbf{x}_{ij}\) : image pixel coordinate&lt;/li&gt;
+      &lt;li&gt;\(\mathbf{p}\) : projection parameters : intrinsic parameters (typically 5)&lt;/li&gt;
+      &lt;li&gt;\(\mathbf{q}\) : distortion&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;\(\hat{\lambda}\) : Scale factor&lt;/li&gt;
+  &lt;li&gt;\(\Sigma_{x_{ij}}\) : uncertainty in the image coordinates
+    &lt;ul&gt;
+      &lt;li&gt;\(I_j\) : number of points in image j&lt;/li&gt;
+      &lt;li&gt;\(J\) : number of images&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Encodes the camera &lt;strong&gt;projection&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Error is the distance between each projected 3D and measured 2D point&lt;/li&gt;
+  &lt;li&gt;Encodes the &lt;strong&gt;collinearity constraint&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Known&lt;/strong&gt; data association (Strong assumption: We know the exact matches)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;unknonwns&quot;&gt;Unknonwns&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;3D locations of new points \(\hat{\mathbf{X}}_{i}\)&lt;/li&gt;
+  &lt;li&gt;1D scale factor \(\hat{\lambda}_{ij}\)&lt;/li&gt;
+  &lt;li&gt;6D exterior orientation (camera location and orientation)&lt;/li&gt;
+  &lt;li&gt;5D projection parameters (intrinsic parameters \(\mathbf{p}\))&lt;/li&gt;
+  &lt;li&gt;Nonlinear distortion parameters \(\mathbf{q}\)&lt;/li&gt;
+&lt;/ul&gt;
+
+\[^a\hat{P}_k(x_{ij}, \mathbf{p}, \mathbf{q}) = \hat{K}(x_{ij}, \hat{\mathbf{p}}, \hat{\mathbf{q}})\hat{R}_j[I_3 \vert-\hat{X}_{0j}]\]
+
+&lt;ul&gt;
+  &lt;li&gt;\(\hat{K}(x_{ij}, \hat{\mathbf{p}}, \hat{\mathbf{q}})\) : Calibration (interior orientation)&lt;/li&gt;
+  &lt;li&gt;\(\hat{R}_j[I_3 \vert -\hat{X}_{0j}]\) : Exterior orientation&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;eliminating-the-scale-factors&quot;&gt;Eliminating the Scale Factors&lt;/h2&gt;
+
+\[^a\mathbf{x}_{ij}'+^a\hat{\mathbf{v}}_{x_{ij}'}=\hat{\lambda}_{ij} ^a\hat{P}_j(x_{ij}, \mathbf{p}, \mathbf{q})\hat{\mathbf{X}}_i\\\]
+
+&lt;p&gt;to&lt;/p&gt;
+
+\[^ax_{ij}'+^a\hat{v}_{x_{ij}'}=\frac{^a\hat{P}_{1:2,j}(x_{ij}, \mathbf{p}, \mathbf{q})\hat{\mathbf{X}}_i}{^a\hat{P}_{3,j}(x_{ij}, \mathbf{p}, \mathbf{q})\hat{\mathbf{X}}_i}\\\]
+
+&lt;p&gt;By diving the first two elements by third element (Homogeneous coordinates to &lt;strong&gt;Euclidean&lt;/strong&gt; coordinates - Drastically reduce unknowns)&lt;/p&gt;
+
+&lt;h2 id=&quot;setting-up-and-solving-the-system-of-normal-equations&quot;&gt;Setting Up and Solving the System of Normal Equations&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Standard procedure in least squares estimation community&lt;/li&gt;
+  &lt;li&gt;with unknowns \(\mathbf{x}\) and observations \(\mathbf{l}\)&lt;/li&gt;
+  &lt;li&gt;Setting upt the normal equations&lt;/li&gt;
+&lt;/ul&gt;
+
+\[A^\top \Sigma^{-1} A \Delta\mathbf{x} = A^\top \Sigma^{-1} \Delta\mathbf{l}\]
+
+&lt;ul&gt;
+  &lt;li&gt;This yields the estimate&lt;/li&gt;
+&lt;/ul&gt;
+
+\[\hat{\Delta\mathbf{x}}=(A^\top \Sigma^{-1} A)^{-1} A^\top\Sigma^{-1} \Delta\mathbf{l}\]
+
+&lt;p&gt;where&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;\(A\) : Jacobian&lt;/li&gt;
+  &lt;li&gt;\(\Sigma\) : Information Matrix&lt;/li&gt;
+  &lt;li&gt;Get the update to the unknown parameters (change), and this way we can solve this by iterative way&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;optimality&quot;&gt;Optimality&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;BA is &lt;strong&gt;statistically optimal&lt;/strong&gt; : under some assumptions&lt;/li&gt;
+  &lt;li&gt;Exploits all observations and considers the uncertainties and correlations&lt;/li&gt;
+  &lt;li&gt;Exploits all available information&lt;/li&gt;
+  &lt;li&gt;Computes orientations, calibration parameters, and point locations with highest precision&lt;/li&gt;
+  &lt;li&gt;Assumes Gaussian noise&lt;/li&gt;
+  &lt;li&gt;Requires an initial estimate&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;absolute-orientation-through-control-points&quot;&gt;Absolute Orientation Through Control Points&lt;/h2&gt;
+
+&lt;p&gt;Absolute orientation was the task of anchoring the model into the real world&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Reconstruction only with the images gives us so-called photogrammetric model
+    &lt;ul&gt;
+      &lt;li&gt;Model that is only defined up to a similarity transform&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;We want to know the absolute scale&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;control-points&quot;&gt;Control Points&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Assume that some of the points are control points (known coordinates in the real world)&lt;/li&gt;
+&lt;/ul&gt;
+
+\[\mathbf{X}_i + \hat{\mathbf{v}}_{\mathbf{X}_i} = \hat{\mathbf{X}}_i\]
+
+&lt;p&gt;Provided Coordinates + Correct = Estimated Coordinate&lt;/p&gt;
+
+&lt;p&gt;with&lt;/p&gt;
+
+\[\Sigma_{\mathbf{X}_i, \mathbf{X}_i}, i=1,\dots, I_{CP}\]
+
+&lt;p&gt;\(I_{CP}\) : Number of control points&lt;/p&gt;
+
+&lt;p&gt;We can treat the control points noisy or noise free under different objective functions.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Statistically optimal approach&lt;/strong&gt; : consider that C.P.s are noisy&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;BA with fixed C.P.&lt;/strong&gt; : consider that C.P.s are noise free (enforce the geometry to match the C.P.)
+    &lt;ul&gt;
+      &lt;li&gt;Link to a ground truth map&lt;/li&gt;
+      &lt;li&gt;Statistically suboptimal approach&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;two-step-ba-with-control-points&quot;&gt;Two Step BA with Control Points&lt;/h2&gt;
+
+&lt;p&gt;Step 1.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;BA with noisy control points&lt;/li&gt;
+  &lt;li&gt;Search for gross errors using statistical tests&lt;/li&gt;
+&lt;/ul&gt;
+
+\[T = \hat{v}_{X_i}^\top \Sigma_{\hat{v}_{X_i}, \hat{v}_{X_i}}^{-1} \hat{v}_{X_i} ~ \chi_3^2\]
+
+&lt;ul&gt;
+  &lt;li&gt;See the uncertainties of the control points aligned with defined uncertainty&lt;/li&gt;
+  &lt;li&gt;Eliminate erroneous control points&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Step 2.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;BA with fixed control points&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-many-control-points&quot;&gt;How Many Control Points?&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;For DLT or P3P solutions, we need 3~6 control points per image pair&lt;/li&gt;
+  &lt;li&gt;Only a small number of control points is needed&lt;/li&gt;
+  &lt;li&gt;Typically full C.P.s at the boundaries&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;initial-guess&quot;&gt;Initial Guess&lt;/h2&gt;
+
+&lt;p&gt;As all the nonlinear optimization problems need it, BA also requires some initial guesses&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Orientation of the image pair with a direct method&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;No direct solution is known for N views&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Direct solution means we don’t need an initial guess&lt;/li&gt;
+  &lt;li&gt;We can use those tools for initial guess (successive measure)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;computing-an-initial-guess&quot;&gt;Computing an Initial Guess&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Compute relative orientation from the first image pair&lt;/li&gt;
+  &lt;li&gt;Compute orientation for subsequent images through P3P/RRS&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Problems&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;We might have a good chance of loosing track between images&lt;/li&gt;
+  &lt;li&gt;Cross error handling is essential&lt;/li&gt;
+  &lt;li&gt;Requres enough new points in each image overlap&lt;/li&gt;
+  &lt;li&gt;No singular/critical configurations&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;outliers&quot;&gt;Outliers&lt;/h2&gt;
+
+&lt;h2 id=&quot;gross-errors--outliers&quot;&gt;Gross Errors / Outliers&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Reasons for gross errors
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;Wrong correspondences&lt;/strong&gt;&lt;/li&gt;
+      &lt;li&gt;Wrong point measurement&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;How many observations per point do we need to deal with outliers?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;At least 4 views to identify the observation with a gross error&lt;/li&gt;
+  &lt;li&gt;Observed points from 5~6 different views typically yield good estimates&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;eliminating-gross-errors&quot;&gt;Eliminating Gross Errors&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Decompose the problem into several small blocks of 3~6 images first&lt;/li&gt;
+  &lt;li&gt;Check for gross errors in the small blocks using statistical tests&lt;/li&gt;
+  &lt;li&gt;Only consider features that can be tracked consistently in all 3~6 images&lt;/li&gt;
+  &lt;li&gt;Relative orientation (5 point algorithm) combined with RANSAC&lt;/li&gt;
+  &lt;li&gt;Eliminate gross errors, and then run full BA&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;robust-kernels&quot;&gt;Robust Kernels&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Instead of using a Gaussian noise model, consider a robustified version&lt;/li&gt;
+  &lt;li&gt;Reduce “penalty” far away zero&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/images/BA_pt1/Kernels.png&quot; alt=&quot;BA_image&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A Robust kernel leads to a weight in LS&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;quality-of-result&quot;&gt;Quality of Result&lt;/h2&gt;
+
+&lt;h2 id=&quot;precision&quot;&gt;Precision&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;We can compute the theoretical precision&lt;/li&gt;
+&lt;/ul&gt;
+
+\[\Sigma_{\hat{x}\hat{x}}=(A^\top \Sigma_{ll}^{-1}A)^{-1}\]
+
+&lt;ul&gt;
+  &lt;li&gt;as well as the emperical precision through the variance factor&lt;/li&gt;
+&lt;/ul&gt;
+
+\[\hat{\Sigma}_{\hat{x}\hat{x}} = \hat{\sigma}_0^2(A^\top\Sigma_{ll}^{-1}A)^{-1}\]
+
+&lt;h2 id=&quot;variance-factor&quot;&gt;Variance Factor&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Does a variance factor take a value around 1?
+    &lt;ul&gt;
+      &lt;li&gt;\(\hat{\sigma}_0=1\) suggests a correct model&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Use a &lt;strong&gt;statistical test&lt;/strong&gt; to judge the variance factor&lt;/li&gt;
+  &lt;li&gt;In practice, a &lt;strong&gt;F-test often fails&lt;/strong&gt; due to the high redundancy&lt;/li&gt;
+&lt;/ul&gt;
+
+\[T = \frac{\hat{\sigma}_l^2}{\underline{\sigma}^2} ~ F(R, \infty), e.g., R = 10000\]
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;The uncertainty in the assumed measurement noise has to be considered&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Can use the F-test by changing the redundancy based on the measurement uncertainty&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;precision-1&quot;&gt;Precision&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;With eliminated gross error&lt;/li&gt;
+  &lt;li&gt;small systematic errors&lt;/li&gt;
+  &lt;li&gt;and \(\hat{\sigma}_0=1\)&lt;/li&gt;
+  &lt;li&gt;we obtain a realistic estimate for the precision of the parameters&lt;/li&gt;
+&lt;/ul&gt;
+
+\[\hat{\Sigma}_{\hat{x}\hat{x}} = \hat{\sigma}_0^2(A^\top\Sigma_{ll}^{-1}A)^{-1}\]</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html">Source Lecture by Cyrill Stachniss</summary></entry><entry><title type="html">[GTSAM] Making simple custom node and factor</title><link href="http://localhost:4000/slam/2020-11-12-gtsam_custom/" rel="alternate" type="text/html" title="[GTSAM] Making simple custom node and factor" /><published>2020-11-12T00:00:00+09:00</published><updated>2020-11-12T00:00:00+09:00</updated><id>http://localhost:4000/slam/gtsam_custom</id><content type="html" xml:base="http://localhost:4000/slam/2020-11-12-gtsam_custom/">&lt;h2 id=&quot;defining-a-node&quot;&gt;Defining a node&lt;/h2&gt;
 &lt;p&gt;GTSAM objects:
 LieGroup \(\subset\) Manifold \(\subset\) Testble&lt;/p&gt;
 

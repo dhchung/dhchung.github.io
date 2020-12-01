@@ -39,18 +39,20 @@ Powered by Hydejack v9.0.5 <https://hydejack.com/>
   
     
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Blog | Dongha Chung</title>
+<title>[Computer Vision] Bundle Adjustment PT1 | Dongha Chung</title>
 <meta name="generator" content="Jekyll v3.9.0" />
-<meta property="og:title" content="Blog" />
+<meta property="og:title" content="[Computer Vision] Bundle Adjustment PT1" />
 <meta name="author" content="<Dongha> <Chung>" />
 <meta property="og:locale" content="en" />
-<meta name="description" content="The official Hydejack blog. Version updates, example content and how-to guides on how to blog with Jekyll." />
-<meta property="og:description" content="The official Hydejack blog. Version updates, example content and how-to guides on how to blog with Jekyll." />
-<link rel="canonical" href="http://localhost:4000/" />
-<meta property="og:url" content="http://localhost:4000/" />
+<meta name="description" content="Bundle Adjustment" />
+<meta property="og:description" content="Bundle Adjustment" />
+<link rel="canonical" href="http://localhost:4000/computer%20vision/slam/2020-11-30-Bundle_Adjustment_PT1/" />
+<meta property="og:url" content="http://localhost:4000/computer%20vision/slam/2020-11-30-Bundle_Adjustment_PT1/" />
 <meta property="og:site_name" content="Dongha Chung" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-11-30T00:00:00+09:00" />
 <script type="application/ld+json">
-{"description":"The official Hydejack blog. Version updates, example content and how-to guides on how to blog with Jekyll.","@type":"WebSite","headline":"Blog","dateModified":"2018-08-03T00:00:00+09:00","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"name":"Dongha Chung","url":"http://localhost:4000/","author":{"@type":"Person","name":"<Dongha> <Chung>"},"@context":"https://schema.org"}</script>
+{"description":"Bundle Adjustment","@type":"BlogPosting","headline":"[Computer Vision] Bundle Adjustment PT1","dateModified":"2020-11-30T00:00:00+09:00","datePublished":"2020-11-30T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/computer%20vision/slam/2020-11-30-Bundle_Adjustment_PT1/"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/computer%20vision/slam/2020-11-30-Bundle_Adjustment_PT1/","author":{"@type":"Person","name":"<Dongha> <Chung>"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -224,94 +226,9 @@ Left here for reference, feel free to delete.
 
   <main
   id="_main"
-  class="content layout-blog"
+  class="content layout-post"
   role="main"
 >
-  
-
-
-  
-
-  
-
-
-
-
-
-<article id="post-computer%20vision-slam-Bundle_Adjustment_PT2" class="page post mb6" role="article">
-  <header>
-    <h1 class="post-title flip-project-title">
-      <a href="/computer%20vision/slam/2020-12-01-Bundle_Adjustment_PT2/" class="flip-title">
-        [Computer Vision] Bundle Adjustment PT2
-      </a>
-    </h1>
-
-    <div class="post-date">
-      
-      <time datetime="2020-12-01T00:00:00+09:00">01 Dec 2020</time>
-      
-      
-      
-      
-      
-
-
-
-
-
-
-
-
-
-in <span>Computer vision</span> / <a href="/slam/" class="flip-title">SLAM</a>
-
-      
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-
-    
-    
-
-    
-
-
-
-  
-    <p class="note-sm" >
-      Neumerics of BA
-
-    </p>
-  
-
-
-  </header>
-
-  
-    <p>Source <a href="https://www.youtube.com/watch?v=LKDLcKrWOIU">Lecture by Cyrill Stachniss</a></p>
-
-
-    
-    
-    <footer>
-      <p class="read-more">
-        Continue reading <a class="heading flip-title" href="/computer%20vision/slam/2020-12-01-Bundle_Adjustment_PT2/">[Computer Vision] Bundle Adjustment PT2</a>
-
-      </p>
-    </footer>
-  
-</article>
-
-
   
 
 
@@ -321,9 +238,9 @@ in <span>Computer vision</span> / <a href="/slam/" class="flip-title">SLAM</a>
 <article id="post-computer%20vision-slam-Bundle_Adjustment_PT1" class="page post mb6" role="article">
   <header>
     <h1 class="post-title flip-project-title">
-      <a href="/computer%20vision/slam/2020-11-30-Bundle_Adjustment_PT1/" class="flip-title">
+      
         [Computer Vision] Bundle Adjustment PT1
-      </a>
+      
     </h1>
 
     <div class="post-date">
@@ -379,355 +296,443 @@ in <span>Computer vision</span> / <a href="/slam/" class="flip-title">SLAM</a>
   
     <p>Source <a href="https://www.youtube.com/watch?v=sobyKHwgB0Y">Lecture by Cyrill Stachniss</a></p>
 
+<p>Bundle adjustment is an optimization process which minimizes the <a href="#reprojection-error">Reprojection Error</a> to get the <a href="#unknonwns">Unknowns</a> by solving the <a href="#setting-up-and-solving-the-system-of-normal-equations">Normal Equations</a>.</p>
 
+<p>3D reconstruction with multiple images</p>
 
-    
-    
-    <footer>
-      <p class="read-more">
-        Continue reading <a class="heading flip-title" href="/computer%20vision/slam/2020-11-30-Bundle_Adjustment_PT1/">[Computer Vision] Bundle Adjustment PT1</a>
+<ul>
+  <li>Feature extraction at each image</li>
+  <li>Least squares approach to estimating camera poses and 3D points
+    <ul>
+      <li>Start with an initial guess</li>
+      <li>Project the estimated 3D points into the estimated camera images</li>
+      <li>Compare locations of the projected 3D points with measured (2D) ones</li>
+      <li>Adjust to minimize error in the images</li>
+    </ul>
+  </li>
+</ul>
 
-      </p>
-    </footer>
+<h2 id="reprojection-error">Reprojection Error</h2>
+
+\[^a\mathbf{x}_{ij}'+^a\hat{\mathbf{v}}_{x_{ij}'}=\hat{\lambda}_{ij} ^a\hat{P}_j(x_{ij}, \mathbf{p}, \mathbf{q})\hat{\mathbf{X}}_i\]
+
+<ul>
+  <li>Left hand side : Point’s actual coordinates in the image coordinate system + error</li>
+  <li>Right hand side : Projection of estimated 3D point in the image coordinate system</li>
+</ul>
+
+<p>with</p>
+
+\[\Sigma_{x_{ij}, x_{ij}}, i=1, \dots, I_j; j=1, \dots, J\]
+
+<ul>
+  <li>\(^a\) : arbitrary frame</li>
+  <li>\(_{ij}\) : point \(i\) observed in image \(j\)</li>
+  <li>\(\hat{\mathbf{v}}\) : corrections (error)</li>
+  <li>\(\hat{\mathbf{X}}_i\) : Estimated 3D location of the point \(i\) (guess) in homogeneous coordinate</li>
+  <li>\(^a\hat{P}_j\) : Projection matrix
+    <ul>
+      <li>\(\mathbf{x}_{ij}\) : image pixel coordinate</li>
+      <li>\(\mathbf{p}\) : projection parameters : intrinsic parameters (typically 5)</li>
+      <li>\(\mathbf{q}\) : distortion</li>
+    </ul>
+  </li>
+  <li>\(\hat{\lambda}\) : Scale factor</li>
+  <li>\(\Sigma_{x_{ij}}\) : uncertainty in the image coordinates
+    <ul>
+      <li>\(I_j\) : number of points in image j</li>
+      <li>\(J\) : number of images</li>
+    </ul>
+  </li>
+  <li>Encodes the camera <strong>projection</strong></li>
+  <li>Error is the distance between each projected 3D and measured 2D point</li>
+  <li>Encodes the <strong>collinearity constraint</strong></li>
+  <li><strong>Known</strong> data association (Strong assumption: We know the exact matches)</li>
+</ul>
+
+<h2 id="unknonwns">Unknonwns</h2>
+<ul>
+  <li>3D locations of new points \(\hat{\mathbf{X}}_{i}\)</li>
+  <li>1D scale factor \(\hat{\lambda}_{ij}\)</li>
+  <li>6D exterior orientation (camera location and orientation)</li>
+  <li>5D projection parameters (intrinsic parameters \(\mathbf{p}\))</li>
+  <li>Nonlinear distortion parameters \(\mathbf{q}\)</li>
+</ul>
+
+\[^a\hat{P}_k(x_{ij}, \mathbf{p}, \mathbf{q}) = \hat{K}(x_{ij}, \hat{\mathbf{p}}, \hat{\mathbf{q}})\hat{R}_j[I_3 \vert-\hat{X}_{0j}]\]
+
+<ul>
+  <li>\(\hat{K}(x_{ij}, \hat{\mathbf{p}}, \hat{\mathbf{q}})\) : Calibration (interior orientation)</li>
+  <li>\(\hat{R}_j[I_3 \vert -\hat{X}_{0j}]\) : Exterior orientation</li>
+</ul>
+
+<h2 id="eliminating-the-scale-factors">Eliminating the Scale Factors</h2>
+
+\[^a\mathbf{x}_{ij}'+^a\hat{\mathbf{v}}_{x_{ij}'}=\hat{\lambda}_{ij} ^a\hat{P}_j(x_{ij}, \mathbf{p}, \mathbf{q})\hat{\mathbf{X}}_i\\\]
+
+<p>to</p>
+
+\[^ax_{ij}'+^a\hat{v}_{x_{ij}'}=\frac{^a\hat{P}_{1:2,j}(x_{ij}, \mathbf{p}, \mathbf{q})\hat{\mathbf{X}}_i}{^a\hat{P}_{3,j}(x_{ij}, \mathbf{p}, \mathbf{q})\hat{\mathbf{X}}_i}\\\]
+
+<p>By diving the first two elements by third element (Homogeneous coordinates to <strong>Euclidean</strong> coordinates - Drastically reduce unknowns)</p>
+
+<h2 id="setting-up-and-solving-the-system-of-normal-equations">Setting Up and Solving the System of Normal Equations</h2>
+
+<ul>
+  <li>Standard procedure in least squares estimation community</li>
+  <li>with unknowns \(\mathbf{x}\) and observations \(\mathbf{l}\)</li>
+  <li>Setting upt the normal equations</li>
+</ul>
+
+\[A^\top \Sigma^{-1} A \Delta\mathbf{x} = A^\top \Sigma^{-1} \Delta\mathbf{l}\]
+
+<ul>
+  <li>This yields the estimate</li>
+</ul>
+
+\[\hat{\Delta\mathbf{x}}=(A^\top \Sigma^{-1} A)^{-1} A^\top\Sigma^{-1} \Delta\mathbf{l}\]
+
+<p>where</p>
+
+<ul>
+  <li>\(A\) : Jacobian</li>
+  <li>\(\Sigma\) : Information Matrix</li>
+  <li>Get the update to the unknown parameters (change), and this way we can solve this by iterative way</li>
+</ul>
+
+<h2 id="optimality">Optimality</h2>
+
+<ul>
+  <li>BA is <strong>statistically optimal</strong> : under some assumptions</li>
+  <li>Exploits all observations and considers the uncertainties and correlations</li>
+  <li>Exploits all available information</li>
+  <li>Computes orientations, calibration parameters, and point locations with highest precision</li>
+  <li>Assumes Gaussian noise</li>
+  <li>Requires an initial estimate</li>
+</ul>
+
+<h2 id="absolute-orientation-through-control-points">Absolute Orientation Through Control Points</h2>
+
+<p>Absolute orientation was the task of anchoring the model into the real world</p>
+
+<ul>
+  <li>Reconstruction only with the images gives us so-called photogrammetric model
+    <ul>
+      <li>Model that is only defined up to a similarity transform</li>
+    </ul>
+  </li>
+  <li>We want to know the absolute scale</li>
+</ul>
+
+<h2 id="control-points">Control Points</h2>
+
+<ul>
+  <li>Assume that some of the points are control points (known coordinates in the real world)</li>
+</ul>
+
+\[\mathbf{X}_i + \hat{\mathbf{v}}_{\mathbf{X}_i} = \hat{\mathbf{X}}_i\]
+
+<p>Provided Coordinates + Correct = Estimated Coordinate</p>
+
+<p>with</p>
+
+\[\Sigma_{\mathbf{X}_i, \mathbf{X}_i}, i=1,\dots, I_{CP}\]
+
+<p>\(I_{CP}\) : Number of control points</p>
+
+<p>We can treat the control points noisy or noise free under different objective functions.</p>
+
+<ul>
+  <li><strong>Statistically optimal approach</strong> : consider that C.P.s are noisy</li>
+  <li><strong>BA with fixed C.P.</strong> : consider that C.P.s are noise free (enforce the geometry to match the C.P.)
+    <ul>
+      <li>Link to a ground truth map</li>
+      <li>Statistically suboptimal approach</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="two-step-ba-with-control-points">Two Step BA with Control Points</h2>
+
+<p>Step 1.</p>
+
+<ul>
+  <li>BA with noisy control points</li>
+  <li>Search for gross errors using statistical tests</li>
+</ul>
+
+\[T = \hat{v}_{X_i}^\top \Sigma_{\hat{v}_{X_i}, \hat{v}_{X_i}}^{-1} \hat{v}_{X_i} ~ \chi_3^2\]
+
+<ul>
+  <li>See the uncertainties of the control points aligned with defined uncertainty</li>
+  <li>Eliminate erroneous control points</li>
+</ul>
+
+<p>Step 2.</p>
+
+<ul>
+  <li>BA with fixed control points</li>
+</ul>
+
+<h2 id="how-many-control-points">How Many Control Points?</h2>
+
+<ul>
+  <li>For DLT or P3P solutions, we need 3~6 control points per image pair</li>
+  <li>Only a small number of control points is needed</li>
+  <li>Typically full C.P.s at the boundaries</li>
+</ul>
+
+<h2 id="initial-guess">Initial Guess</h2>
+
+<p>As all the nonlinear optimization problems need it, BA also requires some initial guesses</p>
+
+<ul>
+  <li>Orientation of the image pair with a direct method</li>
+  <li><strong>No direct solution is known for N views</strong></li>
+  <li>Direct solution means we don’t need an initial guess</li>
+  <li>We can use those tools for initial guess (successive measure)</li>
+</ul>
+
+<h2 id="computing-an-initial-guess">Computing an Initial Guess</h2>
+
+<ul>
+  <li>Compute relative orientation from the first image pair</li>
+  <li>Compute orientation for subsequent images through P3P/RRS</li>
+</ul>
+
+<p><strong>Problems</strong></p>
+<ul>
+  <li>We might have a good chance of loosing track between images</li>
+  <li>Cross error handling is essential</li>
+  <li>Requres enough new points in each image overlap</li>
+  <li>No singular/critical configurations</li>
+</ul>
+
+<h2 id="outliers">Outliers</h2>
+
+<h2 id="gross-errors--outliers">Gross Errors / Outliers</h2>
+
+<ul>
+  <li>Reasons for gross errors
+    <ul>
+      <li><strong>Wrong correspondences</strong></li>
+      <li>Wrong point measurement</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>How many observations per point do we need to deal with outliers?</strong></p>
+
+<ul>
+  <li>At least 4 views to identify the observation with a gross error</li>
+  <li>Observed points from 5~6 different views typically yield good estimates</li>
+</ul>
+
+<h2 id="eliminating-gross-errors">Eliminating Gross Errors</h2>
+
+<ul>
+  <li>Decompose the problem into several small blocks of 3~6 images first</li>
+  <li>Check for gross errors in the small blocks using statistical tests</li>
+  <li>Only consider features that can be tracked consistently in all 3~6 images</li>
+  <li>Relative orientation (5 point algorithm) combined with RANSAC</li>
+  <li>Eliminate gross errors, and then run full BA</li>
+</ul>
+
+<h2 id="robust-kernels">Robust Kernels</h2>
+
+<ul>
+  <li>Instead of using a Gaussian noise model, consider a robustified version</li>
+  <li>Reduce “penalty” far away zero</li>
+</ul>
+
+<p><img src="../../../assets/images/BA_pt1/Kernels.png" alt="BA_image" /></p>
+
+<ul>
+  <li>A Robust kernel leads to a weight in LS</li>
+</ul>
+
+<h2 id="quality-of-result">Quality of Result</h2>
+
+<h2 id="precision">Precision</h2>
+
+<ul>
+  <li>We can compute the theoretical precision</li>
+</ul>
+
+\[\Sigma_{\hat{x}\hat{x}}=(A^\top \Sigma_{ll}^{-1}A)^{-1}\]
+
+<ul>
+  <li>as well as the emperical precision through the variance factor</li>
+</ul>
+
+\[\hat{\Sigma}_{\hat{x}\hat{x}} = \hat{\sigma}_0^2(A^\top\Sigma_{ll}^{-1}A)^{-1}\]
+
+<h2 id="variance-factor">Variance Factor</h2>
+
+<ul>
+  <li>Does a variance factor take a value around 1?
+    <ul>
+      <li>\(\hat{\sigma}_0=1\) suggests a correct model</li>
+    </ul>
+  </li>
+  <li>Use a <strong>statistical test</strong> to judge the variance factor</li>
+  <li>In practice, a <strong>F-test often fails</strong> due to the high redundancy</li>
+</ul>
+
+\[T = \frac{\hat{\sigma}_l^2}{\underline{\sigma}^2} ~ F(R, \infty), e.g., R = 10000\]
+
+<ul>
+  <li><strong>The uncertainty in the assumed measurement noise has to be considered</strong>
+    <ul>
+      <li>Can use the F-test by changing the redundancy based on the measurement uncertainty</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="precision-1">Precision</h2>
+
+<ul>
+  <li>With eliminated gross error</li>
+  <li>small systematic errors</li>
+  <li>and \(\hat{\sigma}_0=1\)</li>
+  <li>we obtain a realistic estimate for the precision of the parameters</li>
+</ul>
+
+\[\hat{\Sigma}_{\hat{x}\hat{x}} = \hat{\sigma}_0^2(A^\top\Sigma_{ll}^{-1}A)^{-1}\]
+
   
 </article>
 
 
-  
+<hr class="dingbat related" />
 
-
-
-
-
-<article id="post-slam-gtsam_custom" class="page post mb6" role="article">
-  <header>
-    <h1 class="post-title flip-project-title">
-      <a href="/slam/2020-11-12-gtsam_custom/" class="flip-title">
-        [GTSAM] Making simple custom node and factor
-      </a>
-    </h1>
-
-    <div class="post-date">
-      
-      <time datetime="2020-11-12T00:00:00+09:00">12 Nov 2020</time>
-      
-      
-      
-      
-      
-
-
-
-
-
-
-
-
-
-in <a href="/slam/" class="flip-title">SLAM</a>
-
-      
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-
-    
-    
-
-    
 
 
 
   
-    <p class="note-sm" >
-      How to make a custom node and factor for GTSAM c++
+     
 
-    </p>
+
+  <aside class="about related mt4 mb4" role="complementary">
+    
+    
+
+<div class="author mt4">
   
 
-
-  </header>
-
   
-    <h2 id="defining-a-node">Defining a node</h2>
-<p>GTSAM objects:
-LieGroup \(\subset\) Manifold \(\subset\) Testble</p>
+    
 
 
-
+<img
+  
+    src="/assets/img/dh.jpg"
     
     
-    <footer>
-      <p class="read-more">
-        Continue reading <a class="heading flip-title" href="/slam/2020-11-12-gtsam_custom/">[GTSAM] Making simple custom node and factor</a>
-
-      </p>
-    </footer>
   
-</article>
-
+  alt="<Dongha> <Chung>"
+  class="avatar"
+  
+  width="120"
+  height="120"
+  loading="lazy"
+/>
 
   
 
-
-
-
-
-<article id="post-slam-paper_review-p_review" class="page post mb6" role="article">
-  <header>
-    <h1 class="post-title flip-project-title">
-      <a href="/slam/paper_review/2020-10-03-p_review/" class="flip-title">
-        [Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…)
-      </a>
-    </h1>
-
-    <div class="post-date">
-      
-      <time datetime="2020-10-03T00:00:00+09:00">03 Oct 2020</time>
-      
-      
-      
-      
-      
-
-
-
-
-
-
-
-
-
-in <a href="/slam/" class="flip-title">SLAM</a> / <span>Paper_review</span>
-
-      
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-
-    
-    
-
-    
-
-
-
-  <div class="hr pb0"></div>
-
-
-  </header>
-
   
-    <p>ElasticFusion: Dense SLAM Without A Pose Graph</p>
-
-
-
-    
-    
-    <footer>
-      <p class="read-more">
-        Continue reading <a class="heading flip-title" href="/slam/paper_review/2020-10-03-p_review/">[Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…)</a>
-
-      </p>
-    </footer>
   
-</article>
+  <h2  class="page-title hr-bottom">
+    About
+  </h2>
+
+  <p><strong>Dongha Chung</strong></p>
+
+<p>A robotics perception engineer</p>
+
+
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
 
 
   
 
-
-
-
-
-<article id="post-slam-p_review" class="page post mb6" role="article">
-  <header>
-    <h1 class="post-title flip-project-title">
-      <a href="/slam/2020-04-29-p_review/" class="flip-title">
-        [Paper Review] Square Root SAM (writing..)
-      </a>
-    </h1>
-
-    <div class="post-date">
-      
-      <time datetime="2020-04-29T00:00:00+09:00">29 Apr 2020</time>
-      
-      
-      
-      
-      
-
-
-
-
-
-
-
-
-
-in <a href="/slam/" class="flip-title">SLAM</a>
-
-      
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-
-    
-    
-
-    
-
-
-
-  <div class="hr pb0"></div>
-
-
-  </header>
+  
+  
+  
+  
 
   
-    <p>Square Root SAM</p>
 
-
-
-    
-    
-    <footer>
-      <p class="read-more">
-        Continue reading <a class="heading flip-title" href="/slam/2020-04-29-p_review/">[Paper Review] Square Root SAM (writing..)</a>
-
-      </p>
-    </footer>
   
-</article>
+
+  <li>
+    <a href="https://github.com/dhchung" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+      
+
 
 
   
 
-
-
-
-
-<article id="post-slam-p_review" class="page post mb6" role="article">
-  <header>
-    <h1 class="post-title flip-project-title">
-      <a href="/slam/2020-04-09-p_review/" class="flip-title">
-        [Paper Review] Estimating Uncertain Spatial Relationships in Robotics
-      </a>
-    </h1>
-
-    <div class="post-date">
-      
-      <time datetime="2020-04-09T00:00:00+09:00">09 Apr 2020</time>
-      
-      
-      
-      
-      
-
-
-
-
-
-
-
-
-
-in <a href="/slam/" class="flip-title">SLAM</a>
-
-      
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-
-    
-    
-
-    
-
-
-
-  <div class="hr pb0"></div>
-
-
-  </header>
+  
+  
+  
+  
 
   
-    <p>Estimating Uncertain Spatial Relationships in Robotics</p>
 
-
-
-    
-    
-    <footer>
-      <p class="read-more">
-        Continue reading <a class="heading flip-title" href="/slam/2020-04-09-p_review/">[Paper Review] Estimating Uncertain Spatial Relationships in Robotics</a>
-
-      </p>
-    </footer>
   
-</article>
+
+  <li>
+    <a href="https://www.youtube.com/channel/UC2MeUdGRQws1YhdQt0wf_vA/" title="YouTube" class="no-mark-external">
+      <span class="icon-youtube"></span>
+      <span class="sr-only">YouTube</span>
+    </a>
+  </li>
 
 
+    
+  
+</ul>
+
+  </div>
+</div>
+
+  </aside>
 
 
-  <h2 class="sr-only">Pagination</h2>
-<nav class="pagination heading clearfix" role="navigation">
-  <ul>
-    <li class="pagination-item older" >
-      
-      
-      
-  <span class=" ">Older</span>
+  
+
+  
+  
+
+  
+    
 
 
-    </li>
-    <li class="pagination-item newer" >
-      
-      
-      
-  <span class=" ">Newer</span>
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/computer%20vision/slam/2020-12-01-Bundle_Adjustment_PT2/" class="flip-title"><span>[Computer Vision] Bundle Adjustment PT2</span></a>  <time class="faded fine" datetime="2020-12-01T00:00:00+09:00">01 Dec 2020</time></li>                        <li class="h4">  <a href="/slam/2020-11-12-gtsam_custom/" class="flip-title"><span>[GTSAM] Making simple custom node and factor</span></a>  <time class="faded fine" datetime="2020-11-12T00:00:00+09:00">12 Nov 2020</time></li>                        <li class="h4">  <a href="/slam/paper_review/2020-10-03-p_review/" class="flip-title"><span>[Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…)</span></a>  <time class="faded fine" datetime="2020-10-03T00:00:00+09:00">03 Oct 2020</time></li>            </ul></aside>
 
+  
 
-    </li>
-  </ul>
-</nav>
+  
+  
 
+  
+    
+
+  
 
 
   
