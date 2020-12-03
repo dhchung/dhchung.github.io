@@ -39,20 +39,20 @@ Powered by Hydejack v9.0.5 <https://hydejack.com/>
   
     
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>[Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…) | Dongha Chung</title>
+<title>[GTSAM] Orientation correction using gravity direction | Dongha Chung</title>
 <meta name="generator" content="Jekyll v3.9.0" />
-<meta property="og:title" content="[Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…)" />
+<meta property="og:title" content="[GTSAM] Orientation correction using gravity direction" />
 <meta name="author" content="<Dongha> <Chung>" />
 <meta property="og:locale" content="en" />
-<meta name="description" content="ElasticFusion: Dense SLAM Without A Pose Graph" />
-<meta property="og:description" content="ElasticFusion: Dense SLAM Without A Pose Graph" />
-<link rel="canonical" href="http://localhost:4000/slam/paper_review/2020-10-03-p_review/" />
-<meta property="og:url" content="http://localhost:4000/slam/paper_review/2020-10-03-p_review/" />
+<meta name="description" content="Unary factor for absolute orientation" />
+<meta property="og:description" content="Unary factor for absolute orientation" />
+<link rel="canonical" href="http://localhost:4000/slam/2020-12-03-gtsam_orientation/" />
+<meta property="og:url" content="http://localhost:4000/slam/2020-12-03-gtsam_orientation/" />
 <meta property="og:site_name" content="Dongha Chung" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-10-03T00:00:00+09:00" />
+<meta property="article:published_time" content="2020-12-03T00:00:00+09:00" />
 <script type="application/ld+json">
-{"description":"ElasticFusion: Dense SLAM Without A Pose Graph","@type":"BlogPosting","headline":"[Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…)","dateModified":"2020-10-03T00:00:00+09:00","datePublished":"2020-10-03T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/slam/paper_review/2020-10-03-p_review/"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/slam/paper_review/2020-10-03-p_review/","author":{"@type":"Person","name":"<Dongha> <Chung>"},"@context":"https://schema.org"}</script>
+{"description":"Unary factor for absolute orientation","@type":"BlogPosting","headline":"[GTSAM] Orientation correction using gravity direction","dateModified":"2020-12-03T00:00:00+09:00","datePublished":"2020-12-03T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/slam/2020-12-03-gtsam_orientation/"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/slam/2020-12-03-gtsam_orientation/","author":{"@type":"Person","name":"<Dongha> <Chung>"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -235,17 +235,17 @@ Left here for reference, feel free to delete.
 
 
 
-<article id="post-slam-paper_review-p_review" class="page post mb6" role="article">
+<article id="post-slam-gtsam_orientation" class="page post mb6" role="article">
   <header>
     <h1 class="post-title flip-project-title">
       
-        [Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…)
+        [GTSAM] Orientation correction using gravity direction
       
     </h1>
 
     <div class="post-date">
       
-      <time datetime="2020-10-03T00:00:00+09:00">03 Oct 2020</time>
+      <time datetime="2020-12-03T00:00:00+09:00">03 Dec 2020</time>
       
       
       
@@ -260,7 +260,7 @@ Left here for reference, feel free to delete.
 
 
 
-in <a href="/slam/" class="flip-title">SLAM</a> / <span>Paper_review</span>
+in <a href="/slam/" class="flip-title">SLAM</a>
 
       
 
@@ -283,118 +283,20 @@ in <a href="/slam/" class="flip-title">SLAM</a> / <span>Paper_review</span>
 
 
 
-  <div class="hr pb0"></div>
+  
+    <p class="note-sm" >
+      Unary factor for absolute orientation
+
+    </p>
+  
 
 
   </header>
 
   
-    <p>ElasticFusion: Dense SLAM Without A Pose Graph</p>
+    <p>For attitude correction, we can use the gravity direction which doesn’t change(assuming that the gravity field is uniform and the mission area is small enough).</p>
 
-<p>Thomas Whelan et al. (Dyson Robotics Laboratory at Imperial College London)</p>
-
-<h2 id="abstract">Abstract</h2>
-
-<p>We present a novel approach to real-time <strong>dense visual SLAM</strong>. Our system is capable of capturing comprehensive <strong>dense globally consistent surfel-based maps</strong> of room scale envi-ronments explored using an <strong>RGB-D camera</strong> in an incremental online fashion, <strong>without pose graph optimisation</strong> or any post-processing steps. This is accomplished by using dense <strong>frame-to-model camera tracking and windowed surfel-based fusion</strong> coupled with <strong>frequent model refinement</strong> through <strong>non-rigid surface deformations</strong>. Our approach applies local <strong>model-to-model surface loop closure optimisations</strong> as often as possible to stay close to the
-mode of the map distribution, while utilising global loop closure to recover from arbitrary drift and maintain global consistency.</p>
-
-<h2 id="introduction">Introduction</h2>
-<p>Existing dense SLAM methods suitable for iincremental, real-time operation struggle when the sensor makes movements which are both of</p>
-<ul>
-  <li>extended duration and often</li>
-  <li>criss-cross loop back on themselves (painting motion)</li>
-</ul>
-
-<p>SLAM algorithms have too often targeted one of two extrems:</p>
-<ul>
-  <li>either extremely loopy motion in a very small area</li>
-  <li>corridor like motion on much larger scales but with fewer loop closures</li>
-</ul>
-
-<p><strong>이러한 SLAM Scenario들은 Dense vision frontend을 가진 SLAM에서는 문제가 될 수 있다!</strong></p>
-
-<p>Dense vision frontend -&gt; No. of points matched is much hier than feature-based systems:<br />
-Makes joint filtering or bundle adjustment computationally infeasible:<br />
-Dense frontend have relied on alternation and effectively per-surface-element-independent filtering</p>
-
-<p><strong>Enormous weight of data serves to overpower the approximations to joint filtering which this assumes</strong><br />
-<strong>This also raises the question as to whether it is optimal to attach a dense frontend to a sparse pose graph structure like its feature-based visual SLAM counterpart</strong></p>
-
-<p>Pose graph SLAM systems primarily focus on: <strong>Optimising the camera trajectory</strong><br />
-Whereas our approach (<strong>utilising a deformation graph</strong>): <strong>Focus on optimising the map</strong></p>
-
-<p><strong>기존의 Pose graph system은 Pose estimation (trajectory)에 집중한 반면, 여기선 Map optimisation에 집중한다</strong></p>
-
-<h3 id="related-work">Related work</h3>
-<p>Utilising pose graphs</p>
-<ul>
-  <li>Whelan et al., parameteries a non-rigid surface deformation with an optimised pose graph to perform occasional loop closures in corridor-like trajectories
-    <ul>
-      <li>Scale well, but perform poorly given locally loopy trajectories while being <strong>unable to re-use revisited areas of the map</strong></li>
-    </ul>
-  </li>
-  <li>DVO SLAM, keyfromae-based pose graph optimisation
-    <ul>
-      <li>Performs no explicit map reconstruction and functions off of raw keyframes alone</li>
-    </ul>
-  </li>
-  <li>Meilland and Comport, unified keyframes: utilises fused predicted 2.5D keyframes of mapped environtments while employing pose graph optimization to close large loops and align keyframes
-    <ul>
-      <li>not creating an explicit continuous 3D surface</li>
-    </ul>
-  </li>
-  <li>MRSMap, registers octree encoded surfel maps together for pose estimation
-    <ul>
-      <li>After pose graph optimisation the final map is created by merging key surfel views</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="in-our-system">In our system</h3>
-<ul>
-  <li>Move away from the focus of pose graph originally grounded in sparse methods</li>
-  <li>Move towards a more map-centric approach</li>
-  <li>Similar to Zhou et al, but runs in real time</li>
-  <li>Attempt to apply <strong>surface loop closure optimisations early and often</strong>
-    <ul>
-      <li>Always stay near to the <strong>mode of the map distribution</strong>
-        <ul>
-          <li>Allow to employ a <em>non-rigid space deformation</em> of the map using a sparse <em>deformation graph</em> embedded in the surface itself</li>
-          <li>Rather than a probabilistic pose graph which <em>rigidly transforming independent keyframes</em></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<p><strong>At the time of writing, this approach is the first of its kind of</strong></p>
-<ul>
-  <li>Use photometric and geometric frame-to-model predictive tracking in a fused surfel-based dense map</li>
-  <li>Perform dense model-to-model local surface loop closures with a non-rigid space deformation</li>
-  <li>Utilise a predicted surface appearance based place recognition method</li>
-</ul>
-
-<h2 id="approach-overview">Approach overview</h2>
-<p>Significant usage of GPU</p>
-<ul>
-  <li>CUDA to implement tracking</li>
-  <li>OpenGL Shading Language for view prediction and map management</li>
-</ul>
-
-<p><strong>Key elements</strong></p>
-<ul>
-  <li>Estimate a fused surfel-based model of the environment
-    <ul>
-      <li>Inspired by the surfel-based fusion system of Keller et al.</li>
-    </ul>
-  </li>
-  <li>Segment older parts of the map which have not been observed into the inactive area
-    <ul>
-      <li>not used for tracking or data fusion</li>
-    </ul>
-  </li>
-  <li>Every frame attempt to register the portion of the active model within the current estimated camera frame</li>
-</ul>
+<p>With coordinate system which the positive z is headed towards downward and positive x value is the vehicle heading, the gravity direction is \(\begin{bmatrix}0 &amp; 0&amp; 1\end{bmatrix}^\top\).</p>
 
   
 </article>
@@ -518,7 +420,7 @@ Whereas our approach (<strong>utilising a deformation graph</strong>): <strong>F
     
 
 
-  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/slam/2020-12-03-rot_mat_btw_vecs/" class="flip-title"><span>Getting the rotation matrix between vectors</span></a>  <time class="faded fine" datetime="2020-12-03T00:00:00+09:00">03 Dec 2020</time></li>                        <li class="h4">  <a href="/slam/2020-12-03-gtsam_orientation/" class="flip-title"><span>[GTSAM] Orientation correction using gravity direction</span></a>  <time class="faded fine" datetime="2020-12-03T00:00:00+09:00">03 Dec 2020</time></li>                        <li class="h4">  <a href="/computer%20vision/slam/2020-12-01-Bundle_Adjustment_PT2/" class="flip-title"><span>[Computer Vision] Bundle Adjustment PT2</span></a>  <time class="faded fine" datetime="2020-12-01T00:00:00+09:00">01 Dec 2020</time></li>            </ul></aside>
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/slam/2020-12-03-rot_mat_btw_vecs/" class="flip-title"><span>Getting the rotation matrix between vectors</span></a>  <time class="faded fine" datetime="2020-12-03T00:00:00+09:00">03 Dec 2020</time></li>                        <li class="h4">  <a href="/computer%20vision/slam/2020-12-01-Bundle_Adjustment_PT2/" class="flip-title"><span>[Computer Vision] Bundle Adjustment PT2</span></a>  <time class="faded fine" datetime="2020-12-01T00:00:00+09:00">01 Dec 2020</time></li>                        <li class="h4">  <a href="/computer%20vision/slam/2020-11-30-Bundle_Adjustment_PT1/" class="flip-title"><span>[Computer Vision] Bundle Adjustment PT1</span></a>  <time class="faded fine" datetime="2020-11-30T00:00:00+09:00">30 Nov 2020</time></li>            </ul></aside>
 
   
 

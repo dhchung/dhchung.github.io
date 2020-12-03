@@ -1,5 +1,41 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2020-12-01T12:50:10+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
-</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">[Computer Vision] Bundle Adjustment PT2</title><link href="http://localhost:4000/computer%20vision/slam/2020-12-01-Bundle_Adjustment_PT2/" rel="alternate" type="text/html" title="[Computer Vision] Bundle Adjustment PT2" /><published>2020-12-01T00:00:00+09:00</published><updated>2020-12-01T00:00:00+09:00</updated><id>http://localhost:4000/computer%20vision/slam/Bundle_Adjustment_PT2</id><content type="html" xml:base="http://localhost:4000/computer%20vision/slam/2020-12-01-Bundle_Adjustment_PT2/">&lt;p&gt;Source &lt;a href=&quot;https://www.youtube.com/watch?v=LKDLcKrWOIU&quot;&gt;Lecture by Cyrill Stachniss&lt;/a&gt;&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html">Source Lecture by Cyrill Stachniss</summary></entry><entry><title type="html">[Computer Vision] Bundle Adjustment PT1</title><link href="http://localhost:4000/computer%20vision/slam/2020-11-30-Bundle_Adjustment_PT1/" rel="alternate" type="text/html" title="[Computer Vision] Bundle Adjustment PT1" /><published>2020-11-30T00:00:00+09:00</published><updated>2020-11-30T00:00:00+09:00</updated><id>http://localhost:4000/computer%20vision/slam/Bundle_Adjustment_PT1</id><content type="html" xml:base="http://localhost:4000/computer%20vision/slam/2020-11-30-Bundle_Adjustment_PT1/">&lt;p&gt;Source &lt;a href=&quot;https://www.youtube.com/watch?v=sobyKHwgB0Y&quot;&gt;Lecture by Cyrill Stachniss&lt;/a&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2020-12-03T21:47:49+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
+</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">[GTSAM] Orientation correction using gravity direction</title><link href="http://localhost:4000/slam/2020-12-03-gtsam_orientation/" rel="alternate" type="text/html" title="[GTSAM] Orientation correction using gravity direction" /><published>2020-12-03T00:00:00+09:00</published><updated>2020-12-03T00:00:00+09:00</updated><id>http://localhost:4000/slam/gtsam_orientation</id><content type="html" xml:base="http://localhost:4000/slam/2020-12-03-gtsam_orientation/">&lt;p&gt;For attitude correction, we can use the gravity direction which doesn’t change(assuming that the gravity field is uniform and the mission area is small enough).&lt;/p&gt;
+
+&lt;p&gt;With coordinate system which the positive z is headed towards downward and positive x value is the vehicle heading, the gravity direction is \(\begin{bmatrix}0 &amp;amp; 0&amp;amp; 1\end{bmatrix}^\top\).&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html">For attitude correction, we can use the gravity direction which doesn’t change(assuming that the gravity field is uniform and the mission area is small enough).</summary></entry><entry><title type="html">Getting the rotation matrix between vectors</title><link href="http://localhost:4000/slam/2020-12-03-rot_mat_btw_vecs/" rel="alternate" type="text/html" title="Getting the rotation matrix between vectors" /><published>2020-12-03T00:00:00+09:00</published><updated>2020-12-03T00:00:00+09:00</updated><id>http://localhost:4000/slam/rot_mat_btw_vecs</id><content type="html" xml:base="http://localhost:4000/slam/2020-12-03-rot_mat_btw_vecs/">&lt;p&gt;Let’s find a rotation matrix which rotates a unit vector \(\mathbf{v}_1\) to a unit vector \(\mathbf{v}_2\)&lt;/p&gt;
+
+&lt;p&gt;We can think about a vector \(\mathbf{k} = \mathbf{v}_1 \times \mathbf{v}_2\), which can also be expressed as \(\mathbf{k} = [\mathbf{v}_1]_\times\mathbf{v}_2\)&lt;/p&gt;
+
+&lt;p&gt;where \([\mathbf{v}_1]_\times\) is a skew-symmetric matrix:&lt;/p&gt;
+
+\[[\mathbf{v}_1]_\times = \begin{bmatrix}
+0 &amp;amp; -v_{1_3} &amp;amp; v_{1_2} \\
+v_{1_3} &amp;amp; 0 &amp;amp; -v_{1_1} \\
+-v_{1_2} &amp;amp; v_{1_1} &amp;amp; 0
+\end{bmatrix}\]
+
+&lt;p&gt;From vector products, we can get the cosine and sine value of the angle between the vectors (geodesic angle), \(\theta\) as:&lt;/p&gt;
+
+\[\begin{align*}
+cos(\theta) &amp;amp;= \mathbf{v}_1 \cdot \mathbf{v}_2\\
+sin(\theta) &amp;amp;= \lVert \mathbf{v}_1\times \mathbf{v}_2 \rVert = \lVert \mathbf{k} \rVert
+\end{align*}\]
+
+&lt;p&gt;From the figure below, we can figure out that&lt;/p&gt;
+
+\[\mathbf{v}_2 = \mathbf{v}_1 + sin(\theta)(\mathbf{k}\times\mathbf{v}_1)+(1-cos(\theta))(\mathbf{k}\times(\mathbf{k}\times\mathbf{v}_1))\]
+
+&lt;p&gt;which can be expressed in a matrix form&lt;/p&gt;
+
+\[\begin{align*}
+&amp;amp;\mathbf{v}_2 = \mathbf{v}_1 + sin(\theta)([\mathbf{k}]_\times\mathbf{v}_1)+(1-cos(\theta))([\mathbf{k}]_\times([\mathbf{k}]_\times\mathbf{v}_1))\\
+=&amp;amp;(I+sin(\theta)[\mathbf{k}]_\times+(1-cos(\theta))[\mathbf{k}]_\times^2)\mathbf{v}_1
+\end{align*}\]
+
+&lt;p&gt;&lt;img src=&quot;../../assets/images/gravity_odom_correction/v1_to_v2.png&quot; alt=&quot;v1 to v2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Since we want to find a rotation matrix \(R\) which satisfies \(R\mathbf{v}_1 = \mathbf{v}_2\), \(R\) can be expressed as:&lt;/p&gt;
+
+\[R = I + sin(\theta)[\mathbf{k}]_\times + (1-cos(\theta))[\mathbf{k}]_\times^2\]</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html">Let’s find a rotation matrix which rotates a unit vector \(\mathbf{v}_1\) to a unit vector \(\mathbf{v}_2\)</summary></entry><entry><title type="html">[Computer Vision] Bundle Adjustment PT2</title><link href="http://localhost:4000/computer%20vision/slam/2020-12-01-Bundle_Adjustment_PT2/" rel="alternate" type="text/html" title="[Computer Vision] Bundle Adjustment PT2" /><published>2020-12-01T00:00:00+09:00</published><updated>2020-12-01T00:00:00+09:00</updated><id>http://localhost:4000/computer%20vision/slam/Bundle_Adjustment_PT2</id><content type="html" xml:base="http://localhost:4000/computer%20vision/slam/2020-12-01-Bundle_Adjustment_PT2/">&lt;p&gt;Source &lt;a href=&quot;https://www.youtube.com/watch?v=LKDLcKrWOIU&quot;&gt;Lecture by Cyrill Stachniss&lt;/a&gt;&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html">Source Lecture by Cyrill Stachniss</summary></entry><entry><title type="html">[Computer Vision] Bundle Adjustment PT1</title><link href="http://localhost:4000/computer%20vision/slam/2020-11-30-Bundle_Adjustment_PT1/" rel="alternate" type="text/html" title="[Computer Vision] Bundle Adjustment PT1" /><published>2020-11-30T00:00:00+09:00</published><updated>2020-11-30T00:00:00+09:00</updated><id>http://localhost:4000/computer%20vision/slam/Bundle_Adjustment_PT1</id><content type="html" xml:base="http://localhost:4000/computer%20vision/slam/2020-11-30-Bundle_Adjustment_PT1/">&lt;p&gt;Source &lt;a href=&quot;https://www.youtube.com/watch?v=sobyKHwgB0Y&quot;&gt;Lecture by Cyrill Stachniss&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Bundle adjustment is an optimization process which minimizes the &lt;a href=&quot;#reprojection-error&quot;&gt;Reprojection Error&lt;/a&gt; to get the &lt;a href=&quot;#unknonwns&quot;&gt;Unknowns&lt;/a&gt; by solving the &lt;a href=&quot;#setting-up-and-solving-the-system-of-normal-equations&quot;&gt;Normal Equations&lt;/a&gt;.&lt;/p&gt;
 

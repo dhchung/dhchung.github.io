@@ -25,6 +25,14 @@
 <lastmod>2020-12-01T00:00:00+09:00</lastmod>
 </url>
 <url>
+<loc>http://localhost:4000/slam/2020-12-03-gtsam_orientation/</loc>
+<lastmod>2020-12-03T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/slam/2020-12-03-rot_mat_btw_vecs/</loc>
+<lastmod>2020-12-03T00:00:00+09:00</lastmod>
+</url>
+<url>
 <loc>http://localhost:4000/about/</loc>
 </url>
 <url>
