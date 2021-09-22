@@ -360,7 +360,7 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
   <li>Submap들은 다시 Global mapping 단계 input으로 들어가 voxelized GICP matching cost factor로 factor graph를 형성한다.</li>
 </ol>
 
-<!-- ![Whole Process](../images/20210921_3.png){: width="auto" height="auto"}{: .center} -->
+<!-- ![Whole Process](/papers/images/20210921_3.png){: width="auto" height="auto"}{: .center} -->
 
 <p align="center">
   <img src="../images/20210921_3.png" alt="Factor Graph for local and global mapping" />
@@ -432,6 +432,29 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
 <p>\(\mathbf{b}_j\) \(= \sum_{k}^{N} \mathbf{B}_{k}^{T} \mathbf{\Omega}_{k} \mathbf{e}_{k}\)</p>
 
 <p>매 optimization iteration마다 \(\mathbf{e}^M\)을 다시 계산하기에 \(\mathbf{H}_{*}\)와 \(\mathbf{b}_{*}\)는 다시 계산된다 (GPU 사용).</p>
+
+<h4 id="overlap-metric">Overlap metric</h4>
+
+<p>Local mapping과 global mapping에서 overlap을 계산하는데 있어 query voxel과 target point cloud간의 overlap 정도는 다음과 같이 binary한 cost를 이용하여 계산한다.</p>
+
+<p>\(s(\mathbf{p}_k, \mathcal{P}_j)\) \(= \begin{cases}
+    1,              &amp; \text{if } \mathbf{p}_k \text{ fell in a voxel of } \mathcal{P}_j\\
+    0,              &amp; \text{otherwise}
+\end{cases}\)</p>
+
+<p>\(\text{overlap}(\mathcal{P}_i, \mathcal{P}_j)\) \(= \sum_{k}^{N} s(\mathbf{p}_k, \mathcal{P}_j) / N\)</p>
+
+<p>즉 \(\mathcal{P}_i\)의 각 점들이 \(\mathcal{P}_j\)로 만들어진 voxel map에 해당되는 정도로 overlap을 계산한다. (이는 GPU로 약 5만개의 점들에 대해 0.1.ms이하로 계산된다고 한다.)</p>
+
+<p>기존의 경우는 time interval이나 sensor displacement로 가까이 있으면 overlap일 것이라고 예측하는 것보다 유용하며, bounding-box overlap metric보다 더 정확하다. (drift가 심할 경우에는 bbox가 더 나을 것 같은데..)</p>
+
+<h4 id="local-mapping">Local Mapping</h4>
+
+<p>Overlap이 95% 이상인 경우 displacement가 없다고 가정하여 frame skip을 하며, 그 미만인 경우 voxel map을 resolution \(r^L\)로 만들어 (여기서 \(L\)은 Local인듯, Local과 Global map resolution을 따로 사용하는 모양이다.) 이 pair를 submap factor graph에 넣는다 (Factor graph에 넣는 방식은 <a href="#voxelized-gicp-matching-cost-factors">여기서</a> 나와있는 방법으로..)</p>
+
+<p>Submap의 첫 frame과 마지막(가장 최근의) frame의 overlap이 10% 이하인 경우나 Frame 갯수가 특정 threshold (\(N_{max}^L\))을 넘어갈 경우 Submap의 factor graph를 optimize하며 모든 frame들을 하나의 submap으로 merge한다.</p>
+
+<p>그 후 resolution \(r^G\)인 voxel map submap을 기반으로 생성되어 global mapping module로 들어가게 된다.</p>
 
   
 </article>
@@ -637,7 +660,7 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
       <li>
         <a
           
-          href="https://github.com/dhchung/curriculum_vitae/blob/master/dongha_chung_CV.pdf"
+          href="/cv"
           class="sidebar-nav-item "
           
         >

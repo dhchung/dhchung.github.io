@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-09-22T18:47:48+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-09-22T19:21:54+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
 </subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">[Lidar SLAM] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors</title><link href="http://localhost:4000/papers/2021-09-21-GPU_Lidar/" rel="alternate" type="text/html" title="[Lidar SLAM] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors" /><published>2021-09-21T00:00:00+09:00</published><updated>2021-09-21T00:00:00+09:00</updated><id>http://localhost:4000/papers/GPU_Lidar</id><content type="html" xml:base="http://localhost:4000/papers/2021-09-21-GPU_Lidar/">&lt;h2 id=&quot;2021-ra-letters&quot;&gt;2021 RA-Letters&lt;/h2&gt;
 &lt;h3 id=&quot;researchers-at-aist-japan-first-author-kenji-koide&quot;&gt;Researchers at AIST, Japan. First Author: Kenji Koide&lt;/h3&gt;
 
@@ -63,7 +63,7 @@
   &lt;li&gt;Submap들은 다시 Global mapping 단계 input으로 들어가 voxelized GICP matching cost factor로 factor graph를 형성한다.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;!-- ![Whole Process](../images/20210921_3.png){: width=&quot;auto&quot; height=&quot;auto&quot;}{: .center} --&gt;
+&lt;!-- ![Whole Process](/papers/images/20210921_3.png){: width=&quot;auto&quot; height=&quot;auto&quot;}{: .center} --&gt;
 
 &lt;p align=&quot;center&quot;&gt;
   &lt;img src=&quot;../images/20210921_3.png&quot; alt=&quot;Factor Graph for local and global mapping&quot; /&gt;
@@ -134,7 +134,30 @@
 
 &lt;p&gt;\(\mathbf{b}_j\) \(= \sum_{k}^{N} \mathbf{B}_{k}^{T} \mathbf{\Omega}_{k} \mathbf{e}_{k}\)&lt;/p&gt;
 
-&lt;p&gt;매 optimization iteration마다 \(\mathbf{e}^M\)을 다시 계산하기에 \(\mathbf{H}_{*}\)와 \(\mathbf{b}_{*}\)는 다시 계산된다 (GPU 사용).&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">2021 RA-Letters Researchers at AIST, Japan. First Author: Kenji Koide</summary></entry><entry><title type="html">Installing GTSAM</title><link href="http://localhost:4000/etc/2021-01-11-install_gtsam/" rel="alternate" type="text/html" title="Installing GTSAM" /><published>2021-01-11T00:00:00+09:00</published><updated>2021-01-11T00:00:00+09:00</updated><id>http://localhost:4000/etc/install_gtsam</id><content type="html" xml:base="http://localhost:4000/etc/2021-01-11-install_gtsam/">&lt;p&gt;clone the gtsam github &lt;a href=&quot;https://github.com/borglab/gtsam&quot;&gt;repo&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;매 optimization iteration마다 \(\mathbf{e}^M\)을 다시 계산하기에 \(\mathbf{H}_{*}\)와 \(\mathbf{b}_{*}\)는 다시 계산된다 (GPU 사용).&lt;/p&gt;
+
+&lt;h4 id=&quot;overlap-metric&quot;&gt;Overlap metric&lt;/h4&gt;
+
+&lt;p&gt;Local mapping과 global mapping에서 overlap을 계산하는데 있어 query voxel과 target point cloud간의 overlap 정도는 다음과 같이 binary한 cost를 이용하여 계산한다.&lt;/p&gt;
+
+&lt;p&gt;\(s(\mathbf{p}_k, \mathcal{P}_j)\) \(= \begin{cases}
+    1,              &amp;amp; \text{if } \mathbf{p}_k \text{ fell in a voxel of } \mathcal{P}_j\\
+    0,              &amp;amp; \text{otherwise}
+\end{cases}\)&lt;/p&gt;
+
+&lt;p&gt;\(\text{overlap}(\mathcal{P}_i, \mathcal{P}_j)\) \(= \sum_{k}^{N} s(\mathbf{p}_k, \mathcal{P}_j) / N\)&lt;/p&gt;
+
+&lt;p&gt;즉 \(\mathcal{P}_i\)의 각 점들이 \(\mathcal{P}_j\)로 만들어진 voxel map에 해당되는 정도로 overlap을 계산한다. (이는 GPU로 약 5만개의 점들에 대해 0.1.ms이하로 계산된다고 한다.)&lt;/p&gt;
+
+&lt;p&gt;기존의 경우는 time interval이나 sensor displacement로 가까이 있으면 overlap일 것이라고 예측하는 것보다 유용하며, bounding-box overlap metric보다 더 정확하다. (drift가 심할 경우에는 bbox가 더 나을 것 같은데..)&lt;/p&gt;
+
+&lt;h4 id=&quot;local-mapping&quot;&gt;Local Mapping&lt;/h4&gt;
+
+&lt;p&gt;Overlap이 95% 이상인 경우 displacement가 없다고 가정하여 frame skip을 하며, 그 미만인 경우 voxel map을 resolution \(r^L\)로 만들어 (여기서 \(L\)은 Local인듯, Local과 Global map resolution을 따로 사용하는 모양이다.) 이 pair를 submap factor graph에 넣는다 (Factor graph에 넣는 방식은 &lt;a href=&quot;#voxelized-gicp-matching-cost-factors&quot;&gt;여기서&lt;/a&gt; 나와있는 방법으로..)&lt;/p&gt;
+
+&lt;p&gt;Submap의 첫 frame과 마지막(가장 최근의) frame의 overlap이 10% 이하인 경우나 Frame 갯수가 특정 threshold (\(N_{max}^L\))을 넘어갈 경우 Submap의 factor graph를 optimize하며 모든 frame들을 하나의 submap으로 merge한다.&lt;/p&gt;
+
+&lt;p&gt;그 후 resolution \(r^G\)인 voxel map submap을 기반으로 생성되어 global mapping module로 들어가게 된다.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">2021 RA-Letters Researchers at AIST, Japan. First Author: Kenji Koide</summary></entry><entry><title type="html">Installing GTSAM</title><link href="http://localhost:4000/etc/2021-01-11-install_gtsam/" rel="alternate" type="text/html" title="Installing GTSAM" /><published>2021-01-11T00:00:00+09:00</published><updated>2021-01-11T00:00:00+09:00</updated><id>http://localhost:4000/etc/install_gtsam</id><content type="html" xml:base="http://localhost:4000/etc/2021-01-11-install_gtsam/">&lt;p&gt;clone the gtsam github &lt;a href=&quot;https://github.com/borglab/gtsam&quot;&gt;repo&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;open terminal in root folder of gtsam (i.e. cd ~/something/gtsam-4.x.x)&lt;/p&gt;
 
