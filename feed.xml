@@ -1,0 +1,725 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-09-22T18:47:48+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
+</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">[Lidar SLAM] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors</title><link href="http://localhost:4000/papers/2021-09-21-GPU_Lidar/" rel="alternate" type="text/html" title="[Lidar SLAM] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors" /><published>2021-09-21T00:00:00+09:00</published><updated>2021-09-21T00:00:00+09:00</updated><id>http://localhost:4000/papers/GPU_Lidar</id><content type="html" xml:base="http://localhost:4000/papers/2021-09-21-GPU_Lidar/">&lt;h2 id=&quot;2021-ra-letters&quot;&gt;2021 RA-Letters&lt;/h2&gt;
+&lt;h3 id=&quot;researchers-at-aist-japan-first-author-kenji-koide&quot;&gt;Researchers at AIST, Japan. First Author: Kenji Koide&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/papers/images/20210921_1.png&quot; alt=&quot;Mapping&quot; width=&quot;100%&quot; height=&quot;100%&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A. Global matching cost minimization을 통해 아주 작은 overlap의 frame간의 constraint를 적용할 수 있다.&lt;/li&gt;
+  &lt;li&gt;B. GPU를 이용함으로서 어마어마한 양의 Factor들과 Factor Graph를 처리할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;기존-lidar-slam의-한계점&quot;&gt;기존 Lidar SLAM의 한계점&lt;/h3&gt;
+
+&lt;h4 id=&quot;pose-graph-optimization&quot;&gt;Pose Graph Optimization&lt;/h4&gt;
+
+&lt;p&gt;기존의 Lidar based odometry의 경우 Pose graph 형식으로 만들어 point cloud matching에 대해 하나의 Gaussian distribution으로 정의하여 optimization을 진행함. Scan matching은 다양한 local minima가 존재하여 하나의 Gaussian distribution으로 정의할 수 없음.&lt;/p&gt;
+
+&lt;p&gt;대부분 constant한 covariance matrix, weight-based covariance matrix, 또는 Hessian-based close form으로 covariance matrix를 사용하나, 이는 “cost function deviation caused by data association changes”를 고려하지 않아 너무 optimistic한 결과를 나타냄. (여기서 optimistic이란, 실제 uncertainty보다 더 작다는 의미?) 이러한 잘못된 pose constraint modeling은 long trajectory에 대해 잘못된 결과를 야기시킬 수 있음.&lt;/p&gt;
+
+&lt;p&gt;Monte-Carlo 기반 방법도 있으나 computationally expensive하다. Data-driven 방법을 통한 covariance matrix 추정 기법도 있음. 하지만 현존하는 대부분의 방법이 앞서 말한 constant, weight-based, 또는 Hessian-based 방법을 사용함.&lt;/p&gt;
+
+&lt;h4 id=&quot;bundle-alignment&quot;&gt;Bundle Alignment&lt;/h4&gt;
+
+&lt;p&gt;주로 Visual SLAM기법에 사용됨 근데 computationally 비쌈. VSLAM에서 two track으로 real-time local과 low frequency global BA로 주로 진행되며 GPU기반으로 feasibility를 보인 바 있음. Lidar에서는 진행된 바가 별로 없음.&lt;/p&gt;
+
+&lt;h4 id=&quot;global-matching-cost-minimization&quot;&gt;Global Matching Cost Minimization&lt;/h4&gt;
+
+&lt;p&gt;그래프 기반으로 frame간 matching cost를 최소화한는 기법이 이용된 바 있음 (2D). 이를 발전시켜 loop closure event에서 실행함으로서 global optimization 빈도를 줄이면서 3D로 확장시킨 바 있음. Global optimization할 시 모든 factor를 업데이트 함으로서 global 및 local consistency를 유지함. 하지만 computationally expensive하여 real-time application 및 large-scale SLAM에는 부적절함.&lt;/p&gt;
+
+&lt;p&gt;Volumetric mapping 기법으로 Euclidean signed distance field (ESDF)를 사용해 local submap간의 registration error를 고려한 방법이 있으나, computationally expensive하고 random subsed of residuals만 사용하고 SE3 pose constraint의 지원이 있어야 해서 한계가 있다.&lt;/p&gt;
+
+&lt;h4 id=&quot;deformation-graph&quot;&gt;Deformation Graph&lt;/h4&gt;
+
+&lt;p&gt;Elastic Fusion과 같이 deformation graph를 사용하는 방법들이 있으나, 이들은 주어진 정보를 다 사용하지 않으며 global consistancy를 방해할 수 있다. 
+(odometry 정보 같은 것을 사용하지 않는다는 뜻인듯? Pose graph와 다르게 완전 map centric이니까.. 해당 논문을 다시 읽어봐야 할듯)&lt;/p&gt;
+
+&lt;h3 id=&quot;제안하는-방법&quot;&gt;제안하는 방법&lt;/h3&gt;
+
+&lt;p&gt;Real-time and globally consistent 3D Lidar mapping frame using GPU&lt;/p&gt;
+
+&lt;p&gt;GPU 기반 전체 map에 대해 Generalized ICP (GICP)로 활용한 Voxel-based data association을 통한 multi-scan registeration&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;아주 작은 overlap에 대해서도 constraint를 부과할 수 있다. (2.5%)&lt;/li&gt;
+  &lt;li&gt;GPU 사용을 통해 많은 양의 Factor를 생성할 수 있다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;제안하는 방법은 Local 및 Global mapping module로 구성되어있다.&lt;/p&gt;
+
+&lt;!-- ![Whole Process](/papers/images/20210921_2.png){: width=&quot;auto&quot; height=&quot;auto&quot;}{: .center} --&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;../images/20210921_2.png&quot; alt=&quot;Whole Process&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;둘다 voxel-based overlap metric을 사용하여 GPU를 통해 빠른 연산이 가능하다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Point cloud가 들어오면 RandLA-Net를 이용해 dynamic object를 삭제하고&lt;/li&gt;
+  &lt;li&gt;Odometry estimation을 MULLS을 이용해 초기값을 추정한다.&lt;/li&gt;
+  &lt;li&gt;그동안 각 point의 covariance matrix를 kn point들을 통해 구한다는데 voxel에 적용하려고 그런건가?&lt;/li&gt;
+  &lt;li&gt;처리된 point cloud는 local mapping module에 들어가 약 10~20개의 frame들이 matching 되어 local submap을 형성한다.&lt;/li&gt;
+  &lt;li&gt;Submap들은 다시 Global mapping 단계 input으로 들어가 voxelized GICP matching cost factor로 factor graph를 형성한다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- ![Whole Process](../images/20210921_3.png){: width=&quot;auto&quot; height=&quot;auto&quot;}{: .center} --&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;../images/20210921_3.png&quot; alt=&quot;Factor Graph for local and global mapping&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;위의 그림과 같이 local mapping과 global mapping module이 형성된다. Global mapping module에서 matching cost factor가  local solution에 갇히는 것을 방지하기 위해 explicit한 loop closure constraint를 사용한다. (여기서는 ScanContext).&lt;/p&gt;
+
+&lt;p&gt;Local mapping에서는 fully connected factor graph를 형성하며, global mapping에서는 가장 마지막 submap과 특정 값 이상의 overlap이 존재하는 기존의 submap간의 constraint를 형성한다.&lt;/p&gt;
+
+&lt;p&gt;(여기선 이걸 implicit loop closure라고 말하는 듯;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;explicit loop closure = ScanContext와 같이 query Lidar key의 value와 비교하여 비슷하면 매칭하는 loop closure,&lt;/li&gt;
+  &lt;li&gt;implicit loop closure = 계산된 또는 측정된 odometry 정보와 overlapping 정보를 이용한 loop closure)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;voxelized-gicp-matching-cost-factors&quot;&gt;Voxelized GICP Matching Cost Factors&lt;/h4&gt;
+&lt;p&gt;주어진 sensor pose와 point cloud pair에 대해서 다음과 같이 주어진 objective function을 최소화 함으로써 추정된다.&lt;/p&gt;
+
+&lt;p&gt;Sensor pose : \(\mathcal{T}  = \left\{ \mathbf{T}_0, \dots, \mathbf{T}_t \right\}\)&lt;/p&gt;
+
+&lt;p&gt;Point cloud pair : \(\mathcal{F}^{M}\) 으로 matching pair의 indices 집합 \((i, j)\)&lt;/p&gt;
+
+&lt;p&gt;cost function : \(f^{M}(\mathcal{F}^{M}, \mathcal{T}) = \sum_{(i,j) \in \mathcal{F}^{M}} e^{M}(\mathcal{P}_i, \mathcal{P}_j, \mathbf{T}_i, \mathbf{T}_j)\)&lt;/p&gt;
+
+&lt;p&gt;여기서 matching cost function \(e\)는 Voxelized GICP에 맞게 설정된다. GCIP error는 point with covariance를 사용하게 되는데, transformation \(\mathbf{T}\)를 가진 \(\mathbf{p}_k\)와 \(\mathbf{p}_k'\) 의 point pair에 대한 error값은 다음과 같이 정의된다.&lt;/p&gt;
+
+&lt;p&gt;Point with covariance : \(\mathbf{p} = (\mathbf{\mu}_k, \mathbf{C}_k)\)&lt;/p&gt;
+
+&lt;p&gt;GICP error : \(e^{GICP}(\mathbf{p}_k, \mathbf{T}) = \mathbf{d}_k^{T}(\mathbf{C}_k' + \mathbf{T}\mathbf{C}_k \mathbf{T}^T)^{-1}\mathbf{d}_k\) (Mahalanobis distance를 이용하는듯)&lt;/p&gt;
+
+&lt;p&gt;여기서 \(\mathbf{d}_k = \mathbf{\mu}_{k}' - \mathbf{T}\mathbf{\mu}_k\) 로 \(k'\) 좌표계에서 계산한 두 점간의 벡터 차이이다.&lt;/p&gt;
+
+&lt;p&gt;기존 GICP에서는 이 corresponding point 쌍을 찾는 방법이 KD Tree를 이용하여 찾는데, 이는 GPU 연산에 적합하지 않다 (Conditional branches를 사용하기 때문 : KD Tree와 GPU에 대해 좀 더 알아봐야 이해할 것 같다..).&lt;/p&gt;
+
+&lt;p&gt;VGICP에서는 voxel-based data association을 사용하는데 여기서 voxel은 point cloud를 voxel 안에 mean과 covariance로 계산하여 나타낸다.&lt;/p&gt;
+
+&lt;p&gt;여기서 covariance는 Normalized Distributions Transform(NDT)와는 다른 방법을 사용하는데, NDT가 point set에서 voxel distribution을 계산하는 반면 VGICP는 point distribution을 하나의 voxel distribution으로 aggregate 한다. (잘 이해가 안됨)&lt;/p&gt;
+
+&lt;p&gt;Voxel로 만듦으로서 GICP에서 사용된 KD-Tree와 다르게 Voxel Position기반으로 주변의 Voxel에 대한 search로 corresponding point를 찾는다는 것 같다. (이를 GPU computing에 어떻게 넣고 하는지는 설명되어있지 않다.)&lt;/p&gt;
+
+&lt;p&gt;VGICP matching cost function은 다음과 같이 된다.&lt;/p&gt;
+
+&lt;p&gt;cost function : \(e^{M}(\mathcal{P}_i, \mathcal{P}_j, \mathbf{T}_i, \mathbf{T}_j) = \sum_{\mathbf{p}_k \in \mathcal{P}_i} e^{GCIP}(\mathbf{p}_k, \mathbf{T}_{ij})\)&lt;/p&gt;
+
+&lt;p&gt;Factor node를 구성하기 위해선 error값 뿐만 아니라 각 Factor에 대한 Jacobian을 &lt;a href=&quot;/slam/2020-11-12-gtsam_custom/&quot;&gt;계산&lt;/a&gt;해야 되는데 여기서는 Hessian에 대한 설명이 나와있다. (응?)&lt;/p&gt;
+
+&lt;p&gt;Transformation에 대한 미분값을 다음과 같이 정의한다.&lt;/p&gt;
+
+&lt;p&gt;For \(\mathbf{T_i}\) : \(\mathbf{A}_k = \partial \mathbf{e}_k / \partial \mathbf{T}_k\)&lt;/p&gt;
+
+&lt;p&gt;For \(\mathbf{T_j}\) : \(\mathbf{B}_k = \partial \mathbf{e}_k / \partial \mathbf{T}_j\)&lt;/p&gt;
+
+&lt;p&gt;여기서 \(\mathbf{e}_k\) 는 \(\mathbf{d}_k\) 와 비슷한 \(\mathbf{e}_k = \mathbf{\mu}_{k}' - \mathbf{T}_{ij}\mathbf{\mu}_k\) 로 \(j\) coordinate system에서 본 point mean 값의 차이 벡터이다.&lt;/p&gt;
+
+&lt;p&gt;Hessian값은 앞서 구한 미분값들과 \(j\) coordinate system에서 구한 covariance matrix로 계산된다. (&lt;a href=&quot;/papers/2020-04-09-Estimating_Uncertain/&quot;&gt;coordiante frame간 covariance matrix 참조&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;\(\mathbf{H}_{ii}\) \(= \sum_{k}^{N} \mathbf{A}_{k}^{T} \mathbf{\Omega}_{k} \mathbf{A}_{k}\)&lt;/p&gt;
+
+&lt;p&gt;\(\mathbf{H}_{ij}\) \(= \sum_{k}^{N} \mathbf{A}_{k}^{T} \mathbf{\Omega}_{k} \mathbf{B}_{k}\)&lt;/p&gt;
+
+&lt;p&gt;\(\mathbf{H}_{jj}\) \(= \sum_{k}^{N} \mathbf{B}_{k}^{T} \mathbf{\Omega}_{k} \mathbf{B}_{k}\)&lt;/p&gt;
+
+&lt;p&gt;여기서 \(\mathbf{\Omega}\)는 앞서 말한 covariance matrix인데 이는 \(\mathbf{\Omega}_k = \mathbf{C}_{k}' + \mathbf{T}_{ij} \mathbf{C}_{k} \mathbf{T}_{ij}^{T}\) 로 정의된다. 즉 \(\mathbf{e}_k\)의 covariance matrix이다.&lt;/p&gt;
+
+&lt;p&gt;다음으로 coefficient vector라는 것을 정의하는데.. 어디에 쓰이는지 잘 모르겠다. Factor graph 논문을 다시 봐야하나&lt;/p&gt;
+
+&lt;p&gt;\(\mathbf{b}_i\) \(= \sum_{k}^{N} \mathbf{A}_{k}^{T} \mathbf{\Omega}_{k} \mathbf{e}_{k}\)&lt;/p&gt;
+
+&lt;p&gt;\(\mathbf{b}_j\) \(= \sum_{k}^{N} \mathbf{B}_{k}^{T} \mathbf{\Omega}_{k} \mathbf{e}_{k}\)&lt;/p&gt;
+
+&lt;p&gt;매 optimization iteration마다 \(\mathbf{e}^M\)을 다시 계산하기에 \(\mathbf{H}_{*}\)와 \(\mathbf{b}_{*}\)는 다시 계산된다 (GPU 사용).&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">2021 RA-Letters Researchers at AIST, Japan. First Author: Kenji Koide</summary></entry><entry><title type="html">Installing GTSAM</title><link href="http://localhost:4000/etc/2021-01-11-install_gtsam/" rel="alternate" type="text/html" title="Installing GTSAM" /><published>2021-01-11T00:00:00+09:00</published><updated>2021-01-11T00:00:00+09:00</updated><id>http://localhost:4000/etc/install_gtsam</id><content type="html" xml:base="http://localhost:4000/etc/2021-01-11-install_gtsam/">&lt;p&gt;clone the gtsam github &lt;a href=&quot;https://github.com/borglab/gtsam&quot;&gt;repo&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;open terminal in root folder of gtsam (i.e. cd ~/something/gtsam-4.x.x)&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;build
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;build
+cmake ..
+make check
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;make &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;run some examples&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">clone the gtsam github repo</summary></entry><entry><title type="html">SU(2)</title><link href="http://localhost:4000/rlog/2021-01-10-rlog/" rel="alternate" type="text/html" title="SU(2)" /><published>2021-01-10T00:00:00+09:00</published><updated>2021-01-10T00:00:00+09:00</updated><id>http://localhost:4000/rlog/rlog</id><content type="html" xml:base="http://localhost:4000/rlog/2021-01-10-rlog/">&lt;p&gt;This article is based on the book Topology Geometry and Garuge Fields, 1997&lt;/p&gt;
+
+&lt;p&gt;Whilest I was studying how to utilize the unit normal vector in gtsam, I had to study more about its basics.&lt;/p&gt;
+
+&lt;p&gt;SU(2) the Special unitary group&lt;/p&gt;
+
+&lt;p&gt;SO(3) the Special orthogonal group : the group of 3 by 3 matrices \(A\) that satisfies:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;\(A^{-1} = A^{\top}\) and&lt;/li&gt;
+  &lt;li&gt;\(det A = 1\).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;In physical meaning, it is a linear transformations that rotate \(\mathcal{R}^3\)&lt;/p&gt;
+
+&lt;p&gt;With a normal vector \(\vec{n} = &amp;lt;n_1, n_2, n_3&amp;gt;\), and a scalar \(\phi\), Define a \(3 \times 3\) matrix \(R(\phi, \vec{n})\) by&lt;/p&gt;
+
+\[R(\phi, \vec{n}) = I_{3\times 3} + (sin\phi)N + (1-cos\phi)N^2\]
+
+&lt;p&gt;where&lt;/p&gt;
+
+\[N = \begin{bmatrix}
+0 &amp;amp; -n_3 &amp;amp; n_2 \\
+n^3 &amp;amp; 0 &amp;amp; -n_1 \\
+-n_2 &amp;amp; n_1 &amp;amp; 0
+\end{bmatrix}\]
+
+&lt;p&gt;This matrix rotates the standard basis for \(\mathcal{R}^3\) through angle \(\phi\) about the axis along \(\vec{n}\) in the sense determined by the right-hand rule.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="rlog" /><summary type="html">This article is based on the book Topology Geometry and Garuge Fields, 1997</summary></entry><entry><title type="html">Segmentation Fault with Eigen Matrix</title><link href="http://localhost:4000/etc/2021-01-05-programming/" rel="alternate" type="text/html" title="Segmentation Fault with Eigen Matrix" /><published>2021-01-05T00:00:00+09:00</published><updated>2021-01-05T00:00:00+09:00</updated><id>http://localhost:4000/etc/programming</id><content type="html" xml:base="http://localhost:4000/etc/2021-01-05-programming/">&lt;p&gt;A segmentation fault error was occured when I tried to copy a eigen matrix to a elemenet of a vector of eigne matrices:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Eigen&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Matrix4f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;someFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Not really sure what caused the problem, but here’s the solution for this:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Eigen&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Matrix4f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;someFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">A segmentation fault error was occured when I tried to copy a eigen matrix to a elemenet of a vector of eigne matrices:</summary></entry><entry><title type="html">[GTSAM] Orientation correction using gravity direction</title><link href="http://localhost:4000/slam/2020-12-03-gtsam_orientation/" rel="alternate" type="text/html" title="[GTSAM] Orientation correction using gravity direction" /><published>2020-12-03T00:00:00+09:00</published><updated>2020-12-03T00:00:00+09:00</updated><id>http://localhost:4000/slam/gtsam_orientation</id><content type="html" xml:base="http://localhost:4000/slam/2020-12-03-gtsam_orientation/">&lt;p&gt;For attitude correction, we can use the gravity direction which doesn’t change(assuming that the gravity field is uniform and the mission area is small enough).&lt;/p&gt;
+
+&lt;p&gt;With coordinate system which the positive z is headed towards downward and positive x value is the vehicle heading, the gravity direction is \(\begin{bmatrix}0 &amp;amp; 0&amp;amp; 1\end{bmatrix}^\top\).&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html">For attitude correction, we can use the gravity direction which doesn’t change(assuming that the gravity field is uniform and the mission area is small enough).</summary></entry><entry><title type="html">Getting the rotation matrix between vectors</title><link href="http://localhost:4000/slam/2020-12-03-rot_mat_btw_vecs/" rel="alternate" type="text/html" title="Getting the rotation matrix between vectors" /><published>2020-12-03T00:00:00+09:00</published><updated>2020-12-03T00:00:00+09:00</updated><id>http://localhost:4000/slam/rot_mat_btw_vecs</id><content type="html" xml:base="http://localhost:4000/slam/2020-12-03-rot_mat_btw_vecs/">&lt;p&gt;Let’s find a rotation matrix which rotates a unit vector \(\mathbf{v}_1\) to a unit vector \(\mathbf{v}_2\)&lt;/p&gt;
+
+&lt;p&gt;We can think about a vector \(\mathbf{k} = \mathbf{v}_1 \times \mathbf{v}_2\), which can also be expressed as \(\mathbf{k} = [\mathbf{v}_1]_\times\mathbf{v}_2\)&lt;/p&gt;
+
+&lt;p&gt;where \([\mathbf{v}_1]_\times\) is a skew-symmetric matrix:&lt;/p&gt;
+
+\[[\mathbf{v}_1]_\times = \begin{bmatrix}
+0 &amp;amp; -v_{1_3} &amp;amp; v_{1_2} \\
+v_{1_3} &amp;amp; 0 &amp;amp; -v_{1_1} \\
+-v_{1_2} &amp;amp; v_{1_1} &amp;amp; 0
+\end{bmatrix}\]
+
+&lt;p&gt;From vector products, we can get the cosine and sine value of the angle between the vectors (geodesic angle), \(\theta\) as:&lt;/p&gt;
+
+\[\begin{align*}
+cos(\theta) &amp;amp;= \mathbf{v}_1 \cdot \mathbf{v}_2\\
+sin(\theta) &amp;amp;= \lVert \mathbf{v}_1\times \mathbf{v}_2 \rVert = \lVert \mathbf{k} \rVert
+\end{align*}\]
+
+&lt;p&gt;From the figure below, we can figure out that&lt;/p&gt;
+
+\[\mathbf{v}_2 = \mathbf{v}_1 + sin(\theta)(\mathbf{k}\times\mathbf{v}_1)+(1-cos(\theta))(\mathbf{k}\times(\mathbf{k}\times\mathbf{v}_1))\]
+
+&lt;p&gt;which can be expressed in a matrix form&lt;/p&gt;
+
+\[\begin{align*}
+&amp;amp;\mathbf{v}_2 = \mathbf{v}_1 + sin(\theta)([\mathbf{k}]_\times\mathbf{v}_1)+(1-cos(\theta))([\mathbf{k}]_\times([\mathbf{k}]_\times\mathbf{v}_1))\\
+=&amp;amp;(I+sin(\theta)[\mathbf{k}]_\times+(1-cos(\theta))[\mathbf{k}]_\times^2)\mathbf{v}_1
+\end{align*}\]
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/gravity_odom_correction/v1_to_v2.png&quot; alt=&quot;v1 to v2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Since we want to find a rotation matrix \(R\) which satisfies \(R\mathbf{v}_1 = \mathbf{v}_2\), \(R\) can be expressed as:&lt;/p&gt;
+
+\[R = I + sin(\theta)[\mathbf{k}]_\times + (1-cos(\theta))[\mathbf{k}]_\times^2\]</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html">Let’s find a rotation matrix which rotates a unit vector \(\mathbf{v}_1\) to a unit vector \(\mathbf{v}_2\)</summary></entry><entry><title type="html">[Computer Vision] Bundle Adjustment PT2</title><link href="http://localhost:4000/papers/2020-12-01-Bundle_Adjustment_PT2/" rel="alternate" type="text/html" title="[Computer Vision] Bundle Adjustment PT2" /><published>2020-12-01T00:00:00+09:00</published><updated>2020-12-01T00:00:00+09:00</updated><id>http://localhost:4000/papers/Bundle_Adjustment_PT2</id><content type="html" xml:base="http://localhost:4000/papers/2020-12-01-Bundle_Adjustment_PT2/">&lt;p&gt;Source &lt;a href=&quot;https://www.youtube.com/watch?v=LKDLcKrWOIU&quot;&gt;Lecture by Cyrill Stachniss&lt;/a&gt;&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">Source Lecture by Cyrill Stachniss</summary></entry><entry><title type="html">[Computer Vision] Bundle Adjustment PT1</title><link href="http://localhost:4000/papers/2020-11-30-Bundle_Adjustment_PT1/" rel="alternate" type="text/html" title="[Computer Vision] Bundle Adjustment PT1" /><published>2020-11-30T00:00:00+09:00</published><updated>2020-11-30T00:00:00+09:00</updated><id>http://localhost:4000/papers/Bundle_Adjustment_PT1</id><content type="html" xml:base="http://localhost:4000/papers/2020-11-30-Bundle_Adjustment_PT1/">&lt;p&gt;Source &lt;a href=&quot;https://www.youtube.com/watch?v=sobyKHwgB0Y&quot;&gt;Lecture by Cyrill Stachniss&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Bundle adjustment is an optimization process which minimizes the &lt;a href=&quot;#reprojection-error&quot;&gt;Reprojection Error&lt;/a&gt; to get the &lt;a href=&quot;#unknonwns&quot;&gt;Unknowns&lt;/a&gt; by solving the &lt;a href=&quot;#setting-up-and-solving-the-system-of-normal-equations&quot;&gt;Normal Equations&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;3D reconstruction with multiple images&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Feature extraction at each image&lt;/li&gt;
+  &lt;li&gt;Least squares approach to estimating camera poses and 3D points
+    &lt;ul&gt;
+      &lt;li&gt;Start with an initial guess&lt;/li&gt;
+      &lt;li&gt;Project the estimated 3D points into the estimated camera images&lt;/li&gt;
+      &lt;li&gt;Compare locations of the projected 3D points with measured (2D) ones&lt;/li&gt;
+      &lt;li&gt;Adjust to minimize error in the images&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;reprojection-error&quot;&gt;Reprojection Error&lt;/h2&gt;
+
+\[^a\mathbf{x}_{ij}'+^a\hat{\mathbf{v}}_{x_{ij}'}=\hat{\lambda}_{ij} ^a\hat{P}_j(x_{ij}, \mathbf{p}, \mathbf{q})\hat{\mathbf{X}}_i\]
+
+&lt;ul&gt;
+  &lt;li&gt;Left hand side : Point’s actual coordinates in the image coordinate system + error&lt;/li&gt;
+  &lt;li&gt;Right hand side : Projection of estimated 3D point in the image coordinate system&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;with&lt;/p&gt;
+
+\[\Sigma_{x_{ij}, x_{ij}}, i=1, \dots, I_j; j=1, \dots, J\]
+
+&lt;ul&gt;
+  &lt;li&gt;\(^a\) : arbitrary frame&lt;/li&gt;
+  &lt;li&gt;\(_{ij}\) : point \(i\) observed in image \(j\)&lt;/li&gt;
+  &lt;li&gt;\(\hat{\mathbf{v}}\) : corrections (error)&lt;/li&gt;
+  &lt;li&gt;\(\hat{\mathbf{X}}_i\) : Estimated 3D location of the point \(i\) (guess) in homogeneous coordinate&lt;/li&gt;
+  &lt;li&gt;\(^a\hat{P}_j\) : Projection matrix
+    &lt;ul&gt;
+      &lt;li&gt;\(\mathbf{x}_{ij}\) : image pixel coordinate&lt;/li&gt;
+      &lt;li&gt;\(\mathbf{p}\) : projection parameters : intrinsic parameters (typically 5)&lt;/li&gt;
+      &lt;li&gt;\(\mathbf{q}\) : distortion&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;\(\hat{\lambda}\) : Scale factor&lt;/li&gt;
+  &lt;li&gt;\(\Sigma_{x_{ij}}\) : uncertainty in the image coordinates
+    &lt;ul&gt;
+      &lt;li&gt;\(I_j\) : number of points in image j&lt;/li&gt;
+      &lt;li&gt;\(J\) : number of images&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Encodes the camera &lt;strong&gt;projection&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Error is the distance between each projected 3D and measured 2D point&lt;/li&gt;
+  &lt;li&gt;Encodes the &lt;strong&gt;collinearity constraint&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Known&lt;/strong&gt; data association (Strong assumption: We know the exact matches)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;unknonwns&quot;&gt;Unknonwns&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;3D locations of new points \(\hat{\mathbf{X}}_{i}\)&lt;/li&gt;
+  &lt;li&gt;1D scale factor \(\hat{\lambda}_{ij}\)&lt;/li&gt;
+  &lt;li&gt;6D exterior orientation (camera location and orientation)&lt;/li&gt;
+  &lt;li&gt;5D projection parameters (intrinsic parameters \(\mathbf{p}\))&lt;/li&gt;
+  &lt;li&gt;Nonlinear distortion parameters \(\mathbf{q}\)&lt;/li&gt;
+&lt;/ul&gt;
+
+\[^a\hat{P}_k(x_{ij}, \mathbf{p}, \mathbf{q}) = \hat{K}(x_{ij}, \hat{\mathbf{p}}, \hat{\mathbf{q}})\hat{R}_j[I_3 \vert-\hat{X}_{0j}]\]
+
+&lt;ul&gt;
+  &lt;li&gt;\(\hat{K}(x_{ij}, \hat{\mathbf{p}}, \hat{\mathbf{q}})\) : Calibration (interior orientation)&lt;/li&gt;
+  &lt;li&gt;\(\hat{R}_j[I_3 \vert -\hat{X}_{0j}]\) : Exterior orientation&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;eliminating-the-scale-factors&quot;&gt;Eliminating the Scale Factors&lt;/h2&gt;
+
+\[^a\mathbf{x}_{ij}'+^a\hat{\mathbf{v}}_{x_{ij}'}=\hat{\lambda}_{ij} ^a\hat{P}_j(x_{ij}, \mathbf{p}, \mathbf{q})\hat{\mathbf{X}}_i\\\]
+
+&lt;p&gt;to&lt;/p&gt;
+
+\[^ax_{ij}'+^a\hat{v}_{x_{ij}'}=\frac{^a\hat{P}_{1:2,j}(x_{ij}, \mathbf{p}, \mathbf{q})\hat{\mathbf{X}}_i}{^a\hat{P}_{3,j}(x_{ij}, \mathbf{p}, \mathbf{q})\hat{\mathbf{X}}_i}\\\]
+
+&lt;p&gt;By diving the first two elements by third element (Homogeneous coordinates to &lt;strong&gt;Euclidean&lt;/strong&gt; coordinates - Drastically reduce unknowns)&lt;/p&gt;
+
+&lt;h2 id=&quot;setting-up-and-solving-the-system-of-normal-equations&quot;&gt;Setting Up and Solving the System of Normal Equations&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Standard procedure in least squares estimation community&lt;/li&gt;
+  &lt;li&gt;with unknowns \(\mathbf{x}\) and observations \(\mathbf{l}\)&lt;/li&gt;
+  &lt;li&gt;Setting upt the normal equations&lt;/li&gt;
+&lt;/ul&gt;
+
+\[A^\top \Sigma^{-1} A \Delta\mathbf{x} = A^\top \Sigma^{-1} \Delta\mathbf{l}\]
+
+&lt;ul&gt;
+  &lt;li&gt;This yields the estimate&lt;/li&gt;
+&lt;/ul&gt;
+
+\[\hat{\Delta\mathbf{x}}=(A^\top \Sigma^{-1} A)^{-1} A^\top\Sigma^{-1} \Delta\mathbf{l}\]
+
+&lt;p&gt;where&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;\(A\) : Jacobian&lt;/li&gt;
+  &lt;li&gt;\(\Sigma\) : Information Matrix&lt;/li&gt;
+  &lt;li&gt;Get the update to the unknown parameters (change), and this way we can solve this by iterative way&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;optimality&quot;&gt;Optimality&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;BA is &lt;strong&gt;statistically optimal&lt;/strong&gt; : under some assumptions&lt;/li&gt;
+  &lt;li&gt;Exploits all observations and considers the uncertainties and correlations&lt;/li&gt;
+  &lt;li&gt;Exploits all available information&lt;/li&gt;
+  &lt;li&gt;Computes orientations, calibration parameters, and point locations with highest precision&lt;/li&gt;
+  &lt;li&gt;Assumes Gaussian noise&lt;/li&gt;
+  &lt;li&gt;Requires an initial estimate&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;absolute-orientation-through-control-points&quot;&gt;Absolute Orientation Through Control Points&lt;/h2&gt;
+
+&lt;p&gt;Absolute orientation was the task of anchoring the model into the real world&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Reconstruction only with the images gives us so-called photogrammetric model
+    &lt;ul&gt;
+      &lt;li&gt;Model that is only defined up to a similarity transform&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;We want to know the absolute scale&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;control-points&quot;&gt;Control Points&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Assume that some of the points are control points (known coordinates in the real world)&lt;/li&gt;
+&lt;/ul&gt;
+
+\[\mathbf{X}_i + \hat{\mathbf{v}}_{\mathbf{X}_i} = \hat{\mathbf{X}}_i\]
+
+&lt;p&gt;Provided Coordinates + Correct = Estimated Coordinate&lt;/p&gt;
+
+&lt;p&gt;with&lt;/p&gt;
+
+\[\Sigma_{\mathbf{X}_i, \mathbf{X}_i}, i=1,\dots, I_{CP}\]
+
+&lt;p&gt;\(I_{CP}\) : Number of control points&lt;/p&gt;
+
+&lt;p&gt;We can treat the control points noisy or noise free under different objective functions.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Statistically optimal approach&lt;/strong&gt; : consider that C.P.s are noisy&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;BA with fixed C.P.&lt;/strong&gt; : consider that C.P.s are noise free (enforce the geometry to match the C.P.)
+    &lt;ul&gt;
+      &lt;li&gt;Link to a ground truth map&lt;/li&gt;
+      &lt;li&gt;Statistically suboptimal approach&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;two-step-ba-with-control-points&quot;&gt;Two Step BA with Control Points&lt;/h2&gt;
+
+&lt;p&gt;Step 1.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;BA with noisy control points&lt;/li&gt;
+  &lt;li&gt;Search for gross errors using statistical tests&lt;/li&gt;
+&lt;/ul&gt;
+
+\[T = \hat{v}_{X_i}^\top \Sigma_{\hat{v}_{X_i}, \hat{v}_{X_i}}^{-1} \hat{v}_{X_i} ~ \chi_3^2\]
+
+&lt;ul&gt;
+  &lt;li&gt;See the uncertainties of the control points aligned with defined uncertainty&lt;/li&gt;
+  &lt;li&gt;Eliminate erroneous control points&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Step 2.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;BA with fixed control points&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-many-control-points&quot;&gt;How Many Control Points?&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;For DLT or P3P solutions, we need 3~6 control points per image pair&lt;/li&gt;
+  &lt;li&gt;Only a small number of control points is needed&lt;/li&gt;
+  &lt;li&gt;Typically full C.P.s at the boundaries&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;initial-guess&quot;&gt;Initial Guess&lt;/h2&gt;
+
+&lt;p&gt;As all the nonlinear optimization problems need it, BA also requires some initial guesses&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Orientation of the image pair with a direct method&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;No direct solution is known for N views&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Direct solution means we don’t need an initial guess&lt;/li&gt;
+  &lt;li&gt;We can use those tools for initial guess (successive measure)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;computing-an-initial-guess&quot;&gt;Computing an Initial Guess&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Compute relative orientation from the first image pair&lt;/li&gt;
+  &lt;li&gt;Compute orientation for subsequent images through P3P/RRS&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Problems&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;We might have a good chance of loosing track between images&lt;/li&gt;
+  &lt;li&gt;Cross error handling is essential&lt;/li&gt;
+  &lt;li&gt;Requres enough new points in each image overlap&lt;/li&gt;
+  &lt;li&gt;No singular/critical configurations&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;outliers&quot;&gt;Outliers&lt;/h2&gt;
+
+&lt;h2 id=&quot;gross-errors--outliers&quot;&gt;Gross Errors / Outliers&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Reasons for gross errors
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;Wrong correspondences&lt;/strong&gt;&lt;/li&gt;
+      &lt;li&gt;Wrong point measurement&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;How many observations per point do we need to deal with outliers?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;At least 4 views to identify the observation with a gross error&lt;/li&gt;
+  &lt;li&gt;Observed points from 5~6 different views typically yield good estimates&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;eliminating-gross-errors&quot;&gt;Eliminating Gross Errors&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Decompose the problem into several small blocks of 3~6 images first&lt;/li&gt;
+  &lt;li&gt;Check for gross errors in the small blocks using statistical tests&lt;/li&gt;
+  &lt;li&gt;Only consider features that can be tracked consistently in all 3~6 images&lt;/li&gt;
+  &lt;li&gt;Relative orientation (5 point algorithm) combined with RANSAC&lt;/li&gt;
+  &lt;li&gt;Eliminate gross errors, and then run full BA&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;robust-kernels&quot;&gt;Robust Kernels&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Instead of using a Gaussian noise model, consider a robustified version&lt;/li&gt;
+  &lt;li&gt;Reduce “penalty” far away zero&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/images/BA_pt1/Kernels.png&quot; alt=&quot;BA_image&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A Robust kernel leads to a weight in LS&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;quality-of-result&quot;&gt;Quality of Result&lt;/h2&gt;
+
+&lt;h2 id=&quot;precision&quot;&gt;Precision&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;We can compute the theoretical precision&lt;/li&gt;
+&lt;/ul&gt;
+
+\[\Sigma_{\hat{x}\hat{x}}=(A^\top \Sigma_{ll}^{-1}A)^{-1}\]
+
+&lt;ul&gt;
+  &lt;li&gt;as well as the emperical precision through the variance factor&lt;/li&gt;
+&lt;/ul&gt;
+
+\[\hat{\Sigma}_{\hat{x}\hat{x}} = \hat{\sigma}_0^2(A^\top\Sigma_{ll}^{-1}A)^{-1}\]
+
+&lt;h2 id=&quot;variance-factor&quot;&gt;Variance Factor&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Does a variance factor take a value around 1?
+    &lt;ul&gt;
+      &lt;li&gt;\(\hat{\sigma}_0=1\) suggests a correct model&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Use a &lt;strong&gt;statistical test&lt;/strong&gt; to judge the variance factor&lt;/li&gt;
+  &lt;li&gt;In practice, a &lt;strong&gt;F-test often fails&lt;/strong&gt; due to the high redundancy&lt;/li&gt;
+&lt;/ul&gt;
+
+\[T = \frac{\hat{\sigma}_l^2}{\underline{\sigma}^2} ~ F(R, \infty), e.g., R = 10000\]
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;The uncertainty in the assumed measurement noise has to be considered&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Can use the F-test by changing the redundancy based on the measurement uncertainty&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;precision-1&quot;&gt;Precision&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;With eliminated gross error&lt;/li&gt;
+  &lt;li&gt;small systematic errors&lt;/li&gt;
+  &lt;li&gt;and \(\hat{\sigma}_0=1\)&lt;/li&gt;
+  &lt;li&gt;we obtain a realistic estimate for the precision of the parameters&lt;/li&gt;
+&lt;/ul&gt;
+
+\[\hat{\Sigma}_{\hat{x}\hat{x}} = \hat{\sigma}_0^2(A^\top\Sigma_{ll}^{-1}A)^{-1}\]</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">Source Lecture by Cyrill Stachniss</summary></entry><entry><title type="html">[GTSAM] Making simple custom node and factor</title><link href="http://localhost:4000/slam/2020-11-12-gtsam_custom/" rel="alternate" type="text/html" title="[GTSAM] Making simple custom node and factor" /><published>2020-11-12T00:00:00+09:00</published><updated>2020-11-12T00:00:00+09:00</updated><id>http://localhost:4000/slam/gtsam_custom</id><content type="html" xml:base="http://localhost:4000/slam/2020-11-12-gtsam_custom/">&lt;h2 id=&quot;defining-a-node&quot;&gt;Defining a node&lt;/h2&gt;
+&lt;p&gt;GTSAM objects:
+LieGroup \(\subset\) Manifold \(\subset\) Testble&lt;/p&gt;
+
+&lt;p&gt;Required functions for each sets:&lt;/p&gt;
+
+&lt;p&gt;LieGroup:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Identity, Logmap, Expmap, Compose, Between, Inverse&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Manifold:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;dimension, GetDimension, Local, Retract&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Testble:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Equal, Print&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Custom node which we are going to make is in Manifold set, so we need to define&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Equal, Print, dimension, GetDimension, Local, Retract&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;defining-a-factor&quot;&gt;Defining a factor&lt;/h2&gt;
+
+&lt;p&gt;Let’s say the state is a N dimensional vector, \(\begin{bmatrix}
+s_1&amp;amp;s_2&amp;amp;s_3&amp;amp;\dots&amp;amp;s_N
+\end{bmatrix}^\top\)&lt;/p&gt;
+
+&lt;p&gt;and a measurement is a M dimensional vector:\(\begin{bmatrix}
+m_1&amp;amp;m_2&amp;amp;m_3&amp;amp;\dots&amp;amp;m_M
+\end{bmatrix}^\top\)&lt;/p&gt;
+
+&lt;p&gt;Let’s say that the measurement is a between factor which relates two states:&lt;/p&gt;
+
+\[\mathbf{m_k} = h(\mathbf{s_i}, \mathbf{s_j})\]
+
+&lt;p&gt;For graph SLAM, we need to define the jacobian of measurement with respect to both states, and error between the expected measurement and actual measurement (kinda similar to ‘innovation’ term in Kalman filter).&lt;/p&gt;
+
+&lt;p&gt;So, for the jacobian of the measurement for the base state:&lt;/p&gt;
+
+\[H_1 =\begin{bmatrix}
+\frac{\partial m_{k1}}{\partial s_{i1}} &amp;amp; \frac{\partial m_{k1}}{\partial s_{i2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{k1}}{\partial s_{iN}} \\
+\frac{\partial m_{k2}}{\partial s_{i1}} &amp;amp; \frac{\partial m_{k2}}{\partial s_{i2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{k2}}{\partial s_{iN}} \\
+\vdots &amp;amp; \vdots &amp;amp;  &amp;amp; \vdots \\
+\frac{\partial m_{kM}}{\partial s_{i1}} &amp;amp; \frac{\partial m_{kM}}{\partial s_{i2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{kM}}{\partial s_{iN}}
+\end{bmatrix}_{M \times N}\]
+
+&lt;p&gt;and the jacobian for the target state:&lt;/p&gt;
+
+\[H_2 =\begin{bmatrix}
+\frac{\partial m_{k1}}{\partial s_{j1}} &amp;amp; \frac{\partial m_{k1}}{\partial s_{j2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{k1}}{\partial s_{jN}} \\
+\frac{\partial m_{k2}}{\partial s_{j1}} &amp;amp; \frac{\partial m_{k2}}{\partial s_{j2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{k2}}{\partial s_{jN}} \\
+\vdots &amp;amp; \vdots &amp;amp;  &amp;amp; \vdots \\
+\frac{\partial m_{kM}}{\partial s_{j1}} &amp;amp; \frac{\partial m_{kM}}{\partial s_{j2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{kM}}{\partial s_{jN}}
+\end{bmatrix}_{M \times N}\]
+
+&lt;p&gt;And the error is defined as:&lt;/p&gt;
+
+\[\mathbf{v} = h(\mathbf{s_i}, \mathbf{s_j}) - \mathbf{m_k}\]
+
+&lt;p&gt;Per optimization step, each jacobian matrix indicates which direction should the values be changed, and the error vector indicates how much should the values be changed.&lt;/p&gt;
+
+&lt;p&gt;This can be adapted to connect between any nodes; let’s say there’s a N dimensional node \(\mathbf{s}\), K dimensional node \(\mathbf{r}\) and a M dimensional measurement which connect between those nodes \(\mathbf{m}\) (e.g. \(\mathbf{s}\) is a state, \(\mathbf{m}\) is a measurement and \(\mathbf{r}\) is a corresponding landmark).&lt;/p&gt;
+
+&lt;p&gt;Similarly:&lt;/p&gt;
+
+\[H_1 =\begin{bmatrix}
+\frac{\partial m_{k1}}{\partial s_{i1}} &amp;amp; \frac{\partial m_{k1}}{\partial s_{i2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{k1}}{\partial s_{iN}} \\
+\frac{\partial m_{k2}}{\partial s_{i1}} &amp;amp; \frac{\partial m_{k2}}{\partial s_{i2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{k2}}{\partial s_{iN}} \\
+\vdots &amp;amp; \vdots &amp;amp;  &amp;amp; \vdots \\
+\frac{\partial m_{kM}}{\partial s_{i1}} &amp;amp; \frac{\partial m_{kM}}{\partial s_{i2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{kM}}{\partial s_{iN}}
+\end{bmatrix}_{M \times N}, 
+H_2 =\begin{bmatrix}
+\frac{\partial m_{k1}}{\partial r_{j1}} &amp;amp; \frac{\partial m_{k1}}{\partial r_{j2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{k1}}{\partial r_{jK}} \\
+\frac{\partial m_{k2}}{\partial r_{j1}} &amp;amp; \frac{\partial m_{k2}}{\partial r_{j2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{k2}}{\partial r_{jK}} \\
+\vdots &amp;amp; \vdots &amp;amp;  &amp;amp; \vdots \\
+\frac{\partial m_{kM}}{\partial r_{j1}} &amp;amp; \frac{\partial m_{kM}}{\partial r_{j2}} &amp;amp; \dots &amp;amp; \frac{\partial m_{kM}}{\partial r_{jK}}
+\end{bmatrix}_{M \times K}\]
+
+&lt;p&gt;and error:&lt;/p&gt;
+
+\[\mathbf{v} = f(\mathbf{s_i}, \mathbf{r_j}) - \mathbf{m_k}\]</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html">Defining a node GTSAM objects: LieGroup \(\subset\) Manifold \(\subset\) Testble</summary></entry><entry><title type="html">[Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…)</title><link href="http://localhost:4000/papers/2020-10-03-ElasticFusion/" rel="alternate" type="text/html" title="[Paper Review] ElasticFusion: Dense SLAM Without A Pose Graph (RSS 2015) (Writing…)" /><published>2020-10-03T00:00:00+09:00</published><updated>2020-10-03T00:00:00+09:00</updated><id>http://localhost:4000/papers/ElasticFusion</id><content type="html" xml:base="http://localhost:4000/papers/2020-10-03-ElasticFusion/">&lt;p&gt;ElasticFusion: Dense SLAM Without A Pose Graph&lt;/p&gt;
+
+&lt;p&gt;Thomas Whelan et al. (Dyson Robotics Laboratory at Imperial College London)&lt;/p&gt;
+
+&lt;h2 id=&quot;abstract&quot;&gt;Abstract&lt;/h2&gt;
+
+&lt;p&gt;We present a novel approach to real-time &lt;strong&gt;dense visual SLAM&lt;/strong&gt;. Our system is capable of capturing comprehensive &lt;strong&gt;dense globally consistent surfel-based maps&lt;/strong&gt; of room scale envi-ronments explored using an &lt;strong&gt;RGB-D camera&lt;/strong&gt; in an incremental online fashion, &lt;strong&gt;without pose graph optimisation&lt;/strong&gt; or any post-processing steps. This is accomplished by using dense &lt;strong&gt;frame-to-model camera tracking and windowed surfel-based fusion&lt;/strong&gt; coupled with &lt;strong&gt;frequent model refinement&lt;/strong&gt; through &lt;strong&gt;non-rigid surface deformations&lt;/strong&gt;. Our approach applies local &lt;strong&gt;model-to-model surface loop closure optimisations&lt;/strong&gt; as often as possible to stay close to the
+mode of the map distribution, while utilising global loop closure to recover from arbitrary drift and maintain global consistency.&lt;/p&gt;
+
+&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Existing dense SLAM methods suitable for iincremental, real-time operation struggle when the sensor makes movements which are both of&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;extended duration and often&lt;/li&gt;
+  &lt;li&gt;criss-cross loop back on themselves (painting motion)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;SLAM algorithms have too often targeted one of two extrems:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;either extremely loopy motion in a very small area&lt;/li&gt;
+  &lt;li&gt;corridor like motion on much larger scales but with fewer loop closures&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;이러한 SLAM Scenario들은 Dense vision frontend을 가진 SLAM에서는 문제가 될 수 있다!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Dense vision frontend -&amp;gt; No. of points matched is much hier than feature-based systems:&lt;br /&gt;
+Makes joint filtering or bundle adjustment computationally infeasible:&lt;br /&gt;
+Dense frontend have relied on alternation and effectively per-surface-element-independent filtering&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Enormous weight of data serves to overpower the approximations to joint filtering which this assumes&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;This also raises the question as to whether it is optimal to attach a dense frontend to a sparse pose graph structure like its feature-based visual SLAM counterpart&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Pose graph SLAM systems primarily focus on: &lt;strong&gt;Optimising the camera trajectory&lt;/strong&gt;&lt;br /&gt;
+Whereas our approach (&lt;strong&gt;utilising a deformation graph&lt;/strong&gt;): &lt;strong&gt;Focus on optimising the map&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;기존의 Pose graph system은 Pose estimation (trajectory)에 집중한 반면, 여기선 Map optimisation에 집중한다&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;related-work&quot;&gt;Related work&lt;/h3&gt;
+&lt;p&gt;Utilising pose graphs&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Whelan et al., parameteries a non-rigid surface deformation with an optimised pose graph to perform occasional loop closures in corridor-like trajectories
+    &lt;ul&gt;
+      &lt;li&gt;Scale well, but perform poorly given locally loopy trajectories while being &lt;strong&gt;unable to re-use revisited areas of the map&lt;/strong&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;DVO SLAM, keyfromae-based pose graph optimisation
+    &lt;ul&gt;
+      &lt;li&gt;Performs no explicit map reconstruction and functions off of raw keyframes alone&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Meilland and Comport, unified keyframes: utilises fused predicted 2.5D keyframes of mapped environtments while employing pose graph optimization to close large loops and align keyframes
+    &lt;ul&gt;
+      &lt;li&gt;not creating an explicit continuous 3D surface&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;MRSMap, registers octree encoded surfel maps together for pose estimation
+    &lt;ul&gt;
+      &lt;li&gt;After pose graph optimisation the final map is created by merging key surfel views&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;in-our-system&quot;&gt;In our system&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Move away from the focus of pose graph originally grounded in sparse methods&lt;/li&gt;
+  &lt;li&gt;Move towards a more map-centric approach&lt;/li&gt;
+  &lt;li&gt;Similar to Zhou et al, but runs in real time&lt;/li&gt;
+  &lt;li&gt;Attempt to apply &lt;strong&gt;surface loop closure optimisations early and often&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Always stay near to the &lt;strong&gt;mode of the map distribution&lt;/strong&gt;
+        &lt;ul&gt;
+          &lt;li&gt;Allow to employ a &lt;em&gt;non-rigid space deformation&lt;/em&gt; of the map using a sparse &lt;em&gt;deformation graph&lt;/em&gt; embedded in the surface itself&lt;/li&gt;
+          &lt;li&gt;Rather than a probabilistic pose graph which &lt;em&gt;rigidly transforming independent keyframes&lt;/em&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;At the time of writing, this approach is the first of its kind of&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Use photometric and geometric frame-to-model predictive tracking in a fused surfel-based dense map&lt;/li&gt;
+  &lt;li&gt;Perform dense model-to-model local surface loop closures with a non-rigid space deformation&lt;/li&gt;
+  &lt;li&gt;Utilise a predicted surface appearance based place recognition method&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;approach-overview&quot;&gt;Approach overview&lt;/h2&gt;
+&lt;p&gt;Significant usage of GPU&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;CUDA to implement tracking&lt;/li&gt;
+  &lt;li&gt;OpenGL Shading Language for view prediction and map management&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Key elements&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Estimate a fused surfel-based model of the environment
+    &lt;ul&gt;
+      &lt;li&gt;Inspired by the surfel-based fusion system of Keller et al.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Segment older parts of the map which have not been observed into the inactive area
+    &lt;ul&gt;
+      &lt;li&gt;not used for tracking or data fusion&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Every frame attempt to register the portion of the active model within the current estimated camera frame&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">ElasticFusion: Dense SLAM Without A Pose Graph</summary></entry></feed>
