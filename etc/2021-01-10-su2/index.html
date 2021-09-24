@@ -39,22 +39,22 @@ Powered by Hydejack v9.0.5 <https://hydejack.com/>
   
     
 <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>Getting the rotation matrix between vectors | Dongha Chung</title>
+<title>SU(2) | Dongha Chung</title>
 <meta name="generator" content="Jekyll v3.9.0" />
-<meta property="og:title" content="Getting the rotation matrix between vectors" />
+<meta property="og:title" content="SU(2)" />
 <meta name="author" content="<Dongha> <Chung>" />
 <meta property="og:locale" content="en" />
-<meta name="description" content="Let’s find a rotation matrix which rotates a unit vector \(\mathbf{v}_1\) to a unit vector \(\mathbf{v}_2\)" />
-<meta property="og:description" content="Let’s find a rotation matrix which rotates a unit vector \(\mathbf{v}_1\) to a unit vector \(\mathbf{v}_2\)" />
-<link rel="canonical" href="http://localhost:4000/slam/2020-12-03-rot_mat_btw_vecs/" />
-<meta property="og:url" content="http://localhost:4000/slam/2020-12-03-rot_mat_btw_vecs/" />
+<meta name="description" content="Surfel measure factor fixing" />
+<meta property="og:description" content="Surfel measure factor fixing" />
+<link rel="canonical" href="http://localhost:4000/etc/2021-01-10-su2/" />
+<meta property="og:url" content="http://localhost:4000/etc/2021-01-10-su2/" />
 <meta property="og:site_name" content="Dongha Chung" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-12-03T00:00:00+09:00" />
+<meta property="article:published_time" content="2021-01-10T00:00:00+09:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Getting the rotation matrix between vectors" />
+<meta property="twitter:title" content="SU(2)" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/slam/2020-12-03-rot_mat_btw_vecs/","headline":"Getting the rotation matrix between vectors","dateModified":"2020-12-03T00:00:00+09:00","datePublished":"2020-12-03T00:00:00+09:00","author":{"@type":"Person","name":"<Dongha> <Chung>"},"description":"Let’s find a rotation matrix which rotates a unit vector \\(\\mathbf{v}_1\\) to a unit vector \\(\\mathbf{v}_2\\)","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/slam/2020-12-03-rot_mat_btw_vecs/"},"@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/etc/2021-01-10-su2/","headline":"SU(2)","dateModified":"2021-01-10T00:00:00+09:00","datePublished":"2021-01-10T00:00:00+09:00","author":{"@type":"Person","name":"<Dongha> <Chung>"},"description":"Surfel measure factor fixing","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/etc/2021-01-10-su2/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -237,17 +237,17 @@ Left here for reference, feel free to delete.
 
 
 
-<article id="post-slam-rot_mat_btw_vecs" class="page post mb6" role="article">
+<article id="post-etc-su2" class="page post mb6" role="article">
   <header>
     <h1 class="post-title flip-project-title">
       
-        Getting the rotation matrix between vectors
+        SU(2)
       
     </h1>
 
     <div class="post-date">
       
-      <time datetime="2020-12-03T00:00:00+09:00">03 Dec 2020</time>
+      <time datetime="2021-01-10T00:00:00+09:00">10 Jan 2021</time>
       
       
       
@@ -262,7 +262,7 @@ Left here for reference, feel free to delete.
 
 
 
-in <a href="/slam/" class="flip-title">SLAM</a>
+in <a href="/etc/" class="flip-title">etc.</a>
 
       
 
@@ -285,47 +285,44 @@ in <a href="/slam/" class="flip-title">SLAM</a>
 
 
 
-  <div class="hr pb0"></div>
+  
+    <p class="note-sm" >
+      Surfel measure factor fixing
+
+    </p>
+  
 
 
   </header>
 
   
-    <p>Let’s find a rotation matrix which rotates a unit vector \(\mathbf{v}_1\) to a unit vector \(\mathbf{v}_2\)</p>
+    <p>This article is based on the book Topology Geometry and Garuge Fields, 1997</p>
 
-<p>We can think about a vector \(\mathbf{k} = \mathbf{v}_1 \times \mathbf{v}_2\), which can also be expressed as \(\mathbf{k} = [\mathbf{v}_1]_\times\mathbf{v}_2\)</p>
+<p>Whilest I was studying how to utilize the unit normal vector in gtsam, I had to study more about its basics.</p>
 
-<p>where \([\mathbf{v}_1]_\times\) is a skew-symmetric matrix:</p>
+<p>SU(2) the Special unitary group</p>
 
-\[[\mathbf{v}_1]_\times = \begin{bmatrix}
-0 &amp; -v_{1_3} &amp; v_{1_2} \\
-v_{1_3} &amp; 0 &amp; -v_{1_1} \\
--v_{1_2} &amp; v_{1_1} &amp; 0
+<p>SO(3) the Special orthogonal group : the group of 3 by 3 matrices \(A\) that satisfies:</p>
+<ol>
+  <li>\(A^{-1} = A^{\top}\) and</li>
+  <li>\(det A = 1\).</li>
+</ol>
+
+<p>In physical meaning, it is a linear transformations that rotate \(\mathcal{R}^3\)</p>
+
+<p>With a normal vector \(\vec{n} = &lt;n_1, n_2, n_3&gt;\), and a scalar \(\phi\), Define a \(3 \times 3\) matrix \(R(\phi, \vec{n})\) by</p>
+
+\[R(\phi, \vec{n}) = I_{3\times 3} + (sin\phi)N + (1-cos\phi)N^2\]
+
+<p>where</p>
+
+\[N = \begin{bmatrix}
+0 &amp; -n_3 &amp; n_2 \\
+n^3 &amp; 0 &amp; -n_1 \\
+-n_2 &amp; n_1 &amp; 0
 \end{bmatrix}\]
 
-<p>From vector products, we can get the cosine and sine value of the angle between the vectors (geodesic angle), \(\theta\) as:</p>
-
-\[\begin{align*}
-cos(\theta) &amp;= \mathbf{v}_1 \cdot \mathbf{v}_2\\
-sin(\theta) &amp;= \lVert \mathbf{v}_1\times \mathbf{v}_2 \rVert = \lVert \mathbf{k} \rVert
-\end{align*}\]
-
-<p>From the figure below, we can figure out that</p>
-
-\[\mathbf{v}_2 = \mathbf{v}_1 + sin(\theta)(\mathbf{k}\times\mathbf{v}_1)+(1-cos(\theta))(\mathbf{k}\times(\mathbf{k}\times\mathbf{v}_1))\]
-
-<p>which can be expressed in a matrix form</p>
-
-\[\begin{align*}
-&amp;\mathbf{v}_2 = \mathbf{v}_1 + sin(\theta)([\mathbf{k}]_\times\mathbf{v}_1)+(1-cos(\theta))([\mathbf{k}]_\times([\mathbf{k}]_\times\mathbf{v}_1))\\
-=&amp;(I+sin(\theta)[\mathbf{k}]_\times+(1-cos(\theta))[\mathbf{k}]_\times^2)\mathbf{v}_1
-\end{align*}\]
-
-<p><img src="/assets/images/gravity_odom_correction/v1_to_v2.png" alt="v1 to v2" /></p>
-
-<p>Since we want to find a rotation matrix \(R\) which satisfies \(R\mathbf{v}_1 = \mathbf{v}_2\), \(R\) can be expressed as:</p>
-
-\[R = I + sin(\theta)[\mathbf{k}]_\times + (1-cos(\theta))[\mathbf{k}]_\times^2\]
+<p>This matrix rotates the standard basis for \(\mathcal{R}^3\) through angle \(\phi\) about the axis along \(\vec{n}\) in the sense determined by the right-hand rule.</p>
 
   
 </article>
@@ -431,6 +428,30 @@ sin(\theta) &amp;= \lVert \mathbf{v}_1\times \mathbf{v}_2 \rVert = \lVert \mathb
 
 
     
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.linkedin.com/in/dongha-chung-b7a538bb" title="LinkedIn" class="no-mark-external">
+      <span class="icon-linkedin2"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  </li>
+
+
+    
   
 </ul>
 
@@ -449,7 +470,7 @@ sin(\theta) &amp;= \lVert \mathbf{v}_1\times \mathbf{v}_2 \rVert = \lVert \mathb
     
 
 
-  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/papers/2021-09-21-GPU_Lidar/" class="flip-title"><span>[Lidar SLAM] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors</span></a>  <time class="faded fine" datetime="2021-09-21T00:00:00+09:00">21 Sep 2021</time></li>                        <li class="h4">  <a href="/etc/2021-01-11-install_gtsam/" class="flip-title"><span>Installing GTSAM</span></a>  <time class="faded fine" datetime="2021-01-11T00:00:00+09:00">11 Jan 2021</time></li>                        <li class="h4">  <a href="/rlog/2021-01-10-rlog/" class="flip-title"><span>SU(2)</span></a>  <time class="faded fine" datetime="2021-01-10T00:00:00+09:00">10 Jan 2021</time></li>            </ul></aside>
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/papers/2021-09-24-ScanContext/" class="flip-title"><span>[2018 IROS] Scan Context: Egocentric Spatial Descriptor for Place Recognition within 3D Point Cloud Map</span></a>  <time class="faded fine" datetime="2021-09-24T00:00:00+09:00">24 Sep 2021</time></li>                        <li class="h4">  <a href="/log/2021-09-24-logging/" class="flip-title"><span>Restart Logging!</span></a>  <time class="faded fine" datetime="2021-09-24T00:00:00+09:00">24 Sep 2021</time></li>                        <li class="h4">  <a href="/etc/2021-09-23-PCL_ROS/" class="flip-title"><span>Publishing extra information using pcl Pointcloud and ros Pointcloud2</span></a>  <time class="faded fine" datetime="2021-09-23T00:00:00+09:00">23 Sep 2021</time></li>            </ul></aside>
 
   
 
@@ -543,11 +564,11 @@ sin(\theta) &amp;= \lVert \mathbf{v}_1\times \mathbf{v}_2 \rVert = \lVert \mathb
       <li>
         <a
           
-          href="/slam/"
+          href="/papers/"
           class="sidebar-nav-item "
           
         >
-          SLAM
+          Paper Review
         </a>
       </li>
     
@@ -555,11 +576,11 @@ sin(\theta) &amp;= \lVert \mathbf{v}_1\times \mathbf{v}_2 \rVert = \lVert \mathb
       <li>
         <a
           
-          href="/others/"
+          href="/slam/"
           class="sidebar-nav-item "
           
         >
-          Others
+          SLAM
         </a>
       </li>
     
@@ -579,11 +600,11 @@ sin(\theta) &amp;= \lVert \mathbf{v}_1\times \mathbf{v}_2 \rVert = \lVert \mathb
       <li>
         <a
           
-          href="/rlog/"
+          href="/log/"
           class="sidebar-nav-item "
           
         >
-          Research Log
+          Logging
         </a>
       </li>
     
@@ -591,11 +612,11 @@ sin(\theta) &amp;= \lVert \mathbf{v}_1\times \mathbf{v}_2 \rVert = \lVert \mathb
       <li>
         <a
           
-          href="/papers/"
+          href="/allposts/"
           class="sidebar-nav-item "
           
         >
-          Paper Review
+          All Posts
         </a>
       </li>
     
@@ -653,6 +674,30 @@ sin(\theta) &amp;= \lVert \mathbf{v}_1\times \mathbf{v}_2 \rVert = \lVert \mathb
     <a href="https://www.youtube.com/channel/UC2MeUdGRQws1YhdQt0wf_vA/" title="YouTube" class="no-mark-external">
       <span class="icon-youtube"></span>
       <span class="sr-only">YouTube</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.linkedin.com/in/dongha-chung-b7a538bb" title="LinkedIn" class="no-mark-external">
+      <span class="icon-linkedin2"></span>
+      <span class="sr-only">LinkedIn</span>
     </a>
   </li>
 

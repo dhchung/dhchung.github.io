@@ -39,22 +39,22 @@ Powered by Hydejack v9.0.5 <https://hydejack.com/>
   
     
 <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>[Lidar SLAM] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors | Dongha Chung</title>
+<title>[2021 RAL] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors | Dongha Chung</title>
 <meta name="generator" content="Jekyll v3.9.0" />
-<meta property="og:title" content="[Lidar SLAM] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors" />
+<meta property="og:title" content="[2021 RAL] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors" />
 <meta name="author" content="<Dongha> <Chung>" />
 <meta property="og:locale" content="en" />
-<meta name="description" content="Surfel measure factor fixing" />
-<meta property="og:description" content="Surfel measure factor fixing" />
+<meta name="description" content="2021 RAL paper on LiDAR SLAM using VGICP on GPU" />
+<meta property="og:description" content="2021 RAL paper on LiDAR SLAM using VGICP on GPU" />
 <link rel="canonical" href="http://localhost:4000/papers/2021-09-21-GPU_Lidar/" />
 <meta property="og:url" content="http://localhost:4000/papers/2021-09-21-GPU_Lidar/" />
 <meta property="og:site_name" content="Dongha Chung" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-09-21T00:00:00+09:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="[Lidar SLAM] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors" />
+<meta property="twitter:title" content="[2021 RAL] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/papers/2021-09-21-GPU_Lidar/","headline":"[Lidar SLAM] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors","dateModified":"2021-09-21T00:00:00+09:00","datePublished":"2021-09-21T00:00:00+09:00","author":{"@type":"Person","name":"<Dongha> <Chung>"},"description":"Surfel measure factor fixing","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/papers/2021-09-21-GPU_Lidar/"},"@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/papers/2021-09-21-GPU_Lidar/","headline":"[2021 RAL] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors","dateModified":"2021-09-21T00:00:00+09:00","datePublished":"2021-09-21T00:00:00+09:00","author":{"@type":"Person","name":"<Dongha> <Chung>"},"description":"2021 RAL paper on LiDAR SLAM using VGICP on GPU","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/papers/2021-09-21-GPU_Lidar/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -241,7 +241,7 @@ Left here for reference, feel free to delete.
   <header>
     <h1 class="post-title flip-project-title">
       
-        [Lidar SLAM] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors
+        [2021 RAL] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors
       
     </h1>
 
@@ -287,7 +287,7 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
 
   
     <p class="note-sm" >
-      Surfel measure factor fixing
+      2021 RAL paper on LiDAR SLAM using VGICP on GPU
 
     </p>
   
@@ -296,8 +296,7 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
   </header>
 
   
-    <h2 id="2021-ra-letters">2021 RA-Letters</h2>
-<h3 id="researchers-at-aist-japan-first-author-kenji-koide">Researchers at AIST, Japan. First Author: Kenji Koide</h3>
+    <h3 id="researchers-at-aist-japan-first-author-kenji-koide">Researchers at AIST, Japan. First Author: Kenji Koide</h3>
 
 <p><img src="/papers/images/20210921_1.png" alt="Mapping" width="100%" height="100%" class="center" /></p>
 
@@ -456,6 +455,48 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
 
 <p>그 후 resolution \(r^G\)인 voxel map submap을 기반으로 생성되어 global mapping module로 들어가게 된다.</p>
 
+<h4 id="global-mapping">Global Mapping</h4>
+
+<p>앞서 언급된 Local Mapping을 통해 얻어진 새로운 submap이 들어올 때 마다 기존에 생성된 submap들과의 overlap matric을 계산해 특정값(여기선 무려 2.5%!!) 이상일 경우 constraint를 적용한다. 이는 densely connected factor graph를 형성한다; scan matching이 실패하는 부분도 모두 matching cost factor를 형성하여 deficient constraint를 형성할 수 있으나, 전체 시스템이 다른 factor로 인해 well constrained 되어 있기에 큰 영향을 주지 않는다. (이부분이 완벽히 이해가 되지는 않는데.. matching cost factor는 말 그대로 상태에 대한 어떤 cost를 반환하는 반면 scan matching은 잘못되었든 잘 되었든 하나의 값을 그냥 던져줘서 문제가 될 수 있다고 생각됨..!)</p>
+
+<p align="center">
+  <img src="../images/20210921_4.png" alt="Matching cost factor &amp; scan matching" />
+</p>
+
+<p>이러한 matching cost factor는 local solution에 갇힐 수 있어 explicit 한 loop closure detector를 사용하여 SE3 relative pose constraint를 더하며, objective function은 다음과 같다.</p>
+
+<p>\(f^{G}(\mathcal{T})\) \(= f^M(\mathcal{F}_G^M, \mathcal{T}) + f^{L}(\mathcal{F}_G^L, \mathcal{T})\)</p>
+
+<p>여기서 \(f^M(\mathcal{F}_G^M, \mathcal{T})\)는 local mapping과 비슷하게 submap간 cost function이고</p>
+
+<p>\(f^{L}(\mathcal{F}^L, \mathcal{T})\) \(= \sum_{(i,j)\in\mathcal{F}^L} \rho \left( {\lVert log(\hat{\mathbf{T}}_{ij}^{-1} \mathbf{T}_i^{-1}\mathbf{T}_{j}) \rVert}^{2} \right)\)</p>
+
+<p>\(\mathcal{F}_G^L\)은 loop detection 찾아낸 submap index pair들, \(\hat{\mathbf{T}}_{ij}\) 은 relative pose measurement (loop detection으로 찾은건지 아니면 다른건지는 명시되어있지 않으나 \(\hat{}\)이 들어간 것으로 보아 loop detection이지 않을까 싶다), 그리고 \(\rho\)는 robust kernel이라고 한다.</p>
+
+<p align="center">
+  <img src="../images/20210921_5.png" alt="Shifted Tukey's biweight function" />
+</p>
+
+<p>Robust kernel (\(\rho\))에 대해서는 위와 같은 shifted Tukey’s robust kernel로 정의되는데, current estimate가 loop constraint를 만족시키는 경우 (relative pose로 비교하는듯) matching cost function을 방해할 수 있기 때문에 (둘의 sum으로 이루어졌기에 이 사이 조절이 힘든가? 암튼) loop closure constraint를 최소화하고, 너무 차이가 클 경우 outlier로 제외시킨다(loop closure의 실패로 간주). 이를 식으로 나타내면 다음과 같다.</p>
+
+<p>\(\text{tukey}(x,w)\) \(= max(0, (1-x^2 / w)^2)\)</p>
+
+<p>\(\text{shifted_tukey}(x,w,offset)\) \(=\text{tukey}(\lVert x-offset \rVert, w)\)</p>
+
+<p align="center">
+  <img src="../images/20210921_6.png" alt="Effect of loop closing" />
+</p>
+
+<h4 id="implementation-details">Implementation Details</h4>
+
+<p>Factor graph optimization을 위해 GTSAM의 Levenberg-Marquardt optimizer를 사용하였다. GPU 관련해서는 계산식들에 대해(주로 VGICP Matching Factor들) 적용하였다고 한다. (Factor graph가 dense한것과 관련이 있나? 아마 각 factor 계산이 어마어마하니까 dense해서 계산량이 많아져 GPU로 효과를 본게 아니라 각 factor 계산을 GPU로 하기에 효과를 봤다고 보는게 맞는건가.. 모르겠다)</p>
+
+<h3 id="evaluation">Evaluation</h3>
+
+<p>다른 SOTA algorithm들과 비교를 해놨는데, 이부분도 자세히 읽어보고 서술할 예정.</p>
+
+<p>TBW</p>
+
   
 </article>
 
@@ -560,6 +601,30 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
 
 
     
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.linkedin.com/in/dongha-chung-b7a538bb" title="LinkedIn" class="no-mark-external">
+      <span class="icon-linkedin2"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  </li>
+
+
+    
   
 </ul>
 
@@ -578,7 +643,7 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
     
 
 
-  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/etc/2021-01-11-install_gtsam/" class="flip-title"><span>Installing GTSAM</span></a>  <time class="faded fine" datetime="2021-01-11T00:00:00+09:00">11 Jan 2021</time></li>                        <li class="h4">  <a href="/rlog/2021-01-10-rlog/" class="flip-title"><span>SU(2)</span></a>  <time class="faded fine" datetime="2021-01-10T00:00:00+09:00">10 Jan 2021</time></li>                        <li class="h4">  <a href="/etc/2021-01-05-programming/" class="flip-title"><span>Segmentation Fault with Eigen Matrix</span></a>  <time class="faded fine" datetime="2021-01-05T00:00:00+09:00">05 Jan 2021</time></li>            </ul></aside>
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/papers/2021-09-24-ScanContext/" class="flip-title"><span>[2018 IROS] Scan Context: Egocentric Spatial Descriptor for Place Recognition within 3D Point Cloud Map</span></a>  <time class="faded fine" datetime="2021-09-24T00:00:00+09:00">24 Sep 2021</time></li>                        <li class="h4">  <a href="/log/2021-09-24-logging/" class="flip-title"><span>Restart Logging!</span></a>  <time class="faded fine" datetime="2021-09-24T00:00:00+09:00">24 Sep 2021</time></li>                        <li class="h4">  <a href="/etc/2021-09-23-PCL_ROS/" class="flip-title"><span>Publishing extra information using pcl Pointcloud and ros Pointcloud2</span></a>  <time class="faded fine" datetime="2021-09-23T00:00:00+09:00">23 Sep 2021</time></li>            </ul></aside>
 
   
 
@@ -672,11 +737,11 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
       <li>
         <a
           
-          href="/slam/"
+          href="/papers/"
           class="sidebar-nav-item "
           
         >
-          SLAM
+          Paper Review
         </a>
       </li>
     
@@ -684,11 +749,11 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
       <li>
         <a
           
-          href="/others/"
+          href="/slam/"
           class="sidebar-nav-item "
           
         >
-          Others
+          SLAM
         </a>
       </li>
     
@@ -708,11 +773,11 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
       <li>
         <a
           
-          href="/rlog/"
+          href="/log/"
           class="sidebar-nav-item "
           
         >
-          Research Log
+          Logging
         </a>
       </li>
     
@@ -720,11 +785,11 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
       <li>
         <a
           
-          href="/papers/"
+          href="/allposts/"
           class="sidebar-nav-item "
           
         >
-          Paper Review
+          All Posts
         </a>
       </li>
     
@@ -782,6 +847,30 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
     <a href="https://www.youtube.com/channel/UC2MeUdGRQws1YhdQt0wf_vA/" title="YouTube" class="no-mark-external">
       <span class="icon-youtube"></span>
       <span class="sr-only">YouTube</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.linkedin.com/in/dongha-chung-b7a538bb" title="LinkedIn" class="no-mark-external">
+      <span class="icon-linkedin2"></span>
+      <span class="sr-only">LinkedIn</span>
     </a>
   </li>
 

@@ -39,20 +39,22 @@ Powered by Hydejack v9.0.5 <https://hydejack.com/>
   
     
 <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>PRO License | Dongha Chung</title>
+<title>[2018 IROS] Scan Context: Egocentric Spatial Descriptor for Place Recognition within 3D Point Cloud Map | Dongha Chung</title>
 <meta name="generator" content="Jekyll v3.9.0" />
-<meta property="og:title" content="PRO License" />
+<meta property="og:title" content="[2018 IROS] Scan Context: Egocentric Spatial Descriptor for Place Recognition within 3D Point Cloud Map" />
 <meta name="author" content="<Dongha> <Chung>" />
 <meta property="og:locale" content="en" />
-<meta name="description" content="Hola" />
-<meta property="og:description" content="Hola" />
-<link rel="canonical" href="http://localhost:4000/licenses/PRO/" />
-<meta property="og:url" content="http://localhost:4000/licenses/PRO/" />
+<meta name="description" content="2018 IROS paper on Lidar loop detection" />
+<meta property="og:description" content="2018 IROS paper on Lidar loop detection" />
+<link rel="canonical" href="http://localhost:4000/papers/2021-09-24-ScanContext/" />
+<meta property="og:url" content="http://localhost:4000/papers/2021-09-24-ScanContext/" />
 <meta property="og:site_name" content="Dongha Chung" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-09-24T00:00:00+09:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="PRO License" />
+<meta property="twitter:title" content="[2018 IROS] Scan Context: Egocentric Spatial Descriptor for Place Recognition within 3D Point Cloud Map" />
 <script type="application/ld+json">
-{"@type":"WebPage","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/licenses/PRO/","headline":"PRO License","author":{"@type":"Person","name":"<Dongha> <Chung>"},"description":"Hola","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/papers/2021-09-24-ScanContext/","headline":"[2018 IROS] Scan Context: Egocentric Spatial Descriptor for Place Recognition within 3D Point Cloud Map","dateModified":"2021-09-24T00:00:00+09:00","datePublished":"2021-09-24T00:00:00+09:00","author":{"@type":"Person","name":"<Dongha> <Chung>"},"description":"2018 IROS paper on Lidar loop detection","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/papers/2021-09-24-ScanContext/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -226,208 +228,369 @@ Left here for reference, feel free to delete.
 
   <main
   id="_main"
-  class="content layout-page"
+  class="content layout-post"
   role="main"
 >
-  <article class="page" role="article">
+  
+
+
+
+
+
+<article id="post-papers-ScanContext" class="page post mb6" role="article">
   <header>
-    <h1 class="page-title">PRO License</h1>
+    <h1 class="post-title flip-project-title">
+      
+        [2018 IROS] Scan Context: Egocentric Spatial Descriptor for Place Recognition within 3D Point Cloud Map
+      
+    </h1>
+
+    <div class="post-date">
+      
+      <time datetime="2021-09-24T00:00:00+09:00">24 Sep 2021</time>
+      
+      
+      
+      
+      
+
+
+
+
+
+
+
+
+
+in <a href="/papers/" class="flip-title">Paper Review</a>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+
     
 
 
 
-  <div class="hr pb0"></div>
+  
+    <p class="note-sm" >
+      2018 IROS paper on Lidar loop detection
+
+    </p>
+  
 
 
   </header>
 
-  <ul class="large-only" id="markdown-toc">
-  <li><a href="#license-summary" id="markdown-toc-license-summary">License Summary</a></li>
-  <li><a href="#terms-and-conditions" id="markdown-toc-terms-and-conditions">Terms and Conditions</a>    <ul>
-      <li><a href="#1-preamble" id="markdown-toc-1-preamble">1. Preamble</a></li>
-      <li><a href="#2-license-grant" id="markdown-toc-2-license-grant">2. License Grant</a></li>
-      <li><a href="#3-term--termination" id="markdown-toc-3-term--termination">3. Term &amp; Termination:</a></li>
-      <li><a href="#4-payment" id="markdown-toc-4-payment">4. Payment</a></li>
-      <li><a href="#5-upgrades-updates-and-fixes" id="markdown-toc-5-upgrades-updates-and-fixes">5. Upgrades, Updates and Fixes</a></li>
-      <li><a href="#6-support" id="markdown-toc-6-support">6. Support</a></li>
-      <li><a href="#7-liability" id="markdown-toc-7-liability">7. Liability</a></li>
-      <li><a href="#8-warranty" id="markdown-toc-8-warranty">8. Warranty</a></li>
-      <li><a href="#9-no-refunds" id="markdown-toc-9-no-refunds">9. No Refunds</a></li>
-      <li><a href="#10-indemnification" id="markdown-toc-10-indemnification">10. Indemnification</a></li>
-      <li><a href="#11-governing-law-jurisdiction" id="markdown-toc-11-governing-law-jurisdiction">11. Governing Law, Jurisdiction</a></li>
+  
+    <h3 id="researchers-at-kaist-korea-first-author-giseop-kim">Researchers at KAIST, Korea. First Author: Giseop Kim</h3>
+
+<p>영상 기반 recognition은 유명하나 illumination variance 및 environmental change에 민감하다.
+Lidar는 strong invariance to perceptual variance 함</p>
+
+<p>초기에는 computer graphics에서의 3D model에 사용된 local keypoint descriptor들이 noise에 대한 vulnerability를 가짐에도 많이 사용됨. 이런 일들은 주로 local 그리고 global한 descriptor를 개발하는데 연구가 진행됨.</p>
+
+<p>Lidar 기반 place recognition의 두가지 이슈:</p>
+
+<ul>
+  <li>Descriptor는 rotational invariance를 가져야함</li>
+  <li>Noise handling issue</li>
+</ul>
+
+<p>기존 방법에는 histogram을 이용하여 이 두가지 이슈를 해결하고자 하였으나, 이는 scene의 stocastic index를 제공할 뿐 detailed structure를 묘사하지는 않아 인식하기 힘들어 false positive를 야기시킬 수 있다.</p>
+
+<p>Scan Context는 다음 그림과 같이 3D scan을 2.5D 정보를 가지고 있는 행렬로 표현한다.</p>
+
+<p align="center">
+  <img src="../images/20210924_1.png" alt="Scan Context" />
+</p>
+
+<!-- ![Scan Context](/papers/images/20210924_1.png){: width="100%" height="100%"}{: .center} -->
+
+<p>Contributions are:</p>
+
+<ul>
+  <li>Efficient bin encoding function</li>
+  <li>Preservation of internal structure of a point cloud</li>
+  <li>Effective two-phase matching algorithm</li>
+  <li>Thorough validation against other SOTA spatial discriptors
+    <ul>
+      <li>M2DP, ESF, Z-projection 과 비교</li>
     </ul>
   </li>
 </ul>
 
-<h2 id="license-summary">License Summary</h2>
+<h3 id="related-work">Related work</h3>
+
+<p>Visual methods</p>
 <ul>
-  <li>License concerns use of <a href="https://hydejack.com/">Hydejack PRO</a></li>
-  <li>License does not expire</li>
-  <li>Commercial use allowed</li>
-  <li>Can modify source code</li>
-  <li>Parts of software are provided under <a href="../NOTICE.md#licenses">separate licenses</a></li>
+  <li>FAB-MAP
+    <ul>
+      <li>increased robustness with probablistic approach by learning a generative model for the bag of visual words</li>
+      <li>하지만, liight condition change에 vulnerable하다</li>
+    </ul>
+  </li>
+  <li>SeqSLAM
+    <ul>
+      <li>proposed route-based approach</li>
+    </ul>
+  </li>
+  <li>SRAL
+    <ul>
+      <li>Long-term visual recognition을 위해 색, GIST, HOG를 섞음</li>
+    </ul>
+  </li>
 </ul>
 
-<h2 id="terms-and-conditions">Terms and Conditions</h2>
-<h3 id="1-preamble">1. Preamble</h3>
-<p>This Agreement governs the relationship between you (hereinafter: Licensee) and
-Florian Klampfer qwtel.com (hereinafter: Licensor).
-This Agreement sets the terms, rights, restrictions and obligations on using
-Hydejack PRO (hereinafter: The Software)
-created and owned by Licensor, as detailed herein.</p>
+<p>Lidar-based methods</p>
 
-<h3 id="2-license-grant">2. License Grant</h3>
-<p>Licensor hereby grants Licensee a Personal, Perpetual, Commercial, Royalty free,
-Including the rights to create derivative works, Non-exclusive license, all with accordance with
-the terms set forth and other legal restrictions set forth in 3rd party software used while running Software.</p>
+<p>Lidar 기반 방법들은 local한 방법과 global한 방법으로 나뉘어짐</p>
 
+<ul>
+  <li>Local Descriptors
+    <ul>
+      <li>PFH, SHOT, shape context, spin image는 keypoint를 찾아 주변 점들을 bin으로 나누고 둘러싼 bin들의 pattern을 histogram으로 encodding한다.</li>
+      <li>Steder et al은 point feature와 gestalt descriptor를 이용해 bag of words 방식으로 만듦</li>
+      <li>이러한 방법들은 기존 3D model기반이지 place recognition에 적합하지 않다.
+        <ul>
+          <li>거리에 따라 density 변화, normal direction noise</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Global Descriptors
+    <ul>
+      <li>Keypoint detecting phase를 포함 안함</li>
+      <li>GLARE와 그 변종들은 point들의 기하학적 관계를 histogram에 encoding함</li>
+      <li>ESF는 shape function으로 만들어진 histogram을 concatenation함</li>
+      <li>Z-projection은 normal vector의 histogram이고, two distance function의 double threshold scheme을 사용함</li>
+      <li>M2DP는 3D point들을 2D plane으로 projection하여 192 dimensional compact global representation을 추출함
+        <ul>
+          <li>기존 방법들 중 가장 좋은 성능을 나타내고 noise와 resolution change에 강인함</li>
+        </ul>
+      </li>
+      <li>SegMatch는 segment-based matching을 사용하였으며 이는 high-level perception으로 training이 필요하고 global reference frame에서 point가 나타내져야함</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Scan context은 Shape context에 기반하였으며 세가지 phase로 이루어짐</p>
 <ol>
-  <li>
-    <p><strong>Limited:</strong> Licensee may use Software for the purpose of:</p>
-
-    <ol>
-      <li>Running Software on Licensee’s Website[s] and Server[s];</li>
-      <li>Allowing 3rd Parties to run Software on Licensee’s Website[s] and Server[s];</li>
-      <li>Publishing Software’s output to Licensee and 3rd Parties;</li>
-      <li>Modify Software to suit Licensee’s needs and specifications.</li>
-    </ol>
-  </li>
-  <li>
-    <p>This license is granted perpetually, as long as you do not materially breach it.</p>
-  </li>
-  <li>
-    <p><strong>Commercial, Royalty Free:</strong> Licensee may use Software for any purpose, including paid-services, without any
-royalties</p>
-  </li>
-  <li>
-    <p><strong>Including the Right to Create Derivative Works:</strong> Licensee may create derivative works based on Software,
-including amending Software’s source code, modifying it, integrating it into a larger work or removing portions of
-Software.</p>
-  </li>
+  <li>the representation that preserves absolute location information of a point cloud in each bin</li>
+  <li>efficient bin encoding function</li>
+  <li>two-step search algorithm</li>
 </ol>
 
-<h3 id="3-term--termination">3. Term &amp; Termination:</h3>
-<p>The Term of this license shall be until terminated. Licensor may terminate this Agreement,
-including Licensee’s license in the case where Licensee:</p>
+<h3 id="methodology">Methodology</h3>
 
-<ol>
-  <li>became insolvent or otherwise entered into any liquidation process; or</li>
-  <li>exported The Software to any jurisdiction where licensor may not enforce his rights under this agreements in; or</li>
-  <li>Licensee was in breach of any of this license’s terms and conditions and such breach was not cured, immediately
-upon notification; or</li>
-  <li>Licensee in breach of any of the terms of clause 2 to this license; or</li>
-  <li>Licensee otherwise entered into any arrangement which caused Licensor to be unable to enforce his rights under
-this License.</li>
-</ol>
+<h4 id="scan-context">Scan Context</h4>
 
-<h3 id="4-payment">4. Payment</h3>
-<p>In consideration of the License granted under clause 2, Licensee shall pay Licensor a fee, via
-Credit-Card or any other means which Licensor may deem adequate. Failure to perform payment shall construe as
-material breach of this Agreement.</p>
+<p>Scan context는 Shape context에 영향을 받았다고 하는데, Shape context 내용을 대충 보니 Text recognition 등에 사용할 수 있도록 어떤 point cloud에 대해 n개의 점을 뽑고 그 점들 각각에 대해 descriptor를 만들어 matching하는 형식이다.</p>
 
-<h3 id="5-upgrades-updates-and-fixes">5. Upgrades, Updates and Fixes</h3>
-<p>Licensor may provide Licensee, from time to time, with Upgrades, Updates or Fixes,
-as detailed herein and according to his sole discretion. Licensee hereby warrants to keep The Software up-to-date
-and install all relevant updates and fixes, and may, at his sole discretion, purchase upgrades, according to the
-rates set by Licensor. Licensor shall provide any update or Fix free of charge; however, nothing in this Agreement
-shall require Licensor to provide Updates or Fixes.</p>
+<p>차이점 :</p>
 
-<ol>
-  <li>
-    <p><strong>Upgrades:</strong> for the purpose of this license, an Upgrade shall be a material amendment in The Software, which
-contains new features and or major performance improvements and shall be marked as a new version number. For
-example, should Licensee purchase The Software under version 1.X.X, an upgrade shall commence under number
-2.0.0.</p>
+<ul>
+  <li>여기서 shape context는 각 bin에 해당되는 점들의 갯수를 이용했다면 scan context는 bin에 해당되는 점들의 maximum height를 사용하였다.</li>
+  <li>Shape context는 여러 점을 뽑아서 그에 해당되는 descriptor들을 만들지만, scan context는 로봇의 위치(또는 라이더 기준)을 기반으로 제작하여 egocentric하게 만든다.
+    <ul>
+      <li>Egocentric visibility has been a well-known concept in urban design literature for analyzing an identy of a place</li>
+    </ul>
   </li>
-  <li>
-    <p><strong>Updates:</strong> for the purpose of this license, an update shall be a minor amendment in The Software, which may
-contain new features or minor improvements and shall be marked as a new sub-version number. For example, should
-Licensee purchase The Software under version 1.1.X, an upgrade shall commence under number 1.2.0.</p>
-  </li>
-  <li>
-    <p><strong>Fix:</strong> for the purpose of this license, a fix shall be a minor amendment in The Software, intended to remove
-bugs or alter minor features which impair the The Software’s functionality. A fix shall be marked as a new
-sub-sub-version number. For example, should Licensee purchase Software under version 1.1.1, an upgrade shall
-commence under number 1.1.2.</p>
-  </li>
-</ol>
+</ul>
 
-<h3 id="6-support">6. Support</h3>
-<p>Software is provided under an AS-IS basis and without any support, updates or maintenance. Nothing in
-this Agreement shall require Licensor to provide Licensee with support or fixes to any bug, failure,
-mis-performance or other defect in The Software.</p>
+<p>Shape context와 비슷하게 3D scan을 azimuth와 radial bin으로 동일하게 나눈다.(여기선 azimuth 방향으로 60개를, radial 방향으로 20개를 이용)</p>
 
-<ol>
-  <li>
-    <p><strong>Bug Notification:</strong> Licensee may provide Licensor of details regarding any bug, defect or failure in The
-Software promptly and with no delay from such event; Licensee shall comply with Licensor’s request for
-information regarding bugs, defects or failures and furnish him with information, screenshots and try to
-reproduce such bugs, defects or failures.</p>
-  </li>
-  <li>
-    <p><strong>Feature Request:</strong> Licensee may request additional features in Software, provided, however, that:</p>
+<p>Bin의 모양이 멀리갈수록 넓어지는데 이는 먼 point의 sparcity를 보완하고 근처의 dynamic object를 sparse noise로 취급한다. (후자가 이해가 안됨)</p>
 
-    <ol>
-      <li>Licensee shall waive any claim or right in such feature should feature be developed by Licensor;</li>
-      <li>Licensee shall be prohibited from developing the feature, or disclose such feature request, or feature, to
-any 3rd party directly competing with Licensor or any 3rd party which may be, following the development of
-such feature, in direct competition with Licensor;</li>
-      <li>Licensee warrants that feature does not infringe any 3rd party patent, trademark, trade-secret or any other
-intellectual property right; and</li>
-      <li>Licensee developed, envisioned or created the feature solely by himself.</li>
-    </ol>
-  </li>
-</ol>
+<p>수식으로 나타내면 다음과 같다.</p>
 
-<h3 id="7-liability">7. Liability</h3>
-<p>To the extent permitted under Law, The Software is provided under an AS-IS basis. Licensor shall
-never, and without any limit, be liable for any damage, cost, expense or any other payment incurred by Licensee as
-a result of Software’s actions, failure, bugs and/or any other interaction between The Software and Licensee’s
-end-equipment, computers, other software or any 3rd party, end-equipment, computer or services. Moreover, Licensor
-shall never be liable for any defect in source code written by Licensee when relying on The Software or using The
-Software’s source code.</p>
+<p>i번째 ring(radial), j번째 sector(azimuth)에 대한 point set을 \(\mathcal{P}_{ij}\) 라 하면</p>
 
-<h3 id="8-warranty">8. Warranty</h3>
-<ol>
-  <li>
-    <p><strong>No-Warranty:</strong> The Software is provided without any warranty; Licensor hereby disclaims any warranty that The
-Software shall be error free, without defects or code which may cause damage to Licensee’s computers or to
-Licensee, and that Software shall be functional. Licensee shall be solely liable to any damage, defect or loss
-incurred as a result of operating software and undertake the risks contained in running The Software on
-License’s Server[s] and Website[s].</p>
-  </li>
-  <li>
-    <p><strong>Prior Inspection:</strong> Licensee hereby states that he inspected The Software thoroughly and found it
-satisfactory and adequate to his needs, that it does not interfere with his regular operation and that it does
-meet the standards and scope of his computer systems and architecture. Licensee found that The Software
-interacts with his development, website and server environment and that it does not infringe any of End User
-License Agreement of any software Licensee may use in performing his services. Licensee hereby waives any
-claims regarding The Software’s incompatibility, performance, results and features, and warrants that he
-inspected the The Software.</p>
-  </li>
-</ol>
+<p>\(\phi(\mathcal{P}_{ij})\) \(= \max_{\mathbf{p}\in\mathcal{P}_{ij}} z(\mathbf{p})\) 라는 가장 높은 height값을 리턴하는 함수를 정의하고</p>
 
-<h3 id="9-no-refunds">9. No Refunds</h3>
-<p>Licensee warrants that he inspected The Software according to clause 8.2 and that it is adequate to
-his needs. Accordingly, as The Software is intangible goods, Licensee shall not be, ever, entitled to any refund,
-rebate, compensation or restitution for any reason whatsoever, even if The Software contains material flaws.</p>
+<p>이미지에 대해 \(I=(a_{ij})\in \mathbb{R}^{N_r \times N_s}\), \(a_{ij} = \phi(\mathcal{P}_{ij})\)</p>
 
-<h3 id="10-indemnification">10. Indemnification</h3>
-<p>Licensee hereby warrants to hold Licensor harmless and indemnify Licensor for any lawsuit
-brought against it in regards to Licensee’s use of The Software in means that violate, breach or otherwise
-circumvent this license, Licensor’s intellectual property rights or Licensor’s title in The Software. Licensor
-shall promptly notify Licensee in case of such legal action and request Licensee’s consent prior to any settlement
-in relation to such lawsuit or claim.</p>
+<p>위치에 따라 Scan context image가 변할 것을 대비해 \(N_{tans}\)개의 위치를 선정해 거기서의 Scan context image를 만든다. (Lane 변하는 것을 기준.. 아마 Horizontal 방향으로 앞 뒤 좌 우 대각선들 아닐까)</p>
 
-<h3 id="11-governing-law-jurisdiction">11. Governing Law, Jurisdiction</h3>
-<p>Licensee hereby agrees not to initiate class-action lawsuits against Licensor in
-relation to this license and to compensate Licensor for any legal fees, cost or attorney fees should any claim
-brought by Licensee against Licensor be denied, in part or in full.</p>
+<h4 id="similarity-score-between-scan-contexts">Similarity Score between Scan Contexts</h4>
+
+<p>Scan context image \(I^q\) 와 \(I^c\)에 대해 column별 비교를 하게 되는데 이때 각 이미지의 j번째 column vector를 \(c_j^q\), \(c_j^c\)라 하면 (query의 q, candidate의 c인가) distance metric은 다음과 같다.</p>
+
+<p>\(d(I^{q}, I^{c})\) \(= \frac{1}{N_s} \sum_{j=1}^{N_s} \left( 1- \frac{c_j^q \cdot c_j^c }{\lVert c_j^q \rVert \lVert c_j^c \rVert} \right)\)</p>
+
+<p>여기서 \(\frac{c_j^q \cdot c_j^c }{\lVert c_j^q \rVert \lVert c_j^c \rVert}\)는 cosine distance라 부른다.</p>
+
+  
+</article>
+
+
+<hr class="dingbat related" />
+
+
+
+
+  
+     
+
+
+  <aside class="about related mt4 mb4" role="complementary">
+    
+    
+
+<div class="author mt4">
+  
+
+  
+    
+
+
+<img
+  
+    src="/assets/img/dh.jpg"
+    
+    
+  
+  alt="<Dongha> <Chung>"
+  class="avatar"
+  
+  width="120"
+  height="120"
+  loading="lazy"
+/>
+
+  
+
+  
+  
+  <h2  class="page-title hr-bottom">
+    About
+  </h2>
+
+  <p><strong>Dongha Chung</strong></p>
+
+<p>A robotics perception engineer</p>
+
+
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
 
 
   
 
-</article>
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/dhchung" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.youtube.com/channel/UC2MeUdGRQws1YhdQt0wf_vA/" title="YouTube" class="no-mark-external">
+      <span class="icon-youtube"></span>
+      <span class="sr-only">YouTube</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.linkedin.com/in/dongha-chung-b7a538bb" title="LinkedIn" class="no-mark-external">
+      <span class="icon-linkedin2"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+
+  </aside>
+
+
+  
+
+  
+  
+
+  
+    
+
+
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/log/2021-09-24-logging/" class="flip-title"><span>Restart Logging!</span></a>  <time class="faded fine" datetime="2021-09-24T00:00:00+09:00">24 Sep 2021</time></li>                        <li class="h4">  <a href="/etc/2021-09-23-PCL_ROS/" class="flip-title"><span>Publishing extra information using pcl Pointcloud and ros Pointcloud2</span></a>  <time class="faded fine" datetime="2021-09-23T00:00:00+09:00">23 Sep 2021</time></li>                        <li class="h4">  <a href="/papers/2021-09-21-GPU_Lidar/" class="flip-title"><span>[2021 RAL] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors</span></a>  <time class="faded fine" datetime="2021-09-21T00:00:00+09:00">21 Sep 2021</time></li>            </ul></aside>
+
+  
+
+  
+  
+
+  
+    
+
+  
+
 
   
 <footer class="content" role="contentinfo">
