@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-10-04T17:47:16+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-10-04T19:57:52+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
 </subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">[2014 RSS] LOAM</title><link href="http://localhost:4000/papers/2021-10-03-LOAM/" rel="alternate" type="text/html" title="[2014 RSS] LOAM" /><published>2021-10-03T00:00:00+09:00</published><updated>2021-10-03T00:00:00+09:00</updated><id>http://localhost:4000/papers/LOAM</id><content type="html" xml:base="http://localhost:4000/papers/2021-10-03-LOAM/">&lt;h3 id=&quot;researchers-at-carnegie-mellon-university-first-author-ji-zhang&quot;&gt;Researchers at Carnegie Mellon University. First Author: Ji Zhang&lt;/h3&gt;
 
 &lt;p&gt;저자 Ji Zhang님은 현재 CMU Field Robotics Center에 Systems Scientist로 재직중이시다.&lt;/p&gt;
@@ -126,7 +126,7 @@
 &lt;p&gt;Correspondence를 찾기 위해 선택되는 점은 다음 그림과 같다. (사실 좀 이해하기 어렵게 그려져있음)&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211003_3.png&quot; alt=&quot;Points to avoid&quot; /&gt;
+  &lt;img src=&quot;../images/20211003_4.png&quot; alt=&quot;Points to avoid&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;위의 그림에서 주황색은 \(\bar{\mathcal{P}}_k\), 파란색은 \(\mathcal{P}_{k+1}\) 위의 점이다.&lt;/p&gt;
