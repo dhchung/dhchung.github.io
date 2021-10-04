@@ -39,22 +39,22 @@ Powered by Hydejack v9.0.5 <https://hydejack.com/>
   
     
 <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>[GTSAM] Making simple custom node and factor | Dongha Chung</title>
+<title>Getting the rotation matrix between vectors | Dongha Chung</title>
 <meta name="generator" content="Jekyll v3.9.0" />
-<meta property="og:title" content="[GTSAM] Making simple custom node and factor" />
+<meta property="og:title" content="Getting the rotation matrix between vectors" />
 <meta name="author" content="<Dongha> <Chung>" />
 <meta property="og:locale" content="en" />
-<meta name="description" content="How to make a custom node and factor for GTSAM c++" />
-<meta property="og:description" content="How to make a custom node and factor for GTSAM c++" />
-<link rel="canonical" href="http://localhost:4000/etc/2020-11-12-gtsam_custom/" />
-<meta property="og:url" content="http://localhost:4000/etc/2020-11-12-gtsam_custom/" />
+<meta name="description" content="Let’s find a rotation matrix which rotates a unit vector \(\mathbf{v}_1\) to a unit vector \(\mathbf{v}_2\)" />
+<meta property="og:description" content="Let’s find a rotation matrix which rotates a unit vector \(\mathbf{v}_1\) to a unit vector \(\mathbf{v}_2\)" />
+<link rel="canonical" href="http://localhost:4000/etc/2020-12-03-rot_mat_btw_vecs/" />
+<meta property="og:url" content="http://localhost:4000/etc/2020-12-03-rot_mat_btw_vecs/" />
 <meta property="og:site_name" content="Dongha Chung" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-11-12T00:00:00+09:00" />
+<meta property="article:published_time" content="2020-12-03T00:00:00+09:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="[GTSAM] Making simple custom node and factor" />
+<meta property="twitter:title" content="Getting the rotation matrix between vectors" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/etc/2020-11-12-gtsam_custom/","headline":"[GTSAM] Making simple custom node and factor","dateModified":"2020-11-12T00:00:00+09:00","datePublished":"2020-11-12T00:00:00+09:00","author":{"@type":"Person","name":"<Dongha> <Chung>"},"description":"How to make a custom node and factor for GTSAM c++","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/etc/2020-11-12-gtsam_custom/"},"@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/etc/2020-12-03-rot_mat_btw_vecs/","headline":"Getting the rotation matrix between vectors","dateModified":"2020-12-03T00:00:00+09:00","datePublished":"2020-12-03T00:00:00+09:00","author":{"@type":"Person","name":"<Dongha> <Chung>"},"description":"Let’s find a rotation matrix which rotates a unit vector \\(\\mathbf{v}_1\\) to a unit vector \\(\\mathbf{v}_2\\)","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/etc/2020-12-03-rot_mat_btw_vecs/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -237,17 +237,17 @@ Left here for reference, feel free to delete.
 
 
 
-<article id="post-etc-gtsam_custom" class="page post mb6" role="article">
+<article id="post-etc-rot_mat_btw_vecs" class="page post mb6" role="article">
   <header>
     <h1 class="post-title flip-project-title">
       
-        [GTSAM] Making simple custom node and factor
+        Getting the rotation matrix between vectors
       
     </h1>
 
     <div class="post-date">
       
-      <time datetime="2020-11-12T00:00:00+09:00">12 Nov 2020</time>
+      <time datetime="2020-12-03T00:00:00+09:00">03 Dec 2020</time>
       
       
       
@@ -285,103 +285,47 @@ in <a href="/etc/" class="flip-title">etc.</a>
 
 
 
-  
-    <p class="note-sm" >
-      How to make a custom node and factor for GTSAM c++
-
-    </p>
-  
+  <div class="hr pb0"></div>
 
 
   </header>
 
   
-    <h2 id="defining-a-node">Defining a node</h2>
-<p>GTSAM objects:
-LieGroup \(\subset\) Manifold \(\subset\) Testble</p>
+    <p>Let’s find a rotation matrix which rotates a unit vector \(\mathbf{v}_1\) to a unit vector \(\mathbf{v}_2\)</p>
 
-<p>Required functions for each sets:</p>
+<p>We can think about a vector \(\mathbf{k} = \mathbf{v}_1 \times \mathbf{v}_2\), which can also be expressed as \(\mathbf{k} = [\mathbf{v}_1]_\times\mathbf{v}_2\)</p>
 
-<p>LieGroup:</p>
-<ul>
-  <li>Identity, Logmap, Expmap, Compose, Between, Inverse</li>
-</ul>
+<p>where \([\mathbf{v}_1]_\times\) is a skew-symmetric matrix:</p>
 
-<p>Manifold:</p>
-<ul>
-  <li>dimension, GetDimension, Local, Retract</li>
-</ul>
+\[[\mathbf{v}_1]_\times = \begin{bmatrix}
+0 &amp; -v_{1_3} &amp; v_{1_2} \\
+v_{1_3} &amp; 0 &amp; -v_{1_1} \\
+-v_{1_2} &amp; v_{1_1} &amp; 0
+\end{bmatrix}\]
 
-<p>Testble:</p>
-<ul>
-  <li>Equal, Print</li>
-</ul>
+<p>From vector products, we can get the cosine and sine value of the angle between the vectors (geodesic angle), \(\theta\) as:</p>
 
-<p>Custom node which we are going to make is in Manifold set, so we need to define</p>
-<ul>
-  <li>Equal, Print, dimension, GetDimension, Local, Retract</li>
-</ul>
+\[\begin{align*}
+cos(\theta) &amp;= \mathbf{v}_1 \cdot \mathbf{v}_2\\
+sin(\theta) &amp;= \lVert \mathbf{v}_1\times \mathbf{v}_2 \rVert = \lVert \mathbf{k} \rVert
+\end{align*}\]
 
-<h2 id="defining-a-factor">Defining a factor</h2>
+<p>From the figure below, we can figure out that</p>
 
-<p>Let’s say the state is a N dimensional vector, \(\begin{bmatrix}
-s_1&amp;s_2&amp;s_3&amp;\dots&amp;s_N
-\end{bmatrix}^\top\)</p>
+\[\mathbf{v}_2 = \mathbf{v}_1 + sin(\theta)(\mathbf{k}\times\mathbf{v}_1)+(1-cos(\theta))(\mathbf{k}\times(\mathbf{k}\times\mathbf{v}_1))\]
 
-<p>and a measurement is a M dimensional vector:\(\begin{bmatrix}
-m_1&amp;m_2&amp;m_3&amp;\dots&amp;m_M
-\end{bmatrix}^\top\)</p>
+<p>which can be expressed in a matrix form</p>
 
-<p>Let’s say that the measurement is a between factor which relates two states:</p>
+\[\begin{align*}
+&amp;\mathbf{v}_2 = \mathbf{v}_1 + sin(\theta)([\mathbf{k}]_\times\mathbf{v}_1)+(1-cos(\theta))([\mathbf{k}]_\times([\mathbf{k}]_\times\mathbf{v}_1))\\
+=&amp;(I+sin(\theta)[\mathbf{k}]_\times+(1-cos(\theta))[\mathbf{k}]_\times^2)\mathbf{v}_1
+\end{align*}\]
 
-\[\mathbf{m_k} = h(\mathbf{s_i}, \mathbf{s_j})\]
+<p><img src="/assets/images/gravity_odom_correction/v1_to_v2.png" alt="v1 to v2" /></p>
 
-<p>For graph SLAM, we need to define the jacobian of measurement with respect to both states, and error between the expected measurement and actual measurement (kinda similar to ‘innovation’ term in Kalman filter).</p>
+<p>Since we want to find a rotation matrix \(R\) which satisfies \(R\mathbf{v}_1 = \mathbf{v}_2\), \(R\) can be expressed as:</p>
 
-<p>So, for the jacobian of the measurement for the base state:</p>
-
-\[H_1 =\begin{bmatrix}
-\frac{\partial m_{k1}}{\partial s_{i1}} &amp; \frac{\partial m_{k1}}{\partial s_{i2}} &amp; \dots &amp; \frac{\partial m_{k1}}{\partial s_{iN}} \\
-\frac{\partial m_{k2}}{\partial s_{i1}} &amp; \frac{\partial m_{k2}}{\partial s_{i2}} &amp; \dots &amp; \frac{\partial m_{k2}}{\partial s_{iN}} \\
-\vdots &amp; \vdots &amp;  &amp; \vdots \\
-\frac{\partial m_{kM}}{\partial s_{i1}} &amp; \frac{\partial m_{kM}}{\partial s_{i2}} &amp; \dots &amp; \frac{\partial m_{kM}}{\partial s_{iN}}
-\end{bmatrix}_{M \times N}\]
-
-<p>and the jacobian for the target state:</p>
-
-\[H_2 =\begin{bmatrix}
-\frac{\partial m_{k1}}{\partial s_{j1}} &amp; \frac{\partial m_{k1}}{\partial s_{j2}} &amp; \dots &amp; \frac{\partial m_{k1}}{\partial s_{jN}} \\
-\frac{\partial m_{k2}}{\partial s_{j1}} &amp; \frac{\partial m_{k2}}{\partial s_{j2}} &amp; \dots &amp; \frac{\partial m_{k2}}{\partial s_{jN}} \\
-\vdots &amp; \vdots &amp;  &amp; \vdots \\
-\frac{\partial m_{kM}}{\partial s_{j1}} &amp; \frac{\partial m_{kM}}{\partial s_{j2}} &amp; \dots &amp; \frac{\partial m_{kM}}{\partial s_{jN}}
-\end{bmatrix}_{M \times N}\]
-
-<p>And the error is defined as:</p>
-
-\[\mathbf{v} = h(\mathbf{s_i}, \mathbf{s_j}) - \mathbf{m_k}\]
-
-<p>Per optimization step, each jacobian matrix indicates which direction should the values be changed, and the error vector indicates how much should the values be changed.</p>
-
-<p>This can be adapted to connect between any nodes; let’s say there’s a N dimensional node \(\mathbf{s}\), K dimensional node \(\mathbf{r}\) and a M dimensional measurement which connect between those nodes \(\mathbf{m}\) (e.g. \(\mathbf{s}\) is a state, \(\mathbf{m}\) is a measurement and \(\mathbf{r}\) is a corresponding landmark).</p>
-
-<p>Similarly:</p>
-
-\[H_1 =\begin{bmatrix}
-\frac{\partial m_{k1}}{\partial s_{i1}} &amp; \frac{\partial m_{k1}}{\partial s_{i2}} &amp; \dots &amp; \frac{\partial m_{k1}}{\partial s_{iN}} \\
-\frac{\partial m_{k2}}{\partial s_{i1}} &amp; \frac{\partial m_{k2}}{\partial s_{i2}} &amp; \dots &amp; \frac{\partial m_{k2}}{\partial s_{iN}} \\
-\vdots &amp; \vdots &amp;  &amp; \vdots \\
-\frac{\partial m_{kM}}{\partial s_{i1}} &amp; \frac{\partial m_{kM}}{\partial s_{i2}} &amp; \dots &amp; \frac{\partial m_{kM}}{\partial s_{iN}}
-\end{bmatrix}_{M \times N}, 
-H_2 =\begin{bmatrix}
-\frac{\partial m_{k1}}{\partial r_{j1}} &amp; \frac{\partial m_{k1}}{\partial r_{j2}} &amp; \dots &amp; \frac{\partial m_{k1}}{\partial r_{jK}} \\
-\frac{\partial m_{k2}}{\partial r_{j1}} &amp; \frac{\partial m_{k2}}{\partial r_{j2}} &amp; \dots &amp; \frac{\partial m_{k2}}{\partial r_{jK}} \\
-\vdots &amp; \vdots &amp;  &amp; \vdots \\
-\frac{\partial m_{kM}}{\partial r_{j1}} &amp; \frac{\partial m_{kM}}{\partial r_{j2}} &amp; \dots &amp; \frac{\partial m_{kM}}{\partial r_{jK}}
-\end{bmatrix}_{M \times K}\]
-
-<p>and error:</p>
-
-\[\mathbf{v} = f(\mathbf{s_i}, \mathbf{r_j}) - \mathbf{m_k}\]
+\[R = I + sin(\theta)[\mathbf{k}]_\times + (1-cos(\theta))[\mathbf{k}]_\times^2\]
 
   
 </article>

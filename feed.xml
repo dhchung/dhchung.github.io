@@ -1,5 +1,203 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-09-24T17:17:32+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
-</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">Restart Logging!</title><link href="http://localhost:4000/log/2021-09-24-logging/" rel="alternate" type="text/html" title="Restart Logging!" /><published>2021-09-24T00:00:00+09:00</published><updated>2021-09-24T00:00:00+09:00</updated><id>http://localhost:4000/log/logging</id><content type="html" xml:base="http://localhost:4000/log/2021-09-24-logging/">&lt;p&gt;이래 저래 많이 늦었지만.. 다시 시작!&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="log" /><summary type="html">이래 저래 많이 늦었지만.. 다시 시작!</summary></entry><entry><title type="html">[2018 IROS] Scan Context: Egocentric Spatial Descriptor for Place Recognition within 3D Point Cloud Map</title><link href="http://localhost:4000/papers/2021-09-24-ScanContext/" rel="alternate" type="text/html" title="[2018 IROS] Scan Context: Egocentric Spatial Descriptor for Place Recognition within 3D Point Cloud Map" /><published>2021-09-24T00:00:00+09:00</published><updated>2021-09-24T00:00:00+09:00</updated><id>http://localhost:4000/papers/ScanContext</id><content type="html" xml:base="http://localhost:4000/papers/2021-09-24-ScanContext/">&lt;h3 id=&quot;researchers-at-kaist-korea-first-author-giseop-kim&quot;&gt;Researchers at KAIST, Korea. First Author: Giseop Kim&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-10-04T17:47:16+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
+</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">[2014 RSS] LOAM</title><link href="http://localhost:4000/papers/2021-10-03-LOAM/" rel="alternate" type="text/html" title="[2014 RSS] LOAM" /><published>2021-10-03T00:00:00+09:00</published><updated>2021-10-03T00:00:00+09:00</updated><id>http://localhost:4000/papers/LOAM</id><content type="html" xml:base="http://localhost:4000/papers/2021-10-03-LOAM/">&lt;h3 id=&quot;researchers-at-carnegie-mellon-university-first-author-ji-zhang&quot;&gt;Researchers at Carnegie Mellon University. First Author: Ji Zhang&lt;/h3&gt;
+
+&lt;p&gt;저자 Ji Zhang님은 현재 CMU Field Robotics Center에 Systems Scientist로 재직중이시다.&lt;/p&gt;
+
+&lt;p&gt;LOAM의 geometrical feature matching 기법은 많은 알고리즘들에 사용될 정도로 efficient함을 보여줬다. (LeGO-LOAM, LIO-SAM 등)&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/8ezyhTAEyHs&quot;&gt;Related Video&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Lidar 기반 odometry 추정 및 Map 생성 알고리즘을 위한 geometrical feature extraction &amp;amp; matching.&lt;/li&gt;
+  &lt;li&gt;Odometry 추정 및 Map generation으로 이루어진 2 stage 기법.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;related-work&quot;&gt;Related work&lt;/h3&gt;
+&lt;p&gt;라이다는 카메라와는 달리(사실 카메라고 rolling shutter의 경우 distortion이 생기지만..) 하나의 스캔이 동시에 이뤄지지 않기에 정확한 point cloud를 얻기 위해선 external motion에 대한 compasation이 요구된다. 기존 연구들에서는 IMU, GPS/INS 등 odometry sensor 정보를 이용하여 deskew 및 state estimation에 활용이 되었음.&lt;/p&gt;
+
+&lt;p&gt;Lidar intensity값을 통해 visual matching으로 motion을 추정한 경우도 있음&lt;/p&gt;
+
+&lt;p&gt;Velocity model의 경우 constant velocity 또는 Gaussian process를 이용한 경우들이 있음 (본 논문은 constant velocity model 사용)&lt;/p&gt;
+
+&lt;p&gt;본 논문과 가장 유사한 내용 : Bosse &amp;amp; Zlot의 경우 Geometrical structure matching기법을 이용하였으며, IMU와 incorporation함 (대표적인 예: Zebedee). 하지만 Map 생성에 시간이 오래 걸림&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;본 논문의 map 생성은 Bosse &amp;amp; Zlot의 알고리즘을 통해 얻어진 map과 비슷하나 real-time으로 생성 가능.&lt;/li&gt;
+  &lt;li&gt;Lidar scan pattern 및 point cloud distribution을 이용함&lt;/li&gt;
+  &lt;li&gt;Odometry 및 mapping을 위한 Feature matching은 빠르고 정확하도록 설계됨&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;notation--task-description&quot;&gt;Notation &amp;amp; task description&lt;/h3&gt;
+
+&lt;p&gt;Lidar가 pre-calibrated되어있고, angular &amp;amp; linear velocity는 smooth하고 continuous하다고 가정 (이 가정은 IMU 사용을 통해 제거될 수 있음)&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;right uppercase : coordiante system&lt;/li&gt;
+  &lt;li&gt;Sweep은 lidar가 one time of scan converage를 완료할때를 뜻함 (-90~90 다 돌았을때인듯?)&lt;/li&gt;
+  &lt;li&gt;right subscription : indicate the sweep&lt;/li&gt;
+  &lt;li&gt;\(\mathcal{P}_k\) : sweep \(k\)를 통해 얻어진 point cloud&lt;/li&gt;
+  &lt;li&gt;Lidar coordinate system : \(\{L\}\)
+    &lt;ul&gt;
+      &lt;li&gt;\(\mathcal{P}_k\)의 point \(i\)의 \(\{L_k\}\)에서의 coordinate는 \(\mathbf{X}_{(k,i)}^L\)로 표기됨&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;World coordinate system : \(\{W\}\)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Problem: 주어진 lidar cloud sequence에 대해 각 sweep에서의 egomotion을 계산하고 지나간 환경에 대한 map 생성&lt;/p&gt;
+
+&lt;h3 id=&quot;system-overview&quot;&gt;System Overview&lt;/h3&gt;
+
+&lt;h4 id=&quot;hardware-overview&quot;&gt;Hardware Overview&lt;/h4&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;../images/20211003_1.png&quot; alt=&quot;2 axis lidar&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Hokuyo 2D laser scanner를 사용하였으며 -90도에서 90도까지 180도/s 로 돌아 전방향 coverage를 갖음 (하지만 이런 라이다 종류에만 적용이 제한된건 아님)&lt;/p&gt;
+
+&lt;h4 id=&quot;software-overview&quot;&gt;Software Overview&lt;/h4&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;../images/20211003_2.png&quot; alt=&quot;Algorithm overview&quot; /&gt;
+&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Laser Scan \(\hat{\mathcal{P}}\) 은 Lidar coordinate system \(\{L\}\)에 register되어 sweep \(k\)를 통해 \(\mathcal{P}_k\)를 형성&lt;/li&gt;
+  &lt;li&gt;\(\mathcal{P}_k\)는 두가지의 알고리즘으로 처리됨
+    &lt;ul&gt;
+      &lt;li&gt;연속적인 두 sweep간의 point cloud를 통해 motion estimation을 함
+        &lt;ul&gt;
+          &lt;li&gt;추정된 motion을 통해 \(\mathcal{P}_k\)의 distortion correction을 진행 (10Hz)&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Output은 Lidar mapping에서 undistorted cloud를 map과 matching함 (1Hz)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;두 알고리즘을 통해 얻어진 pose transforms를 융합해 transform output를 생성 (10Hz)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lidar-odometry&quot;&gt;Lidar Odometry&lt;/h3&gt;
+
+&lt;h4 id=&quot;feature-point-extraction&quot;&gt;Feature Point Extraction&lt;/h4&gt;
+
+&lt;p&gt;처음에는 1 sweep으로 만들어진 point cloud에 대해서 nearest point를 통해 얻어지는 줄 알았지만, 1 scan에서 feature point를 뽑는다.&lt;/p&gt;
+
+&lt;p&gt;1 sweep point cloud \(\mathcal{P}_k\)에 대해 (1 sweep은 lidar 1 scan이 아니라 2번째 axis에 대한 -90에서 90도, 90에서 -90도 회전할동안을 뜻함) \(i\)를 point중 하나라 하고, \(\mathcal{S}\)를 \(i\) 의 전후로 측정된 point(연속적인 배열)들이라 하면 smoothness는 다음과 같이 정의된다.&lt;/p&gt;
+
+\[c = \frac{1}{\lvert S \rvert \cdot \lVert \mathbf{X}_{(k,i)}^{L} \rVert} \lVert \sum_{j \in \mathcal{S}, j \neq i} (\mathbf{X}_{(k,i)}^L - \mathbf{X}_{(k,j)}^L) \rVert\]
+
+&lt;p&gt;여기서 \(\lvert S \rvert\)가 의미하는 바를 모르겠다…&lt;/p&gt;
+
+&lt;p&gt;여기서 \(c\)가 어떤 threshold를 넘으면 coner point, 그리고 어떤 threshold보다 낮으면 planar point로 명명한다. 너무 많을 것을 대비해 scan에 대해 정확히 4분할 하여 각 분할에 대해 최대 2 edge, 4 planar point를 가질 수 있게 한다. (아마 \(c\)값으로 판단할듯)&lt;/p&gt;
+
+&lt;p&gt;여기서 reduntent한 point를 고르지 않도록 한다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;../images/20211003_3.png&quot; alt=&quot;Points to avoid&quot; /&gt;
+&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Avoid points whose surrounded points are selected&lt;/li&gt;
+  &lt;li&gt;Avoid points on local planar surfaces that are roughly parallel to the laser beams
+    &lt;ul&gt;
+      &lt;li&gt;Unreliable하기 때문에&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Avoid points on that are on boundary of occluded surfaces
+    &lt;ul&gt;
+      &lt;li&gt;Occulusion으로 인해 생긴 fake edge일 수 있기에&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;finding-feature-point-correspondence&quot;&gt;Finding feature point correspondence&lt;/h4&gt;
+
+&lt;p&gt;Sweep \(k\)의 시작 시간을 \(t_k\)라 하면 sweep \(k\)에 얻은 point cloud \(\mathcal{P}_k\)는 \(t_{k+1}\)에 “reprojected”된다. (여기선 데이터를 얻은 시간을 표기할 때 시간을 reproject했다라고 표현한 것 같다.) 이 reproject된 point cloud는 \(\bar{\mathcal{P}}_k\)로 표기한다. 이 \(\bar{\mathcal{P}}_k\)와 새로 얻어진 point cloud \(\mathcal{P}_{k+1}\)간의 매칭을 통해 lidar motion을 진행한다.&lt;/p&gt;
+
+&lt;p&gt;여기까지 읽으면서 생각이 드는게, \(\mathcal{P}\)는 scan에 따라 점들이 추가되는것이고, 하나의 sweep이 끝난 것을 \(\bar{\mathcal{P}}\)로 표현하는 것 같다. (jekyll mathjack에선 잘 안보이는데 두번째는 bar가 추가됨)&lt;/p&gt;
+
+&lt;p&gt;여튼, \(\mathcal{P}_{k+1}\)의 edge와 planar feature points의 set을 각각 \(\mathcal{E}_{k+1}\)와 \(\mathcal{H}_{k+1}\)이라 하자.&lt;/p&gt;
+
+&lt;p&gt;\(\mathcal{P}_{k+1}\)에서 \(\mathcal{E}_{k+1}\)와 \(\mathcal{H}_{k+1}\)가 scan에 따라 점차 늘어나게 되는데, 현재 추정된 transform에 따라 초기 scan의 coordinate에 reprojection된 것을 \(\tilde{\mathcal{E}_{k+1}}\)와 \(\tilde{\mathcal{H}}_{k+1}\)라 하자.&lt;/p&gt;
+
+&lt;p&gt;\(\bar{\mathcal{P}}_k\)는 3D KD-tree에 저장이 되어 \(\tilde{\mathcal{E}}_{k+1}\)와 \(\tilde{\mathcal{H}}_{k+1}\)와 빠른 nn search를 수행한다.&lt;/p&gt;
+
+&lt;p&gt;Correspondence를 찾기 위해 선택되는 점은 다음 그림과 같다. (사실 좀 이해하기 어렵게 그려져있음)&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;../images/20211003_3.png&quot; alt=&quot;Points to avoid&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;위의 그림에서 주황색은 \(\bar{\mathcal{P}}_k\), 파란색은 \(\mathcal{P}_{k+1}\) 위의 점이다.&lt;/p&gt;
+
+&lt;p&gt;Edge correspondence (2개의 점으로 구성됨)&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;\(i \in \tilde{\mathcal{E}}_{k+1}\)에 대해서 같은 scan이 아닌(연속적인?) \(i\)와 nn 인 \(j, l \in \bar{\mathcal{P}}_{k}\)을 찾는다.&lt;/li&gt;
+  &lt;li&gt;\(j, l\)을 smoothness 계산을 통해 edge임을 확인한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Plane correspondence (3개의 점으로 구성됨)&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;\(i \in \tilde{\mathcal{H}}_{k+1}\)에 대해서 \(j, l, m \in \bar{\mathcal{P}}_{k}\)을 찾되, \(j\)는 \(i\)의 nn, \(l\)은 \(j\)와 same scan에서, \(l\)은 \(j\)의 two consecutive scan상에서 찾는다. (non-colinear를 보장하기 위해)&lt;/li&gt;
+  &lt;li&gt;\(j, l, m\)의 smoothness 계산을 통해 planar임을 확인 (근데, 그냥 smoothness를 다시 계산하기 않고 같이 저장하면 안되나?)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;각 Distance to correspondence는 점과 선과의 거리, 점과 평면간의 거리로 계산됨&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Edge feature point distance:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;../images/20211003_edge.png&quot; alt=&quot;Edge feature point distance&quot; /&gt;
+&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Planar feature point distance:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;../images/20211003_plane.png&quot; alt=&quot;Planar feature point distance&quot; /&gt;
+&lt;/p&gt;
+
+&lt;h4 id=&quot;motion-estimation&quot;&gt;Motion Estimation&lt;/h4&gt;
+
+&lt;p&gt;Lidar motion이 constant angular &amp;amp; linear velocity로 modeling되어있다는 가정을 통해 pose transfrom을 linear interpolation을 하여 각 점에 대해 pose transform을 할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;\(\mathbf{T}_{k+1}^L = [t_x, t_y, t_z, \theta_x, \theta_y, \theta_z]\)을 \([t_{k+1}, t]\)의 lidar의 6-DOF tranform이라 하자.&lt;/p&gt;
+
+&lt;p&gt;앞서 말한 것처럼 linear transform에 따라 다음과 같이 된다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;../images/20211003_5.png&quot; alt=&quot;Linear interpolation of transformation&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Angle 부분에서는 조금 이해가 안되는 게 있긴 한데.. 여튼, 그냥 일반적인 linear interpolation하는게 아니라 rotation을 따로 분리해서 rotation direction까지 고려는 해주는 것 같다.&lt;/p&gt;
+
+&lt;p&gt;나머지 부분은 적으려다가, 그냥 optimization하는 방식이라 생략한다. 대충 위의 식을 edge 및 planar feature distance에 넣어서 jacobian을 계산해 optimize하는 내용이다.&lt;/p&gt;
+
+&lt;h4 id=&quot;lidar-odometry-algorithm&quot;&gt;Lidar Odometry Algorithm&lt;/h4&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;../images/20211003_algorithm.png&quot; alt=&quot;Lidar Odometry Algorithm&quot; /&gt;
+&lt;/p&gt;
+
+&lt;h3 id=&quot;lidar-mapping&quot;&gt;Lidar Mapping&lt;/h3&gt;
+
+&lt;p&gt;기존의 mapping 결과(여기선 point cloud로 map 생성) \(\mathcal{Q}_k\)와 앞선 motion estimation으로 deskew된 결과 \(\tilde{\mathcal{Q}}_{k+1}\)를 matching함으로서 mapping이 이루어진다.&lt;/p&gt;
+
+&lt;p&gt;여기서 \({\mathcal{Q}}_{k+1}\)와 intersect(어떻게 intersection을 측정하는지 알려줬으면 ㅜ)하는 \(\mathcal{Q}_k\)를 3D KD-tree로 만들어 edge point와 planar point간 매칭을 하는데, 여기서는 기존보다 더 나아가 eigenvalue 및 eigen vector를 계산하여 3차원에서의 edge 및 plane에 대한 구분을 한다. 나머지는 비슷한듯.&lt;/p&gt;
+
+&lt;p&gt;이후 map은 voxelization을 통해 downsize된다.&lt;/p&gt;
+
+&lt;p&gt;아무래도 여기선 smoothing하지는 않으니까, 기존 pose를 고친다기보단 mapping시 transpose를 한번 고쳐주는 방식으로 pose estimation이 합성된다.&lt;/p&gt;
+
+&lt;h3 id=&quot;experiments&quot;&gt;Experiments&lt;/h3&gt;
+
+&lt;p&gt;TBW&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">Researchers at Carnegie Mellon University. First Author: Ji Zhang</summary></entry><entry><title type="html">Restart Logging!</title><link href="http://localhost:4000/log/2021-09-24-logging/" rel="alternate" type="text/html" title="Restart Logging!" /><published>2021-09-24T00:00:00+09:00</published><updated>2021-09-24T00:00:00+09:00</updated><id>http://localhost:4000/log/logging</id><content type="html" xml:base="http://localhost:4000/log/2021-09-24-logging/">&lt;p&gt;이래 저래 많이 늦었지만.. 다시 시작!&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="log" /><summary type="html">이래 저래 많이 늦었지만.. 다시 시작!</summary></entry><entry><title type="html">[2018 IROS] Scan Context: Egocentric Spatial Descriptor for Place Recognition within 3D Point Cloud Map</title><link href="http://localhost:4000/papers/2021-09-24-ScanContext/" rel="alternate" type="text/html" title="[2018 IROS] Scan Context: Egocentric Spatial Descriptor for Place Recognition within 3D Point Cloud Map" /><published>2021-09-24T00:00:00+09:00</published><updated>2021-09-24T00:00:00+09:00</updated><id>http://localhost:4000/papers/ScanContext</id><content type="html" xml:base="http://localhost:4000/papers/2021-09-24-ScanContext/">&lt;h3 id=&quot;researchers-at-kaist-korea-first-author-giseop-kim&quot;&gt;Researchers at KAIST, Korea. First Author: Giseop Kim&lt;/h3&gt;
+
+&lt;p&gt;저자 김기섭님은 예전에 김아영 교수님 수업 들었을 때 조교로 처음 알게 되었는데, SLAM 커뮤니티에서 활동이 어마어마 하시고 논문도 어마어마 하시다.. 늦은감이 있지만 대학원생으로서 본받을 점이 많다. 이번 논문은 그의 첫번째 논문으로 Lidar 기반 Loop detection에 대한 논문이며, LiDAR Odometry SOTA algorithm 들과 융합한 코드를 만드셨는데 (&lt;a href=&quot;https://youtu.be/Uv6_BRmxJho&quot;&gt;SC-A-LOAM&lt;/a&gt;, &lt;a href=&quot;https://youtu.be/bEqCehMJ_Hk&quot;&gt;SC-LeGO-LOAM&lt;/a&gt;, &lt;a href=&quot;https://youtu.be/jmR3DH_A4Co&quot;&gt;SC-LIO-SAM&lt;/a&gt;, &lt;a href=&quot;https://youtu.be/Fw9S6D6HozA&quot;&gt;FAST-LIO-SLAM&lt;/a&gt;) 이젠 기본적으로 Lidar SLAM에서 포함된 알고리즘이 나오고 있다 &lt;a href=&quot;/papers/2021-09-21-GPU_Lidar/&quot;&gt;VGICP&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;이 알고리즘에 intensity값을 추가해 만든 &lt;a href=&quot;https://arxiv.org/abs/2003.05656&quot;&gt;Intensity Scan Context&lt;/a&gt;나 최근 나온 semantic 정보를 입힌 &lt;a href=&quot;https://arxiv.org/abs/2107.00382&quot;&gt;Semantic Scan Context&lt;/a&gt; 도 읽어봐야겠다.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/_etNafgQXoY&quot;&gt;Related Video&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;영상 기반 recognition은 유명하나 illumination variance 및 environmental change에 민감하다.
 Lidar는 strong invariance to perceptual variance 함&lt;/p&gt;
@@ -134,7 +332,57 @@ Lidar는 strong invariance to perceptual variance 함&lt;/p&gt;
 
 &lt;p&gt;\(d(I^{q}, I^{c})\) \(= \frac{1}{N_s} \sum_{j=1}^{N_s} \left( 1- \frac{c_j^q \cdot c_j^c }{\lVert c_j^q \rVert \lVert c_j^c \rVert} \right)\)&lt;/p&gt;
 
-&lt;p&gt;여기서 \(\frac{c_j^q \cdot c_j^c }{\lVert c_j^q \rVert \lVert c_j^c \rVert}\)는 cosine distance라 부른다.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">Researchers at KAIST, Korea. First Author: Giseop Kim</summary></entry><entry><title type="html">Publishing extra information using pcl Pointcloud and ros Pointcloud2</title><link href="http://localhost:4000/etc/2021-09-23-PCL_ROS/" rel="alternate" type="text/html" title="Publishing extra information using pcl Pointcloud and ros Pointcloud2" /><published>2021-09-23T00:00:00+09:00</published><updated>2021-09-23T00:00:00+09:00</updated><id>http://localhost:4000/etc/PCL_ROS</id><content type="html" xml:base="http://localhost:4000/etc/2021-09-23-PCL_ROS/">&lt;p&gt;Pohang Dataset으로 LIO-SAM을 돌리려다보니 안되길래 들여다보니 LIO-SAM은 ring value를 이용해 이미지로 만들어 이를 통해 각 feature를 뽑아 내는 것을 발견하게 되었다.&lt;/p&gt;
+&lt;p&gt;여기서 \(\frac{c_j^q \cdot c_j^c }{\lVert c_j^q \rVert \lVert c_j^c \rVert}\)는 cosine distance라 부른다.&lt;/p&gt;
+
+&lt;p&gt;Column-wise shift는 같은 위치에 대한 viewpoint change (yaw change?)에 의해 발생할 수 있다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;../images/20210924_2.png&quot; alt=&quot;Column-wise shift&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;이를 위해 모든 shift possibility에 대해 최소의 distance matric을 가지는 값을 찾는다고 한다. (방위각 예측)&lt;/p&gt;
+
+&lt;p&gt;\(D(I^q, I^c)\) \(= \min_{n\in [N_s]} d(I^q, I_n^c)\)&lt;/p&gt;
+
+&lt;p&gt;\(n^*\) \(= \text{argmin}_{n\in [N_s]} d(I^q, I_n^c)\)&lt;/p&gt;
+&lt;h4 id=&quot;two-phase-search-algorithm&quot;&gt;Two-phase Search Algorithm&lt;/h4&gt;
+
+&lt;p&gt;Place recognition에서는 주로 3단계로 이루어짐&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Pairwise similarity scoring&lt;/li&gt;
+  &lt;li&gt;Nearest Neighbor search&lt;/li&gt;
+  &lt;li&gt;Sparse optimization&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;여기서는 reasonable search time을 위해 1.와 2.를 융합한다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;../images/20210924_3.png&quot; alt=&quot;Two-phase search&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;앞서 말한 \(n^*\) \(= \text{argmin}_{n\in [N_s]} d(I^q, I_n^c)\) 이 식이 시간이 오래 걸려 2가지 hierarchical search 알고리즘을 도입한다.&lt;/p&gt;
+
+&lt;p&gt;Ring key 는 rotation invariant descriptor로서 이번엔 row vector들의 값의 특성들에 대해서 다룬다.&lt;/p&gt;
+
+&lt;p&gt;column-wise하게 순서만 다를뿐 row vector는 같은 위치에 대해 비슷한 값을 encoding 하고 있다.&lt;/p&gt;
+
+&lt;p&gt;이는 즉 같은 거리에 대한 높이 정보들이라 생각하면 되는데, 여기서는 각 row vector에 대한 occupancy ratio를 계산하여 radial한 방향으로 각 하나의 값을 추출하여 vector \(\mathbf{k}\)를 정의한다.&lt;/p&gt;
+
+&lt;p&gt;\(\mathbf{k}\) \(=(\psi(r_1), ..., \psi(r_{N_r}))\)&lt;/p&gt;
+
+&lt;p&gt;\(\psi(r_i)\) \(= \frac{\lVert r_i \rVert_0}{N_s}\)&lt;/p&gt;
+
+&lt;p&gt;여기서 \(\lVert r_i \rVert_0\)은 L0 norm&lt;/p&gt;
+
+&lt;p&gt;이러한 ring key는 scan context보다는 정보가 덜하나, candidate loop을 빨리 찾을 수 있는 장점이 있다. 이 \(\mathbf{k}\)는 KD-tree를 구성하는데 사용되며, candidate에서 선별을 다시 distance metric으로 진행한다.&lt;/p&gt;
+
+&lt;p&gt;\(c^*\) \(= \text{argmin}_{c_k \in \mathcal{C}} D(I^q, I^{c_k}), \text{s.t} D &amp;lt; \tau\)&lt;/p&gt;
+
+&lt;p&gt;여기서 2 stage에서 두번째가 앞서 말한 \(D(I^q, I^c)\)이고, 첫번쨰가 \(\mathbf{k}\)를 이용한 KD-tree search인가? 아마도 그게 논리적으로 맞겠지.. 코드를 한번 봐야겠다.&lt;/p&gt;
+
+&lt;h3 id=&quot;experimental-validation&quot;&gt;Experimental Validation&lt;/h3&gt;
+
+&lt;p&gt;TBW&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">Researchers at KAIST, Korea. First Author: Giseop Kim</summary></entry><entry><title type="html">Publishing extra information using pcl Pointcloud and ros Pointcloud2</title><link href="http://localhost:4000/etc/2021-09-23-PCL_ROS/" rel="alternate" type="text/html" title="Publishing extra information using pcl Pointcloud and ros Pointcloud2" /><published>2021-09-23T00:00:00+09:00</published><updated>2021-09-23T00:00:00+09:00</updated><id>http://localhost:4000/etc/PCL_ROS</id><content type="html" xml:base="http://localhost:4000/etc/2021-09-23-PCL_ROS/">&lt;p&gt;Pohang Dataset으로 LIO-SAM을 돌리려다보니 안되길래 들여다보니 LIO-SAM은 ring value를 이용해 이미지로 만들어 이를 통해 각 feature를 뽑아 내는 것을 발견하게 되었다.&lt;/p&gt;
 
 &lt;p&gt;처음에는 그냥 대충 이미지로 projection 해보고 저장된 point sequence가 어떤식으로 저장되나 보면서 해보려고 했지만, 2048 * 32 혹은 * 64 의 점들을 파악하기가 여간 쉬운 일이 아닐꺼라 예상되어 실험 마지막날 ring value를 포함한 logging data를 만들었다.&lt;/p&gt;
 
@@ -300,7 +548,7 @@ Lidar는 strong invariance to perceptual variance 함&lt;/p&gt;
 
 &lt;p&gt;cost function : \(e^{M}(\mathcal{P}_i, \mathcal{P}_j, \mathbf{T}_i, \mathbf{T}_j) = \sum_{\mathbf{p}_k \in \mathcal{P}_i} e^{GCIP}(\mathbf{p}_k, \mathbf{T}_{ij})\)&lt;/p&gt;
 
-&lt;p&gt;Factor node를 구성하기 위해선 error값 뿐만 아니라 각 Factor에 대한 Jacobian을 &lt;a href=&quot;/slam/2020-11-12-gtsam_custom/&quot;&gt;계산&lt;/a&gt;해야 되는데 여기서는 Hessian에 대한 설명이 나와있다. (응?)&lt;/p&gt;
+&lt;p&gt;Factor node를 구성하기 위해선 error값 뿐만 아니라 각 Factor에 대한 Jacobian을 &lt;a href=&quot;../../slam/_posts/2020-11-12-gtsam_custom.md&quot;&gt;계산&lt;/a&gt;해야 되는데 여기서는 Hessian에 대한 설명이 나와있다. (응?)&lt;/p&gt;
 
 &lt;p&gt;Transformation에 대한 미분값을 다음과 같이 정의한다.&lt;/p&gt;
 
@@ -449,9 +697,9 @@ n^3 &amp;amp; 0 &amp;amp; -n_1 \\
     &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;someFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">A segmentation fault error was occured when I tried to copy a eigen matrix to a elemenet of a vector of eigne matrices:</summary></entry><entry><title type="html">[GTSAM] Orientation correction using gravity direction</title><link href="http://localhost:4000/etc/slam/2020-12-03-gtsam_orientation/" rel="alternate" type="text/html" title="[GTSAM] Orientation correction using gravity direction" /><published>2020-12-03T00:00:00+09:00</published><updated>2020-12-03T00:00:00+09:00</updated><id>http://localhost:4000/etc/slam/gtsam_orientation</id><content type="html" xml:base="http://localhost:4000/etc/slam/2020-12-03-gtsam_orientation/">&lt;p&gt;For attitude correction, we can use the gravity direction which doesn’t change(assuming that the gravity field is uniform and the mission area is small enough).&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">A segmentation fault error was occured when I tried to copy a eigen matrix to a elemenet of a vector of eigne matrices:</summary></entry><entry><title type="html">[GTSAM] Orientation correction using gravity direction</title><link href="http://localhost:4000/etc/2020-12-03-gtsam_orientation/" rel="alternate" type="text/html" title="[GTSAM] Orientation correction using gravity direction" /><published>2020-12-03T00:00:00+09:00</published><updated>2020-12-03T00:00:00+09:00</updated><id>http://localhost:4000/etc/gtsam_orientation</id><content type="html" xml:base="http://localhost:4000/etc/2020-12-03-gtsam_orientation/">&lt;p&gt;For attitude correction, we can use the gravity direction which doesn’t change(assuming that the gravity field is uniform and the mission area is small enough).&lt;/p&gt;
 
-&lt;p&gt;With coordinate system which the positive z is headed towards downward and positive x value is the vehicle heading, the gravity direction is \(\begin{bmatrix}0 &amp;amp; 0&amp;amp; 1\end{bmatrix}^\top\).&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html">For attitude correction, we can use the gravity direction which doesn’t change(assuming that the gravity field is uniform and the mission area is small enough).</summary></entry><entry><title type="html">Getting the rotation matrix between vectors</title><link href="http://localhost:4000/etc/slam/2020-12-03-rot_mat_btw_vecs/" rel="alternate" type="text/html" title="Getting the rotation matrix between vectors" /><published>2020-12-03T00:00:00+09:00</published><updated>2020-12-03T00:00:00+09:00</updated><id>http://localhost:4000/etc/slam/rot_mat_btw_vecs</id><content type="html" xml:base="http://localhost:4000/etc/slam/2020-12-03-rot_mat_btw_vecs/">&lt;p&gt;Let’s find a rotation matrix which rotates a unit vector \(\mathbf{v}_1\) to a unit vector \(\mathbf{v}_2\)&lt;/p&gt;
+&lt;p&gt;With coordinate system which the positive z is headed towards downward and positive x value is the vehicle heading, the gravity direction is \(\begin{bmatrix}0 &amp;amp; 0&amp;amp; 1\end{bmatrix}^\top\).&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">For attitude correction, we can use the gravity direction which doesn’t change(assuming that the gravity field is uniform and the mission area is small enough).</summary></entry><entry><title type="html">Getting the rotation matrix between vectors</title><link href="http://localhost:4000/etc/2020-12-03-rot_mat_btw_vecs/" rel="alternate" type="text/html" title="Getting the rotation matrix between vectors" /><published>2020-12-03T00:00:00+09:00</published><updated>2020-12-03T00:00:00+09:00</updated><id>http://localhost:4000/etc/rot_mat_btw_vecs</id><content type="html" xml:base="http://localhost:4000/etc/2020-12-03-rot_mat_btw_vecs/">&lt;p&gt;Let’s find a rotation matrix which rotates a unit vector \(\mathbf{v}_1\) to a unit vector \(\mathbf{v}_2\)&lt;/p&gt;
 
 &lt;p&gt;We can think about a vector \(\mathbf{k} = \mathbf{v}_1 \times \mathbf{v}_2\), which can also be expressed as \(\mathbf{k} = [\mathbf{v}_1]_\times\mathbf{v}_2\)&lt;/p&gt;
 
@@ -485,4 +733,4 @@ sin(\theta) &amp;amp;= \lVert \mathbf{v}_1\times \mathbf{v}_2 \rVert = \lVert \m
 
 &lt;p&gt;Since we want to find a rotation matrix \(R\) which satisfies \(R\mathbf{v}_1 = \mathbf{v}_2\), \(R\) can be expressed as:&lt;/p&gt;
 
-\[R = I + sin(\theta)[\mathbf{k}]_\times + (1-cos(\theta))[\mathbf{k}]_\times^2\]</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="slam" /><summary type="html">Let’s find a rotation matrix which rotates a unit vector \(\mathbf{v}_1\) to a unit vector \(\mathbf{v}_2\)</summary></entry><entry><title type="html">[Computer Vision] Bundle Adjustment PT2</title><link href="http://localhost:4000/papers/2020-12-01-Bundle_Adjustment_PT2/" rel="alternate" type="text/html" title="[Computer Vision] Bundle Adjustment PT2" /><published>2020-12-01T00:00:00+09:00</published><updated>2020-12-01T00:00:00+09:00</updated><id>http://localhost:4000/papers/Bundle_Adjustment_PT2</id><content type="html" xml:base="http://localhost:4000/papers/2020-12-01-Bundle_Adjustment_PT2/">&lt;p&gt;Source &lt;a href=&quot;https://www.youtube.com/watch?v=LKDLcKrWOIU&quot;&gt;Lecture by Cyrill Stachniss&lt;/a&gt;&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">Source Lecture by Cyrill Stachniss</summary></entry></feed>
+\[R = I + sin(\theta)[\mathbf{k}]_\times + (1-cos(\theta))[\mathbf{k}]_\times^2\]</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">Let’s find a rotation matrix which rotates a unit vector \(\mathbf{v}_1\) to a unit vector \(\mathbf{v}_2\)</summary></entry></feed>

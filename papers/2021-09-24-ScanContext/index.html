@@ -298,6 +298,12 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
   
     <h3 id="researchers-at-kaist-korea-first-author-giseop-kim">Researchers at KAIST, Korea. First Author: Giseop Kim</h3>
 
+<p>저자 김기섭님은 예전에 김아영 교수님 수업 들었을 때 조교로 처음 알게 되었는데, SLAM 커뮤니티에서 활동이 어마어마 하시고 논문도 어마어마 하시다.. 늦은감이 있지만 대학원생으로서 본받을 점이 많다. 이번 논문은 그의 첫번째 논문으로 Lidar 기반 Loop detection에 대한 논문이며, LiDAR Odometry SOTA algorithm 들과 융합한 코드를 만드셨는데 (<a href="https://youtu.be/Uv6_BRmxJho">SC-A-LOAM</a>, <a href="https://youtu.be/bEqCehMJ_Hk">SC-LeGO-LOAM</a>, <a href="https://youtu.be/jmR3DH_A4Co">SC-LIO-SAM</a>, <a href="https://youtu.be/Fw9S6D6HozA">FAST-LIO-SLAM</a>) 이젠 기본적으로 Lidar SLAM에서 포함된 알고리즘이 나오고 있다 <a href="/papers/2021-09-21-GPU_Lidar/">VGICP</a>.</p>
+
+<p>이 알고리즘에 intensity값을 추가해 만든 <a href="https://arxiv.org/abs/2003.05656">Intensity Scan Context</a>나 최근 나온 semantic 정보를 입힌 <a href="https://arxiv.org/abs/2107.00382">Semantic Scan Context</a> 도 읽어봐야겠다.</p>
+
+<p><a href="https://youtu.be/_etNafgQXoY">Related Video</a></p>
+
 <p>영상 기반 recognition은 유명하나 illumination variance 및 environmental change에 민감하다.
 Lidar는 strong invariance to perceptual variance 함</p>
 
@@ -432,6 +438,56 @@ Lidar는 strong invariance to perceptual variance 함</p>
 <p>\(d(I^{q}, I^{c})\) \(= \frac{1}{N_s} \sum_{j=1}^{N_s} \left( 1- \frac{c_j^q \cdot c_j^c }{\lVert c_j^q \rVert \lVert c_j^c \rVert} \right)\)</p>
 
 <p>여기서 \(\frac{c_j^q \cdot c_j^c }{\lVert c_j^q \rVert \lVert c_j^c \rVert}\)는 cosine distance라 부른다.</p>
+
+<p>Column-wise shift는 같은 위치에 대한 viewpoint change (yaw change?)에 의해 발생할 수 있다.</p>
+
+<p align="center">
+  <img src="../images/20210924_2.png" alt="Column-wise shift" />
+</p>
+
+<p>이를 위해 모든 shift possibility에 대해 최소의 distance matric을 가지는 값을 찾는다고 한다. (방위각 예측)</p>
+
+<p>\(D(I^q, I^c)\) \(= \min_{n\in [N_s]} d(I^q, I_n^c)\)</p>
+
+<p>\(n^*\) \(= \text{argmin}_{n\in [N_s]} d(I^q, I_n^c)\)</p>
+<h4 id="two-phase-search-algorithm">Two-phase Search Algorithm</h4>
+
+<p>Place recognition에서는 주로 3단계로 이루어짐</p>
+<ol>
+  <li>Pairwise similarity scoring</li>
+  <li>Nearest Neighbor search</li>
+  <li>Sparse optimization</li>
+</ol>
+
+<p>여기서는 reasonable search time을 위해 1.와 2.를 융합한다.</p>
+
+<p align="center">
+  <img src="../images/20210924_3.png" alt="Two-phase search" />
+</p>
+
+<p>앞서 말한 \(n^*\) \(= \text{argmin}_{n\in [N_s]} d(I^q, I_n^c)\) 이 식이 시간이 오래 걸려 2가지 hierarchical search 알고리즘을 도입한다.</p>
+
+<p>Ring key 는 rotation invariant descriptor로서 이번엔 row vector들의 값의 특성들에 대해서 다룬다.</p>
+
+<p>column-wise하게 순서만 다를뿐 row vector는 같은 위치에 대해 비슷한 값을 encoding 하고 있다.</p>
+
+<p>이는 즉 같은 거리에 대한 높이 정보들이라 생각하면 되는데, 여기서는 각 row vector에 대한 occupancy ratio를 계산하여 radial한 방향으로 각 하나의 값을 추출하여 vector \(\mathbf{k}\)를 정의한다.</p>
+
+<p>\(\mathbf{k}\) \(=(\psi(r_1), ..., \psi(r_{N_r}))\)</p>
+
+<p>\(\psi(r_i)\) \(= \frac{\lVert r_i \rVert_0}{N_s}\)</p>
+
+<p>여기서 \(\lVert r_i \rVert_0\)은 L0 norm</p>
+
+<p>이러한 ring key는 scan context보다는 정보가 덜하나, candidate loop을 빨리 찾을 수 있는 장점이 있다. 이 \(\mathbf{k}\)는 KD-tree를 구성하는데 사용되며, candidate에서 선별을 다시 distance metric으로 진행한다.</p>
+
+<p>\(c^*\) \(= \text{argmin}_{c_k \in \mathcal{C}} D(I^q, I^{c_k}), \text{s.t} D &lt; \tau\)</p>
+
+<p>여기서 2 stage에서 두번째가 앞서 말한 \(D(I^q, I^c)\)이고, 첫번쨰가 \(\mathbf{k}\)를 이용한 KD-tree search인가? 아마도 그게 논리적으로 맞겠지.. 코드를 한번 봐야겠다.</p>
+
+<h3 id="experimental-validation">Experimental Validation</h3>
+
+<p>TBW</p>
 
   
 </article>
@@ -579,7 +635,7 @@ Lidar는 strong invariance to perceptual variance 함</p>
     
 
 
-  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/log/2021-09-24-logging/" class="flip-title"><span>Restart Logging!</span></a>  <time class="faded fine" datetime="2021-09-24T00:00:00+09:00">24 Sep 2021</time></li>                        <li class="h4">  <a href="/etc/2021-09-23-PCL_ROS/" class="flip-title"><span>Publishing extra information using pcl Pointcloud and ros Pointcloud2</span></a>  <time class="faded fine" datetime="2021-09-23T00:00:00+09:00">23 Sep 2021</time></li>                        <li class="h4">  <a href="/papers/2021-09-21-GPU_Lidar/" class="flip-title"><span>[2021 RAL] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors</span></a>  <time class="faded fine" datetime="2021-09-21T00:00:00+09:00">21 Sep 2021</time></li>            </ul></aside>
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/papers/2021-10-03-LOAM/" class="flip-title"><span>[2014 RSS] LOAM</span></a>  <time class="faded fine" datetime="2021-10-03T00:00:00+09:00">03 Oct 2021</time></li>                        <li class="h4">  <a href="/log/2021-09-24-logging/" class="flip-title"><span>Restart Logging!</span></a>  <time class="faded fine" datetime="2021-09-24T00:00:00+09:00">24 Sep 2021</time></li>                        <li class="h4">  <a href="/etc/2021-09-23-PCL_ROS/" class="flip-title"><span>Publishing extra information using pcl Pointcloud and ros Pointcloud2</span></a>  <time class="faded fine" datetime="2021-09-23T00:00:00+09:00">23 Sep 2021</time></li>            </ul></aside>
 
   
 

@@ -2,11 +2,11 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://localhost:4000/about/</loc>
-<lastmod>2021-09-24T17:17:32+09:00</lastmod>
+<lastmod>2021-10-04T17:47:16+09:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/slam/</loc>
-<lastmod>2021-09-24T17:17:32+09:00</lastmod>
+<lastmod>2021-10-04T17:47:16+09:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/papers/2020-04-09-Estimating_Uncertain/</loc>
@@ -33,11 +33,11 @@
 <lastmod>2020-12-01T00:00:00+09:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/etc/slam/2020-12-03-gtsam_orientation/</loc>
+<loc>http://localhost:4000/etc/2020-12-03-gtsam_orientation/</loc>
 <lastmod>2020-12-03T00:00:00+09:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/etc/slam/2020-12-03-rot_mat_btw_vecs/</loc>
+<loc>http://localhost:4000/etc/2020-12-03-rot_mat_btw_vecs/</loc>
 <lastmod>2020-12-03T00:00:00+09:00</lastmod>
 </url>
 <url>
@@ -67,6 +67,10 @@
 <url>
 <loc>http://localhost:4000/papers/2021-09-24-ScanContext/</loc>
 <lastmod>2021-09-24T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/papers/2021-10-03-LOAM/</loc>
+<lastmod>2021-10-03T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/</loc>
