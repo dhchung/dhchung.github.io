@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en"><!--
+ __  __                __                                     __
+/\ \/\ \              /\ \             __                    /\ \
+\ \ \_\ \   __  __    \_\ \      __   /\_\      __       ___ \ \ \/'\
+ \ \  _  \ /\ \/\ \   /'_` \   /'__`\ \/\ \   /'__`\    /'___\\ \ , <
+  \ \ \ \ \\ \ \_\ \ /\ \L\ \ /\  __/  \ \ \ /\ \L\.\_ /\ \__/ \ \ \\`\
+   \ \_\ \_\\/`____ \\ \___,_\\ \____\ _\ \ \\ \__/.\_\\ \____\ \ \_\ \_\
+    \/_/\/_/ `/___/> \\/__,_ / \/____//\ \_\ \\/__/\/_/ \/____/  \/_/\/_/
+                /\___/                \ \____/
+                \/__/                  \/___/
+
+Powered by Hydejack v9.0.5 <https://hydejack.com/>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<head>
+  
+
+
+
+
+
+
+  
+    
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>[2019 CVPR] PointPillars | Dongha Chung</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="[2019 CVPR] PointPillars" />
+<meta name="author" content="<Dongha> <Chung>" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="2019 CVPR Paper on Lidar Object Detection" />
+<meta property="og:description" content="2019 CVPR Paper on Lidar Object Detection" />
+<link rel="canonical" href="http://localhost:4000/papers/2021-10-12-PointPillar/" />
+<meta property="og:url" content="http://localhost:4000/papers/2021-10-12-PointPillar/" />
+<meta property="og:site_name" content="Dongha Chung" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-10-12T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="[2019 CVPR] PointPillars" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/papers/2021-10-12-PointPillar/","headline":"[2019 CVPR] PointPillars","dateModified":"2021-10-12T00:00:00+09:00","datePublished":"2021-10-12T00:00:00+09:00","author":{"@type":"Person","name":"<Dongha> <Chung>"},"description":"2019 CVPR Paper on Lidar Object Detection","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/papers/2021-10-12-PointPillar/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+  
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Dongha Chung">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<meta name="application-name" content="Dongha Chung">
+
+
+  <meta name="theme-color" content="rgb(8,46,57)">
+
+
+<meta name="generator" content="Hydejack v9.0.5" />
+
+
+<link rel="alternate" href="http://localhost:4000/papers/2020-04-09-Estimating_Uncertain/" hreflang="en">
+
+<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Dongha Chung" />
+
+
+<link rel="shortcut icon"    href="/assets/icons/favicon.ico">
+<link rel="apple-touch-icon" href="/assets/icons/icon-192x192.png">
+
+<link rel="manifest" href="/assets/site.webmanifest">
+
+
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+
+
+
+<link rel="preload" href="/assets/img/swipe.svg" as="image" id="_hrefSwipeSVG">
+
+
+
+
+
+
+<script>!function(e,t){"use strict";function n(e,t,n,o){e.addEventListener?e.addEventListener(t,n,o):e.attachEvent?e.attachEvent("on"+t,n):e["on"+t]=n}e.loadJS=function(e,o){var r=t.createElement("script");r.src=e,o&&n(r,"load",o,{once:!0});var a=t.scripts[0];return a.parentNode.insertBefore(r,a),r},e._loaded=!1,e.loadJSDeferred=function(o,r){function a(){e._loaded=!0,r&&n(c,"load",r,{once:!0});var o=t.scripts[0];o.parentNode.insertBefore(c,o)}var c=t.createElement("script");return c.src=o,e._loaded?a():n(e,"load",a,{once:!0}),c},e.setRel=e.setRelStylesheet=function(e){function o(){this.rel="stylesheet"}n(t.getElementById(e),"load",o,{once:!0})}}(window,document);
+!function(a){"use strict";var b=function(b,c,d){function e(a){return h.body?a():void setTimeout(function(){e(a)})}function f(){i.addEventListener&&i.removeEventListener("load",f),i.media=d||"all"}var g,h=a.document,i=h.createElement("link");if(c)g=c;else{var j=(h.body||h.getElementsByTagName("head")[0]).childNodes;g=j[j.length-1]}var k=h.styleSheets;i.rel="stylesheet",i.href=b,i.media="only x",e(function(){g.parentNode.insertBefore(i,c?g:g.nextSibling)});var l=function(a){for(var b=i.href,c=k.length;c--;)if(k[c].href===b)return a();setTimeout(function(){l(a)})};return i.addEventListener&&i.addEventListener("load",f),i.onloadcssdefined=l,l(f),i};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);
+!function(a){if(a.loadCSS){var b=loadCSS.relpreload={};if(b.support=function(){try{return a.document.createElement("link").relList.supports("preload")}catch(b){return!1}},b.poly=function(){for(var b=a.document.getElementsByTagName("link"),c=0;c<b.length;c++){var d=b[c];"preload"===d.rel&&"style"===d.getAttribute("as")&&(a.loadCSS(d.href,d,d.getAttribute("media")),d.rel=null)}},!b.support()){b.poly();var c=a.setInterval(b.poly,300);a.addEventListener&&a.addEventListener("load",function(){b.poly(),a.clearInterval(c)}),a.attachEvent&&a.attachEvent("onload",function(){a.clearInterval(c)})}}}(this);
+!function(w) {
+  w._baseURL = '/';
+  w._publicPath = '/assets/js/';
+  w._noPushState = false;
+  w._noDrawer = true;
+  w._noNavbar = true;
+  w._noToc = false;
+  w._noSearch = true;
+}(window);
+</script>
+
+
+<script async src="/assets/bower_components/MathJax/es5/tex-mml-chtml.js" id="_MathJax"></script>
+
+
+<!--[if gt IE 8]><!---->
+
+  
+
+
+
+
+<link rel="stylesheet" href="/assets/css/hydejack-9.0.5.css" id="_stylePreload">
+<link rel="stylesheet" href="/assets/icomoon/style.css" id="_iconsPreload">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:700%7CNoto+Sans:400,400i,700,700i&display=swap" id="_fontsPreload">
+
+
+
+  <style id="_pageStyle">
+
+html{--accent-color: rgb(79,177,186);--accent-color-faded: rgba(79,177,186,0.5);--accent-color-darkened: #409ba3;--theme-color: rgb(8,46,57)}
+
+</style>
+
+
+<!--<![endif]-->
+
+
+<!--
+Code used for embedding Gumroad on the Hydejack Site. 
+Left here for reference, feel free to delete.
+-->
+<link rel="dns-prefetch" href="https://assets.gumroad.com">
+<script type="module">
+  let p;
+  const promisify = f => x => new Promise(r => f(x).addEventListener('load', r));
+  const loadJS = promisify(window.loadJS);
+  document.querySelector('hy-push-state').addEventListener('load', () => {
+    const io = new IntersectionObserver(async (entries) => {
+      if (entries.some(x => x.isIntersecting)) {
+        p = p || loadJS('https://gumroad.com/js/gumroad-embed.js');
+        await p;
+        if (!window.GumroadEmbed) {
+          await new Promise(function check1(res) {
+            if ('createGumroadEmbed' in window) res(window.createGumroadEmbed());
+            else setTimeout(() => check1(res), 200);
+          });
+        }
+        await new Promise(function check2(res) {
+          if ('GumroadEmbed' in window) res(GumroadEmbed.reload());
+          else setTimeout(() => check2(res), 200);
+        });
+      }
+    }, { rootMargin: '1440px' });
+    document.querySelectorAll('.gumroad-product-embed').forEach(el => io.observe(el));
+  });
+</script>
+<script type="module">
+  let p;
+  const promisify = f => x => new Promise(r => f(x).addEventListener('load', r));
+  const loadJS = promisify(window.loadJS);
+  document.querySelector('hy-push-state').addEventListener('load', () => {
+    const io = new IntersectionObserver(async (entries) => {
+      if (entries.some(x => x.isIntersecting)) {
+        p = p || loadJS('https://gumroad.com/js/gumroad.js');
+        await p;
+        if (!window.GumroadOverlay) {
+          await new Promise(function check(res) {
+            if ('createGumroadOverlay' in window) res(window.createGumroadOverlay());
+            else setTimeout(() => check(res), 200);
+          });
+        }
+      }
+    }, { rootMargin: '300px' });
+    document.querySelectorAll('.gumroad-button').forEach(el => io.observe(el));
+  });
+</script>
+
+
+</head>
+
+<body class="no-break-layout no-drawer">
+  
+
+
+<hy-push-state
+  id="_pushState"
+  replace-selector="#_main"
+  link-selector="a[href]:not([href^='/assets/']):not(.external):not(.no-push-state)"
+  script-selector="script"
+  duration="500"
+  hashchange
+>
+  
+  <div id="_navbar" class="navbar fixed-top">
+  <div class="content">
+    <span class="sr-only">Jump to:</span>
+    <div class="nav-btn-bar">
+      <a id="_menu" class="nav-btn no-hover" href="#_drawer--opened">
+        <span class="sr-only">Navigation</span>
+        <span class="icon-menu"></span>
+      </a>
+      <div class="nav-span"></div>
+    </div>
+  </div>
+</div>
+<hr class="sr-only" hidden />
+
+  <main
+  id="_main"
+  class="content layout-post"
+  role="main"
+>
+  
+
+
+
+
+
+<article id="post-papers-PointPillar" class="page post mb6" role="article">
+  <header>
+    <h1 class="post-title flip-project-title">
+      
+        [2019 CVPR] PointPillars
+      
+    </h1>
+
+    <div class="post-date">
+      
+      <time datetime="2021-10-12T00:00:00+09:00">12 Oct 2021</time>
+      
+      
+      
+      
+      
+
+
+
+
+
+
+
+
+
+in <a href="/papers/" class="flip-title">Paper Review</a>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+
+    
+
+
+
+  
+    <p class="note-sm" >
+      2019 CVPR Paper on Lidar Object Detection
+
+    </p>
+  
+
+
+  </header>
+
+  
+    <h3 id="researchers-at-nutonomy-spinned-off-from-mit-first-author-alex-h-lang">Researchers at nuTonomy (spinned off from MIT). First Author: Alex H. Lang</h3>
+
+<p><a href="https://www.youtube.com/watch?v=sOLCgRkWlWQ">Related Video</a></p>
+
+<h3 id="abstract">Abstract</h3>
+<p>최근에 두가지 encoder가 사용됨</p>
+<ul>
+  <li>fixed encoders : 빠르지만 정확도가 낮음</li>
+  <li>learned from data encoders : 정확하지만 느림</li>
+</ul>
+
+<ol>
+  <li>이 연구에선 vertical columns (pillars)로 정리된 point cloud의 representation을 learning하는 encoder를 제시.</li>
+  <li>Encoded features가 2D convolutional detection architecture에 적용 가능</li>
+  <li>또한 Lean downstream network을 제시</li>
+  <li>실험 검증을 통해 정확도 및 속도가 훨씬 빠름을 보임</li>
+</ol>
+
+<h3 id="introduction">Introduction</h3>
+<p>기존 방법은 bottom-up pipeline으로 background subtraction을 시작으로 saptiotemporal clustering 및 classification을 통해 진행됨.</p>
+
+<p>Deep learing 기법이 적용되는 lidar와 image의 가장 큰 차이점</p>
+<ul>
+  <li>Point cloud는 sparse, Image는 dense</li>
+  <li>Point cloud는 3D, Image는 2D</li>
+</ul>
+
+<p>초기 연구는 3D convolution이나 point cloud를 image plane에 projection함으로서 진행됨</p>
+
+<p>최근 연구는 point cloud를 bird’s eye view (BEV)로 보는 경향이 있음:</p>
+<ul>
+  <li>BEV는 object scale을 보존함</li>
+  <li>BEV에서의 convolution은 local range information을 보존함
+    <ul>
+      <li>Image view에서의 convolution은 depth를 blurring하는 효과를 줄 수 있음</li>
+    </ul>
+  </li>
+</ul>
+<p align="center">
+  <img src="../images/20211012_depthblur.png" alt="Convolution effect on image plane" />
+</p>
+
+<p>하지만, BEV는 굉장히 sparse할 수 있어 CNN이 impractical 하고 inefficient할 수 있음.</p>
+
+<p>이런 문제를 해결하는 주된 방법으로는 ground plane에 대해 일정한 grid를 생성해 그 voxel 안의 hand-crafted feature encoding하는 방법이 있음. 하지만 이는 generalize하기 어려움.</p>
+
+<p>VoxelNet은 이런 문제를 해결하는 end-to-end 기법들의 초기 연구들임.</p>
+<ul>
+  <li>Space를 voxel로 나눔</li>
+  <li>각 voxel에 PointNet을 적용</li>
+  <li>3D CNN을 통해 수직축을 통합</li>
+  <li>2D CNN을 통해 detection architecture가 적용됨</li>
+</ul>
+
+<p>VoxelNet의 성능은 좋으나 3D CNN으로 시간이 좀 걸림 (4.4Hz)</p>
+
+<p>최근 SECOND가 VoxelNet의 inference 시간을 줄였으나 아직 3D CNN은 bottleneck이다.</p>
+
+<p><strong>이 연구에선 오직 2D CNN을 이용하는 end-to-end 3D objection detection 기법을 소개한다.</strong></p>
+
+<p>PointPillars는 pillar들의 feature를 learning하는 novel encoder를 사용하여 3D bounding box를 검출한다.</p>
+
+<ol>
+  <li>Fixed encoder보다 feature learning을 함으로서 point cloud에 대한 모든 정보를 아우를 수 있다.</li>
+  <li>Voxel대신 pillar를 사용함으로서 vertical direction으로의 binning이 필요없다 (parameter-free)</li>
+  <li>2D convolution을 사용함으로서 빠름</li>
+  <li>다양한 조건과 radar point cloud에서조차 Hand-tuning이 필요 없음</li>
+</ol>
+
+<p>Kitti benchmark에서도 좋은 성능을 보임</p>
+<p align="center">
+  <img src="../images/20211012_performance.png" alt="Performance in KITTI benchmark suit" />
+</p>
+
+<h3 id="related-work">Related work</h3>
+<h4 id="object-detection-using-cnn">Object detection using CNN</h4>
+<p><a href="https://arxiv.org/abs/1311.2524">R-CNN</a>을 시작으로 영상에선 CNN이 짱이라는 것이 확립됨.</p>
+
+<p>이후 region proposal network 한 후 classification으로 이어지는 two stage 기법들이 사용됨.</p>
+
+<p>이런 two-stage 기법은 <a href="https://arxiv.org/abs/1512.02325">SSD</a>와 같은 single stage architecture보다 좋은 성능을 보였음</p>
+
+<p>하지만 최근 <a href="https://ieeexplore.ieee.org/document/8417976"><strong>focal loss function</strong>를 사용한 single stage 기법</a>이 정확도와 속도면에서 two-stage 기법을 앞선다고 함 (<a href="https://ropiens.tistory.com/83">잘 설명된 post</a> 기본적으로 scene에서 object보다 background가 더 많이 자리를 차지하기에, 이와 관련된 weight를 따로 부여하는 방식)</p>
+
+<p>여기서의 network는 single stage로 구성됨</p>
+
+<h4 id="object-detecion-in-lidar-point-clouds">Object detecion in lidar point clouds</h4>
+<p>Point cloud 가 3차원이니 3D CNN을 사용하는 것이 직관적으로 봤을 떄 자연스러움. 하지만 느림 (0.5초)</p>
+
+<p>최근 기법들은 ground plane으로 또는 image plane으로 projection 시키는 방법을 통해 runtime을 줄임.</p>
+
+<p>가장 최근 많이 사용되는 방법은 고정된 길이와 hand-crafted feature를 가진 vertical column으로 encoding하여 pseudo-image를 형성하여 standard image detection architecture를 적용함.</p>
+
+<p><a href="https://arxiv.org/abs/1611.07759">MV3D</a>와 <a href="https://arxiv.org/abs/1712.02294">AVOD</a>는 two-stage 기법을 적용하며, <a href="https://arxiv.org/abs/1902.06326">PIXOR</a>와 <a href="https://arxiv.org/abs/1803.06199">Complex YOLO</a>는 single stage pipeline을 사용함.</p>
+
+<p><a href="https://arxiv.org/abs/1612.00593">PointNet</a>및 <a href="https://arxiv.org/abs/1706.02413">PointNet++</a>에선 learning from unordered set을 위한 구조를 제시하였으며, <a href="https://arxiv.org/abs/1711.06396">VoxelNet</a>은 PointNet을 lidar point cloud에 적용한 첫번째 사례이다.</p>
+
+<p>VoxelNet은 voxel들에 PointNet이 적용되고, 후에 3D CNN을 적용하고 2D CNN을 Backbone으로 한 후 detection head로 넘어가는 구조로 이루어져있다. 이는 end-to-end learning이 가능하나, 다른 3D CNN과 같이 오래걸린다(4.4Hz).</p>
+
+<p><a href="https://arxiv.org/abs/1711.08488">Frustum PointNet</a>은 다른 fusion based method보다 좋은 성능을 보이나 multi-stage design은 end-to-end learning에 적합하지 않다.</p>
+
+<p><a href="https://www.mdpi.com/1424-8220/18/10/3337">SECOND</a>은 VoxelNet을 향상시켜 (Sparcity를 이용함) 더 좋은 성능과 계산속도를 나타내나 여전히 3D CNN을 사용해 느리다.</p>
+
+<h4 id="contribution">Contribution</h4>
+<ul>
+  <li>Point cloud encoder를 적용해 3D object detection을 위한 end-to-end learning 구조를 제시함</li>
+  <li>Pillar들이 dense 2D CNN에 어떻게 적용되는지 보여주며, 62Hz의 inference 속도를 보암</li>
+  <li>KITTI dataset에 대한 검증을 하였으며 car, pedestrian, cyclist에 대해 BEV 및 3D benchmark에서 SOTA를 이룸 (지금은 100위 밖)</li>
+  <li>좋은 성능을 보이는 이유에 대해 연구를 진행함</li>
+</ul>
+
+<h3 id="pointpillars-network">PointPillars Network</h3>
+<p align="center">
+  <img src="../images/20211012_1.png" alt="PointPillar Network" />
+</p>
+
+<p>네트워크는 3가지로 구성됨</p>
+<ol>
+  <li>Pillar Feature Network
+    <ol>
+      <li>Point cloud to pseudo image</li>
+    </ol>
+  </li>
+  <li>2D CNN Backbone (2 sub-networks)
+    <ol>
+      <li>top-down network로 spatial resolution 증가에 따른 feature 검출</li>
+      <li>Upsampling &amp; concatenation of 1</li>
+    </ol>
+  </li>
+  <li>Detection Head (SSD)
+    <ol>
+      <li>SSD를 통한 Object detection</li>
+    </ol>
+  </li>
+</ol>
+
+<h4 id="pointcloud-to-pseudo-image">Pointcloud to Pseudo-Image</h4>
+<p>이부분은 사실 논문을 3~4번 읽어도 잘 이해를 못했는데, <a href="https://towardsdatascience.com/implementing-point-pillars-in-tensorflow-c38d10e9286">이 글</a>의 <a href="https://github.com/tyagi-iiitv/PointPillars">코드</a>를 보면서 이해가 한번에 되었다.</p>
+
+<p align="center">
+  <img src="../images/20211012_ptcld4.png" alt="PointPillar Network" />
+</p>
+
+<p>그림을 열심히 그렸으나 역시 더럽게 못그린다. 여튼,</p>
+<ol>
+  <li>Point cloud를 x-y plane에서 일정한 grid로 binning을 한다. 각 bin(voxel)은 pillar가 된다. (첫번째-&gt;두번째)
+    <ol>
+      <li>논문에서는 set of pillars \(\mathcal{P}\) with \(\lvert \mathcal{P} \rvert = B\)라는데 놀랍게도 \(B\)에 대한 언급은 이 이후에도 전혀 없다.</li>
+    </ol>
+  </li>
+  <li>각 pillar안에 속해있는 point들의 mean값과 pillar의 중심값을 찾는다. (두번째-&gt;세번째)</li>
+  <li>각 pillar안에 속해있는 point마다 9차원 값을 넣는다 -&gt; \([x, y, z, r, x_c, y_c, z_c, x_p, y_p]\)</li>
+</ol>
+
+<p>여기서 \([x, y, z]\)는 point의 원래 좌표이며 \(r\)은 reflectivity이며 intensity값으로 넣기도 한다. (두개가 다른건가? 갑지기 나오니 헷갈리네). \([x_c, y_c, z_c]\)는 \(p - p_{mean}\)이고, \([x_p, y_p]\)는 \(p-p_{center}\)의 \(x, y\) 좌표값이다.</p>
+
+<p>자 이제 PointPillar stacking을 해야되는데, 이 부분이 조금 헷갈려서 헤맸었다. 결론적으로 말하면 Pillar를 쌓는 순서는 전혀 상관 없다.</p>
+
+<p align="center">
+  <img src="../images/20211012_2.png" alt="Stacking Pillars" />
+</p>
+
+<ul>
+  <li>여기서 \(D\)는 dimension으로 위와 같이 \(D=9\)가 된다. \(([x, y, z, r, x_c, y_c, z_c, x_p, y_p])\)</li>
+  <li>\(P\)는 maximum number of non-empty pillars per sample(point cloud)로 약 12000개 정도로 잡는다.</li>
+  <li>\(N\)은 maximum number of points per pillar로 약 100개 정도로 잡는다.</li>
+</ul>
+
+<p>일단 \(D\times P\times N\) 크기의 tensor를 만든 다음 pillar들을 순서에 상관 없이 넣는 형식이다. 순서가 상관 없는게, pillar의 feature를 뽑은 후(이 과정은 단순히 pillar의 feature를 뽑는데 있어 GPU 연산을 쉽게 하기 위해 만들어진 구조라 추측된다. 처음에는 “Pillar간 convolution하는거 아니야? 그럼 위치도 상관있을텐데?” 생각했는데 아니었다.) 어차피 다시 voxel coordinate로 다시 이동되기 때문이다.</p>
+
+<p>만약 pointcloud 내 non-empty pillar의 갯수가 \(P\)보다 크면 pillar를 random하게 선택하며 pillar 내 point 갯수도 \(N\)에 대해 마찬가지로 한다. 정 반대로 만약 pillar갯수나 point 갯수가 이보다 작다면 zero padding하는 형식이다. (뭔가 seq2seq가 겹쳐보인다)</p>
+
+<p>자 그럼 어떻게 쌓느냐, 좌표와 상관 없이 선택된 pillar에 대해 위의 그림에서 \(P\)축에 놓고, 그 \(P\)값에 마찬가지로 \(N\)축에 pillar 내의 point vector(9개 값을 가진)를 쌓아올린다. (여기서 point를 쌓는 것도 순서와 상관이 없는데, 나중에 feature를 뽑고 max값을 통해 invariance of order를 만족시킨다.) 다만 코드상 구현을 보면 stacked pillar를 다시 pseudo image로 변환할 때 바로 coordinate를 찾을 수 있도록 unordered_map 상에 x, y index 값을 저장하여 hash형태로 나타낸다.</p>
+
+<p align="center">
+  <img src="../images/20211012_3.png" alt="Stacking Pillars to Learned Features" />
+</p>
+
+<p align="center">
+  <img src="../images/20211012_4.png" alt="1x1 Convolution" />
+</p>
+
+<p>그 다음 각 point feature마다 \(1\times 1\) Convolution을 수행하여 \(1\times 1\times D\) input layer를 \(1 \times 1\tims C\) 로 늘린다. (찾아보니 이는 사실상 fully connected와 같은 모양이다. 계산을 빠르게 하기 위해 CNN으로 하는건가?) PointNet이랑 비슷하게 이 \(1 \times 1\) convolution은 모든 point에 동일한 커널로 진행하는 듯 하다. (하 ubuntu gimp로 그림 그릴라니까 빡세다. Powerpoint가 그립구나)</p>
+
+<p>이후 batch normalization과 ReLU를 통해 activation하여 \(1\times 1\times C\)짜리 layer 결과가 나온다.</p>
+
+<p align="center">
+  <img src="../images/20211012_5.png" alt="Stacked Pillars to Learned Stacked Pillars" />
+</p>
+
+<p>그럼 결과적으로 \((D\times P \times N)\) layer는 \({C \times P \times N}\)짜리 layer로 바뀐다. 참고로 point 수 또는 pillar 수가 부족한 경우 (위 그림의 회색 부분)은 input layer나 output(convolution 해봤자 0이니까) layer나 전부 0이다.</p>
+
+<p>이후 point별로 (그림에서의 N축) 각 feature element끼리의 max operator를 진행하여 결과적으로 \(C\times P\)의 layer가 나오게 된다.</p>
+
+<p align="center">
+  <img src="../images/20211012_6.png" alt="Learned Features to Pseudo Image" />
+</p>
+
+<p>이후 위에 서술하듯 각 pillar별로 크기 \(C\)의 vector를 hashing으로 미리 저장해둔 pillar의 voxel coordinate로 이동시켜줌으로서 channel \(C\)의 pseudo image를 생성한다. 이로써 각 pillar안의 3D points에 대한 feature들을 (웬지 max operator로 많은 feature가 사라질 것 같지만..) 하나의 pillar feature로 함으로써 2D convolution operation이 가능하게 된다.</p>
+
+<h4 id="backbone">Backbone</h4>
+<p align="center">
+  <img src="../images/20211012_7.png" alt="Backbone" />
+</p>
+
+<p>VoxelNet과 비슷한 backbone을 가진다 한다. 위의 그림의 1과 2의 sub-network로 구성되는데,</p>
+<ol>
+  <li>Top-down network : Produce features at increasingly small spatial resolution (resolution이 증가하면 .. 음 그림과 매칭이 안되는거 같은디)</li>
+  <li>Perform upsampling &amp; concatenation of the top-down features.</li>
+</ol>
+
+<p><strong>Network-1</strong>은 연속된 \(\text{Block}(S, L, F)\)로 이루어졌느데, pseudo image의 크기에 따라 정해지는 stride \(S\)로 적용된다. 각 block은 output channel이 \(F\)인 \(L\)개의 \(3\times 3\) 2D convolution layer가 있으며 각각 batch normalization과 ReLU가 뒤따른다.</p>
+
+<p>첫번째 convolution은 \(\frac{S}{S_{in}}\)의 stride를 가지는데, 이는 stride \(S_{in}\)을 가진 input blob을 입력한 후 block operation이 stride \(S\)를 가질 수 있기 위해 행해진다. (뭔뜻인겨?)</p>
+
+<p>이후의 convolution의 block operation은 1의 stride를 가진다.</p>
+
+<p><strong>Network-2</strong>: top-down block에서(Network-1) 나온 모든 feature들은 upsampling과 concatenation을 통해 합쳐진다.</p>
+<ol>
+  <li>Feature들은 pseudo image 크기를 고려한 초기 stride \(S_{in}\)에서 마지막 stride \(S_{out}\)로 final feature \(F\)를 가진 transposed 2D convolution을 통해 upsampled된다. \(\text{Up}(S_{in}, S_{out}, F)\)</li>
+</ol>
+
+<p>여기서 transposed 2D convolution과 deconvolution은 완전 다른 것이다!(비슷하면서도 아니다! <a href="https://zzsza.github.io/data/2018/02/23/introduction-convolution/">참고</a>)</p>
+
+<p>이후 batch normalization 및 ReLU를 적용한다. 다른 stride에 대한 feature들을 concatination함으로서 최종 feature가 생성된다.</p>
+
+<h4 id="detection-head">Detection Head</h4>
+<p>SSD의 설정을 차용하여 3D object detection을 수행한다. 만약 segmentation을 하고 싶다면 detection head만 변경하면 된다고 한다. SSD와 비슷하게 priorbox를 ground truth와 2D iou를 통해 비교한다. <strong>Bounding box의 height와 elevation</strong>은 사용되지 않는다. (추가적인 작업이 필요하다! ex: ground estimation)</p>
+
+<p>일단 여기까지가 대부분의 내용인데, 이후 내용들도 참고하기 좋은 내용들이다. 일단 시간이 없으니 magic word로 여기까지 TBW!</p>
+
+<h3 id="implementation-details">Implementation Details</h3>
+<h4 id="network">Network</h4>
+<h4 id="loss">Loss</h4>
+
+<h3 id="experimental-setup">Experimental Setup</h3>
+<h4 id="dataset">Dataset</h4>
+<h4 id="settings">Settings</h4>
+<h4 id="data-augmentation">Data Augmentation</h4>
+
+<h3 id="result">Result</h3>
+<h4 id="quantitative-analysis">Quantitative Analysis</h4>
+<h4 id="qualitative-analysis">Qualitative Analysis</h4>
+
+<h3 id="realtime-inference">Realtime Inference</h3>
+<h4 id="encoding">Encoding</h4>
+<h4 id="slimmer-design">Slimmer Design</h4>
+<h4 id="tensorrt">TensorRT</h4>
+<h4 id="the-need-for-speed">The need for speed</h4>
+
+<h3 id="ablation-studies">Ablation Studies</h3>
+<h4 id="spatial-resolution">Spatial Resolution</h4>
+<h4 id="per-box-data-augmentation">Per Box Data Augmentation</h4>
+<h4 id="point-decorations">Point Decorations</h4>
+<h4 id="encoding-1">Encoding</h4>
+
+<h3 id="conclusion">Conclusion</h3>
+
+  
+</article>
+
+
+<hr class="dingbat related" />
+
+
+
+
+  
+     
+
+
+  <aside class="about related mt4 mb4" role="complementary">
+    
+    
+
+<div class="author mt4">
+  
+
+  
+    
+
+
+<img
+  
+    src="/assets/img/dh.jpg"
+    
+    
+  
+  alt="<Dongha> <Chung>"
+  class="avatar"
+  
+  width="120"
+  height="120"
+  loading="lazy"
+/>
+
+  
+
+  
+  
+  <h2  class="page-title hr-bottom">
+    About
+  </h2>
+
+  <p><strong>Dongha Chung</strong></p>
+
+<p>A robotics perception engineer</p>
+
+
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/dhchung" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.youtube.com/channel/UC2MeUdGRQws1YhdQt0wf_vA/" title="YouTube" class="no-mark-external">
+      <span class="icon-youtube"></span>
+      <span class="sr-only">YouTube</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.linkedin.com/in/dongha-chung-b7a538bb" title="LinkedIn" class="no-mark-external">
+      <span class="icon-linkedin2"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+
+  </aside>
+
+
+  
+
+  
+  
+
+  
+    
+
+
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/papers/2021-10-03-LOAM/" class="flip-title"><span>[2014 RSS] LOAM</span></a>  <time class="faded fine" datetime="2021-10-03T00:00:00+09:00">03 Oct 2021</time></li>                        <li class="h4">  <a href="/papers/2021-09-24-ScanContext/" class="flip-title"><span>[2018 IROS] Scan Context: Egocentric Spatial Descriptor for Place Recognition within 3D Point Cloud Map</span></a>  <time class="faded fine" datetime="2021-09-24T00:00:00+09:00">24 Sep 2021</time></li>                        <li class="h4">  <a href="/log/2021-09-24-logging/" class="flip-title"><span>Restart Logging!</span></a>  <time class="faded fine" datetime="2021-09-24T00:00:00+09:00">24 Sep 2021</time></li>            </ul></aside>
+
+  
+
+  
+  
+
+  
+    
+
+  
+
+
+  
+<footer class="content" role="contentinfo">
+  <hr/>
+  
+    <p><small class="copyright">© 2020. All rights reserved.
+</small></p>
+  
+  
+    <p><small>Powered by <a class="external" href="https://hydejack.com/">Hydejack</a> v<span id="_version">9.0.5</span></small></p>
+  <hr class="sr-only"/>
+</footer>
+
+
+</main>
+
+  <hy-drawer
+  id="_drawer"
+  class=""
+  side="left"
+  threshold="10"
+  noscroll
+  
+>
+  <header id="_sidebar" class="sidebar" role="banner">
+    
+
+
+
+
+<div class="sidebar-bg sidebar-overlay" style="background-color:rgb(8,46,57);background-image:url(/assets/img/side.jpg)"></div>
+
+    <div class="sidebar-sticky">
+  <div class="sidebar-about">
+    
+      <a class="no-hover" href="/" tabindex="-1">
+        <img src="/assets/img/dh.jpg" class="avatar" alt="Dongha Chung" width="120" height="120" loading="lazy" />
+      </a>
+    
+    <a class="sidebar-title" href="/"><h2 class="h1">Dongha Chung</h2></a>
+    
+    
+      <p class="">
+        Scribbling stuffs
+
+      </p>
+    
+  </div>
+
+  <nav class="sidebar-nav heading" role="navigation">
+    <span class="sr-only">Navigation:</span>
+<ul>
+  
+    
+      
+      <li>
+        <a
+          id="_drawer--opened"
+          href="/about/"
+          class="sidebar-nav-item "
+          
+        >
+          About
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/cv"
+          class="sidebar-nav-item "
+          
+        >
+          Curriculum Vitae
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/papers/"
+          class="sidebar-nav-item "
+          
+        >
+          Paper Review
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/slam/"
+          class="sidebar-nav-item "
+          
+        >
+          SLAM
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/etc/"
+          class="sidebar-nav-item "
+          
+        >
+          etc.
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/log/"
+          class="sidebar-nav-item "
+          
+        >
+          Logging
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/allposts/"
+          class="sidebar-nav-item "
+          
+        >
+          All Posts
+        </a>
+      </li>
+    
+  
+</ul>
+
+  </nav>
+
+  
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/dhchung" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.youtube.com/channel/UC2MeUdGRQws1YhdQt0wf_vA/" title="YouTube" class="no-mark-external">
+      <span class="icon-youtube"></span>
+      <span class="sr-only">YouTube</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.linkedin.com/in/dongha-chung-b7a538bb" title="LinkedIn" class="no-mark-external">
+      <span class="icon-linkedin2"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+  </header>
+</hy-drawer>
+<hr class="sr-only" hidden />
+
+</hy-push-state>
+
+
+  <!--[if gt IE 10]><!---->
+  <script nomodule>!function(){var e=document.createElement("script");if(!("noModule"in e)&&"onbeforeload"in e){var t=!1;document.addEventListener("beforeload",function(n){if(n.target===e)t=!0;else if(!n.target.hasAttribute("nomodule")||!t)return;n.preventDefault()},!0),e.type="module",e.src=".",document.head.appendChild(e),e.remove()}}();
+</script>
+  <script src="/assets/js/hydejack-9.0.5.js" type="module"></script>
+  <script src="/assets/js/LEGACY-hydejack-9.0.5.js" nomodule defer></script>
+  
+
+  
+
+<!--<![endif]-->
+  <!--
+Code for integrating CloudFlare's email protection with Hydejack's single page app loading.
+-->
+<script>
+  document.getElementById('_pushState').addEventListener('hy-push-state-after', function (e) {
+    function e(e){
+      (console.error?console.error:console.log).call(console,e)
+    }
+
+    function t(e){
+      return l.innerHTML='<a href="'+e.replace(/"/g,"&quot;")+'"></a>',l.childNodes[0].getAttribute("href")
+    }
+
+    function r(e,t){
+      var r=e.substr(t,2);return parseInt(r,16)
+    }
+
+    function n(e,n){
+      for(var o="",c=r(e,n),a=n+2;a<e.length;a+=2){
+        var l=r(e,a)^c;
+        o+=String.fromCharCode(l)
+      }
+      return t(o)
+    }
+
+    var o="/cdn-cgi/l/email-protection#",
+        c=".__cf_email__",
+        a="data-cfemail",
+        l=document.createElement("div");
+
+    !function(){
+      for(var t=document.getElementsByTagName("a"),r=0;r<t.length;r++)
+        try{
+          var c=t[r],a=c.href.indexOf(o);
+          a>-1&&(c.href="mailto:"+n(c.href,a+o.length))
+        }catch(t){
+          e(t)
+        }
+    }(),
+    function(){
+      for(var t=document.querySelectorAll(c),r=0;r<t.length;r++)
+        try{
+          var o=t[r],l=n(o.getAttribute(a),0),i=document.createTextNode(l);
+          o.parentNode.replaceChild(i,o)
+        }catch(t){
+          e(t)
+        }
+    }()
+  });
+</script>
+
+
+
+
+
+<div hidden>
+  
+  <h2 class="sr-only">Templates (for web app):</h2>
+
+  <template id="_animation-template">
+  <div class="animation-main fixed-top">
+    <div class="content">
+      <div class="page"></div>
+    </div>
+  </div>
+</template>
+
+  <template id="_loading-template">
+  <div class="loading nav-btn fr">
+    <span class="sr-only">Loading…</span>
+    <span class="icon-cog"></span>
+  </div>
+</template>
+
+  <template id="_error-template">
+  <div class="page">
+    <h1 class="page-title">Error</h1>
+    
+    
+    <p class="lead">
+      Sorry, an error occurred while loading <a class="this-link" href=""></a>.
+
+    </p>
+  </div>
+</template>
+
+  <template id="_forward-template">
+  <button id="_forward" class="forward nav-btn no-hover">
+    <span class="sr-only">Forward</span>
+    <span class="icon-arrow-right2"></span>
+  </button>
+</template>
+
+  <template id="_back-template">
+  <button id="_back" class="back nav-btn no-hover">
+    <span class="sr-only">Back</span>
+    <span class="icon-arrow-left2"></span>
+  </button>
+</template>
+
+  <template id="_permalink-template">
+  <a href="#" class="permalink">
+    <span class="sr-only">Permalink</span>
+    <span class="content-hash"></span>
+  </a>
+</template>
+
+</div>
+
+
+</body>
+</html>
