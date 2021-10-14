@@ -478,7 +478,7 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
   <img src="../images/20211012_4.png" alt="1x1 Convolution" />
 </p>
 
-<p>그 다음 각 point feature마다 \(1\times 1\) Convolution을 수행하여 \(1\times 1\times D\) input layer를 \(1 \times 1\tims C\) 로 늘린다. (찾아보니 이는 사실상 fully connected와 같은 모양이다. 계산을 빠르게 하기 위해 CNN으로 하는건가?) PointNet이랑 비슷하게 이 \(1 \times 1\) convolution은 모든 point에 동일한 커널로 진행하는 듯 하다. (하 ubuntu gimp로 그림 그릴라니까 빡세다. Powerpoint가 그립구나)</p>
+<p>그 다음 각 point feature마다 \(1\times 1\) Convolution을 수행하여 \(1\times 1\times D\) input layer를 \(1 \times 1\times C\) 로 늘린다. (찾아보니 이는 사실상 fully connected와 같은 모양이다. 계산을 빠르게 하기 위해 CNN으로 하는건가?) PointNet이랑 비슷하게 이 \(1 \times 1\) convolution은 모든 point에 동일한 커널로 진행하는 듯 하다. (하 ubuntu gimp로 그림 그릴라니까 빡세다. Powerpoint가 그립구나)</p>
 
 <p>이후 batch normalization과 ReLU를 통해 activation하여 \(1\times 1\times C\)짜리 layer 결과가 나온다.</p>
 

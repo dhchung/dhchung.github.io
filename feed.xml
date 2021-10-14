@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-10-14T15:29:04+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-10-14T15:33:53+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
 </subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">[2019 CVPR] PointPillars</title><link href="http://localhost:4000/papers/2021-10-12-PointPillar/" rel="alternate" type="text/html" title="[2019 CVPR] PointPillars" /><published>2021-10-12T00:00:00+09:00</published><updated>2021-10-12T00:00:00+09:00</updated><id>http://localhost:4000/papers/PointPillar</id><content type="html" xml:base="http://localhost:4000/papers/2021-10-12-PointPillar/">&lt;h3 id=&quot;researchers-at-nutonomy-spinned-off-from-mit-first-author-alex-h-lang&quot;&gt;Researchers at nuTonomy (spinned off from MIT). First Author: Alex H. Lang&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=sOLCgRkWlWQ&quot;&gt;Related Video&lt;/a&gt;&lt;/p&gt;
@@ -181,7 +181,7 @@
   &lt;img src=&quot;../images/20211012_4.png&quot; alt=&quot;1x1 Convolution&quot; /&gt;
 &lt;/p&gt;
 
-&lt;p&gt;그 다음 각 point feature마다 \(1\times 1\) Convolution을 수행하여 \(1\times 1\times D\) input layer를 \(1 \times 1\tims C\) 로 늘린다. (찾아보니 이는 사실상 fully connected와 같은 모양이다. 계산을 빠르게 하기 위해 CNN으로 하는건가?) PointNet이랑 비슷하게 이 \(1 \times 1\) convolution은 모든 point에 동일한 커널로 진행하는 듯 하다. (하 ubuntu gimp로 그림 그릴라니까 빡세다. Powerpoint가 그립구나)&lt;/p&gt;
+&lt;p&gt;그 다음 각 point feature마다 \(1\times 1\) Convolution을 수행하여 \(1\times 1\times D\) input layer를 \(1 \times 1\times C\) 로 늘린다. (찾아보니 이는 사실상 fully connected와 같은 모양이다. 계산을 빠르게 하기 위해 CNN으로 하는건가?) PointNet이랑 비슷하게 이 \(1 \times 1\) convolution은 모든 point에 동일한 커널로 진행하는 듯 하다. (하 ubuntu gimp로 그림 그릴라니까 빡세다. Powerpoint가 그립구나)&lt;/p&gt;
 
 &lt;p&gt;이후 batch normalization과 ReLU를 통해 activation하여 \(1\times 1\times C\)짜리 layer 결과가 나온다.&lt;/p&gt;
 
