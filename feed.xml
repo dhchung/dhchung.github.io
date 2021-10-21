@@ -1,5 +1,134 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-10-14T15:33:53+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
-</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">[2019 CVPR] PointPillars</title><link href="http://localhost:4000/papers/2021-10-12-PointPillar/" rel="alternate" type="text/html" title="[2019 CVPR] PointPillars" /><published>2021-10-12T00:00:00+09:00</published><updated>2021-10-12T00:00:00+09:00</updated><id>http://localhost:4000/papers/PointPillar</id><content type="html" xml:base="http://localhost:4000/papers/2021-10-12-PointPillar/">&lt;h3 id=&quot;researchers-at-nutonomy-spinned-off-from-mit-first-author-alex-h-lang&quot;&gt;Researchers at nuTonomy (spinned off from MIT). First Author: Alex H. Lang&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-10-21T19:02:44+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
+</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">Essential Matrix &amp;amp; Fundamental Matrix</title><link href="http://localhost:4000/log/2021-10-20-Photommetry/" rel="alternate" type="text/html" title="Essential Matrix &amp;amp; Fundamental Matrix" /><published>2021-10-20T00:00:00+09:00</published><updated>2021-10-20T00:00:00+09:00</updated><id>http://localhost:4000/log/Photommetry</id><content type="html" xml:base="http://localhost:4000/log/2021-10-20-Photommetry/">&lt;h2 id=&quot;rotation-matrix--translation&quot;&gt;Rotation matrix &amp;amp; translation&lt;/h2&gt;
+
+&lt;p&gt;MVG pg.155에서, camera calibration matrix \(K\)는 \(\mathbf{x} = K[I~\vert ~\mathbf{0}]\mathbf{X}_{cam}\)&lt;/p&gt;
+
+&lt;p&gt;Camera rotation과 translation을 고려하면 \(\mathbf{x} = KR[I~\vert ~-\tilde{\mathbf{C}}]\mathbf{X}\)가 된다.&lt;/p&gt;
+
+&lt;p&gt;여기서 \(\tilde{\mathbf{C}}\)는 camera center를 world coordinate frame에서 표현한거고&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;where \(\tilde{\mathbf{C}}\) represents the coordinates of the camera center in the world coordinate system&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;\(R\)은 camera coordinate frame의 orientation을 표현하는 rotation matrix이다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;and \(R\) is an \(3 \times 3\) rotation matrix representing the orientation of the camera coordinate system&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;그럼 결국 \(\mathbf{X}_{cam} = \begin{bmatrix} R &amp;amp; -R\tilde{\mathbf{C}} \\ 0 &amp;amp; 1 \end{bmatrix}\mathbf{X}\)가 된다는 뜻으로, 이는 world coordinate system상의 점 \(\mathbf{X}\)가 camera coordinate system에서 \(\mathbf{X}_{cam}\)로 표현이 되는 것을 나타낸다.&lt;/p&gt;
+
+&lt;p&gt;여기서 잠깐, 우리가 기존에 알던 것이랑 좀 많이 다르다. 우리가 일반적으로 사용하는 translation matrix를 생각해보면, 기준 좌표계 (world coordinate system)에서 rotation이 \(R\)이고 translation이 \(\mathbf{t}\)인 어떤 좌표계 A에 대해서 기준좌표계의 점 \(\mathbf{X}\)는 A 좌표계에서 다음과 같이 보여진다.&lt;/p&gt;
+
+&lt;p&gt;(여기서 모두 homogeneous coordinate임을 고려하자)&lt;/p&gt;
+
+&lt;p&gt;\(\mathbf{X}_{A} =\) \(\begin{bmatrix} R^{\top} &amp;amp; - R^{\top}\mathbf{t} \\ 0 &amp;amp; 1 \end{bmatrix} \mathbf{X}\)&lt;/p&gt;
+
+&lt;p&gt;\(-R\tilde{\mathbf{C}}=\mathbf{t}\)로 하면 camera matrix \(P\)는 다음과 같이 표현된다.&lt;/p&gt;
+
+&lt;p&gt;\(P=\) \(K[R~\vert~\mathbf{t}]\)&lt;/p&gt;
+
+&lt;p&gt;위의 식과 좀 다르다는 것을 알 수 있다. 어떤 이유에서인지 모르겠지만, 여기서 사용된 \(R\)은 내가 알던 \(R\)의 행렬로 camera coordinate system에서 바라본 world coordinate system의 rotation matrix인거 같다.&lt;/p&gt;
+
+&lt;p&gt;결국, 여기서의 \(R\)과 \(\mathbf{t}\)를 world coordinate system에서 바라본 camera coordinate system의 rotation 및 translation이 아니라 그 반대로 &lt;strong&gt;camera coordinate system에서 바라본 world coordinate system의 rotation 및 translation&lt;/strong&gt;으로 생각한다면 식이 이해가 된다.&lt;/p&gt;
+
+&lt;p&gt;(솔직히 이게 맞는지 모르겠다. googling을 해봤는데 나랑 같이 의문을 표한 내용을 찾을 수가 없네)&lt;/p&gt;
+
+&lt;h2 id=&quot;fundamental-matrix&quot;&gt;Fundamental matrix&lt;/h2&gt;
+&lt;p&gt;3차원 공간의 1개의 점에 대해 두개의 image plane에 맻힌 상을 각각 \(\mathbf{x}\)와 \(\mathbf{x}'\)라 했을 때 fundamental matrix \(F\)는 \(\mathbf{x}'^{\top}F\mathbf{x}=0\)를 만족하는 matrix이며 다음을 만족한다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Transpose: \(F\)가 카메라 \((P, P')\)에 대해 만족한다면 \(F^{\top}\)은 카메라 \({P', P}\)에 대해 만족
+    &lt;ol&gt;
+      &lt;li&gt;i.e. \(\mathbf{x}'^{\top}F\mathbf{x}=0, \mathbf{x}^{\top}F^{\top}\mathbf{x}'\)&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Epipolar lines: 첫번째 영상에 대해 아무 점 \(\mathbf{x}\)에 대해 대응하는 epipolar line은 \(\mathbf{l}' = F\mathbf{x}\)이다.&lt;/li&gt;
+  &lt;li&gt;Epipole: epipole(\(\mathbf{e}\))를 제외한 아무 점 \(\mathbf{x}\)에 대해 epipolar line \(\mathbf{l}' = F\mathbf{x}\)은 epipole \(\mathbf{e}'\)을 지난다.
+    &lt;ol&gt;
+      &lt;li&gt;이는 곧 \(\mathbf{e}'F\mathbf{x} = (\mathbf{e}'F)x = 0\)이 된다.&lt;/li&gt;
+      &lt;li&gt;결국 이를 만족하기 위해선 \(mathbf{e}'F=0\)이 되야 하며 \(mathbf{e}'\)는 F의 left nullspace와 같다.&lt;/li&gt;
+      &lt;li&gt;비슷하게 \(\mathbf{e}F^{\top}=0\)인데 이를 transpose하면 \(Fmathbf{e}=0\)가 되어 \(\mathbf{e}\)는 F의 right nullspace가 된다.&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;특징들은, 한번 정리하면 좋을 것 같으니 다 써놓자.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;F는 rank 2의 homogeneous matrix로 7DoF를 가진다.&lt;/li&gt;
+  &lt;li&gt;Point Correspondence: \(\mathbf{x}'^{\top}F\mathbf{x}=0\)&lt;/li&gt;
+  &lt;li&gt;Epipolar lines:
+    &lt;ol&gt;
+      &lt;li&gt;\(\mathbf{l}'=\) \(F\mathbf{x}\)&lt;/li&gt;
+      &lt;li&gt;\(\mathbf{l} =\) \(F^{\top}\mathbf{x}'\)&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Epipoles
+    &lt;ol&gt;
+      &lt;li&gt;\(F\mathbf{e}=\) \(0\)&lt;/li&gt;
+      &lt;li&gt;\(F^{\top}\mathbf{e}'=\) \(0\)&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Computtation from camera matrices \(P, P'\):
+    &lt;ol&gt;
+      &lt;li&gt;General Cameras:
+        &lt;ol&gt;
+          &lt;li&gt;\(F=[\mathbf{e}']_{\times}P'P^{+}\) where \(P^{+}\) is pseudo-inverse of \(P\), and \(\mathbf{e}' = P'\mathbf{C}\) with \(P\mathbf{C}=0\) (여기서 \(\mathbf{C}\)는 첫번째 camera centre in 3D)&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Canonical cameras, \(P=K[I~\vert~0]\), \(P'=[M~\vert~\mathbf{m}]\)
+        &lt;ol&gt;
+          &lt;li&gt;\(F=[\mathbf{e}']_{\times}M=M^{-\top}[\mathbf{e}]_{\times}\), where \(\mathbf{e}'=\mathbf{m}\) and \(\mathbf{e}=M^{-1}\mathbf{m}\)&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Cameras not at infinity: \(P = K[I~\vert~0]\), \(P' = K'[R~\vert~\mathbf{t}]\)
+        &lt;ol&gt;
+          &lt;li&gt;\(F=\) \(K'^{-\top}[\mathbf{t}]_{\times} R K^{-1} = [K'\mathbf{t}]_{\times} K'RK^{-1} = K'^{-\top} RK^{\top}[KR^{\top}\mathbf{t}]_{\times}\)&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Epipolar line에 대한 homography는 다음과 같다.
+\(\mathbf{l}'= F[\mathbf{e}]_{\times}\mathbf{l}\), \(\mathbf{l}= F^{\top}[\mathbf{e}']_{\times}\mathbf{l}'\)&lt;/p&gt;
+
+&lt;h2 id=&quot;essential-matrix&quot;&gt;Essential matrix&lt;/h2&gt;
+
+&lt;p&gt;3차원 공간의 1개의 점에 대해 두개의 image plane에 맻힌 상의 &lt;strong&gt;normalized coordinate&lt;/strong&gt;을 각각 \(\hat{\mathbf{x}}\)와 \(\hat{\mathbf{x}}'\)라 했을 때  Essential matrix \(E\)는 \(\hat{\mathbf{x}}'^{\top}E\hat{\mathbf{x}}=0\)를 만족하는 matrix로서 \(E = [\mathbf{t}]_{\times}R\)로 계산할 수 있는데 이는 point transformation에서 유도할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;한가지 설명을 빠뜨린 것이 있는데, \(\hat{\mathbf{x}}\)는 &lt;strong&gt;normalized coordinate&lt;/strong&gt;로서 이미지 좌표에 camera calibration matrix의 inverse를 취해 나타낸 것으로 \(\hat{\mathbf{x}} = K^{-1}\mathbf{x}\)이다.&lt;/p&gt;
+
+&lt;p&gt;Point transformation을 간략히 나타내면 \(\mathbf{X}_{A} = R\mathbf{X}+\mathbf{t}_{B}\)가 된다.&lt;/p&gt;
+
+&lt;p&gt;(여기선 homogeneous coordinate가 아니다!!)&lt;/p&gt;
+
+&lt;p&gt;앞서 말한 것과 같이 여기서의 \(R\)과 \(\mathbf{t}\)는 A coordinate system에서 바라본 B의 rotation 및 translation이다.&lt;/p&gt;
+
+&lt;p&gt;양변을 transpose한 후 \(E\)를 우측에 곱하면&lt;/p&gt;
+
+&lt;p&gt;\(\mathbf{X}_{A}^{\top}[\mathbf{t}]_{\times}R = (\mathbf{X}_{B}^{\top}R^{\top}+\mathbf{t}^{\top})([\mathbf{t}]_{\times}R)\)이 되고&lt;/p&gt;
+
+&lt;p&gt;양변에 \(\mathbf{X}_{B}\)를 곱하게 되면 \(\mathbf{X}_{A}^{\top}[\mathbf{t}]_{\times}R \mathbf{X}_{B}= (\mathbf{X}_{B}^{\top}R^{\top}+\mathbf{t}^{\top})([\mathbf{t}]_{\times}R)\mathbf{X}_{B}\)가 된다.&lt;/p&gt;
+
+&lt;p&gt;여기서 우현을 보면 \(\mathbf{t}^{\top}[\mathbf{t}]_{\times}\)는 0이 되고, 남은 \(\mathbf{X}_{B}^{\top} R^{\top} [\mathbf{t}]_{\times} R\mathbf{X}_{B}\)를 살펴보자&lt;/p&gt;
+
+&lt;p&gt;어떤 vector \(R\mathbf{X}_{B}\)에 대해 \([\mathbf{t}]_{\times}\) 를 곱한 것은 결국 \(\mathbf{t} \times R\mathbf{X}_{B}\)와 같아 이는 \(R\mathbf{X}_{B}\)와 직교하게 된다. 결국 직교하는 vector간 내적이 되어 이것도 0이 된다.&lt;/p&gt;
+
+&lt;p&gt;결국 \(\mathbf{X}_{A}^{\top}E\mathbf{X}_{B}=0\)이 된다.&lt;/p&gt;
+
+&lt;p&gt;사실, \(\mathbf{X} = \begin{bmatrix}x &amp;amp; y &amp;amp; z\end{bmatrix}^{\top}\)라 했을 때 \(\hat{\mathbf{x}} = \begin{bmatrix} x/z &amp;amp; y/z &amp;amp; 1 \end{bmatrix}^{\top}\)이기에 양변을 각각의 \(z\)값으로 나누면 처음 식 \(\hat{\mathbf{x}}'^{\top}E\hat{\mathbf{x}}=0\)이 만족된다.&lt;/p&gt;
+
+&lt;p&gt;여기서 Fundamental matrix를 생각해보면 이는 \(\mathbf{x}'^{\top}F\mathbf{x}=0\)를 만족하는 matrix F이기에&lt;/p&gt;
+
+&lt;p&gt;다시 쓰면 \(\mathbf{x}'^{\top}K'^{-\top}EK^{-1}\mathbf{x}=0\)이 되어 \(E = K'^{\top}FK\)가 된다.&lt;/p&gt;
+
+&lt;p&gt;Essential matrix는 5DoF이다. (scale ambiguity)&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="log" /><summary type="html">Rotation matrix &amp;amp; translation</summary></entry><entry><title type="html">Kitti Object Dataset</title><link href="http://localhost:4000/log/2021-10-16-KittiObject/" rel="alternate" type="text/html" title="Kitti Object Dataset" /><published>2021-10-16T00:00:00+09:00</published><updated>2021-10-16T00:00:00+09:00</updated><id>http://localhost:4000/log/KittiObject</id><content type="html" xml:base="http://localhost:4000/log/2021-10-16-KittiObject/">&lt;p&gt;이번 포스트에서는 PointPillars 및 기타 Object detection learning을 위한 dataset에 있어 Kitti를 사용하는 방법에 대해서 알아볼 예정이다.&lt;/p&gt;
+
+&lt;p&gt;일단 Kitti dataset으로 &lt;a href=&quot;http://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=3d&quot;&gt;3D object benchmark&lt;/a&gt;을 사용하였으며, 아래와 같이 여섯개의 데이터를 다운받았다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/log/images/20211016/kitti_page.png&quot; alt=&quot;Kitti_image&quot; /&gt;&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="log" /><summary type="html">이번 포스트에서는 PointPillars 및 기타 Object detection learning을 위한 dataset에 있어 Kitti를 사용하는 방법에 대해서 알아볼 예정이다.</summary></entry><entry><title type="html">[2019 CVPR] PointPillars</title><link href="http://localhost:4000/papers/2021-10-12-PointPillar/" rel="alternate" type="text/html" title="[2019 CVPR] PointPillars" /><published>2021-10-12T00:00:00+09:00</published><updated>2021-10-12T00:00:00+09:00</updated><id>http://localhost:4000/papers/PointPillar</id><content type="html" xml:base="http://localhost:4000/papers/2021-10-12-PointPillar/">&lt;h3 id=&quot;researchers-at-nutonomy-spinned-off-from-mit-first-author-alex-h-lang&quot;&gt;Researchers at nuTonomy (spinned off from MIT). First Author: Alex H. Lang&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=sOLCgRkWlWQ&quot;&gt;Related Video&lt;/a&gt;&lt;/p&gt;
 
@@ -38,7 +167,7 @@
   &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211012_depthblur.png&quot; alt=&quot;Convolution effect on image plane&quot; /&gt;
+  &lt;img src=&quot;../images/20211012/20211012_depthblur.png&quot; alt=&quot;Convolution effect on image plane&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;하지만, BEV는 굉장히 sparse할 수 있어 CNN이 impractical 하고 inefficient할 수 있음.&lt;/p&gt;
@@ -70,7 +199,7 @@
 
 &lt;p&gt;Kitti benchmark에서도 좋은 성능을 보임&lt;/p&gt;
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211012_performance.png&quot; alt=&quot;Performance in KITTI benchmark suit&quot; /&gt;
+  &lt;img src=&quot;../images/20211012/20211012_performance.png&quot; alt=&quot;Performance in KITTI benchmark suit&quot; /&gt;
 &lt;/p&gt;
 
 &lt;h3 id=&quot;related-work&quot;&gt;Related work&lt;/h3&gt;
@@ -112,7 +241,7 @@
 
 &lt;h3 id=&quot;pointpillars-network&quot;&gt;PointPillars Network&lt;/h3&gt;
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211012_1.png&quot; alt=&quot;PointPillar Network&quot; /&gt;
+  &lt;img src=&quot;../images/20211012/20211012_1.png&quot; alt=&quot;PointPillar Network&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;네트워크는 3가지로 구성됨&lt;/p&gt;
@@ -139,7 +268,7 @@
 &lt;p&gt;이부분은 사실 논문을 3~4번 읽어도 잘 이해를 못했는데, &lt;a href=&quot;https://towardsdatascience.com/implementing-point-pillars-in-tensorflow-c38d10e9286&quot;&gt;이 글&lt;/a&gt;의 &lt;a href=&quot;https://github.com/tyagi-iiitv/PointPillars&quot;&gt;코드&lt;/a&gt;를 보면서 이해가 한번에 되었다.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211012_ptcld4.png&quot; alt=&quot;PointPillar Network&quot; /&gt;
+  &lt;img src=&quot;../images/20211012/20211012_ptcld4.png&quot; alt=&quot;PointPillar Network&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;그림을 열심히 그렸으나 역시 더럽게 못그린다. 여튼,&lt;/p&gt;
@@ -158,7 +287,7 @@
 &lt;p&gt;자 이제 PointPillar stacking을 해야되는데, 이 부분이 조금 헷갈려서 헤맸었다. 결론적으로 말하면 Pillar를 쌓는 순서는 전혀 상관 없다.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211012_2.png&quot; alt=&quot;Stacking Pillars&quot; /&gt;
+  &lt;img src=&quot;../images/20211012/20211012_2.png&quot; alt=&quot;Stacking Pillars&quot; /&gt;
 &lt;/p&gt;
 
 &lt;ul&gt;
@@ -174,11 +303,11 @@
 &lt;p&gt;자 그럼 어떻게 쌓느냐, 좌표와 상관 없이 선택된 pillar에 대해 위의 그림에서 \(P\)축에 놓고, 그 \(P\)값에 마찬가지로 \(N\)축에 pillar 내의 point vector(9개 값을 가진)를 쌓아올린다. (여기서 point를 쌓는 것도 순서와 상관이 없는데, 나중에 feature를 뽑고 max값을 통해 invariance of order를 만족시킨다.) 다만 코드상 구현을 보면 stacked pillar를 다시 pseudo image로 변환할 때 바로 coordinate를 찾을 수 있도록 unordered_map 상에 x, y index 값을 저장하여 hash형태로 나타낸다.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211012_3.png&quot; alt=&quot;Stacking Pillars to Learned Features&quot; /&gt;
+  &lt;img src=&quot;../images/20211012/20211012_3.png&quot; alt=&quot;Stacking Pillars to Learned Features&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211012_4.png&quot; alt=&quot;1x1 Convolution&quot; /&gt;
+  &lt;img src=&quot;../images/20211012/20211012_4.png&quot; alt=&quot;1x1 Convolution&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;그 다음 각 point feature마다 \(1\times 1\) Convolution을 수행하여 \(1\times 1\times D\) input layer를 \(1 \times 1\times C\) 로 늘린다. (찾아보니 이는 사실상 fully connected와 같은 모양이다. 계산을 빠르게 하기 위해 CNN으로 하는건가?) PointNet이랑 비슷하게 이 \(1 \times 1\) convolution은 모든 point에 동일한 커널로 진행하는 듯 하다. (하 ubuntu gimp로 그림 그릴라니까 빡세다. Powerpoint가 그립구나)&lt;/p&gt;
@@ -186,7 +315,7 @@
 &lt;p&gt;이후 batch normalization과 ReLU를 통해 activation하여 \(1\times 1\times C\)짜리 layer 결과가 나온다.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211012_5.png&quot; alt=&quot;Stacked Pillars to Learned Stacked Pillars&quot; /&gt;
+  &lt;img src=&quot;../images/20211012/20211012_5.png&quot; alt=&quot;Stacked Pillars to Learned Stacked Pillars&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;그럼 결과적으로 \((D\times P \times N)\) layer는 \({C \times P \times N}\)짜리 layer로 바뀐다. 참고로 point 수 또는 pillar 수가 부족한 경우 (위 그림의 회색 부분)은 input layer나 output(convolution 해봤자 0이니까) layer나 전부 0이다.&lt;/p&gt;
@@ -194,14 +323,14 @@
 &lt;p&gt;이후 point별로 (그림에서의 N축) 각 feature element끼리의 max operator를 진행하여 결과적으로 \(C\times P\)의 layer가 나오게 된다.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211012_6.png&quot; alt=&quot;Learned Features to Pseudo Image&quot; /&gt;
+  &lt;img src=&quot;../images/20211012/20211012_6.png&quot; alt=&quot;Learned Features to Pseudo Image&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;이후 위에 서술하듯 각 pillar별로 크기 \(C\)의 vector를 hashing으로 미리 저장해둔 pillar의 voxel coordinate로 이동시켜줌으로서 channel \(C\)의 pseudo image를 생성한다. 이로써 각 pillar안의 3D points에 대한 feature들을 (웬지 max operator로 많은 feature가 사라질 것 같지만..) 하나의 pillar feature로 함으로써 2D convolution operation이 가능하게 된다.&lt;/p&gt;
 
 &lt;h4 id=&quot;backbone&quot;&gt;Backbone&lt;/h4&gt;
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211012_7.png&quot; alt=&quot;Backbone&quot; /&gt;
+  &lt;img src=&quot;../images/20211012/20211012_7.png&quot; alt=&quot;Backbone&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;VoxelNet과 비슷한 backbone을 가진다 한다. 위의 그림의 1과 2의 sub-network로 구성되는데,&lt;/p&gt;
@@ -307,7 +436,7 @@
 &lt;h4 id=&quot;hardware-overview&quot;&gt;Hardware Overview&lt;/h4&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211003_1.png&quot; alt=&quot;2 axis lidar&quot; /&gt;
+  &lt;img src=&quot;../images/20211003/20211003_1.png&quot; alt=&quot;2 axis lidar&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;Hokuyo 2D laser scanner를 사용하였으며 -90도에서 90도까지 180도/s 로 돌아 전방향 coverage를 갖음 (하지만 이런 라이다 종류에만 적용이 제한된건 아님)&lt;/p&gt;
@@ -315,7 +444,7 @@
 &lt;h4 id=&quot;software-overview&quot;&gt;Software Overview&lt;/h4&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211003_2.png&quot; alt=&quot;Algorithm overview&quot; /&gt;
+  &lt;img src=&quot;../images/20211003/20211003_2.png&quot; alt=&quot;Algorithm overview&quot; /&gt;
 &lt;/p&gt;
 
 &lt;ul&gt;
@@ -350,7 +479,7 @@
 &lt;p&gt;여기서 reduntent한 point를 고르지 않도록 한다.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211003_3.png&quot; alt=&quot;Points to avoid&quot; /&gt;
+  &lt;img src=&quot;../images/20211003/20211003_3.png&quot; alt=&quot;Points to avoid&quot; /&gt;
 &lt;/p&gt;
 
 &lt;ul&gt;
@@ -382,7 +511,7 @@
 &lt;p&gt;Correspondence를 찾기 위해 선택되는 점은 다음 그림과 같다. (사실 좀 이해하기 어렵게 그려져있음)&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211003_4.png&quot; alt=&quot;Points to avoid&quot; /&gt;
+  &lt;img src=&quot;../images/20211003/20211003_4.png&quot; alt=&quot;Points to avoid&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;위의 그림에서 주황색은 \(\bar{\mathcal{P}}_k\), 파란색은 \(\mathcal{P}_{k+1}\) 위의 점이다.&lt;/p&gt;
@@ -404,13 +533,13 @@
   &lt;li&gt;Edge feature point distance:&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211003_edge.png&quot; alt=&quot;Edge feature point distance&quot; /&gt;
+  &lt;img src=&quot;../images/20211003/20211003_edge.png&quot; alt=&quot;Edge feature point distance&quot; /&gt;
 &lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Planar feature point distance:&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211003_plane.png&quot; alt=&quot;Planar feature point distance&quot; /&gt;
+  &lt;img src=&quot;../images/20211003/20211003_plane.png&quot; alt=&quot;Planar feature point distance&quot; /&gt;
 &lt;/p&gt;
 
 &lt;h4 id=&quot;motion-estimation&quot;&gt;Motion Estimation&lt;/h4&gt;
@@ -422,7 +551,7 @@
 &lt;p&gt;앞서 말한 것처럼 linear transform에 따라 다음과 같이 된다.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211003_5.png&quot; alt=&quot;Linear interpolation of transformation&quot; /&gt;
+  &lt;img src=&quot;../images/20211003/20211003_5.png&quot; alt=&quot;Linear interpolation of transformation&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;Angle 부분에서는 조금 이해가 안되는 게 있긴 한데.. 여튼, 그냥 일반적인 linear interpolation하는게 아니라 rotation을 따로 분리해서 rotation direction까지 고려는 해주는 것 같다.&lt;/p&gt;
@@ -432,7 +561,7 @@
 &lt;h4 id=&quot;lidar-odometry-algorithm&quot;&gt;Lidar Odometry Algorithm&lt;/h4&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211003_algorithm.png&quot; alt=&quot;Lidar Odometry Algorithm&quot; /&gt;
+  &lt;img src=&quot;../images/20211003/20211003_algorithm.png&quot; alt=&quot;Lidar Odometry Algorithm&quot; /&gt;
 &lt;/p&gt;
 
 &lt;h3 id=&quot;lidar-mapping&quot;&gt;Lidar Mapping&lt;/h3&gt;
@@ -474,10 +603,10 @@ Lidar는 strong invariance to perceptual variance 함&lt;/p&gt;
 &lt;p&gt;Scan Context는 다음 그림과 같이 3D scan을 2.5D 정보를 가지고 있는 행렬로 표현한다.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20210924_1.png&quot; alt=&quot;Scan Context&quot; /&gt;
+  &lt;img src=&quot;../images/20210924/20210924_1.png&quot; alt=&quot;Scan Context&quot; /&gt;
 &lt;/p&gt;
 
-&lt;!-- ![Scan Context](/papers/images/20210924_1.png){: width=&quot;100%&quot; height=&quot;100%&quot;}{: .center} --&gt;
+&lt;!-- ![Scan Context](/papers/images/20210924/20210924_1.png){: width=&quot;100%&quot; height=&quot;100%&quot;}{: .center} --&gt;
 
 &lt;p&gt;Contributions are:&lt;/p&gt;
 
@@ -595,7 +724,7 @@ Lidar는 strong invariance to perceptual variance 함&lt;/p&gt;
 &lt;p&gt;Column-wise shift는 같은 위치에 대한 viewpoint change (yaw change?)에 의해 발생할 수 있다.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20210924_2.png&quot; alt=&quot;Column-wise shift&quot; /&gt;
+  &lt;img src=&quot;../images/20210924/20210924_2.png&quot; alt=&quot;Column-wise shift&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;이를 위해 모든 shift possibility에 대해 최소의 distance matric을 가지는 값을 찾는다고 한다. (방위각 예측)&lt;/p&gt;
@@ -615,7 +744,7 @@ Lidar는 strong invariance to perceptual variance 함&lt;/p&gt;
 &lt;p&gt;여기서는 reasonable search time을 위해 1.와 2.를 융합한다.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20210924_3.png&quot; alt=&quot;Two-phase search&quot; /&gt;
+  &lt;img src=&quot;../images/20210924/20210924_3.png&quot; alt=&quot;Two-phase search&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;앞서 말한 \(n^*\) \(= \text{argmin}_{n\in [N_s]} d(I^q, I_n^c)\) 이 식이 시간이 오래 걸려 2가지 hierarchical search 알고리즘을 도입한다.&lt;/p&gt;
@@ -700,7 +829,7 @@ Lidar는 strong invariance to perceptual variance 함&lt;/p&gt;
 
 &lt;p&gt;여기서.. 뭔가 모르겠지만, 이 struct이 그대로 전달돼 함부로 변수명을 바꾸면 (예를 들어 ring을 r로 표기하거나) 안될 것 같다.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">Pohang Dataset으로 LIO-SAM을 돌리려다보니 안되길래 들여다보니 LIO-SAM은 ring value를 이용해 이미지로 만들어 이를 통해 각 feature를 뽑아 내는 것을 발견하게 되었다.</summary></entry><entry><title type="html">[2021 RAL] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors</title><link href="http://localhost:4000/papers/2021-09-21-GPU_Lidar/" rel="alternate" type="text/html" title="[2021 RAL] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors" /><published>2021-09-21T00:00:00+09:00</published><updated>2021-09-21T00:00:00+09:00</updated><id>http://localhost:4000/papers/GPU_Lidar</id><content type="html" xml:base="http://localhost:4000/papers/2021-09-21-GPU_Lidar/">&lt;h3 id=&quot;researchers-at-aist-japan-first-author-kenji-koide&quot;&gt;Researchers at AIST, Japan. First Author: Kenji Koide&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;/papers/images/20210921_1.png&quot; alt=&quot;Mapping&quot; width=&quot;100%&quot; height=&quot;100%&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/papers/images/20210921/20210921_1.png&quot; alt=&quot;Mapping&quot; width=&quot;100%&quot; height=&quot;100%&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;A. Global matching cost minimization을 통해 아주 작은 overlap의 frame간의 constraint를 적용할 수 있다.&lt;/li&gt;
@@ -745,10 +874,10 @@ Lidar는 strong invariance to perceptual variance 함&lt;/p&gt;
 
 &lt;p&gt;제안하는 방법은 Local 및 Global mapping module로 구성되어있다.&lt;/p&gt;
 
-&lt;!-- ![Whole Process](/papers/images/20210921_2.png){: width=&quot;auto&quot; height=&quot;auto&quot;}{: .center} --&gt;
+&lt;!-- ![Whole Process](/papers/images/20210921/20210921_2.png){: width=&quot;auto&quot; height=&quot;auto&quot;}{: .center} --&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20210921_2.png&quot; alt=&quot;Whole Process&quot; /&gt;
+  &lt;img src=&quot;../images/20210921/20210921_2.png&quot; alt=&quot;Whole Process&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;둘다 voxel-based overlap metric을 사용하여 GPU를 통해 빠른 연산이 가능하다.&lt;/p&gt;
@@ -761,10 +890,10 @@ Lidar는 strong invariance to perceptual variance 함&lt;/p&gt;
   &lt;li&gt;Submap들은 다시 Global mapping 단계 input으로 들어가 voxelized GICP matching cost factor로 factor graph를 형성한다.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;!-- ![Whole Process](/papers/images/20210921_3.png){: width=&quot;auto&quot; height=&quot;auto&quot;}{: .center} --&gt;
+&lt;!-- ![Whole Process](/papers/images/20210921/20210921_3.png){: width=&quot;auto&quot; height=&quot;auto&quot;}{: .center} --&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20210921_3.png&quot; alt=&quot;Factor Graph for local and global mapping&quot; /&gt;
+  &lt;img src=&quot;../images/20210921/20210921_3.png&quot; alt=&quot;Factor Graph for local and global mapping&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;위의 그림과 같이 local mapping과 global mapping module이 형성된다. Global mapping module에서 matching cost factor가  local solution에 갇히는 것을 방지하기 위해 explicit한 loop closure constraint를 사용한다. (여기서는 ScanContext).&lt;/p&gt;
@@ -862,7 +991,7 @@ Lidar는 strong invariance to perceptual variance 함&lt;/p&gt;
 &lt;p&gt;앞서 언급된 Local Mapping을 통해 얻어진 새로운 submap이 들어올 때 마다 기존에 생성된 submap들과의 overlap matric을 계산해 특정값(여기선 무려 2.5%!!) 이상일 경우 constraint를 적용한다. 이는 densely connected factor graph를 형성한다; scan matching이 실패하는 부분도 모두 matching cost factor를 형성하여 deficient constraint를 형성할 수 있으나, 전체 시스템이 다른 factor로 인해 well constrained 되어 있기에 큰 영향을 주지 않는다. (이부분이 완벽히 이해가 되지는 않는데.. matching cost factor는 말 그대로 상태에 대한 어떤 cost를 반환하는 반면 scan matching은 잘못되었든 잘 되었든 하나의 값을 그냥 던져줘서 문제가 될 수 있다고 생각됨..!)&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20210921_4.png&quot; alt=&quot;Matching cost factor &amp;amp; scan matching&quot; /&gt;
+  &lt;img src=&quot;../images/20210921/20210921_4.png&quot; alt=&quot;Matching cost factor &amp;amp; scan matching&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;이러한 matching cost factor는 local solution에 갇힐 수 있어 explicit 한 loop closure detector를 사용하여 SE3 relative pose constraint를 더하며, objective function은 다음과 같다.&lt;/p&gt;
@@ -876,7 +1005,7 @@ Lidar는 strong invariance to perceptual variance 함&lt;/p&gt;
 &lt;p&gt;\(\mathcal{F}_G^L\)은 loop detection 찾아낸 submap index pair들, \(\hat{\mathbf{T}}_{ij}\) 은 relative pose measurement (loop detection으로 찾은건지 아니면 다른건지는 명시되어있지 않으나 \(\hat{}\)이 들어간 것으로 보아 loop detection이지 않을까 싶다), 그리고 \(\rho\)는 robust kernel이라고 한다.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20210921_5.png&quot; alt=&quot;Shifted Tukey's biweight function&quot; /&gt;
+  &lt;img src=&quot;../images/20210921/20210921_5.png&quot; alt=&quot;Shifted Tukey's biweight function&quot; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;Robust kernel (\(\rho\))에 대해서는 위와 같은 shifted Tukey’s robust kernel로 정의되는데, current estimate가 loop constraint를 만족시키는 경우 (relative pose로 비교하는듯) matching cost function을 방해할 수 있기 때문에 (둘의 sum으로 이루어졌기에 이 사이 조절이 힘든가? 암튼) loop closure constraint를 최소화하고, 너무 차이가 클 경우 outlier로 제외시킨다(loop closure의 실패로 간주). 이를 식으로 나타내면 다음과 같다.&lt;/p&gt;
@@ -886,7 +1015,7 @@ Lidar는 strong invariance to perceptual variance 함&lt;/p&gt;
 &lt;p&gt;\(\text{shifted_tukey}(x,w,offset)\) \(=\text{tukey}(\lVert x-offset \rVert, w)\)&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20210921_6.png&quot; alt=&quot;Effect of loop closing&quot; /&gt;
+  &lt;img src=&quot;../images/20210921/20210921_6.png&quot; alt=&quot;Effect of loop closing&quot; /&gt;
 &lt;/p&gt;
 
 &lt;h4 id=&quot;implementation-details&quot;&gt;Implementation Details&lt;/h4&gt;
@@ -934,27 +1063,4 @@ n^3 &amp;amp; 0 &amp;amp; -n_1 \\
 -n_2 &amp;amp; n_1 &amp;amp; 0
 \end{bmatrix}\]
 
-&lt;p&gt;This matrix rotates the standard basis for \(\mathcal{R}^3\) through angle \(\phi\) about the axis along \(\vec{n}\) in the sense determined by the right-hand rule.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">This article is based on the book Topology Geometry and Garuge Fields, 1997</summary></entry><entry><title type="html">Segmentation Fault with Eigen Matrix</title><link href="http://localhost:4000/etc/2021-01-05-Eigen_SegFault/" rel="alternate" type="text/html" title="Segmentation Fault with Eigen Matrix" /><published>2021-01-05T00:00:00+09:00</published><updated>2021-01-05T00:00:00+09:00</updated><id>http://localhost:4000/etc/Eigen_SegFault</id><content type="html" xml:base="http://localhost:4000/etc/2021-01-05-Eigen_SegFault/">&lt;p&gt;A segmentation fault error was occured when I tried to copy a eigen matrix to a elemenet of a vector of eigne matrices:&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-&lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Eigen&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Matrix4f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;someFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Not really sure what caused the problem, but here’s the solution for this:&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Eigen&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Matrix4f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;someFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">A segmentation fault error was occured when I tried to copy a eigen matrix to a elemenet of a vector of eigne matrices:</summary></entry><entry><title type="html">[GTSAM] Orientation correction using gravity direction</title><link href="http://localhost:4000/etc/2020-12-03-gtsam_orientation/" rel="alternate" type="text/html" title="[GTSAM] Orientation correction using gravity direction" /><published>2020-12-03T00:00:00+09:00</published><updated>2020-12-03T00:00:00+09:00</updated><id>http://localhost:4000/etc/gtsam_orientation</id><content type="html" xml:base="http://localhost:4000/etc/2020-12-03-gtsam_orientation/">&lt;p&gt;For attitude correction, we can use the gravity direction which doesn’t change(assuming that the gravity field is uniform and the mission area is small enough).&lt;/p&gt;
-
-&lt;p&gt;With coordinate system which the positive z is headed towards downward and positive x value is the vehicle heading, the gravity direction is \(\begin{bmatrix}0 &amp;amp; 0&amp;amp; 1\end{bmatrix}^\top\).&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">For attitude correction, we can use the gravity direction which doesn’t change(assuming that the gravity field is uniform and the mission area is small enough).</summary></entry></feed>
+&lt;p&gt;This matrix rotates the standard basis for \(\mathcal{R}^3\) through angle \(\phi\) about the axis along \(\vec{n}\) in the sense determined by the right-hand rule.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">This article is based on the book Topology Geometry and Garuge Fields, 1997</summary></entry></feed>

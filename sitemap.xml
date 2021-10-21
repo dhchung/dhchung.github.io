@@ -2,11 +2,11 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://localhost:4000/about/</loc>
-<lastmod>2021-10-14T15:33:53+09:00</lastmod>
+<lastmod>2021-10-21T19:02:44+09:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/slam/</loc>
-<lastmod>2021-10-14T15:33:53+09:00</lastmod>
+<lastmod>2021-10-21T19:02:44+09:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/papers/2020-04-09-Estimating_Uncertain/</loc>
@@ -75,6 +75,14 @@
 <url>
 <loc>http://localhost:4000/papers/2021-10-12-PointPillar/</loc>
 <lastmod>2021-10-12T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/log/2021-10-16-KittiObject/</loc>
+<lastmod>2021-10-16T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/log/2021-10-20-Photommetry/</loc>
+<lastmod>2021-10-20T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/</loc>

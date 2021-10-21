@@ -298,7 +298,7 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
   
     <h3 id="researchers-at-aist-japan-first-author-kenji-koide">Researchers at AIST, Japan. First Author: Kenji Koide</h3>
 
-<p><img src="/papers/images/20210921_1.png" alt="Mapping" width="100%" height="100%" class="center" /></p>
+<p><img src="/papers/images/20210921/20210921_1.png" alt="Mapping" width="100%" height="100%" class="center" /></p>
 
 <ul>
   <li>A. Global matching cost minimization을 통해 아주 작은 overlap의 frame간의 constraint를 적용할 수 있다.</li>
@@ -343,10 +343,10 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
 
 <p>제안하는 방법은 Local 및 Global mapping module로 구성되어있다.</p>
 
-<!-- ![Whole Process](/papers/images/20210921_2.png){: width="auto" height="auto"}{: .center} -->
+<!-- ![Whole Process](/papers/images/20210921/20210921_2.png){: width="auto" height="auto"}{: .center} -->
 
 <p align="center">
-  <img src="../images/20210921_2.png" alt="Whole Process" />
+  <img src="../images/20210921/20210921_2.png" alt="Whole Process" />
 </p>
 
 <p>둘다 voxel-based overlap metric을 사용하여 GPU를 통해 빠른 연산이 가능하다.</p>
@@ -359,10 +359,10 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
   <li>Submap들은 다시 Global mapping 단계 input으로 들어가 voxelized GICP matching cost factor로 factor graph를 형성한다.</li>
 </ol>
 
-<!-- ![Whole Process](/papers/images/20210921_3.png){: width="auto" height="auto"}{: .center} -->
+<!-- ![Whole Process](/papers/images/20210921/20210921_3.png){: width="auto" height="auto"}{: .center} -->
 
 <p align="center">
-  <img src="../images/20210921_3.png" alt="Factor Graph for local and global mapping" />
+  <img src="../images/20210921/20210921_3.png" alt="Factor Graph for local and global mapping" />
 </p>
 
 <p>위의 그림과 같이 local mapping과 global mapping module이 형성된다. Global mapping module에서 matching cost factor가  local solution에 갇히는 것을 방지하기 위해 explicit한 loop closure constraint를 사용한다. (여기서는 ScanContext).</p>
@@ -460,7 +460,7 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
 <p>앞서 언급된 Local Mapping을 통해 얻어진 새로운 submap이 들어올 때 마다 기존에 생성된 submap들과의 overlap matric을 계산해 특정값(여기선 무려 2.5%!!) 이상일 경우 constraint를 적용한다. 이는 densely connected factor graph를 형성한다; scan matching이 실패하는 부분도 모두 matching cost factor를 형성하여 deficient constraint를 형성할 수 있으나, 전체 시스템이 다른 factor로 인해 well constrained 되어 있기에 큰 영향을 주지 않는다. (이부분이 완벽히 이해가 되지는 않는데.. matching cost factor는 말 그대로 상태에 대한 어떤 cost를 반환하는 반면 scan matching은 잘못되었든 잘 되었든 하나의 값을 그냥 던져줘서 문제가 될 수 있다고 생각됨..!)</p>
 
 <p align="center">
-  <img src="../images/20210921_4.png" alt="Matching cost factor &amp; scan matching" />
+  <img src="../images/20210921/20210921_4.png" alt="Matching cost factor &amp; scan matching" />
 </p>
 
 <p>이러한 matching cost factor는 local solution에 갇힐 수 있어 explicit 한 loop closure detector를 사용하여 SE3 relative pose constraint를 더하며, objective function은 다음과 같다.</p>
@@ -474,7 +474,7 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
 <p>\(\mathcal{F}_G^L\)은 loop detection 찾아낸 submap index pair들, \(\hat{\mathbf{T}}_{ij}\) 은 relative pose measurement (loop detection으로 찾은건지 아니면 다른건지는 명시되어있지 않으나 \(\hat{}\)이 들어간 것으로 보아 loop detection이지 않을까 싶다), 그리고 \(\rho\)는 robust kernel이라고 한다.</p>
 
 <p align="center">
-  <img src="../images/20210921_5.png" alt="Shifted Tukey's biweight function" />
+  <img src="../images/20210921/20210921_5.png" alt="Shifted Tukey's biweight function" />
 </p>
 
 <p>Robust kernel (\(\rho\))에 대해서는 위와 같은 shifted Tukey’s robust kernel로 정의되는데, current estimate가 loop constraint를 만족시키는 경우 (relative pose로 비교하는듯) matching cost function을 방해할 수 있기 때문에 (둘의 sum으로 이루어졌기에 이 사이 조절이 힘든가? 암튼) loop closure constraint를 최소화하고, 너무 차이가 클 경우 outlier로 제외시킨다(loop closure의 실패로 간주). 이를 식으로 나타내면 다음과 같다.</p>
@@ -484,7 +484,7 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
 <p>\(\text{shifted_tukey}(x,w,offset)\) \(=\text{tukey}(\lVert x-offset \rVert, w)\)</p>
 
 <p align="center">
-  <img src="../images/20210921_6.png" alt="Effect of loop closing" />
+  <img src="../images/20210921/20210921_6.png" alt="Effect of loop closing" />
 </p>
 
 <h4 id="implementation-details">Implementation Details</h4>
@@ -643,7 +643,7 @@ in <a href="/papers/" class="flip-title">Paper Review</a>
     
 
 
-  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/papers/2021-10-12-PointPillar/" class="flip-title"><span>[2019 CVPR] PointPillars</span></a>  <time class="faded fine" datetime="2021-10-12T00:00:00+09:00">12 Oct 2021</time></li>                        <li class="h4">  <a href="/papers/2021-10-03-LOAM/" class="flip-title"><span>[2014 RSS] LOAM</span></a>  <time class="faded fine" datetime="2021-10-03T00:00:00+09:00">03 Oct 2021</time></li>                        <li class="h4">  <a href="/papers/2021-09-24-ScanContext/" class="flip-title"><span>[2018 IROS] Scan Context: Egocentric Spatial Descriptor for Place Recognition within 3D Point Cloud Map</span></a>  <time class="faded fine" datetime="2021-09-24T00:00:00+09:00">24 Sep 2021</time></li>            </ul></aside>
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/log/2021-10-20-Photommetry/" class="flip-title"><span>Essential Matrix &amp; Fundamental Matrix</span></a>  <time class="faded fine" datetime="2021-10-20T00:00:00+09:00">20 Oct 2021</time></li>                        <li class="h4">  <a href="/log/2021-10-16-KittiObject/" class="flip-title"><span>Kitti Object Dataset</span></a>  <time class="faded fine" datetime="2021-10-16T00:00:00+09:00">16 Oct 2021</time></li>                        <li class="h4">  <a href="/papers/2021-10-12-PointPillar/" class="flip-title"><span>[2019 CVPR] PointPillars</span></a>  <time class="faded fine" datetime="2021-10-12T00:00:00+09:00">12 Oct 2021</time></li>            </ul></aside>
 
   
 
