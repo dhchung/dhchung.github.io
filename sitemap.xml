@@ -2,11 +2,11 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://localhost:4000/about/</loc>
-<lastmod>2021-10-21T19:02:44+09:00</lastmod>
+<lastmod>2021-11-16T21:22:15+09:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/slam/</loc>
-<lastmod>2021-10-21T19:02:44+09:00</lastmod>
+<lastmod>2021-11-16T21:22:15+09:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/papers/2020-04-09-Estimating_Uncertain/</loc>
@@ -81,8 +81,16 @@
 <lastmod>2021-10-16T00:00:00+09:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/log/2021-10-20-Photommetry/</loc>
+<loc>http://localhost:4000/log/2021-10-20-EssentialFundamental/</loc>
 <lastmod>2021-10-20T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/papers/2021-11-11-ORBSLAM2-copy/</loc>
+<lastmod>2021-11-11T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/papers/log/2021-11-15-BundleAdjustment/</loc>
+<lastmod>2021-11-15T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/</loc>
@@ -111,6 +119,10 @@
 </url>
 <url>
 <loc>http://localhost:4000/2/</loc>
+<lastmod>2018-08-03T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/3/</loc>
 <lastmod>2018-08-03T00:00:00+09:00</lastmod>
 </url>
 </urlset>

@@ -353,9 +353,9 @@ SLAM 수업 들으면서 초반에 나오는 논문인데, 로봇 이동간에 c
 
 <p>where</p>
 
-\[\mathbf{C}(\mathbf{x}_i, \mathbf{x}_j) \overset{\Delta}{=} E(\tilde{\mathbf{x}}_i, \tilde{\mathbf{x}}_j)
-\\
-\mathbf{C}(\mathbf{x}_i, \mathbf{x}_j) = \mathbf{C}(\mathbf{x}_i, \mathbf{x}_j)^T\]
+\[\mathbf{C}(\mathbf{x}_i, \mathbf{x}_j) \overset{\Delta}{=} E(\tilde{\mathbf{x}}_i, \tilde{\mathbf{x}}_j)\]
+
+\[\mathbf{C}(\mathbf{x}_i, \mathbf{x}_j) = \mathbf{C}(\mathbf{x}_i, \mathbf{x}_j)^T\]
 
 <p>and with centeral limit theorem, resulting distribution will be as in Gaussian:</p>
 
@@ -371,17 +371,17 @@ SLAM 수업 들으면서 초반에 나오는 논문인데, 로봇 이동간에 c
 
 <h4 id="linear-relationships">Linear Relationships</h4>
 
-\[\mathbf{y} = \mathbf{Mx} + \mathbf{b}
-\\
-\hat{\mathbf{y}} = \mathbf{M}\hat{\mathbf{x}} + \mathbf{b}\]
+\[\mathbf{y} = \mathbf{Mx} + \mathbf{b}\]
+
+\[\hat{\mathbf{y}} = \mathbf{M}\hat{\mathbf{x}} + \mathbf{b}\]
 
 <p>Covariance</p>
 
-\[\mathbf{C}(\mathbf{y}) = \mathbf{MC}(\mathbf{x})\mathbf{M}^T
-\\
-\mathbf{C}(\mathbf{y}, \mathbf{z}) = \mathbf{MC}(\mathbf{x}, \mathbf{z})
-\\
-\mathbf{C}(\mathbf{z}, \mathbf{y}) = \mathbf{C}(\mathbf{z}, \mathbf{x})\mathbf{M}^T\]
+\[\mathbf{C}(\mathbf{y}) = \mathbf{MC}(\mathbf{x})\mathbf{M}^T\]
+
+\[\mathbf{C}(\mathbf{y}, \mathbf{z}) = \mathbf{MC}(\mathbf{x}, \mathbf{z})\]
+
+\[\mathbf{C}(\mathbf{z}, \mathbf{y}) = \mathbf{C}(\mathbf{z}, \mathbf{x})\mathbf{M}^T\]
 
 <p>이들은 Covariance matrix의 계산방법 (\(\mathbf{C}(\mathbf{y}) = E((\mathbf{y}-\hat{\mathbf{y}})(\mathbf{y}-\hat{\mathbf{y}})^T), \mathbf{C}(x,y) = E((\mathbf{x}-\hat{\mathbf{x}})(\mathbf{y}-\hat{\mathbf{y}})^T)\))를 따라가면 쉽게 유도할 수 있다.</p>
 
@@ -405,11 +405,11 @@ SLAM 수업 들으면서 초반에 나오는 논문인데, 로봇 이동간에 c
 \frac{\partial f_r}{\partial x_1} &amp;&amp; \frac{\partial f_r}{\partial x_2} &amp;&amp; \dots &amp;&amp; \frac{\partial f_r}{\partial x_n}
 \end{bmatrix}_{\mathbf{x} = \hat{\mathbf{x}}}\]
 
-\[\mathbf{C}(\mathbf{y}) \approx \mathbf{F_x C}(\mathbf{x})\mathbf{F_x}^T 
-\\
-\mathbf{C}(\mathbf{y}, \mathbf{z}) \approx \mathbf{F_x C}(\mathbf{x}, \mathbf{z})
-\\
-\mathbf{C}(\mathbf{z}, \mathbf{y}) \approx \mathbf{C}(\mathbf{z}, \mathbf{x})\mathbf{F_x}^T\]
+\[\mathbf{C}(\mathbf{y}) \approx \mathbf{F_x C}(\mathbf{x})\mathbf{F_x}^T\]
+
+\[\mathbf{C}(\mathbf{y}, \mathbf{z}) \approx \mathbf{F_x C}(\mathbf{x}, \mathbf{z})\]
+
+\[\mathbf{C}(\mathbf{z}, \mathbf{y}) \approx \mathbf{C}(\mathbf{z}, \mathbf{x})\mathbf{F_x}^T\]
 
 <p>If we need to include second order term,</p>
 
@@ -422,34 +422,33 @@ SLAM 수업 들으면서 초반에 나오는 논문인데, 로봇 이동간에 c
 \[\mathbf{C}(\mathbf{y}) = E((\mathbf{y} - \hat{\mathbf{y}})(\mathbf{y} - \hat{\mathbf{y}})^T) \approx
 E((\mathbf{f}(\hat{\mathbf{x}}) + \mathbf{F_x}\tilde{\mathbf{x}} + \frac{1}{2}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)- 
 \mathbf{f}(\hat{\mathbf{x}}) - \frac{1}{2}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x}))(\mathbf{f}(\hat{\mathbf{x}}) + \mathbf{F_x}\tilde{\mathbf{x}} + \frac{1}{2}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)- 
-\mathbf{f}(\hat{\mathbf{x}}) - \frac{1}{2}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x}))^T)
-\\
-=E((\mathbf{F_x}\tilde{\mathbf{x}} + \frac{1}{2}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)
+\mathbf{f}(\hat{\mathbf{x}}) - \frac{1}{2}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x}))^T)\]
+
+\[=E((\mathbf{F_x}\tilde{\mathbf{x}} + \frac{1}{2}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)
 - \frac{1}{2}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x}))
 (\mathbf{F_x}\tilde{\mathbf{x}} + \frac{1}{2}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)
 - \frac{1}{2}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x}))^T
-)
-\\
-=E(
+)\]
+
+\[=E(
 \mathbf{F_x}\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T\mathbf{F_x}^T +
 \frac{1}{2}\mathbf{F_x}\tilde{\mathbf{x}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)\mathbf{F_{xx}}^T - 
 \frac{1}{2}\mathbf{F_x}\tilde{\mathbf{x}}\mathbf{C}(\mathbf{x})^T\mathbf{F_{xx}}^T+
-
 \frac{1}{2}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)\tilde{\mathbf{x}}^T\mathbf{F_x}^T +
 \frac{1}{4}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)\mathbf{F_{xx}}^T -
 \frac{1}{4}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)\mathbf{C}(\mathbf{x})^T\mathbf{F_{xx}}^T - 
 \frac{1}{2}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x})\tilde{\mathbf{x}}^T\mathbf{F_x}^T - \frac{1}{4}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x})(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)\mathbf{F_{xx}}^T + \frac{1}{4}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x})\mathbf{C}(\mathbf{x})^T\mathbf{F_{xx}}^T
-)
-\\
-\approx
+)\]
+
+\[\approx
 E(
 \mathbf{F_x}\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T\mathbf{F_x}^T
 -\frac{1}{4}\mathbf{F_{xx}}(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)\mathbf{C}(\mathbf{x})^T\mathbf{F_{xx}}^T
 - \frac{1}{4}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x})(\tilde{\mathbf{x}}\tilde{\mathbf{x}}^T)\mathbf{F_{xx}}^T 
 + \frac{1}{4}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x})\mathbf{C}(\mathbf{x})^T\mathbf{F_{xx}}^T
-)
-\\
-= \mathbf{F_x}\mathbf{C}(\mathbf{x})\mathbf{F_x}^T
+)\]
+
+\[= \mathbf{F_x}\mathbf{C}(\mathbf{x})\mathbf{F_x}^T
 -\frac{1}{4}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x})\mathbf{C}(\mathbf{x})^T\mathbf{F_{xx}}^T
 -\frac{1}{4}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x})\mathbf{C}(\mathbf{x})^T\mathbf{F_{xx}}^T
 +\frac{1}{4}\mathbf{F_{xx}}\mathbf{C}(\mathbf{x})\mathbf{C}(\mathbf{x})^T\mathbf{F_{xx}}^T\]
@@ -786,7 +785,7 @@ Entries in the map may change for two reasons:</p>
     
 
 
-  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/log/2021-10-20-Photommetry/" class="flip-title"><span>Essential Matrix &amp; Fundamental Matrix</span></a>  <time class="faded fine" datetime="2021-10-20T00:00:00+09:00">20 Oct 2021</time></li>                        <li class="h4">  <a href="/log/2021-10-16-KittiObject/" class="flip-title"><span>Kitti Object Dataset</span></a>  <time class="faded fine" datetime="2021-10-16T00:00:00+09:00">16 Oct 2021</time></li>                        <li class="h4">  <a href="/papers/2021-10-12-PointPillar/" class="flip-title"><span>[2019 CVPR] PointPillars</span></a>  <time class="faded fine" datetime="2021-10-12T00:00:00+09:00">12 Oct 2021</time></li>            </ul></aside>
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/papers/log/2021-11-15-BundleAdjustment/" class="flip-title"><span>Bundle Adjustment</span></a>  <time class="faded fine" datetime="2021-11-15T00:00:00+09:00">15 Nov 2021</time></li>                        <li class="h4">  <a href="/papers/2021-11-11-ORBSLAM2-copy/" class="flip-title"><span>[2017 TRO] ORB-SLAM2</span></a>  <time class="faded fine" datetime="2021-11-11T00:00:00+09:00">11 Nov 2021</time></li>                        <li class="h4">  <a href="/log/2021-10-20-EssentialFundamental/" class="flip-title"><span>Essential Matrix &amp; Fundamental Matrix</span></a>  <time class="faded fine" datetime="2021-10-20T00:00:00+09:00">20 Oct 2021</time></li>            </ul></aside>
 
   
 

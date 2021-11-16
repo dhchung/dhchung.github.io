@@ -1,5 +1,173 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-10-21T19:02:44+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
-</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">Essential Matrix &amp;amp; Fundamental Matrix</title><link href="http://localhost:4000/log/2021-10-20-Photommetry/" rel="alternate" type="text/html" title="Essential Matrix &amp;amp; Fundamental Matrix" /><published>2021-10-20T00:00:00+09:00</published><updated>2021-10-20T00:00:00+09:00</updated><id>http://localhost:4000/log/Photommetry</id><content type="html" xml:base="http://localhost:4000/log/2021-10-20-Photommetry/">&lt;h2 id=&quot;rotation-matrix--translation&quot;&gt;Rotation matrix &amp;amp; translation&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-11-16T21:22:15+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
+</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">Bundle Adjustment</title><link href="http://localhost:4000/papers/log/2021-11-15-BundleAdjustment/" rel="alternate" type="text/html" title="Bundle Adjustment" /><published>2021-11-15T00:00:00+09:00</published><updated>2021-11-15T00:00:00+09:00</updated><id>http://localhost:4000/papers/log/BundleAdjustment</id><content type="html" xml:base="http://localhost:4000/papers/log/2021-11-15-BundleAdjustment/">&lt;p&gt;Bundle adjustment from scratch.&lt;/p&gt;
+
+&lt;p&gt;Bundle adjustment. 하 진짜. VO 한다는 사람이 이제서야 제대로 BA에 대해 공부하기 시작한 웃지 못할 상황이다. 사실 &lt;a href=&quot;../posts/2020-11-../../papers/_posts/2020-11-30-Bundle_Adjustment_PT1.md&quot;&gt;Bundle Adjustment&lt;/a&gt; (와 딱 1년전이네 ㄷㄷ)에서 좀 다뤄볼려고 했는데, 그땐 거의 Cyrill 교수님 강의 베낀 수준이라 완벽히 이해하진 못한거 같다. 이번에 직접 implementation까지 하면서 좀 제대로 이해해보려고 한다.&lt;/p&gt;
+
+&lt;p&gt;BA에 대해서는 사실 석사 때부터 많이 들어오긴 했는데, 제대로 공부할 기회가(라고 쓰고 생각이 라고 읽늗다) 없었다. 걍 뭐 optimization 하나보다 생각했는데, 이번에 좀 제대로 정립하고자 여기저기서 긁어서 공부하며 끄적인다.&lt;/p&gt;
+
+&lt;h2 id=&quot;ba의-목적&quot;&gt;BA의 목적&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;BA는 기존 DLT나 PnP 알고리즘과 같이 한번에 unknown paramter들을 계산하는 방식이 아닌 iterative한 방법으로 optimization하는 과정이다.&lt;/li&gt;
+  &lt;li&gt;여기서 optimization 대상은 rotation, translation, 3d point들이며 적용 목적에 따라 대상이 달라질 수 있다.&lt;/li&gt;
+  &lt;li&gt;Iterative procedure이기에 Initial guess가 중요하다.&lt;/li&gt;
+  &lt;li&gt;완벽히 이해는 못했지만, control point들이나 다른 factor들과 같이 융합이 가능하다 (odometry 정보라든지)&lt;/li&gt;
+  &lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;reprojection-error&quot;&gt;Reprojection Error&lt;/h2&gt;
+&lt;p&gt;모든 Optimization problem이 다 그렇듯이 제대로 된 cost function (DL에서의 loss와 비슷한 개념)이 있어야 좋은 결과가 나온다.&lt;/p&gt;
+
+&lt;p&gt;BA에서는 reprojection error를 사용한다. 이를 설명하기 전에 추정된 3D point cloud와 image point와의 관계는 다음과 같다.&lt;/p&gt;
+
+\[x_{ij}^h + v_{x_{ij}}^h=\lambda_{ij}P(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h\]
+
+&lt;ul&gt;
+  &lt;li&gt;\(x_{ij}^h\)는 원래 이미지의 2D point location으로 homogeneous coordinate \((x_ij, y_ij, 1)^\top\)으로 표현 (i번째 point의 j번째 image plane의 2d coordinate)
+    &lt;ul&gt;
+      &lt;li&gt;\({x_{ij}}\)는 image space에서의 2d point coordinate&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;\(v_{x_{ij}}^h\)는 reprojection error&lt;/li&gt;
+  &lt;li&gt;\(\lambda_{ij}\)는 scale factor&lt;/li&gt;
+  &lt;li&gt;\(P(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j)\)는 camera projection matrix&lt;/li&gt;
+  &lt;li&gt;\(\mathbf{X}_i^h\)는 3차원의 point cloud로 homogeneous coordinate \((X_i, Y_i, Z_i, 1)^\top\)으로 표현 (i번째 point)&lt;/li&gt;
+  &lt;li&gt;\(\mathbf{r}_j\)와 \(\mathbf{t}_j\)는 각각 WC기준 카메라의 rotation 및 translation를 나타내는 vector
+    &lt;ul&gt;
+      &lt;li&gt;\(\mathbf{r}\)는 다양하게 표현 가능 (Euler angle, rotation vector, quaternion, …)&lt;/li&gt;
+      &lt;li&gt;\(\mathbf{r}\)에 대해 여기선 rotation vector \((\omega_x, \omega_y, \omega_z)^\top\)을 사용&lt;/li&gt;
+      &lt;li&gt;\(R(\mathbf{r}) = I + \frac{sin(\theta)}{\theta}\Omega + \frac{1-cos(\theta)}{\theta^2}\Omega^2\) (Rodrigues formula)
+        &lt;ul&gt;
+          &lt;li&gt;\(\theta\) \(= \lVert(\mathbf{r})\rVert\)&lt;/li&gt;
+          &lt;li&gt;\(\Omega\) \(= \mathbf{r}_{[\times]} = \begin{bmatrix} 0 &amp;amp;&amp;amp; -\omega_z &amp;amp;&amp;amp; \omega_y \\ \omega_z &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; -\omega_x \\ -\omega_y &amp;amp;&amp;amp; \omega_x &amp;amp;&amp;amp; 0 \end{bmatrix}\)&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;여기서 \(P(\mathbf{p},\mathbf{r},\mathbf{t})=\) \(K(\mathbf{p})[R(\mathbf{r})~\vert~\mathbf{t}]\) 로 intrinsic parameter \(\mathbf{p}\)에 대한 함수인 camera matrix \(K\)와 카메라의 위치 및 자세 정보 \(\mathbf{t}, \mathbf{r}\)로 구성된다.&lt;/p&gt;
+
+&lt;p&gt;대부분의 computer vision 강의에선 카메라 자세 및 위치를 반대로 (카메라 좌표계에서 WC로) 표현했는데, 회전이랑 변위를 각각 다르게 표현해서 헷갈려서 그냥 로보틱스에서 주로 쓰는 WC 기준으로 작성했다. (&lt;a href=&quot;/log/2021-10-20-EssentialFundamental/&quot;&gt;Essential &amp;amp; Fundamental Matrix&lt;/a&gt; 참고)&lt;/p&gt;
+
+&lt;p&gt;Reprojection error를 minimise하기 위해 이의 squared sum을 구한다.&lt;/p&gt;
+
+\[(\mathbf{r}_{j=1,...,m}, \mathbf{t}_{j=1,...,m}, \mathbf{X}_{i=1,...n})=\text{argmin}_{\mathbf{r}, \mathbf{t}, \mathbf{X}}\sum_{i=1}^{n}\sum_{j=1}^{m}{\gamma_{ij} \lVert \lambda_{ij}P(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h - x_{ij}^h \rVert^2 }\]
+
+&lt;p&gt;여기서 i번째 point가 j번째 image에 속해있으면 \(\gamma_{ij}=1\) otherwise, 0.&lt;/p&gt;
+
+&lt;p&gt;이는 결국 WC에서 표현된 3차원 point cloud를 카메라에 projection 시켰을 때, 처음의 image point과의 L2 norm을 나타낸다. (Cyrill Lecture에선 Huber norm이 쓰인다.)&lt;/p&gt;
+
+&lt;p&gt;Scale factor \(\lambda_{ij}\)가 차지하는 unknown수의 비중이 굉장히 높으므로 이를 제거하기 위해 depth축으로 나눠준다.&lt;/p&gt;
+
+\[x_{ij} + v_{x_{ij}}=P_{(1:2,:)}(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h / P_{(3,:)}(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h\]
+
+&lt;p&gt;Scale factor를 제거한 cost function은 다음과 같이 된다.&lt;/p&gt;
+
+\[A(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j, \mathbf{X}_i)=P_{(1:2,:)}(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h / P_{(3,:)}(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h\]
+
+\[C(x_{ij}, \mathbf{p}, \mathbf{r}_j, \mathbf{t}_j, \mathbf{X}_i) =\sum_{i=1}^{n}\sum_{j=1}^{m}{\gamma_{ij} \lVert A(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j, \mathbf{X}_i - x_{ij}') \rVert^2 }\]
+
+\[(\mathbf{r}_{j=1,...,m}, \mathbf{t}_{j=1,...,m}, \mathbf{X}_{i=1,...n})=\text{argmin}_{\mathbf{r}_j, \mathbf{t}_j, \mathbf{X}_i} C(x_{ij}, \mathbf{p}, \mathbf{r}_j, \mathbf{t}_j, \mathbf{X}_i)\]
+
+&lt;p&gt;결국 이 cost function이 최소가 되는 \(\mathbf{r}, \mathbf{t}, \mathbf{X}\)들을 찾는 문제가 된다.&lt;/p&gt;
+
+&lt;h2 id=&quot;jacobian-of-reprojection-error&quot;&gt;Jacobian of Reprojection Error&lt;/h2&gt;
+
+&lt;p&gt;대부분의 optimization problem이 그렇듯, 그리고 DL에서도 사용되는 gradient decent 방법으로 최소값이 되는 camera pose &amp;amp; point cloud를 찾아낸다.&lt;/p&gt;
+
+&lt;p&gt;일단 어떤 값에 대해 이 cost function을 편미분해보자.&lt;/p&gt;
+
+\[\frac{\partial(C)}{\partial(\mathbf{a})} = 2\sum_{i=1}^{n} \sum_{j=1}^{m} \gamma_{ij} \lVert A(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j, \mathbf{X}_i) - x_{ij}' \rVert  \frac{\partial A(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j, \mathbf{X}_i)}{\partial \mathbf{a}}\]
+
+\[=2\sum_{i=1}^{n} \sum_{j=1}^{m} \gamma_{ij} \lVert A(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j, \mathbf{X}_i) - x_{ij}' \rVert \left( \frac{\partial A}{\partial \mathbf{p}}\frac{\partial \mathbf{p}}{\partial \mathbf{a}}+ 
+\frac{\partial A}{\partial \mathbf{r}_j}\frac{\partial \mathbf{r}_j}{\partial \mathbf{a}} +
+\frac{\partial A}{\partial \mathbf{t}_j}\frac{\partial \mathbf{t}_j}{\partial \mathbf{a}}+
+\frac{\partial A}{\partial \mathbf{X}_i}\frac{\partial \mathbf{X}_i}{\partial \mathbf{a}} 
+\right)\]
+
+&lt;p&gt;사실 엄밀히 말해 camera intrinsic parameter인 \(\mathbf{p}\)도 영상마다 달라질 수 있어(기온차에 의한 렌즈 변형, 이미지별 다른 카메라 및 렌즈) \(\mathbf{p}_i\)로 해주는게 맞으며, intrinsic parameter 또한 이런 방법으로 구할 수 있지만, 여기서는 그냥 알고 있는 constant라 하자. (practical하게 생각한 경우 보통 camera calibration을 먼저 수행하고 로봇을 움직이니까) 그럼 위 식은 다음과 같이 된다.&lt;/p&gt;
+
+\[\frac{\partial(C)}{\partial(\mathbf{a})} = 2\sum_{i=1}^{n} \sum_{j=1}^{m} \gamma_{ij} \lVert A(\mathbf{r}_j,\mathbf{t}_j, \mathbf{X}_i) - x_{ij}' \rVert
+\left(\frac{\partial A }{\partial \mathbf{r}_j}\frac{\partial \mathbf{r}_j}{\partial \mathbf{a}} +
+\frac{\partial A}{\partial \mathbf{t}_j}\frac{\partial \mathbf{t}_j}{\partial \mathbf{a}} +
+\frac{\partial A}{\partial \mathbf{X}_i}\frac{\partial \mathbf{X}_i}{\partial \mathbf{a}}
+\right)\]
+
+&lt;p&gt;여기서 각 \(\mathbf{r}_j, \mathbf{t}_j, \mathbf{X}_i\)에 대해 \(A\)를 편미분 해야 되는데, scaling factor를 없애기 위해 1,2번째 row를 3번째 row로 나눠 미분하기 좀 불편하다. 따라서 이를 나누지 않은 식에 대해 먼저 미분한 다음 chain rule을 통해 다음과 같이 해결한다.&lt;/p&gt;
+
+\[\begin{bmatrix}u\\ v\\ w\end{bmatrix} = B(\mathbf{r}_j, \mathbf{t}_j, \mathbf{X}_i) = \lambda_{ij}P(\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h\]
+
+&lt;p&gt;라 하면 우리가 적용한 식은&lt;/p&gt;
+
+\[\begin{bmatrix}u/w\\ v/w\end{bmatrix} = A(\mathbf{r}_j, \mathbf{t}_j, \mathbf{X}_i) = (P_{(1:2,:)}(\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h)/((P_{(3,:)}(\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h)\]
+
+&lt;p&gt;이며, A에 대해 b로 편미분 한 값은 다음과 같이 표현된다.&lt;/p&gt;
+
+\[\frac{\partial A}{\partial \mathbf{b}} = \frac{\partial A}{\partial B}\frac{\partial B}{\partial \mathbf{b}}  = \begin{bmatrix} 1/w &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; -u/{w^2} \\ 0 &amp;amp;&amp;amp; 1/w &amp;amp;&amp;amp; -v/{w^2} \end{bmatrix}\frac{\partial B}{\partial \mathbf{b}}\]
+
+&lt;p&gt;원래 식은 다음과 같이 된다.&lt;/p&gt;
+
+\[\frac{\partial(C)}{\partial(\mathbf{a})} = 2\sum_{i=1}^{n} \sum_{j=1}^{m} \gamma_{ij} \lVert A(\mathbf{r}_j,\mathbf{t}_j, \mathbf{X}_i) - x_{ij}' \rVert
+\begin{bmatrix} 1/w &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; -u/{w^2} \\ 0 &amp;amp;&amp;amp; 1/w &amp;amp;&amp;amp; -v/{w^2} \end{bmatrix}
+\left(\frac{\partial B }{\partial \mathbf{r}_j}\frac{\partial \mathbf{r}_j}{\partial \mathbf{a}} +
+\frac{\partial B}{\partial \mathbf{t}_j}\frac{\partial \mathbf{t}_j}{\partial \mathbf{a}} +
+\frac{\partial B}{\partial \mathbf{X}_i}\frac{\partial \mathbf{X}_i}{\partial \mathbf{a}}
+\right)\]
+
+&lt;p&gt;로 표현이 된다.&lt;/p&gt;
+
+&lt;p&gt;\(B\)는 \(K[R(\mathbf{r})_j~\vert~\mathbf{t}_j]\mathbf{X}_i^h\)이므로 각각에 대해 편미분 해줘야 한다.&lt;/p&gt;
+
+&lt;p&gt;이를 다시 쓰면&lt;/p&gt;
+
+&lt;p&gt;\(B=\) \(K(R(\mathbf{r}_j)\mathbf{X}_i + \mathbf{t}_j)\) 가 된다. (여기서 주목할 것은 \(\mathbf{X}_i^h\) 에서 \(\mathbf{X}_i\)로 변경된 점이다. Homography coordinate에서 Euclidean Coordinate로)&lt;/p&gt;
+
+&lt;p&gt;이제 \(\mathbf{a}\)를 우리가 구하고자 하는 unknown에 대해 바꾸면서 계산하면 된다.&lt;/p&gt;
+
+&lt;h3 id=&quot;mathbfa--mathbfx_i에-대해&quot;&gt;\(\mathbf{a} = \mathbf{X}_i\)에 대해&lt;/h3&gt;
+
+\[\frac{\partial B}{\partial \mathbf{X}_i} = \frac{\partial (KR(\mathbf{r}_j)\mathbf{X}_i + \mathbf{t}_j)}{\partial \mathbf{X}_i} = KR(\mathbf{r}_j)\]
+
+&lt;h3 id=&quot;mathbfa--mathbft_j에-대해&quot;&gt;\(\mathbf{a} = \mathbf{t}_j\)에 대해&lt;/h3&gt;
+
+\[\frac{\partial B}{\partial \mathbf{t}_j} = \frac{\partial (KR(\mathbf{r}_j)\mathbf{X}_i + \mathbf{t}_j)}{\partial \mathbf{t}_j} = K\]
+
+&lt;h3 id=&quot;mathbfa--mathbfr_j에-대해&quot;&gt;\(\mathbf{a} = \mathbf{r}_j\)에 대해&lt;/h3&gt;
+
+\[\frac{\partial B}{\partial \mathbf{r}_j} = \frac{\partial (KR(\mathbf{r}_j)\mathbf{X}_i + \mathbf{t}_j)}{\partial \mathbf{r}_j} = \frac{\partial (KR(\mathbf{r}_j)\mathbf{X}_i)}{\partial \mathbf{r}_j} = K\frac{\partial (R(\mathbf{r}_j))}{\partial \mathbf{r}_j}\mathbf{X}_i\]
+
+&lt;p&gt;이게 사실 좀 복잡한데, 암튼 Rodrigues formula를 참고하고 여차저차 풀면 된다. 자세한 내용은 &lt;a href=&quot;http://jinyongjeong.github.io/2020/03/01/Jacobian_of_BA/&quot;&gt;진용이형 블로그&lt;/a&gt;에서 참고&lt;/p&gt;
+
+\[\frac{\partial R}{\partial \omega} = \frac{\partial}{\partial \omega} \left( I + \frac{sin(\theta)}{\theta}\Omega + \frac{1-cos(\theta)}{\theta}\Omega^2 \right)\]
+
+\[\frac{\partial}{\partial \omega}\left( \frac{sin(\theta)}{\theta} \right)\Omega + \frac{sin(\theta)}{\theta} \frac{\partial \Omega}{\partial \omega}+ \frac{\partial}{\partial \omega}\left( \frac{1 - cos(\theta)}{\theta^2} \right)\Omega^2 + 2\frac{1 - cos(\theta)}{\theta^2} \frac{\partial \Omega}{\partial \omega}\]
+
+&lt;p&gt;복잡해 보이지만, 복잡하게 풀다 보면 복잡하게 패턴이 나온다 (읭?). 모든 풀이 내용은 위에 블로그를 참고하였다.&lt;/p&gt;
+
+\[\frac{\partial \theta}{\partial \omega_i} = \frac{1}{2} (\omega_x^2 + \omega_y^2 + \omega_z^2)^{\frac{1}{2}} (2\omega_i) = \frac{\omega_i}{2}\]
+
+\[\frac{\partial}{\partial \omega_i}(\frac{sin(\theta)}{\theta}) = \frac{(cos(\theta)\theta - sin(\theta))\omega_i}{\theta^3}\]
+
+\[\frac{\partial}{\partial \omega_i}(\frac{1-cos(\theta)}{\theta^2}) = \frac{(sin(\theta)\theta - 2 + 2cos(\theta))\omega_i}{\theta^4}\]
+
+&lt;p&gt;where \(i=\{x,y,z\}\)&lt;/p&gt;
+
+&lt;p&gt;\(\theta\)가 \(\omega_i\)의 순서에 invariant하기에 여기까지는 다 같은 형태다.&lt;/p&gt;
+
+&lt;p&gt;결국 달라지는 것은 \(\frac{\partial \Omega}{\partial \omega_i}\)이며 이는 다음과 같다.&lt;/p&gt;
+
+\[\frac{\partial \Omega}{\partial \omega_x}=\begin{bmatrix}0 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; 0\\ 0 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; -1 \\ 0 &amp;amp;&amp;amp; 1 &amp;amp;&amp;amp; 0\end{bmatrix}\]
+
+\[\frac{\partial \Omega}{\partial \omega_y}=\begin{bmatrix}0 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; 0\\ 1 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; 0 \\ -1 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; 0\end{bmatrix}\]
+
+\[\frac{\partial \Omega}{\partial \omega_z}=\begin{bmatrix}0 &amp;amp;&amp;amp; -1 &amp;amp;&amp;amp; 0\\ 1 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; 0 \\ 0 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; 0\end{bmatrix}\]
+
+&lt;p&gt;최종적으로 이들을 넣어 Jacobian을 계산하면 된다.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="log" /><summary type="html">Bundle adjustment from scratch.</summary></entry><entry><title type="html">[2017 TRO] ORB-SLAM2</title><link href="http://localhost:4000/papers/2021-11-11-ORBSLAM2-copy/" rel="alternate" type="text/html" title="[2017 TRO] ORB-SLAM2" /><published>2021-11-11T00:00:00+09:00</published><updated>2021-11-11T00:00:00+09:00</updated><id>http://localhost:4000/papers/ORBSLAM2%20copy</id><content type="html" xml:base="http://localhost:4000/papers/2021-11-11-ORBSLAM2-copy/">&lt;h3 id=&quot;researchers-at-universidad-de-zaragoza-first-author-raúl-mur-artal-author-of-orb-slam&quot;&gt;Researchers at Universidad de Zaragoza. First Author: Raúl Mur-Artal (Author of ORB-SLAM)&lt;/h3&gt;
+&lt;h3 id=&quot;juan-d-tardós-corresponding-author-of-dbow2&quot;&gt;Juan D. Tardós: Corresponding author of DBoW2&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=ufvPS5wJAx0&quot;&gt;Related Video&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;TBW&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">Researchers at Universidad de Zaragoza. First Author: Raúl Mur-Artal (Author of ORB-SLAM) Juan D. Tardós: Corresponding author of DBoW2</summary></entry><entry><title type="html">Essential Matrix &amp;amp; Fundamental Matrix</title><link href="http://localhost:4000/log/2021-10-20-EssentialFundamental/" rel="alternate" type="text/html" title="Essential Matrix &amp;amp; Fundamental Matrix" /><published>2021-10-20T00:00:00+09:00</published><updated>2021-10-20T00:00:00+09:00</updated><id>http://localhost:4000/log/EssentialFundamental</id><content type="html" xml:base="http://localhost:4000/log/2021-10-20-EssentialFundamental/">&lt;h2 id=&quot;rotation-matrix--translation&quot;&gt;Rotation matrix &amp;amp; translation&lt;/h2&gt;
 
 &lt;p&gt;MVG pg.155에서, camera calibration matrix \(K\)는 \(\mathbf{x} = K[I~\vert ~\mathbf{0}]\mathbf{X}_{cam}\)&lt;/p&gt;
 
@@ -100,9 +268,11 @@
 
 &lt;p&gt;한가지 설명을 빠뜨린 것이 있는데, \(\hat{\mathbf{x}}\)는 &lt;strong&gt;normalized coordinate&lt;/strong&gt;로서 이미지 좌표에 camera calibration matrix의 inverse를 취해 나타낸 것으로 \(\hat{\mathbf{x}} = K^{-1}\mathbf{x}\)이다.&lt;/p&gt;
 
-&lt;p&gt;Point transformation을 간략히 나타내면 \(\mathbf{X}_{A} = R\mathbf{X}+\mathbf{t}_{B}\)가 된다.&lt;/p&gt;
+&lt;p&gt;(그럼 다시 \(K\hat{\mathbf{x}}\) 하면 \(\mathbf{x}\)가 되니까, 이 normalized coordinate로 변환된 \(\hat{\mathbf{x}}\)는 \(\mathbf{x}\)로 투영되는 3차원의 어떤 점 이라고 이해하면 될 것 같다.)&lt;/p&gt;
 
-&lt;p&gt;(여기선 homogeneous coordinate가 아니다!!)&lt;/p&gt;
+&lt;p&gt;Point transformation을 간략히 나타내면 \(\mathbf{X}_{A} = R\mathbf{X}_{B}+\mathbf{t}_{B}\)가 된다.&lt;/p&gt;
+
+&lt;p&gt;(갑자기 바뀌긴 했는데, \(\mathbf{X}_{A}, \mathbf{X}_{B}\)는 normalized coordinate는 아니고 일반적인 3차원 point이다. 아래 내려가면 갑자기 왜 나왔는지 이해됨. 여기선 homogeneous coordinate가 아니다!!)&lt;/p&gt;
 
 &lt;p&gt;앞서 말한 것과 같이 여기서의 \(R\)과 \(\mathbf{t}\)는 A coordinate system에서 바라본 B의 rotation 및 translation이다.&lt;/p&gt;
 
@@ -1026,41 +1196,4 @@ Lidar는 strong invariance to perceptual variance 함&lt;/p&gt;
 
 &lt;p&gt;다른 SOTA algorithm들과 비교를 해놨는데, 이부분도 자세히 읽어보고 서술할 예정.&lt;/p&gt;
 
-&lt;p&gt;TBW&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">Researchers at AIST, Japan. First Author: Kenji Koide</summary></entry><entry><title type="html">Installing GTSAM</title><link href="http://localhost:4000/etc/2021-01-11-install_gtsam/" rel="alternate" type="text/html" title="Installing GTSAM" /><published>2021-01-11T00:00:00+09:00</published><updated>2021-01-11T00:00:00+09:00</updated><id>http://localhost:4000/etc/install_gtsam</id><content type="html" xml:base="http://localhost:4000/etc/2021-01-11-install_gtsam/">&lt;p&gt;clone the gtsam github &lt;a href=&quot;https://github.com/borglab/gtsam&quot;&gt;repo&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;open terminal in root folder of gtsam (i.e. cd ~/something/gtsam-4.x.x)&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;build
-&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;build
-cmake ..
-make check
-&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;make &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;run some examples&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">clone the gtsam github repo</summary></entry><entry><title type="html">SU(2)</title><link href="http://localhost:4000/etc/2021-01-10-su2/" rel="alternate" type="text/html" title="SU(2)" /><published>2021-01-10T00:00:00+09:00</published><updated>2021-01-10T00:00:00+09:00</updated><id>http://localhost:4000/etc/su2</id><content type="html" xml:base="http://localhost:4000/etc/2021-01-10-su2/">&lt;p&gt;This article is based on the book Topology Geometry and Garuge Fields, 1997&lt;/p&gt;
-
-&lt;p&gt;Whilest I was studying how to utilize the unit normal vector in gtsam, I had to study more about its basics.&lt;/p&gt;
-
-&lt;p&gt;SU(2) the Special unitary group&lt;/p&gt;
-
-&lt;p&gt;SO(3) the Special orthogonal group : the group of 3 by 3 matrices \(A\) that satisfies:&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;\(A^{-1} = A^{\top}\) and&lt;/li&gt;
-  &lt;li&gt;\(det A = 1\).&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;In physical meaning, it is a linear transformations that rotate \(\mathcal{R}^3\)&lt;/p&gt;
-
-&lt;p&gt;With a normal vector \(\vec{n} = &amp;lt;n_1, n_2, n_3&amp;gt;\), and a scalar \(\phi\), Define a \(3 \times 3\) matrix \(R(\phi, \vec{n})\) by&lt;/p&gt;
-
-\[R(\phi, \vec{n}) = I_{3\times 3} + (sin\phi)N + (1-cos\phi)N^2\]
-
-&lt;p&gt;where&lt;/p&gt;
-
-\[N = \begin{bmatrix}
-0 &amp;amp; -n_3 &amp;amp; n_2 \\
-n^3 &amp;amp; 0 &amp;amp; -n_1 \\
--n_2 &amp;amp; n_1 &amp;amp; 0
-\end{bmatrix}\]
-
-&lt;p&gt;This matrix rotates the standard basis for \(\mathcal{R}^3\) through angle \(\phi\) about the axis along \(\vec{n}\) in the sense determined by the right-hand rule.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">This article is based on the book Topology Geometry and Garuge Fields, 1997</summary></entry></feed>
+&lt;p&gt;TBW&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">Researchers at AIST, Japan. First Author: Kenji Koide</summary></entry></feed>
