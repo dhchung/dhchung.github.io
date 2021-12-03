@@ -1,5 +1,163 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-11-16T21:22:15+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
-</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">Bundle Adjustment</title><link href="http://localhost:4000/papers/log/2021-11-15-BundleAdjustment/" rel="alternate" type="text/html" title="Bundle Adjustment" /><published>2021-11-15T00:00:00+09:00</published><updated>2021-11-15T00:00:00+09:00</updated><id>http://localhost:4000/papers/log/BundleAdjustment</id><content type="html" xml:base="http://localhost:4000/papers/log/2021-11-15-BundleAdjustment/">&lt;p&gt;Bundle adjustment from scratch.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-12-03T11:01:21+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
+</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">DeepVO (2017 ICRA)</title><link href="http://localhost:4000/papers/2021-12-02-DeepVO/" rel="alternate" type="text/html" title="DeepVO (2017 ICRA)" /><published>2021-12-02T00:00:00+09:00</published><updated>2021-12-02T00:00:00+09:00</updated><id>http://localhost:4000/papers/DeepVO</id><content type="html" xml:base="http://localhost:4000/papers/2021-12-02-DeepVO/">&lt;h2 id=&quot;deepvo-towards-end-to-end-visual-odometry-with-deep-recuurent-convolutional-neural-networks-2017-icra&quot;&gt;DeepVO: Towards End-to-End Visual Odometry with Deep Recuurent Convolutional Neural Networks (2017 ICRA)&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/papers/images/20211202/DeepVOOverview.png&quot; alt=&quot;Overview&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;abstract&quot;&gt;Abstract&lt;/h3&gt;
+
+&lt;p&gt;기존 VO는 feature extraction, matching, motion estimation, local optimization 등으로 일반적인 pipeline을 따름. 잘 작동하나, 다양한 환경에 대해서 fine-tunning이 요구됨. Absolute scale에 대한 사전지식 또한 요구됨(scale drift 때문).&lt;/p&gt;
+
+&lt;p&gt;이 논문에선 RCNN을 이용한 end-to-end monoculer VO에 대해 설명함. End-to-end이기에 기존 방법의 pipeline이 요구되지 않음. RCNN (Region proposal이 아니다! Recurrent CNN으로 이해해야됨!) 기반으로 좋은 feature를 학습할 뿐만 아니라 RNN을 기반으로 연속적인 데이터에 대한 동적 관계에 대해 학습할 수 있음. KITTI 데이터에 대한 실험을 통해 SOTA와 견줄만한 성능을 보임.&lt;/p&gt;
+
+&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+
+&lt;h4 id=&quot;기존-vo와-dl-기반의-한계점&quot;&gt;기존 VO와 DL 기반의 한계점&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;기존 mono VO는 좋은 성능을 보이나 fine tuning이 요구되며 scale drift가 심하기에 사전 지식이 있어야 한다.&lt;/li&gt;
+  &lt;li&gt;Deep learning은 주로 recognition 및 classification 쪽으로만 발전되어왔기에 Odometry estimation에 대한 내용이 많이 없다.&lt;/li&gt;
+  &lt;li&gt;이런 appereance representation (Object detection based나 segmentation 기반을 말하는 듯)은 VO를 train된 환경에서만 작동하는 제한된 성능을 가지게 한다.&lt;/li&gt;
+  &lt;li&gt;이렇기에 VO는 appereance 보다 geometrycal feature에 대해 더욱더 의존한다.&lt;/li&gt;
+  &lt;li&gt;한편, VO는 각각의 이미지를 처리하는 것보다 연속적인 영상에 대해 변화를 분석하고 연결하여 motion modeling하는 것이 중요하다.&lt;/li&gt;
+  &lt;li&gt;이말은 CNN이 할 수 없는 연속적인 정보에 대한 처리를 해야 한다는 뜻임 (그래서 RNN을 도입한다)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;제안하는-알고리즘&quot;&gt;제안하는 알고리즘&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;이 논문에선 Recurrent Convolutional Neural Networks (RCNNs)을 사용한 DL 기반의 mono VO를 제시한다.&lt;/li&gt;
+  &lt;li&gt;End-to-end 방법으로, 기존의 VO pipeline이 필요하지 않는다 (camera calibration 포함)&lt;/li&gt;
+  &lt;li&gt;Main contribution은 다음과 같다.
+    &lt;ul&gt;
+      &lt;li&gt;Mono VO문제를 raw RGB 영상들을 이용한 DL 기반 end-to-end 방법으로 해결한다.&lt;/li&gt;
+      &lt;li&gt;CNN으로 구해진 geometrical feature를 RCNN을 통한 기법으로 새로운 환경에서도 적용될 수 있는 알고리즘을 소개한다.&lt;/li&gt;
+      &lt;li&gt;인간에 의해 해석되기 어려운 연속적인 데이터에 대한 의존과 복잡한 동작에 대해 RNN으로 자동으로 학습함으로서 해결한다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;related-works&quot;&gt;Related works&lt;/h3&gt;
+
+&lt;p&gt;기존 방법은 크게 두가지로 나눌 수 있다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Geometry based method&lt;/li&gt;
+  &lt;li&gt;Learning base method&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;geometry-based-methods&quot;&gt;Geometry based methods&lt;/h4&gt;
+&lt;h5 id=&quot;1-sparse-feature-based-method&quot;&gt;1. Sparse feature based method&lt;/h5&gt;
+
+&lt;p&gt;&lt;img src=&quot;/papers/images/20211202/DeepVOConventional.png&quot; alt=&quot;Conventional feature based VO&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Sparse feature based method는 위와 같은 pipeline를 주로 따르며 multiview geometry를 이용해 salient feature matching을 통해 motion detection을 진행한다. 하지만, outlier 및 noise로 인해 drift가 존재하며 이를 해결하기 위해 SLAM이나 SfM 기법을 적용한다. (Loop closure를 말하고자 하는듯?)&lt;/p&gt;
+
+&lt;h5 id=&quot;2-direct-methods&quot;&gt;2. Direct methods&lt;/h5&gt;
+
+&lt;p&gt;이건 따로 paper review할 예정이긴 한데, 생각보다 조금 복잡해서 미루고 있다. 여튼, feature based가 computationally expensive하고 전체 이미지를 다 활용하지 않는 단점이 있다. Direct method는 연속적인 영상에 대해 전체 영상 pixel들을 기용할 수 있다. 최근 semi-direct method는 최상의 performance를 보여준 바 있다. Direct method가 feature based보다 좀더 정확한 결과를 나타내고 featureless 환경에서 나은 성능을 보이기에 자주 쓰이기 시작되었다. (&lt;del&gt;Underwater에선 아니던데 ㅜㅜ&lt;/del&gt;)&lt;/p&gt;
+
+&lt;h4 id=&quot;learning-based-methods&quot;&gt;Learning based methods&lt;/h4&gt;
+&lt;h5 id=&quot;1-ml-기반-방법들&quot;&gt;1. ML 기반 방법들&lt;/h5&gt;
+&lt;p&gt;Learning 기반 VO는 geometric theory를 적용하지 않고 센서 데이터로부터 motion을 inference하는 방법으로 진행되어왔다. Optical flow를 이용해 KNN, GP, SVM regression 을 학습시켜 VO를 얻는 기법들이 있었다.&lt;/p&gt;
+
+&lt;p&gt;ML기반은 RGB와 같이 크고 highly non-linear하거나 high dimensional data에 대해서 충분하지 않음은 이미 널리 알려진 사실이다. Large -scale 데이터를 통해 자동적으로 적합한 feature를 학습하는데 적합한 DL이 VO 문제를 해결하는데 대안이 될 수 있다.&lt;/p&gt;
+
+&lt;h5 id=&quot;2-dl-기반-방법들&quot;&gt;2. DL 기반 방법들&lt;/h5&gt;
+&lt;p&gt;DL은 localization 문제에 대해 좋은 성능을 보인 바 있다. CNN의 features들은 appereance based place recognition에 사용된 바 있다. 하지만, VO나 pose estimation에 대한 연구가 많이 진행된 바 없다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Stereo depth 이후 CNN을 통해 direction 과 velocity를 softmax function으로 추정하는 &lt;a href=&quot;https://www.iro.umontreal.ca/~memisevr/pubs/VISAPP2015.pdf&quot;&gt;기법&lt;/a&gt;이 있었으나, VO를 pose regression problem보다 classificiation problem으로 해결한 바 있다.&lt;/li&gt;
+  &lt;li&gt;단일 영상을 통해 camera relocalization하는 &lt;a href=&quot;https://arxiv.org/pdf/1505.07427.pdf&quot;&gt;연구&lt;/a&gt; (PoseNet)가 있었으나, imagel labeling을 SfM으로 하여 시간이 오래걸리고 많은 노동이 필요하다. Map 기반으로 training이 되기에 새로운 환경에 대해선 다시 학습이 요구된다.&lt;/li&gt;
+  &lt;li&gt;Optical flow를 input으로 하는 CNN &lt;a href=&quot;https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;amp;arnumber=7347378&quot;&gt;기법&lt;/a&gt;도 있지만, 이를 위해선 pre-processed dense optical flow가 요구되 real-time application에 알맞지 않다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;end-to-end-vo-through-rcnn&quot;&gt;End-to-end VO through RCNN&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/papers/images/20211202/DeepVORCNN.png&quot; alt=&quot;RCNN based VO&quot; /&gt;
+제안하는 구조는 위의 사진과 같이 CNN 기반 feature extraction과 RNN 기반 sequential modeling으로 구성되어있다.&lt;/p&gt;
+
+&lt;h4 id=&quot;a-architecture-of-proposed-rcnn&quot;&gt;A. Architecture of Proposed RCNN&lt;/h4&gt;
+
+&lt;p&gt;VGGNet이나 GoogLeNet과 같은 좋은 성능을 내는 구조들이 있으며, 이들은 주로 classification과 detection을 목표로 구성되었다. 하지만, VO는 앞서 말한 바와 같이 geometry기반이어야 하지, appereance와 coupled되면 좋지 않다. (과연? 요즘엔 Semantic SLAM도 많이 연구가 되고 있긴 한데, 근데 또 생각해보면 이들은 주로 Localization 쪽으로 치중되어있긴 하다!) 따라서 기존 DNN architecture를 그대로 적용하는 것은 impractical하다. 한편, 연속적인 영상에 대해 연결을 하는 것은 필수적이다. 따라서 제안하는 RCNN은 이 두가지 requirement를 고려한다. (1. geometry 기반 feature, 2. Connection between frames 인듯?)&lt;/p&gt;
+
+&lt;p&gt;다음은 각 과정에 대한 설명이다:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;각 frame별 RGB에서 mean RGB value를 빼고, (Illumination invariant하게 하기 위함인가?) 64의 배수로 resize한다. (CNN에 넣기 위함인듯 하다)&lt;/li&gt;
+  &lt;li&gt;두개의 연속적인 영상들이 쌓임으로 tensor를 형성하여 motion과 pose estimation을 추출하기 위해 deep RCNN이 학습된다.&lt;/li&gt;
+  &lt;li&gt;Image tensor는 CNN을 통해 효과적인 feature를 뽑고 이 feature들이 RNN에 들어가 sequential learning에 활용된다.&lt;/li&gt;
+  &lt;li&gt;각 image pair는 network를 통해 pose estimation 로 결과가 나온다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;RCNN의 장점은 simultaneous feature extraction과 sequential modeling을 각각 CNN과 RNN으로 동시에 학습이 가능하다는 점이다.&lt;/p&gt;
+
+&lt;h4 id=&quot;b-cnn-based-feature-extraction&quot;&gt;B. CNN based Feature Extraction&lt;/h4&gt;
+&lt;p&gt;VO에 적합한 CNN architecture를 구성하기 위해 concatination된 연속적인 영상에 대해 feature extraction을 진행한다. Feature는 이상적으로 appereance나 visual context보단 geometric 정보를 함유해야 모르는 환경에 대해 generalization이 가능하다. CNN 구조는 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/papers/images/20211202/DeepVOCNNArchitecture.png&quot; alt=&quot;CNN Architecture&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 구조는 KITTI image에 맞춰 제작되었으며, 9 convolutional layer와 마지막 convolutional layer 후를 제외하고 8개의 ReLU가 뒤따라 이어져 총 17개의 layer로 구성된다.&lt;/p&gt;
+
+&lt;p&gt;네트워크는 작은 feature를 찾기 위해 7X7, 5X5, 3X3 순으로 convolution kernel이 줄어든다. (? 작은 feature에서 커지는거 아닌가?)&lt;/p&gt;
+
+&lt;p&gt;Zero padding은 receptive field에 대한 configuration을 맞추기 위함이거나, tensor의 spatial dimension을 맞추기 위해 행해진다. 다양한 feature를 학습하기 위해 channel수는 증가한다.&lt;/p&gt;
+
+&lt;p&gt;CNN은 기존 optical flow나 depth estimation 결과와는 다르게 raw RGB 데이터 (mean 값을 빼는 preprocessing만 있다!)만응 이용한다. 학습된 feature는 high-dimensional 영상에 대한 정보를 압축할 뿐만 아니라 연속적인 데이터에 대해서도 성공적인 학습을 증진시킨다.&lt;/p&gt;
+
+&lt;h4 id=&quot;c-rnn-based-sequential-matching&quot;&gt;C. RNN Based Sequential Matching&lt;/h4&gt;
+
+&lt;p&gt;이제 좀 어려워진다 ㅋㅋ RNN이랑 LSTM 구조에 대해서 완벽히 이해 못한채로 읽으니까 해석하기가 참 난해하다.&lt;/p&gt;
+
+&lt;p&gt;RNN이 sequence에 대해 modeling이 가능하기에 VO 문제에 있어 적합하다. 예로, 현재 image frame에 대한 pose estimation은 이전 영상들의 정보를 활용함으로써 도움을 받을 수 있다. 기존 방법들 또한 multiple view geometry를 활용함으로써 two-view geometry의 한계점을 극복하였다. 하지만, RNN은 high dimensional raw data를 활용하기 어렵기 때문에 CNN 결과를 RNN에 넣는 RCNN 구조를 사용하는 것이다.&lt;/p&gt;
+
+&lt;p&gt;RNN은 CNN와 달리 시간에 따른 hidden state에 대한 메모리를 저장한다. 현재의 hidden state는 이전의 hidden state의 함수가 되어 이전 state와 현재 state간의 연결이 가능하다.&lt;/p&gt;
+
+&lt;p&gt;시간 \(k\)의 convolutional feature \(\mathbf{x}_k\)에 대해 RNN update는 다음과 같다.
+(RNN에 대한 다음 이미지를 보면 조금 이해가 수월하다 &lt;a href=&quot;http://colah.github.io/posts/2015-08-Understanding-LSTMs/&quot;&gt;출처: colah’s blog&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/papers/images/20211202/DeepVORNN.png&quot; alt=&quot;RNN Architecture&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;\(\mathbf{h}_k\) \(= \mathcal{H}(\mathbf{W}_{xh}\mathbf{x}_k + \mathbf{W}_{hh}\mathbf{h}_{k-1}+\mathbf{b}_h)\)&lt;/p&gt;
+
+&lt;p&gt;\(\mathbf{y}_k\) \(= \mathbf{W}_{hy}\mathbf{h}_k + \mathbf{b}_y\)&lt;/p&gt;
+
+&lt;p&gt;여기서 \(\mathbf{h}_k\)는 hidden state, \(\mathbf{y}_k\)는 output이다. \(\mathbf{W}\)는 weight matrix들이며, \(b\)는 bias이고, \(\mathcal{H}\)는 element-wise non-linear activation function이다.&lt;/p&gt;
+
+&lt;p&gt;이론적으로 RNN는 어떠한 길이의 sequence를 학습할 수 있으나, 현실적으로는 vanishing gradient problem으로 짧은 sequence에 대해서만 학습이 된다.&lt;/p&gt;
+
+&lt;p&gt;긴 trajectory에 대한 영상들간의 correlation을 이용하기 위해 LSTM이 RNN에 적용되었다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/papers/images/20211202/DeepVOLSTM.png&quot; alt=&quot;LSTM Architecture&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위 사진이랑 논문에서 제시된 사진이랑 같은 구조임을 알 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/papers/images/20211202/DeepVORNNArchitecture.png&quot; alt=&quot;RNN Architecture&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;각 구조에 대해서는 [여기]](http://colah.github.io/posts/2015-08-Understanding-LSTMs/)를 참조하면 될 것 같고 너무 detail하게 들어가지는 않겠다.&lt;/p&gt;
+
+&lt;p&gt;Memory cell \(\mathbf{c}_k\)와 hidden state \(\mathbf{h}_k\)가 그 다음 LSTM의 input으로 들어가게 된다.&lt;/p&gt;
+
+&lt;p&gt;RNN이 long-term dependency를 잘 학습하지만, 아직 high level representation과 복잡한 dynamic model을 이해하기 위해선 더 깊은 network가 요구된다. Deep RNN이 speech recognition에 좋은 성능을 보였기에 여기서도 2개의 LSTM을 이었다.&lt;/p&gt;
+
+&lt;p&gt;각 LSTM layer는 1000차원의 hidden state를 가진다. (each of the LSTM layers has 100 hidden states가 state가 1000개라는건지 state dimension이 1000이라는건지.. 아마 후자겠지?)&lt;/p&gt;
+
+&lt;p&gt;Deep RNN 결과는 각 frame별 pose estimation을 나타낸다. (놀랍게도 relative pose가 아니라 absolute pose라고 한다. 이전 pose 출력 결과까지 LSTM에 남아서 더해지는듯? 근데 &lt;a href=&quot;https://github.com/ChiWeiHsiao/DeepVO-pytorch&quot;&gt;Unofficial code&lt;/a&gt;에선 relative pose를 사용하는 것 같다.)&lt;/p&gt;
+
+&lt;h4 id=&quot;d-cost-function-and-optimization&quot;&gt;D. Cost Function and Optimization&lt;/h4&gt;
+
+&lt;p&gt;제안하는 RCNN 기반 VO는 image sequence에 대한 pose의 conditional probablity를 계산하는 것으로 간주할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;Poses: \(\mathbf{Y}_t = (\mathbf{y}_1, \dots, \mathbf{y}_2)\)&lt;/p&gt;
+
+&lt;p&gt;Image sequence : \(\mathbf{X}_t = (\mathbf{x}_1, \dots, \mathbf{x}_t)\)&lt;/p&gt;
+
+&lt;p&gt;\(p\left(\mathbf{Y}_t \lvert \mathbf{X}_t \right)\) \(= p\left(\mathbf{y}_1, \dots, \mathbf{y}_t \lvert \mathbf{x}_1, \dots, \mathbf{x}_t \right)\)&lt;/p&gt;
+
+&lt;p&gt;VO의 optimal parameter \(\mathbf{\theta}^{\ast}\)를 찾기 위해선 DNN은 다음을 maximize한다.&lt;/p&gt;
+
+&lt;p&gt;\(\mathbf{\theta}^{\ast}\) \(= \text{argmax}_{\mathbf{\theta}} \left( p\left(\mathbf{Y}_t \lvert \mathbf{X}_t, \mathbf{\theta}\right)\right)\)&lt;/p&gt;
+
+&lt;p&gt;Ground truth pose \((\mathbf{p}_k, \mathbf{\psi}_k)\)와 estimated pose \((\hat{\mathbf{p}}_k, \hat{\mathbf{\psi}}_k)\)간의 euclidean distance가 minimize되도록 최적화된다.&lt;/p&gt;
+
+&lt;p&gt;\(\mathbf{\theta}^{\ast}\) \(=\text{argmin}_{\mathbf{\theta}} \left( \frac{1}{N} \sum_{i=1}^{N}{\sum_{k=1}^t {\lVert \hat{\mathbf{p}}_k-\mathbf{p} \rVert_2^2 + \kappa \lVert \hat{\mathbf{\psi}}_k - \mathbf{\psi}_k \rVert_2^2}} \right)\)&lt;/p&gt;
+
+&lt;p&gt;\(\kappa\)는 position과 orientation간의 weighting을 위해 주어졌으며 100이 사용되었다고 한다. Orientation \(\mathbf{\psi}\)에는 euler angle이 사용되었는데, quaternion을 사용하게 되면 하나의 변수가 더 발생해 optimization을 방해하기 때문이라고 한다. (SO3를 이용해서 하면 어떨까?)&lt;/p&gt;
+
+&lt;h3 id=&quot;experimental-results&quot;&gt;Experimental Results&lt;/h3&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">DeepVO: Towards End-to-End Visual Odometry with Deep Recuurent Convolutional Neural Networks (2017 ICRA)</summary></entry><entry><title type="html">Bundle Adjustment</title><link href="http://localhost:4000/log/2021-11-15-BundleAdjustment/" rel="alternate" type="text/html" title="Bundle Adjustment" /><published>2021-11-15T00:00:00+09:00</published><updated>2021-11-15T00:00:00+09:00</updated><id>http://localhost:4000/log/BundleAdjustment</id><content type="html" xml:base="http://localhost:4000/log/2021-11-15-BundleAdjustment/">&lt;p&gt;Bundle adjustment from scratch.&lt;/p&gt;
 
 &lt;p&gt;Bundle adjustment. 하 진짜. VO 한다는 사람이 이제서야 제대로 BA에 대해 공부하기 시작한 웃지 못할 상황이다. 사실 &lt;a href=&quot;../posts/2020-11-../../papers/_posts/2020-11-30-Bundle_Adjustment_PT1.md&quot;&gt;Bundle Adjustment&lt;/a&gt; (와 딱 1년전이네 ㄷㄷ)에서 좀 다뤄볼려고 했는데, 그땐 거의 Cyrill 교수님 강의 베낀 수준이라 완벽히 이해하진 못한거 같다. 이번에 직접 implementation까지 하면서 좀 제대로 이해해보려고 한다.&lt;/p&gt;
 
@@ -11,7 +169,6 @@
   &lt;li&gt;여기서 optimization 대상은 rotation, translation, 3d point들이며 적용 목적에 따라 대상이 달라질 수 있다.&lt;/li&gt;
   &lt;li&gt;Iterative procedure이기에 Initial guess가 중요하다.&lt;/li&gt;
   &lt;li&gt;완벽히 이해는 못했지만, control point들이나 다른 factor들과 같이 융합이 가능하다 (odometry 정보라든지)&lt;/li&gt;
-  &lt;li&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;reprojection-error&quot;&gt;Reprojection Error&lt;/h2&gt;
@@ -39,6 +196,7 @@
         &lt;ul&gt;
           &lt;li&gt;\(\theta\) \(= \lVert(\mathbf{r})\rVert\)&lt;/li&gt;
           &lt;li&gt;\(\Omega\) \(= \mathbf{r}_{[\times]} = \begin{bmatrix} 0 &amp;amp;&amp;amp; -\omega_z &amp;amp;&amp;amp; \omega_y \\ \omega_z &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; -\omega_x \\ -\omega_y &amp;amp;&amp;amp; \omega_x &amp;amp;&amp;amp; 0 \end{bmatrix}\)&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;https://math.stackexchange.com/questions/83874/efficient-and-accurate-numerical-implementation-of-the-inverse-rodrigues-rotatio&quot;&gt;역으로 구하는 방법&lt;/a&gt;&lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
     &lt;/ul&gt;
@@ -47,7 +205,9 @@
 
 &lt;p&gt;여기서 \(P(\mathbf{p},\mathbf{r},\mathbf{t})=\) \(K(\mathbf{p})[R(\mathbf{r})~\vert~\mathbf{t}]\) 로 intrinsic parameter \(\mathbf{p}\)에 대한 함수인 camera matrix \(K\)와 카메라의 위치 및 자세 정보 \(\mathbf{t}, \mathbf{r}\)로 구성된다.&lt;/p&gt;
 
-&lt;p&gt;대부분의 computer vision 강의에선 카메라 자세 및 위치를 반대로 (카메라 좌표계에서 WC로) 표현했는데, 회전이랑 변위를 각각 다르게 표현해서 헷갈려서 그냥 로보틱스에서 주로 쓰는 WC 기준으로 작성했다. (&lt;a href=&quot;/log/2021-10-20-EssentialFundamental/&quot;&gt;Essential &amp;amp; Fundamental Matrix&lt;/a&gt; 참고)&lt;/p&gt;
+&lt;p&gt;대부분의 computer vision 강의에선 카메라 자세 및 위치를 반대로 표현했는데, 회전이랑 변위를 각각 다르게 표현해서 헷갈려서 그냥 로보틱스에서 주로 쓰는 방법 기준으로 작성했다. (&lt;a href=&quot;/log/2021-10-20-EssentialFundamental/&quot;&gt;Essential &amp;amp; Fundamental Matrix&lt;/a&gt;의 Rotataion matrix &amp;amp; translation 참고) 여기서 주의해야 할 점은, 여기서의 R과 t는 카메라 좌표계에서 바라본 WC의 rotation 및 translation이라는 점이다. 카메라의 회전 및 자세를 구하기 위해선 구해진 R과 t에 대한 inverse를 취해야 된다.&lt;/p&gt;
+
+\[[R_{cam} ~ \vert ~ \mathbf{t}_{cam}] = [R^\top ~ \vert -R^\top \mathbf{t}]\]
 
 &lt;p&gt;Reprojection error를 minimise하기 위해 이의 squared sum을 구한다.&lt;/p&gt;
 
@@ -162,7 +322,7 @@
 
 \[\frac{\partial \Omega}{\partial \omega_z}=\begin{bmatrix}0 &amp;amp;&amp;amp; -1 &amp;amp;&amp;amp; 0\\ 1 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; 0 \\ 0 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; 0\end{bmatrix}\]
 
-&lt;p&gt;최종적으로 이들을 넣어 Jacobian을 계산하면 된다.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="log" /><summary type="html">Bundle adjustment from scratch.</summary></entry><entry><title type="html">[2017 TRO] ORB-SLAM2</title><link href="http://localhost:4000/papers/2021-11-11-ORBSLAM2-copy/" rel="alternate" type="text/html" title="[2017 TRO] ORB-SLAM2" /><published>2021-11-11T00:00:00+09:00</published><updated>2021-11-11T00:00:00+09:00</updated><id>http://localhost:4000/papers/ORBSLAM2%20copy</id><content type="html" xml:base="http://localhost:4000/papers/2021-11-11-ORBSLAM2-copy/">&lt;h3 id=&quot;researchers-at-universidad-de-zaragoza-first-author-raúl-mur-artal-author-of-orb-slam&quot;&gt;Researchers at Universidad de Zaragoza. First Author: Raúl Mur-Artal (Author of ORB-SLAM)&lt;/h3&gt;
+&lt;p&gt;최종적으로 이들을 넣어 Jacobian을 계산하면 된다.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="log" /><summary type="html">Bundle adjustment from scratch.</summary></entry><entry><title type="html">[2017 TRO] ORB-SLAM2</title><link href="http://localhost:4000/papers/2021-11-11-ORBSLAM2/" rel="alternate" type="text/html" title="[2017 TRO] ORB-SLAM2" /><published>2021-11-11T00:00:00+09:00</published><updated>2021-11-11T00:00:00+09:00</updated><id>http://localhost:4000/papers/ORBSLAM2</id><content type="html" xml:base="http://localhost:4000/papers/2021-11-11-ORBSLAM2/">&lt;h3 id=&quot;researchers-at-universidad-de-zaragoza-first-author-raúl-mur-artal-author-of-orb-slam&quot;&gt;Researchers at Universidad de Zaragoza. First Author: Raúl Mur-Artal (Author of ORB-SLAM)&lt;/h3&gt;
 &lt;h3 id=&quot;juan-d-tardós-corresponding-author-of-dbow2&quot;&gt;Juan D. Tardós: Corresponding author of DBoW2&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=ufvPS5wJAx0&quot;&gt;Related Video&lt;/a&gt;&lt;/p&gt;
@@ -997,203 +1157,4 @@ Lidar는 strong invariance to perceptual variance 함&lt;/p&gt;
 
 &lt;p&gt;형식으로 넣어주면 된다.&lt;/p&gt;
 
-&lt;p&gt;여기서.. 뭔가 모르겠지만, 이 struct이 그대로 전달돼 함부로 변수명을 바꾸면 (예를 들어 ring을 r로 표기하거나) 안될 것 같다.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">Pohang Dataset으로 LIO-SAM을 돌리려다보니 안되길래 들여다보니 LIO-SAM은 ring value를 이용해 이미지로 만들어 이를 통해 각 feature를 뽑아 내는 것을 발견하게 되었다.</summary></entry><entry><title type="html">[2021 RAL] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors</title><link href="http://localhost:4000/papers/2021-09-21-GPU_Lidar/" rel="alternate" type="text/html" title="[2021 RAL] Globally Consistent 3D LiDAR Mapping with GPU-accelerated GICP Matching Cost Factors" /><published>2021-09-21T00:00:00+09:00</published><updated>2021-09-21T00:00:00+09:00</updated><id>http://localhost:4000/papers/GPU_Lidar</id><content type="html" xml:base="http://localhost:4000/papers/2021-09-21-GPU_Lidar/">&lt;h3 id=&quot;researchers-at-aist-japan-first-author-kenji-koide&quot;&gt;Researchers at AIST, Japan. First Author: Kenji Koide&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;/papers/images/20210921/20210921_1.png&quot; alt=&quot;Mapping&quot; width=&quot;100%&quot; height=&quot;100%&quot; class=&quot;center&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;A. Global matching cost minimization을 통해 아주 작은 overlap의 frame간의 constraint를 적용할 수 있다.&lt;/li&gt;
-  &lt;li&gt;B. GPU를 이용함으로서 어마어마한 양의 Factor들과 Factor Graph를 처리할 수 있다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;기존-lidar-slam의-한계점&quot;&gt;기존 Lidar SLAM의 한계점&lt;/h3&gt;
-
-&lt;h4 id=&quot;pose-graph-optimization&quot;&gt;Pose Graph Optimization&lt;/h4&gt;
-
-&lt;p&gt;기존의 Lidar based odometry의 경우 Pose graph 형식으로 만들어 point cloud matching에 대해 하나의 Gaussian distribution으로 정의하여 optimization을 진행함. Scan matching은 다양한 local minima가 존재하여 하나의 Gaussian distribution으로 정의할 수 없음.&lt;/p&gt;
-
-&lt;p&gt;대부분 constant한 covariance matrix, weight-based covariance matrix, 또는 Hessian-based close form으로 covariance matrix를 사용하나, 이는 “cost function deviation caused by data association changes”를 고려하지 않아 너무 optimistic한 결과를 나타냄. (여기서 optimistic이란, 실제 uncertainty보다 더 작다는 의미?) 이러한 잘못된 pose constraint modeling은 long trajectory에 대해 잘못된 결과를 야기시킬 수 있음.&lt;/p&gt;
-
-&lt;p&gt;Monte-Carlo 기반 방법도 있으나 computationally expensive하다. Data-driven 방법을 통한 covariance matrix 추정 기법도 있음. 하지만 현존하는 대부분의 방법이 앞서 말한 constant, weight-based, 또는 Hessian-based 방법을 사용함.&lt;/p&gt;
-
-&lt;h4 id=&quot;bundle-alignment&quot;&gt;Bundle Alignment&lt;/h4&gt;
-
-&lt;p&gt;주로 Visual SLAM기법에 사용됨 근데 computationally 비쌈. VSLAM에서 two track으로 real-time local과 low frequency global BA로 주로 진행되며 GPU기반으로 feasibility를 보인 바 있음. Lidar에서는 진행된 바가 별로 없음.&lt;/p&gt;
-
-&lt;h4 id=&quot;global-matching-cost-minimization&quot;&gt;Global Matching Cost Minimization&lt;/h4&gt;
-
-&lt;p&gt;그래프 기반으로 frame간 matching cost를 최소화한는 기법이 이용된 바 있음 (2D). 이를 발전시켜 loop closure event에서 실행함으로서 global optimization 빈도를 줄이면서 3D로 확장시킨 바 있음. Global optimization할 시 모든 factor를 업데이트 함으로서 global 및 local consistency를 유지함. 하지만 computationally expensive하여 real-time application 및 large-scale SLAM에는 부적절함.&lt;/p&gt;
-
-&lt;p&gt;Volumetric mapping 기법으로 Euclidean signed distance field (ESDF)를 사용해 local submap간의 registration error를 고려한 방법이 있으나, computationally expensive하고 random subsed of residuals만 사용하고 SE3 pose constraint의 지원이 있어야 해서 한계가 있다.&lt;/p&gt;
-
-&lt;h4 id=&quot;deformation-graph&quot;&gt;Deformation Graph&lt;/h4&gt;
-
-&lt;p&gt;Elastic Fusion과 같이 deformation graph를 사용하는 방법들이 있으나, 이들은 주어진 정보를 다 사용하지 않으며 global consistancy를 방해할 수 있다. 
-(odometry 정보 같은 것을 사용하지 않는다는 뜻인듯? Pose graph와 다르게 완전 map centric이니까.. 해당 논문을 다시 읽어봐야 할듯)&lt;/p&gt;
-
-&lt;h3 id=&quot;제안하는-방법&quot;&gt;제안하는 방법&lt;/h3&gt;
-
-&lt;p&gt;Real-time and globally consistent 3D Lidar mapping frame using GPU&lt;/p&gt;
-
-&lt;p&gt;GPU 기반 전체 map에 대해 Generalized ICP (GICP)로 활용한 Voxel-based data association을 통한 multi-scan registeration&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;아주 작은 overlap에 대해서도 constraint를 부과할 수 있다. (2.5%)&lt;/li&gt;
-  &lt;li&gt;GPU 사용을 통해 많은 양의 Factor를 생성할 수 있다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;제안하는 방법은 Local 및 Global mapping module로 구성되어있다.&lt;/p&gt;
-
-&lt;!-- ![Whole Process](/papers/images/20210921/20210921_2.png){: width=&quot;auto&quot; height=&quot;auto&quot;}{: .center} --&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20210921/20210921_2.png&quot; alt=&quot;Whole Process&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;둘다 voxel-based overlap metric을 사용하여 GPU를 통해 빠른 연산이 가능하다.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Point cloud가 들어오면 RandLA-Net를 이용해 dynamic object를 삭제하고&lt;/li&gt;
-  &lt;li&gt;Odometry estimation을 MULLS을 이용해 초기값을 추정한다.&lt;/li&gt;
-  &lt;li&gt;그동안 각 point의 covariance matrix를 kn point들을 통해 구한다는데 voxel에 적용하려고 그런건가?&lt;/li&gt;
-  &lt;li&gt;처리된 point cloud는 local mapping module에 들어가 약 10~20개의 frame들이 matching 되어 local submap을 형성한다.&lt;/li&gt;
-  &lt;li&gt;Submap들은 다시 Global mapping 단계 input으로 들어가 voxelized GICP matching cost factor로 factor graph를 형성한다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;!-- ![Whole Process](/papers/images/20210921/20210921_3.png){: width=&quot;auto&quot; height=&quot;auto&quot;}{: .center} --&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20210921/20210921_3.png&quot; alt=&quot;Factor Graph for local and global mapping&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;위의 그림과 같이 local mapping과 global mapping module이 형성된다. Global mapping module에서 matching cost factor가  local solution에 갇히는 것을 방지하기 위해 explicit한 loop closure constraint를 사용한다. (여기서는 ScanContext).&lt;/p&gt;
-
-&lt;p&gt;Local mapping에서는 fully connected factor graph를 형성하며, global mapping에서는 가장 마지막 submap과 특정 값 이상의 overlap이 존재하는 기존의 submap간의 constraint를 형성한다.&lt;/p&gt;
-
-&lt;p&gt;(여기선 이걸 implicit loop closure라고 말하는 듯;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;explicit loop closure = ScanContext와 같이 query Lidar key의 value와 비교하여 비슷하면 매칭하는 loop closure,&lt;/li&gt;
-  &lt;li&gt;implicit loop closure = 계산된 또는 측정된 odometry 정보와 overlapping 정보를 이용한 loop closure)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;voxelized-gicp-matching-cost-factors&quot;&gt;Voxelized GICP Matching Cost Factors&lt;/h4&gt;
-&lt;p&gt;주어진 sensor pose와 point cloud pair에 대해서 다음과 같이 주어진 objective function을 최소화 함으로써 추정된다.&lt;/p&gt;
-
-&lt;p&gt;Sensor pose : \(\mathcal{T}  = \left\{ \mathbf{T}_0, \dots, \mathbf{T}_t \right\}\)&lt;/p&gt;
-
-&lt;p&gt;Point cloud pair : \(\mathcal{F}^{M}\) 으로 matching pair의 indices 집합 \((i, j)\)&lt;/p&gt;
-
-&lt;p&gt;cost function : \(f^{M}(\mathcal{F}^{M}, \mathcal{T}) = \sum_{(i,j) \in \mathcal{F}^{M}} e^{M}(\mathcal{P}_i, \mathcal{P}_j, \mathbf{T}_i, \mathbf{T}_j)\)&lt;/p&gt;
-
-&lt;p&gt;여기서 matching cost function \(e\)는 Voxelized GICP에 맞게 설정된다. GCIP error는 point with covariance를 사용하게 되는데, transformation \(\mathbf{T}\)를 가진 \(\mathbf{p}_k\)와 \(\mathbf{p}_k'\) 의 point pair에 대한 error값은 다음과 같이 정의된다.&lt;/p&gt;
-
-&lt;p&gt;Point with covariance : \(\mathbf{p} = (\mathbf{\mu}_k, \mathbf{C}_k)\)&lt;/p&gt;
-
-&lt;p&gt;GICP error : \(e^{GICP}(\mathbf{p}_k, \mathbf{T}) = \mathbf{d}_k^{T}(\mathbf{C}_k' + \mathbf{T}\mathbf{C}_k \mathbf{T}^T)^{-1}\mathbf{d}_k\) (Mahalanobis distance를 이용하는듯)&lt;/p&gt;
-
-&lt;p&gt;여기서 \(\mathbf{d}_k = \mathbf{\mu}_{k}' - \mathbf{T}\mathbf{\mu}_k\) 로 \(k'\) 좌표계에서 계산한 두 점간의 벡터 차이이다.&lt;/p&gt;
-
-&lt;p&gt;기존 GICP에서는 이 corresponding point 쌍을 찾는 방법이 KD Tree를 이용하여 찾는데, 이는 GPU 연산에 적합하지 않다 (Conditional branches를 사용하기 때문 : KD Tree와 GPU에 대해 좀 더 알아봐야 이해할 것 같다..).&lt;/p&gt;
-
-&lt;p&gt;VGICP에서는 voxel-based data association을 사용하는데 여기서 voxel은 point cloud를 voxel 안에 mean과 covariance로 계산하여 나타낸다.&lt;/p&gt;
-
-&lt;p&gt;여기서 covariance는 Normalized Distributions Transform(NDT)와는 다른 방법을 사용하는데, NDT가 point set에서 voxel distribution을 계산하는 반면 VGICP는 point distribution을 하나의 voxel distribution으로 aggregate 한다. (잘 이해가 안됨)&lt;/p&gt;
-
-&lt;p&gt;Voxel로 만듦으로서 GICP에서 사용된 KD-Tree와 다르게 Voxel Position기반으로 주변의 Voxel에 대한 search로 corresponding point를 찾는다는 것 같다. (이를 GPU computing에 어떻게 넣고 하는지는 설명되어있지 않다.)&lt;/p&gt;
-
-&lt;p&gt;VGICP matching cost function은 다음과 같이 된다.&lt;/p&gt;
-
-&lt;p&gt;cost function : \(e^{M}(\mathcal{P}_i, \mathcal{P}_j, \mathbf{T}_i, \mathbf{T}_j) = \sum_{\mathbf{p}_k \in \mathcal{P}_i} e^{GCIP}(\mathbf{p}_k, \mathbf{T}_{ij})\)&lt;/p&gt;
-
-&lt;p&gt;Factor node를 구성하기 위해선 error값 뿐만 아니라 각 Factor에 대한 Jacobian을 &lt;a href=&quot;../../slam/_posts/2020-11-12-gtsam_custom.md&quot;&gt;계산&lt;/a&gt;해야 되는데 여기서는 Hessian에 대한 설명이 나와있다. (응?)&lt;/p&gt;
-
-&lt;p&gt;Transformation에 대한 미분값을 다음과 같이 정의한다.&lt;/p&gt;
-
-&lt;p&gt;For \(\mathbf{T_i}\) : \(\mathbf{A}_k = \partial \mathbf{e}_k / \partial \mathbf{T}_k\)&lt;/p&gt;
-
-&lt;p&gt;For \(\mathbf{T_j}\) : \(\mathbf{B}_k = \partial \mathbf{e}_k / \partial \mathbf{T}_j\)&lt;/p&gt;
-
-&lt;p&gt;여기서 \(\mathbf{e}_k\) 는 \(\mathbf{d}_k\) 와 비슷한 \(\mathbf{e}_k = \mathbf{\mu}_{k}' - \mathbf{T}_{ij}\mathbf{\mu}_k\) 로 \(j\) coordinate system에서 본 point mean 값의 차이 벡터이다.&lt;/p&gt;
-
-&lt;p&gt;Hessian값은 앞서 구한 미분값들과 \(j\) coordinate system에서 구한 covariance matrix로 계산된다. (&lt;a href=&quot;/papers/2020-04-09-Estimating_Uncertain/&quot;&gt;coordiante frame간 covariance matrix 참조&lt;/a&gt;)&lt;/p&gt;
-
-&lt;p&gt;\(\mathbf{H}_{ii}\) \(= \sum_{k}^{N} \mathbf{A}_{k}^{T} \mathbf{\Omega}_{k} \mathbf{A}_{k}\)&lt;/p&gt;
-
-&lt;p&gt;\(\mathbf{H}_{ij}\) \(= \sum_{k}^{N} \mathbf{A}_{k}^{T} \mathbf{\Omega}_{k} \mathbf{B}_{k}\)&lt;/p&gt;
-
-&lt;p&gt;\(\mathbf{H}_{jj}\) \(= \sum_{k}^{N} \mathbf{B}_{k}^{T} \mathbf{\Omega}_{k} \mathbf{B}_{k}\)&lt;/p&gt;
-
-&lt;p&gt;여기서 \(\mathbf{\Omega}\)는 앞서 말한 covariance matrix인데 이는 \(\mathbf{\Omega}_k = \mathbf{C}_{k}' + \mathbf{T}_{ij} \mathbf{C}_{k} \mathbf{T}_{ij}^{T}\) 로 정의된다. 즉 \(\mathbf{e}_k\)의 covariance matrix이다.&lt;/p&gt;
-
-&lt;p&gt;다음으로 coefficient vector라는 것을 정의하는데.. 어디에 쓰이는지 잘 모르겠다. Factor graph 논문을 다시 봐야하나&lt;/p&gt;
-
-&lt;p&gt;\(\mathbf{b}_i\) \(= \sum_{k}^{N} \mathbf{A}_{k}^{T} \mathbf{\Omega}_{k} \mathbf{e}_{k}\)&lt;/p&gt;
-
-&lt;p&gt;\(\mathbf{b}_j\) \(= \sum_{k}^{N} \mathbf{B}_{k}^{T} \mathbf{\Omega}_{k} \mathbf{e}_{k}\)&lt;/p&gt;
-
-&lt;p&gt;매 optimization iteration마다 \(\mathbf{e}^M\)을 다시 계산하기에 \(\mathbf{H}_{*}\)와 \(\mathbf{b}_{*}\)는 다시 계산된다 (GPU 사용).&lt;/p&gt;
-
-&lt;h4 id=&quot;overlap-metric&quot;&gt;Overlap metric&lt;/h4&gt;
-
-&lt;p&gt;Local mapping과 global mapping에서 overlap을 계산하는데 있어 query voxel과 target point cloud간의 overlap 정도는 다음과 같이 binary한 cost를 이용하여 계산한다.&lt;/p&gt;
-
-&lt;p&gt;\(s(\mathbf{p}_k, \mathcal{P}_j)\) \(= \begin{cases}
-    1,              &amp;amp; \text{if } \mathbf{p}_k \text{ fell in a voxel of } \mathcal{P}_j\\
-    0,              &amp;amp; \text{otherwise}
-\end{cases}\)&lt;/p&gt;
-
-&lt;p&gt;\(\text{overlap}(\mathcal{P}_i, \mathcal{P}_j)\) \(= \sum_{k}^{N} s(\mathbf{p}_k, \mathcal{P}_j) / N\)&lt;/p&gt;
-
-&lt;p&gt;즉 \(\mathcal{P}_i\)의 각 점들이 \(\mathcal{P}_j\)로 만들어진 voxel map에 해당되는 정도로 overlap을 계산한다. (이는 GPU로 약 5만개의 점들에 대해 0.1.ms이하로 계산된다고 한다.)&lt;/p&gt;
-
-&lt;p&gt;기존의 경우는 time interval이나 sensor displacement로 가까이 있으면 overlap일 것이라고 예측하는 것보다 유용하며, bounding-box overlap metric보다 더 정확하다. (drift가 심할 경우에는 bbox가 더 나을 것 같은데..)&lt;/p&gt;
-
-&lt;h4 id=&quot;local-mapping&quot;&gt;Local Mapping&lt;/h4&gt;
-
-&lt;p&gt;Overlap이 95% 이상인 경우 displacement가 없다고 가정하여 frame skip을 하며, 그 미만인 경우 voxel map을 resolution \(r^L\)로 만들어 (여기서 \(L\)은 Local인듯, Local과 Global map resolution을 따로 사용하는 모양이다.) 이 pair를 submap factor graph에 넣는다 (Factor graph에 넣는 방식은 &lt;a href=&quot;#voxelized-gicp-matching-cost-factors&quot;&gt;여기서&lt;/a&gt; 나와있는 방법으로..)&lt;/p&gt;
-
-&lt;p&gt;Submap의 첫 frame과 마지막(가장 최근의) frame의 overlap이 10% 이하인 경우나 Frame 갯수가 특정 threshold (\(N_{max}^L\))을 넘어갈 경우 Submap의 factor graph를 optimize하며 모든 frame들을 하나의 submap으로 merge한다.&lt;/p&gt;
-
-&lt;p&gt;그 후 resolution \(r^G\)인 voxel map submap을 기반으로 생성되어 global mapping module로 들어가게 된다.&lt;/p&gt;
-
-&lt;h4 id=&quot;global-mapping&quot;&gt;Global Mapping&lt;/h4&gt;
-
-&lt;p&gt;앞서 언급된 Local Mapping을 통해 얻어진 새로운 submap이 들어올 때 마다 기존에 생성된 submap들과의 overlap matric을 계산해 특정값(여기선 무려 2.5%!!) 이상일 경우 constraint를 적용한다. 이는 densely connected factor graph를 형성한다; scan matching이 실패하는 부분도 모두 matching cost factor를 형성하여 deficient constraint를 형성할 수 있으나, 전체 시스템이 다른 factor로 인해 well constrained 되어 있기에 큰 영향을 주지 않는다. (이부분이 완벽히 이해가 되지는 않는데.. matching cost factor는 말 그대로 상태에 대한 어떤 cost를 반환하는 반면 scan matching은 잘못되었든 잘 되었든 하나의 값을 그냥 던져줘서 문제가 될 수 있다고 생각됨..!)&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20210921/20210921_4.png&quot; alt=&quot;Matching cost factor &amp;amp; scan matching&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;이러한 matching cost factor는 local solution에 갇힐 수 있어 explicit 한 loop closure detector를 사용하여 SE3 relative pose constraint를 더하며, objective function은 다음과 같다.&lt;/p&gt;
-
-&lt;p&gt;\(f^{G}(\mathcal{T})\) \(= f^M(\mathcal{F}_G^M, \mathcal{T}) + f^{L}(\mathcal{F}_G^L, \mathcal{T})\)&lt;/p&gt;
-
-&lt;p&gt;여기서 \(f^M(\mathcal{F}_G^M, \mathcal{T})\)는 local mapping과 비슷하게 submap간 cost function이고&lt;/p&gt;
-
-&lt;p&gt;\(f^{L}(\mathcal{F}^L, \mathcal{T})\) \(= \sum_{(i,j)\in\mathcal{F}^L} \rho \left( {\lVert log(\hat{\mathbf{T}}_{ij}^{-1} \mathbf{T}_i^{-1}\mathbf{T}_{j}) \rVert}^{2} \right)\)&lt;/p&gt;
-
-&lt;p&gt;\(\mathcal{F}_G^L\)은 loop detection 찾아낸 submap index pair들, \(\hat{\mathbf{T}}_{ij}\) 은 relative pose measurement (loop detection으로 찾은건지 아니면 다른건지는 명시되어있지 않으나 \(\hat{}\)이 들어간 것으로 보아 loop detection이지 않을까 싶다), 그리고 \(\rho\)는 robust kernel이라고 한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20210921/20210921_5.png&quot; alt=&quot;Shifted Tukey's biweight function&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Robust kernel (\(\rho\))에 대해서는 위와 같은 shifted Tukey’s robust kernel로 정의되는데, current estimate가 loop constraint를 만족시키는 경우 (relative pose로 비교하는듯) matching cost function을 방해할 수 있기 때문에 (둘의 sum으로 이루어졌기에 이 사이 조절이 힘든가? 암튼) loop closure constraint를 최소화하고, 너무 차이가 클 경우 outlier로 제외시킨다(loop closure의 실패로 간주). 이를 식으로 나타내면 다음과 같다.&lt;/p&gt;
-
-&lt;p&gt;\(\text{tukey}(x,w)\) \(= max(0, (1-x^2 / w)^2)\)&lt;/p&gt;
-
-&lt;p&gt;\(\text{shifted_tukey}(x,w,offset)\) \(=\text{tukey}(\lVert x-offset \rVert, w)\)&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20210921/20210921_6.png&quot; alt=&quot;Effect of loop closing&quot; /&gt;
-&lt;/p&gt;
-
-&lt;h4 id=&quot;implementation-details&quot;&gt;Implementation Details&lt;/h4&gt;
-
-&lt;p&gt;Factor graph optimization을 위해 GTSAM의 Levenberg-Marquardt optimizer를 사용하였다. GPU 관련해서는 계산식들에 대해(주로 VGICP Matching Factor들) 적용하였다고 한다. (Factor graph가 dense한것과 관련이 있나? 아마 각 factor 계산이 어마어마하니까 dense해서 계산량이 많아져 GPU로 효과를 본게 아니라 각 factor 계산을 GPU로 하기에 효과를 봤다고 보는게 맞는건가.. 모르겠다)&lt;/p&gt;
-
-&lt;h3 id=&quot;evaluation&quot;&gt;Evaluation&lt;/h3&gt;
-
-&lt;p&gt;다른 SOTA algorithm들과 비교를 해놨는데, 이부분도 자세히 읽어보고 서술할 예정.&lt;/p&gt;
-
-&lt;p&gt;TBW&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">Researchers at AIST, Japan. First Author: Kenji Koide</summary></entry></feed>
+&lt;p&gt;여기서.. 뭔가 모르겠지만, 이 struct이 그대로 전달돼 함부로 변수명을 바꾸면 (예를 들어 ring을 r로 표기하거나) 안될 것 같다.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">Pohang Dataset으로 LIO-SAM을 돌리려다보니 안되길래 들여다보니 LIO-SAM은 ring value를 이용해 이미지로 만들어 이를 통해 각 feature를 뽑아 내는 것을 발견하게 되었다.</summary></entry></feed>

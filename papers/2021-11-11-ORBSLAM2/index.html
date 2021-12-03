@@ -39,22 +39,22 @@ Powered by Hydejack v9.0.5 <https://hydejack.com/>
   
     
 <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>Bundle Adjustment | Dongha Chung</title>
+<title>[2017 TRO] ORB-SLAM2 | Dongha Chung</title>
 <meta name="generator" content="Jekyll v3.9.0" />
-<meta property="og:title" content="Bundle Adjustment" />
+<meta property="og:title" content="[2017 TRO] ORB-SLAM2" />
 <meta name="author" content="<Dongha> <Chung>" />
 <meta property="og:locale" content="en" />
-<meta name="description" content="Bundle adjustment from scratch." />
-<meta property="og:description" content="Bundle adjustment from scratch." />
-<link rel="canonical" href="http://localhost:4000/papers/log/2021-11-15-BundleAdjustment/" />
-<meta property="og:url" content="http://localhost:4000/papers/log/2021-11-15-BundleAdjustment/" />
+<meta name="description" content="2017 TRO on Visual Odometry" />
+<meta property="og:description" content="2017 TRO on Visual Odometry" />
+<link rel="canonical" href="http://localhost:4000/papers/2021-11-11-ORBSLAM2/" />
+<meta property="og:url" content="http://localhost:4000/papers/2021-11-11-ORBSLAM2/" />
 <meta property="og:site_name" content="Dongha Chung" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2021-11-15T00:00:00+09:00" />
+<meta property="article:published_time" content="2021-11-11T00:00:00+09:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Bundle Adjustment" />
+<meta property="twitter:title" content="[2017 TRO] ORB-SLAM2" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/papers/log/2021-11-15-BundleAdjustment/","headline":"Bundle Adjustment","dateModified":"2021-11-15T00:00:00+09:00","datePublished":"2021-11-15T00:00:00+09:00","author":{"@type":"Person","name":"<Dongha> <Chung>"},"description":"Bundle adjustment from scratch.","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/papers/log/2021-11-15-BundleAdjustment/"},"@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/papers/2021-11-11-ORBSLAM2/","headline":"[2017 TRO] ORB-SLAM2","dateModified":"2021-11-11T00:00:00+09:00","datePublished":"2021-11-11T00:00:00+09:00","author":{"@type":"Person","name":"<Dongha> <Chung>"},"description":"2017 TRO on Visual Odometry","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/papers/2021-11-11-ORBSLAM2/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -237,17 +237,17 @@ Left here for reference, feel free to delete.
 
 
 
-<article id="post-papers-log-BundleAdjustment" class="page post mb6" role="article">
+<article id="post-papers-ORBSLAM2" class="page post mb6" role="article">
   <header>
     <h1 class="post-title flip-project-title">
       
-        Bundle Adjustment
+        [2017 TRO] ORB-SLAM2
       
     </h1>
 
     <div class="post-date">
       
-      <time datetime="2021-11-15T00:00:00+09:00">15 Nov 2021</time>
+      <time datetime="2021-11-11T00:00:00+09:00">11 Nov 2021</time>
       
       
       
@@ -262,7 +262,7 @@ Left here for reference, feel free to delete.
 
 
 
-in <a href="/papers/" class="flip-title">Paper Review</a> / <a href="/log/" class="flip-title">Research Log</a>
+in <a href="/papers/" class="flip-title">Paper Review</a>
 
       
 
@@ -285,176 +285,23 @@ in <a href="/papers/" class="flip-title">Paper Review</a> / <a href="/log/" clas
 
 
 
-  <div class="hr pb0"></div>
+  
+    <p class="note-sm" >
+      2017 TRO on Visual Odometry
+
+    </p>
+  
 
 
   </header>
 
   
-    <p>Bundle adjustment from scratch.</p>
+    <h3 id="researchers-at-universidad-de-zaragoza-first-author-raúl-mur-artal-author-of-orb-slam">Researchers at Universidad de Zaragoza. First Author: Raúl Mur-Artal (Author of ORB-SLAM)</h3>
+<h3 id="juan-d-tardós-corresponding-author-of-dbow2">Juan D. Tardós: Corresponding author of DBoW2</h3>
 
-<p>Bundle adjustment. 하 진짜. VO 한다는 사람이 이제서야 제대로 BA에 대해 공부하기 시작한 웃지 못할 상황이다. 사실 <a href="../posts/2020-11-../../papers/_posts/2020-11-30-Bundle_Adjustment_PT1.md">Bundle Adjustment</a> (와 딱 1년전이네 ㄷㄷ)에서 좀 다뤄볼려고 했는데, 그땐 거의 Cyrill 교수님 강의 베낀 수준이라 완벽히 이해하진 못한거 같다. 이번에 직접 implementation까지 하면서 좀 제대로 이해해보려고 한다.</p>
+<p><a href="https://www.youtube.com/watch?v=ufvPS5wJAx0">Related Video</a></p>
 
-<p>BA에 대해서는 사실 석사 때부터 많이 들어오긴 했는데, 제대로 공부할 기회가(라고 쓰고 생각이 라고 읽늗다) 없었다. 걍 뭐 optimization 하나보다 생각했는데, 이번에 좀 제대로 정립하고자 여기저기서 긁어서 공부하며 끄적인다.</p>
-
-<h2 id="ba의-목적">BA의 목적</h2>
-<ul>
-  <li>BA는 기존 DLT나 PnP 알고리즘과 같이 한번에 unknown paramter들을 계산하는 방식이 아닌 iterative한 방법으로 optimization하는 과정이다.</li>
-  <li>여기서 optimization 대상은 rotation, translation, 3d point들이며 적용 목적에 따라 대상이 달라질 수 있다.</li>
-  <li>Iterative procedure이기에 Initial guess가 중요하다.</li>
-  <li>완벽히 이해는 못했지만, control point들이나 다른 factor들과 같이 융합이 가능하다 (odometry 정보라든지)</li>
-  <li></li>
-</ul>
-
-<h2 id="reprojection-error">Reprojection Error</h2>
-<p>모든 Optimization problem이 다 그렇듯이 제대로 된 cost function (DL에서의 loss와 비슷한 개념)이 있어야 좋은 결과가 나온다.</p>
-
-<p>BA에서는 reprojection error를 사용한다. 이를 설명하기 전에 추정된 3D point cloud와 image point와의 관계는 다음과 같다.</p>
-
-\[x_{ij}^h + v_{x_{ij}}^h=\lambda_{ij}P(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h\]
-
-<ul>
-  <li>\(x_{ij}^h\)는 원래 이미지의 2D point location으로 homogeneous coordinate \((x_ij, y_ij, 1)^\top\)으로 표현 (i번째 point의 j번째 image plane의 2d coordinate)
-    <ul>
-      <li>\({x_{ij}}\)는 image space에서의 2d point coordinate</li>
-    </ul>
-  </li>
-  <li>\(v_{x_{ij}}^h\)는 reprojection error</li>
-  <li>\(\lambda_{ij}\)는 scale factor</li>
-  <li>\(P(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j)\)는 camera projection matrix</li>
-  <li>\(\mathbf{X}_i^h\)는 3차원의 point cloud로 homogeneous coordinate \((X_i, Y_i, Z_i, 1)^\top\)으로 표현 (i번째 point)</li>
-  <li>\(\mathbf{r}_j\)와 \(\mathbf{t}_j\)는 각각 WC기준 카메라의 rotation 및 translation를 나타내는 vector
-    <ul>
-      <li>\(\mathbf{r}\)는 다양하게 표현 가능 (Euler angle, rotation vector, quaternion, …)</li>
-      <li>\(\mathbf{r}\)에 대해 여기선 rotation vector \((\omega_x, \omega_y, \omega_z)^\top\)을 사용</li>
-      <li>\(R(\mathbf{r}) = I + \frac{sin(\theta)}{\theta}\Omega + \frac{1-cos(\theta)}{\theta^2}\Omega^2\) (Rodrigues formula)
-        <ul>
-          <li>\(\theta\) \(= \lVert(\mathbf{r})\rVert\)</li>
-          <li>\(\Omega\) \(= \mathbf{r}_{[\times]} = \begin{bmatrix} 0 &amp;&amp; -\omega_z &amp;&amp; \omega_y \\ \omega_z &amp;&amp; 0 &amp;&amp; -\omega_x \\ -\omega_y &amp;&amp; \omega_x &amp;&amp; 0 \end{bmatrix}\)</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<p>여기서 \(P(\mathbf{p},\mathbf{r},\mathbf{t})=\) \(K(\mathbf{p})[R(\mathbf{r})~\vert~\mathbf{t}]\) 로 intrinsic parameter \(\mathbf{p}\)에 대한 함수인 camera matrix \(K\)와 카메라의 위치 및 자세 정보 \(\mathbf{t}, \mathbf{r}\)로 구성된다.</p>
-
-<p>대부분의 computer vision 강의에선 카메라 자세 및 위치를 반대로 (카메라 좌표계에서 WC로) 표현했는데, 회전이랑 변위를 각각 다르게 표현해서 헷갈려서 그냥 로보틱스에서 주로 쓰는 WC 기준으로 작성했다. (<a href="/log/2021-10-20-EssentialFundamental/">Essential &amp; Fundamental Matrix</a> 참고)</p>
-
-<p>Reprojection error를 minimise하기 위해 이의 squared sum을 구한다.</p>
-
-\[(\mathbf{r}_{j=1,...,m}, \mathbf{t}_{j=1,...,m}, \mathbf{X}_{i=1,...n})=\text{argmin}_{\mathbf{r}, \mathbf{t}, \mathbf{X}}\sum_{i=1}^{n}\sum_{j=1}^{m}{\gamma_{ij} \lVert \lambda_{ij}P(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h - x_{ij}^h \rVert^2 }\]
-
-<p>여기서 i번째 point가 j번째 image에 속해있으면 \(\gamma_{ij}=1\) otherwise, 0.</p>
-
-<p>이는 결국 WC에서 표현된 3차원 point cloud를 카메라에 projection 시켰을 때, 처음의 image point과의 L2 norm을 나타낸다. (Cyrill Lecture에선 Huber norm이 쓰인다.)</p>
-
-<p>Scale factor \(\lambda_{ij}\)가 차지하는 unknown수의 비중이 굉장히 높으므로 이를 제거하기 위해 depth축으로 나눠준다.</p>
-
-\[x_{ij} + v_{x_{ij}}=P_{(1:2,:)}(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h / P_{(3,:)}(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h\]
-
-<p>Scale factor를 제거한 cost function은 다음과 같이 된다.</p>
-
-\[A(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j, \mathbf{X}_i)=P_{(1:2,:)}(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h / P_{(3,:)}(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h\]
-
-\[C(x_{ij}, \mathbf{p}, \mathbf{r}_j, \mathbf{t}_j, \mathbf{X}_i) =\sum_{i=1}^{n}\sum_{j=1}^{m}{\gamma_{ij} \lVert A(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j, \mathbf{X}_i - x_{ij}') \rVert^2 }\]
-
-\[(\mathbf{r}_{j=1,...,m}, \mathbf{t}_{j=1,...,m}, \mathbf{X}_{i=1,...n})=\text{argmin}_{\mathbf{r}_j, \mathbf{t}_j, \mathbf{X}_i} C(x_{ij}, \mathbf{p}, \mathbf{r}_j, \mathbf{t}_j, \mathbf{X}_i)\]
-
-<p>결국 이 cost function이 최소가 되는 \(\mathbf{r}, \mathbf{t}, \mathbf{X}\)들을 찾는 문제가 된다.</p>
-
-<h2 id="jacobian-of-reprojection-error">Jacobian of Reprojection Error</h2>
-
-<p>대부분의 optimization problem이 그렇듯, 그리고 DL에서도 사용되는 gradient decent 방법으로 최소값이 되는 camera pose &amp; point cloud를 찾아낸다.</p>
-
-<p>일단 어떤 값에 대해 이 cost function을 편미분해보자.</p>
-
-\[\frac{\partial(C)}{\partial(\mathbf{a})} = 2\sum_{i=1}^{n} \sum_{j=1}^{m} \gamma_{ij} \lVert A(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j, \mathbf{X}_i) - x_{ij}' \rVert  \frac{\partial A(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j, \mathbf{X}_i)}{\partial \mathbf{a}}\]
-
-\[=2\sum_{i=1}^{n} \sum_{j=1}^{m} \gamma_{ij} \lVert A(\mathbf{p},\mathbf{r}_j,\mathbf{t}_j, \mathbf{X}_i) - x_{ij}' \rVert \left( \frac{\partial A}{\partial \mathbf{p}}\frac{\partial \mathbf{p}}{\partial \mathbf{a}}+ 
-\frac{\partial A}{\partial \mathbf{r}_j}\frac{\partial \mathbf{r}_j}{\partial \mathbf{a}} +
-\frac{\partial A}{\partial \mathbf{t}_j}\frac{\partial \mathbf{t}_j}{\partial \mathbf{a}}+
-\frac{\partial A}{\partial \mathbf{X}_i}\frac{\partial \mathbf{X}_i}{\partial \mathbf{a}} 
-\right)\]
-
-<p>사실 엄밀히 말해 camera intrinsic parameter인 \(\mathbf{p}\)도 영상마다 달라질 수 있어(기온차에 의한 렌즈 변형, 이미지별 다른 카메라 및 렌즈) \(\mathbf{p}_i\)로 해주는게 맞으며, intrinsic parameter 또한 이런 방법으로 구할 수 있지만, 여기서는 그냥 알고 있는 constant라 하자. (practical하게 생각한 경우 보통 camera calibration을 먼저 수행하고 로봇을 움직이니까) 그럼 위 식은 다음과 같이 된다.</p>
-
-\[\frac{\partial(C)}{\partial(\mathbf{a})} = 2\sum_{i=1}^{n} \sum_{j=1}^{m} \gamma_{ij} \lVert A(\mathbf{r}_j,\mathbf{t}_j, \mathbf{X}_i) - x_{ij}' \rVert
-\left(\frac{\partial A }{\partial \mathbf{r}_j}\frac{\partial \mathbf{r}_j}{\partial \mathbf{a}} +
-\frac{\partial A}{\partial \mathbf{t}_j}\frac{\partial \mathbf{t}_j}{\partial \mathbf{a}} +
-\frac{\partial A}{\partial \mathbf{X}_i}\frac{\partial \mathbf{X}_i}{\partial \mathbf{a}}
-\right)\]
-
-<p>여기서 각 \(\mathbf{r}_j, \mathbf{t}_j, \mathbf{X}_i\)에 대해 \(A\)를 편미분 해야 되는데, scaling factor를 없애기 위해 1,2번째 row를 3번째 row로 나눠 미분하기 좀 불편하다. 따라서 이를 나누지 않은 식에 대해 먼저 미분한 다음 chain rule을 통해 다음과 같이 해결한다.</p>
-
-\[\begin{bmatrix}u\\ v\\ w\end{bmatrix} = B(\mathbf{r}_j, \mathbf{t}_j, \mathbf{X}_i) = \lambda_{ij}P(\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h\]
-
-<p>라 하면 우리가 적용한 식은</p>
-
-\[\begin{bmatrix}u/w\\ v/w\end{bmatrix} = A(\mathbf{r}_j, \mathbf{t}_j, \mathbf{X}_i) = (P_{(1:2,:)}(\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h)/((P_{(3,:)}(\mathbf{r}_j,\mathbf{t}_j)\mathbf{X}_i^h)\]
-
-<p>이며, A에 대해 b로 편미분 한 값은 다음과 같이 표현된다.</p>
-
-\[\frac{\partial A}{\partial \mathbf{b}} = \frac{\partial A}{\partial B}\frac{\partial B}{\partial \mathbf{b}}  = \begin{bmatrix} 1/w &amp;&amp; 0 &amp;&amp; -u/{w^2} \\ 0 &amp;&amp; 1/w &amp;&amp; -v/{w^2} \end{bmatrix}\frac{\partial B}{\partial \mathbf{b}}\]
-
-<p>원래 식은 다음과 같이 된다.</p>
-
-\[\frac{\partial(C)}{\partial(\mathbf{a})} = 2\sum_{i=1}^{n} \sum_{j=1}^{m} \gamma_{ij} \lVert A(\mathbf{r}_j,\mathbf{t}_j, \mathbf{X}_i) - x_{ij}' \rVert
-\begin{bmatrix} 1/w &amp;&amp; 0 &amp;&amp; -u/{w^2} \\ 0 &amp;&amp; 1/w &amp;&amp; -v/{w^2} \end{bmatrix}
-\left(\frac{\partial B }{\partial \mathbf{r}_j}\frac{\partial \mathbf{r}_j}{\partial \mathbf{a}} +
-\frac{\partial B}{\partial \mathbf{t}_j}\frac{\partial \mathbf{t}_j}{\partial \mathbf{a}} +
-\frac{\partial B}{\partial \mathbf{X}_i}\frac{\partial \mathbf{X}_i}{\partial \mathbf{a}}
-\right)\]
-
-<p>로 표현이 된다.</p>
-
-<p>\(B\)는 \(K[R(\mathbf{r})_j~\vert~\mathbf{t}_j]\mathbf{X}_i^h\)이므로 각각에 대해 편미분 해줘야 한다.</p>
-
-<p>이를 다시 쓰면</p>
-
-<p>\(B=\) \(K(R(\mathbf{r}_j)\mathbf{X}_i + \mathbf{t}_j)\) 가 된다. (여기서 주목할 것은 \(\mathbf{X}_i^h\) 에서 \(\mathbf{X}_i\)로 변경된 점이다. Homography coordinate에서 Euclidean Coordinate로)</p>
-
-<p>이제 \(\mathbf{a}\)를 우리가 구하고자 하는 unknown에 대해 바꾸면서 계산하면 된다.</p>
-
-<h3 id="mathbfa--mathbfx_i에-대해">\(\mathbf{a} = \mathbf{X}_i\)에 대해</h3>
-
-\[\frac{\partial B}{\partial \mathbf{X}_i} = \frac{\partial (KR(\mathbf{r}_j)\mathbf{X}_i + \mathbf{t}_j)}{\partial \mathbf{X}_i} = KR(\mathbf{r}_j)\]
-
-<h3 id="mathbfa--mathbft_j에-대해">\(\mathbf{a} = \mathbf{t}_j\)에 대해</h3>
-
-\[\frac{\partial B}{\partial \mathbf{t}_j} = \frac{\partial (KR(\mathbf{r}_j)\mathbf{X}_i + \mathbf{t}_j)}{\partial \mathbf{t}_j} = K\]
-
-<h3 id="mathbfa--mathbfr_j에-대해">\(\mathbf{a} = \mathbf{r}_j\)에 대해</h3>
-
-\[\frac{\partial B}{\partial \mathbf{r}_j} = \frac{\partial (KR(\mathbf{r}_j)\mathbf{X}_i + \mathbf{t}_j)}{\partial \mathbf{r}_j} = \frac{\partial (KR(\mathbf{r}_j)\mathbf{X}_i)}{\partial \mathbf{r}_j} = K\frac{\partial (R(\mathbf{r}_j))}{\partial \mathbf{r}_j}\mathbf{X}_i\]
-
-<p>이게 사실 좀 복잡한데, 암튼 Rodrigues formula를 참고하고 여차저차 풀면 된다. 자세한 내용은 <a href="http://jinyongjeong.github.io/2020/03/01/Jacobian_of_BA/">진용이형 블로그</a>에서 참고</p>
-
-\[\frac{\partial R}{\partial \omega} = \frac{\partial}{\partial \omega} \left( I + \frac{sin(\theta)}{\theta}\Omega + \frac{1-cos(\theta)}{\theta}\Omega^2 \right)\]
-
-\[\frac{\partial}{\partial \omega}\left( \frac{sin(\theta)}{\theta} \right)\Omega + \frac{sin(\theta)}{\theta} \frac{\partial \Omega}{\partial \omega}+ \frac{\partial}{\partial \omega}\left( \frac{1 - cos(\theta)}{\theta^2} \right)\Omega^2 + 2\frac{1 - cos(\theta)}{\theta^2} \frac{\partial \Omega}{\partial \omega}\]
-
-<p>복잡해 보이지만, 복잡하게 풀다 보면 복잡하게 패턴이 나온다 (읭?). 모든 풀이 내용은 위에 블로그를 참고하였다.</p>
-
-\[\frac{\partial \theta}{\partial \omega_i} = \frac{1}{2} (\omega_x^2 + \omega_y^2 + \omega_z^2)^{\frac{1}{2}} (2\omega_i) = \frac{\omega_i}{2}\]
-
-\[\frac{\partial}{\partial \omega_i}(\frac{sin(\theta)}{\theta}) = \frac{(cos(\theta)\theta - sin(\theta))\omega_i}{\theta^3}\]
-
-\[\frac{\partial}{\partial \omega_i}(\frac{1-cos(\theta)}{\theta^2}) = \frac{(sin(\theta)\theta - 2 + 2cos(\theta))\omega_i}{\theta^4}\]
-
-<p>where \(i=\{x,y,z\}\)</p>
-
-<p>\(\theta\)가 \(\omega_i\)의 순서에 invariant하기에 여기까지는 다 같은 형태다.</p>
-
-<p>결국 달라지는 것은 \(\frac{\partial \Omega}{\partial \omega_i}\)이며 이는 다음과 같다.</p>
-
-\[\frac{\partial \Omega}{\partial \omega_x}=\begin{bmatrix}0 &amp;&amp; 0 &amp;&amp; 0\\ 0 &amp;&amp; 0 &amp;&amp; -1 \\ 0 &amp;&amp; 1 &amp;&amp; 0\end{bmatrix}\]
-
-\[\frac{\partial \Omega}{\partial \omega_y}=\begin{bmatrix}0 &amp;&amp; 0 &amp;&amp; 0\\ 1 &amp;&amp; 0 &amp;&amp; 0 \\ -1 &amp;&amp; 0 &amp;&amp; 0\end{bmatrix}\]
-
-\[\frac{\partial \Omega}{\partial \omega_z}=\begin{bmatrix}0 &amp;&amp; -1 &amp;&amp; 0\\ 1 &amp;&amp; 0 &amp;&amp; 0 \\ 0 &amp;&amp; 0 &amp;&amp; 0\end{bmatrix}\]
-
-<p>최종적으로 이들을 넣어 Jacobian을 계산하면 된다.</p>
+<p>TBW</p>
 
   
 </article>
@@ -602,7 +449,7 @@ in <a href="/papers/" class="flip-title">Paper Review</a> / <a href="/log/" clas
     
 
 
-  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/papers/2021-11-11-ORBSLAM2-copy/" class="flip-title"><span>[2017 TRO] ORB-SLAM2</span></a>  <time class="faded fine" datetime="2021-11-11T00:00:00+09:00">11 Nov 2021</time></li>                        <li class="h4">  <a href="/log/2021-10-20-EssentialFundamental/" class="flip-title"><span>Essential Matrix &amp; Fundamental Matrix</span></a>  <time class="faded fine" datetime="2021-10-20T00:00:00+09:00">20 Oct 2021</time></li>                        <li class="h4">  <a href="/log/2021-10-16-KittiObject/" class="flip-title"><span>Kitti Object Dataset</span></a>  <time class="faded fine" datetime="2021-10-16T00:00:00+09:00">16 Oct 2021</time></li>            </ul></aside>
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/papers/2021-12-02-DeepVO/" class="flip-title"><span>DeepVO (2017 ICRA)</span></a>  <time class="faded fine" datetime="2021-12-02T00:00:00+09:00">02 Dec 2021</time></li>                        <li class="h4">  <a href="/log/2021-11-15-BundleAdjustment/" class="flip-title"><span>Bundle Adjustment</span></a>  <time class="faded fine" datetime="2021-11-15T00:00:00+09:00">15 Nov 2021</time></li>                        <li class="h4">  <a href="/log/2021-10-20-EssentialFundamental/" class="flip-title"><span>Essential Matrix &amp; Fundamental Matrix</span></a>  <time class="faded fine" datetime="2021-10-20T00:00:00+09:00">20 Oct 2021</time></li>            </ul></aside>
 
   
 
