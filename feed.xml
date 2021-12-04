@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-12-04T16:01:23+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-12-04T16:02:39+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
 </subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">DeepVO (2017 ICRA)</title><link href="http://localhost:4000/papers/2021-12-02-DeepVO/" rel="alternate" type="text/html" title="DeepVO (2017 ICRA)" /><published>2021-12-02T00:00:00+09:00</published><updated>2021-12-02T00:00:00+09:00</updated><id>http://localhost:4000/papers/DeepVO</id><content type="html" xml:base="http://localhost:4000/papers/2021-12-02-DeepVO/">&lt;h2 id=&quot;deepvo-towards-end-to-end-visual-odometry-with-deep-recuurent-convolutional-neural-networks-2017-icra&quot;&gt;DeepVO: Towards End-to-End Visual Odometry with Deep Recuurent Convolutional Neural Networks (2017 ICRA)&lt;/h2&gt;
 
 &lt;p&gt;&lt;img src=&quot;/papers/images/20211202/DeepVOOverview.png&quot; alt=&quot;Overview&quot; /&gt;&lt;/p&gt;
@@ -163,7 +163,7 @@
 
 &lt;h4 id=&quot;effect-of-overfitting&quot;&gt;Effect of overfitting&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&quot;/papers/images/20211202/DeepVORNNArchitecture.png&quot; alt=&quot;Effect of overfitting&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/papers/images/20211202/DeepVOOverfitting.png&quot; alt=&quot;Effect of overfitting&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Overfitting이 machine learning에서 부작용을 나타내는건 잘 알려져 있지만 overfitting이 VO에 미치는 영향에 대해서는 더 많은 연구가 있어야 한다고 한다. 위의 사진처럼 overfitting으로 training은 잘되나 testing에서는 잘 안되는 것을 볼 수 있다. Attitude의 변화는 상대적으로 작기 때문에 overfitting에 취약하다고 한다. (\(\kappa\)의 효과가 없나?) 아마 attitude 변화가 우리가 보는 trajectory 변화에 크게 영향을 미치기 때문 아닐까?&lt;/p&gt;
 
