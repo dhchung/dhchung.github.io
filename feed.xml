@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-12-03T11:01:21+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-12-04T16:01:23+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
 </subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">DeepVO (2017 ICRA)</title><link href="http://localhost:4000/papers/2021-12-02-DeepVO/" rel="alternate" type="text/html" title="DeepVO (2017 ICRA)" /><published>2021-12-02T00:00:00+09:00</published><updated>2021-12-02T00:00:00+09:00</updated><id>http://localhost:4000/papers/DeepVO</id><content type="html" xml:base="http://localhost:4000/papers/2021-12-02-DeepVO/">&lt;h2 id=&quot;deepvo-towards-end-to-end-visual-odometry-with-deep-recuurent-convolutional-neural-networks-2017-icra&quot;&gt;DeepVO: Towards End-to-End Visual Odometry with Deep Recuurent Convolutional Neural Networks (2017 ICRA)&lt;/h2&gt;
 
 &lt;p&gt;&lt;img src=&quot;/papers/images/20211202/DeepVOOverview.png&quot; alt=&quot;Overview&quot; /&gt;&lt;/p&gt;
@@ -157,7 +157,27 @@
 
 &lt;p&gt;\(\kappa\)는 position과 orientation간의 weighting을 위해 주어졌으며 100이 사용되었다고 한다. Orientation \(\mathbf{\psi}\)에는 euler angle이 사용되었는데, quaternion을 사용하게 되면 하나의 변수가 더 발생해 optimization을 방해하기 때문이라고 한다. (SO3를 이용해서 하면 어떨까?)&lt;/p&gt;
 
-&lt;h3 id=&quot;experimental-results&quot;&gt;Experimental Results&lt;/h3&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">DeepVO: Towards End-to-End Visual Odometry with Deep Recuurent Convolutional Neural Networks (2017 ICRA)</summary></entry><entry><title type="html">Bundle Adjustment</title><link href="http://localhost:4000/log/2021-11-15-BundleAdjustment/" rel="alternate" type="text/html" title="Bundle Adjustment" /><published>2021-11-15T00:00:00+09:00</published><updated>2021-11-15T00:00:00+09:00</updated><id>http://localhost:4000/log/BundleAdjustment</id><content type="html" xml:base="http://localhost:4000/log/2021-11-15-BundleAdjustment/">&lt;p&gt;Bundle adjustment from scratch.&lt;/p&gt;
+&lt;h3 id=&quot;experimental-results&quot;&gt;Experimental Results&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.cvlibs.net/datasets/kitti/eval_odometry.php&quot;&gt;KITTI Odometry Data&lt;/a&gt;의 sequence 00부터 10까지는 ground truth가 있고 11부터 21까지는 ground truth가 없기에 GT가 있는 데이터 중 상대적으로 긴 00, 02, 08, 09 sequence를 training에 사용하였다고 한다. Adagrad로 optimization을 하였으며 200 epoch와 0.001 learning rate를 사용하였다. Deopout과 early stopping을 통해 overfitting을 방지하였다고 한다. CNN은 FLowNet의 구조와 같은지 여기서 사용된 pretrained된 network을 사용하였다고 한다.&lt;/p&gt;
+
+&lt;h4 id=&quot;effect-of-overfitting&quot;&gt;Effect of overfitting&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/papers/images/20211202/DeepVORNNArchitecture.png&quot; alt=&quot;Effect of overfitting&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Overfitting이 machine learning에서 부작용을 나타내는건 잘 알려져 있지만 overfitting이 VO에 미치는 영향에 대해서는 더 많은 연구가 있어야 한다고 한다. 위의 사진처럼 overfitting으로 training은 잘되나 testing에서는 잘 안되는 것을 볼 수 있다. Attitude의 변화는 상대적으로 작기 때문에 overfitting에 취약하다고 한다. (\(\kappa\)의 효과가 없나?) 아마 attitude 변화가 우리가 보는 trajectory 변화에 크게 영향을 미치기 때문 아닐까?&lt;/p&gt;
+
+&lt;h4 id=&quot;velocity--error&quot;&gt;Velocity &amp;amp; Error&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/papers/images/20211202/DeepVOGTComparison.png&quot; alt=&quot;Comparison between gt&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;좌측 이미지는 속도에 따른 오차 분석이다. 기존 알고리즘 (LIBVISO2)의 monoculer 결과에 비하면 다 좋지만, (c)에서 속도가 50km/h를 넘어가면 더 안좋아지는 경향이 있다. 이는 training시 대부분 60km/h보다 낮기에 속도가 높아지면 성능이 떨어지는 현상이라고 한다. (일종의 overfitting인가). Attitude error는 상대적으로 다 낮게 나오는데, 이는 높은 속도에서 차량의 anguler rate가 크지 않기에 생긴 현상이라고 한다.&lt;/p&gt;
+
+&lt;h4 id=&quot;dynamic-objects--error&quot;&gt;Dynamic objects &amp;amp; Error&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/papers/images/20211202/DeepVODynamicObjects.png&quot; alt=&quot;Comparison with LIBVISO2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;단조로운 환경에서 Dynamic object가 있는 경우 성능이 저하된다고 한다. 그림 (b)의 sequence 12에서 error가 커지는 것을 볼 수 있는데, 이때 환경이 단조롭고 반대 차선에 차량이 움직이는 상황이다.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">DeepVO: Towards End-to-End Visual Odometry with Deep Recuurent Convolutional Neural Networks (2017 ICRA)</summary></entry><entry><title type="html">Bundle Adjustment</title><link href="http://localhost:4000/log/2021-11-15-BundleAdjustment/" rel="alternate" type="text/html" title="Bundle Adjustment" /><published>2021-11-15T00:00:00+09:00</published><updated>2021-11-15T00:00:00+09:00</updated><id>http://localhost:4000/log/BundleAdjustment</id><content type="html" xml:base="http://localhost:4000/log/2021-11-15-BundleAdjustment/">&lt;p&gt;Bundle adjustment from scratch.&lt;/p&gt;
 
 &lt;p&gt;Bundle adjustment. 하 진짜. VO 한다는 사람이 이제서야 제대로 BA에 대해 공부하기 시작한 웃지 못할 상황이다. 사실 &lt;a href=&quot;../posts/2020-11-../../papers/_posts/2020-11-30-Bundle_Adjustment_PT1.md&quot;&gt;Bundle Adjustment&lt;/a&gt; (와 딱 1년전이네 ㄷㄷ)에서 좀 다뤄볼려고 했는데, 그땐 거의 Cyrill 교수님 강의 베낀 수준이라 완벽히 이해하진 못한거 같다. 이번에 직접 implementation까지 하면서 좀 제대로 이해해보려고 한다.&lt;/p&gt;
 
