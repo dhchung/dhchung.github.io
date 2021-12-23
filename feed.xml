@@ -1,5 +1,117 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-12-04T16:02:39+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
-</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">DeepVO (2017 ICRA)</title><link href="http://localhost:4000/papers/2021-12-02-DeepVO/" rel="alternate" type="text/html" title="DeepVO (2017 ICRA)" /><published>2021-12-02T00:00:00+09:00</published><updated>2021-12-02T00:00:00+09:00</updated><id>http://localhost:4000/papers/DeepVO</id><content type="html" xml:base="http://localhost:4000/papers/2021-12-02-DeepVO/">&lt;h2 id=&quot;deepvo-towards-end-to-end-visual-odometry-with-deep-recuurent-convolutional-neural-networks-2017-icra&quot;&gt;DeepVO: Towards End-to-End Visual Odometry with Deep Recuurent Convolutional Neural Networks (2017 ICRA)&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-12-23T20:19:03+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
+</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">ikd-Tree (2021 arxiv)</title><link href="http://localhost:4000/papers/2021-12-23-ikdtree/" rel="alternate" type="text/html" title="ikd-Tree (2021 arxiv)" /><published>2021-12-23T00:00:00+09:00</published><updated>2021-12-23T00:00:00+09:00</updated><id>http://localhost:4000/papers/ikdtree</id><content type="html" xml:base="http://localhost:4000/papers/2021-12-23-ikdtree/">&lt;h2 id=&quot;ikd-tre-an-inceremtnal-k-d-tree-for-robotic-applications&quot;&gt;ikd-Tre: An Inceremtnal K-D Tree for Robotic Applications&lt;/h2&gt;
+
+&lt;p&gt;저자는 홍콩대의 MaRS Lab 연구진들이다. Fast-LIO, Fast-LIO2를 보며 알게 된건데 ikd-tree 기반으로 제작되었다고 해서 일단 알아보고자 논문을 읽게 되었다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/papers/images/20211223/Overview.png&quot; alt=&quot;Overview&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;abstract&quot;&gt;Abstract&lt;/h3&gt;
+
+&lt;p&gt;Dynamic space partition을 위한 ikd-tree를 제안한다. ikd-Tree 는 incremental하게 k-d tree를 새로운 점들만 가지고 update 함으로서 기존 static k-d tree보다 훨씬 적은량의 연산이 요구된다. point-wise operation 외에도 robotic application에 자주 사용되는 box-wise operation이나 down-sampling도 제공한다. Incremental operation (insert, re-insert, delete)와 병행으로 ikd-Tree는 능동적으로 tree 구조를 모니터링 하며 tree를 부분적으로 balancing하여 나중에 nearest search가 효율적으로 진행되도록 한다. ikd-Tree는 세세히 engineering 되었으며 전반적인 효율을 극대화 하기 위해 multi-thread parallel computing을 지원한다. 제안하는 알고리즘의 고효율성을 나타내기 위해 이론적인 해석을 하였으며, 실험으로 무작위적인 데이터와 실제 LiDAR-inertial SLAM에서의 LiDAR point cloud에 적용하였으며 모든 테스트에서 기존 k-d tree 연산속도의 4%만 걸리는 것을 확인하였다.&lt;/p&gt;
+
+&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+
+&lt;p&gt;k-d Tree는 nn point를 찾는데 있어 빠른 속도를 보여 LiDAR odometry나 obstacle collision check에 사용된다. 여기서 주로 사용되는 k-d tree는 처음부터 모든 점들을 가지고 structure를 만드는 ‘static’한 방식으로 진행된다. 이는 데이터가 주로 연속적으로 들어오는 상황에 알맞지 않다. 따라서 k-d tree는 몇번에 한번씩 업데이트되거나 새로운 포인트에서만 다시 만들어지는 방식으로 진행되어왔다.&lt;/p&gt;
+
+&lt;p&gt;더 자연스러운 k-d tree update 방식으로는 국소적으로 업데이트 하는 방법이 될 수 있다. Local update는 전체 tree를 업데이트하는 불필요한 작업을 줄여 효과적인 연산을 수행할 수 있다. 이러한 dynamic k-d tree는 새로운 데이터가 기존 tree 보다 월씬 적을 때 매우 효과적이다.&lt;/p&gt;
+
+&lt;p&gt;하지만 이러한 dynamic k-d tree는 robotic application에 다양한 문제가 있다:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Point operation 뿐만 아니라 down-sampling과 같은 space operation도 지원해야 한다.&lt;/li&gt;
+  &lt;li&gt;Tree를 쉽게 unbalance하게 만들어 애초의 목적과는 다르게 효율적인 search를 방해하기에 re-building이 요구된다.&lt;/li&gt;
+  &lt;li&gt;Re-building은 real-time application에 맞게 효율적이어야 한다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;이 논문에선, k-d tree를 새로운 point로만 update하며 동시에 원하는 resolution으롷 downsampling이 가능한 ikd-Tree라는 dynamic k-d tree 구조를 제시한다. 이는 insertion, re-insertion, delete와 같은 point-wise operation이나 box-wise operation을 포함한 incremnetal operation을 지원한다. Tree는 부분적인 re-building을 통해 자동으로 re-balance를 수행한다. Real-time update를 위해 ikd-Tree는 필요에 따라 tree re-building을 두개의 thread로 나눠서 진행한다. 본 논문에서는 전체 tree update에 대한 incremental operation와 re-balance에 대한 복잡도 해석을 한다. ikd-Tree의 time complexity는 random data와 LiDAR point cloud에 대해 획기적으로 줄어든 것을 확인하였다.&lt;/p&gt;
+
+&lt;h3 id=&quot;related-work&quot;&gt;Related work&lt;/h3&gt;
+
+&lt;p&gt;k-d tree는 binary search tree (BST)로 볼 수 있으며 AVL, treaps, splay trees와 같은 incermental operation을 inherit한다. 이러한 기법들에서 re-balancing은 tree node rotation을 통해 쉽게 이뤄질 수 있다. 하지만 이런 tree node rotation은 1-D 데이터에서만 가능하며, multi dimension의 경우 좀더 복잡한 reorganization이 요구된다.&lt;/p&gt;
+
+&lt;p&gt;k-d tree의 빠른 re-balancing에 대한 전략은 두가지로 나뉜다:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;하드웨어 기반 acceleration&lt;/li&gt;
+  &lt;li&gt;특별히 제작된 structure를 통한 dynamic re-balancing&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;하드웨어 기반 acceleration은 computing hardware를 새로운 k-d tree를 만듧으로서 re-balancing한다. (그냥 새로 만드는거 아님?) 이는 dynamic scene에서의 ray-tracing와 같은 문제를 해결하기 위해 깊게 연구된 바 있다. 3D Graphics에서 CPU, multi-core CPU, GPU에 대한 연구가 진행된 바 있으나, computing power에 의존하여 onboard computer에선 한계가 있다.&lt;/p&gt;
+
+&lt;p&gt;다음은 후자에 대한 내용이다:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Bentley et at.은 static k-d tree를 dynamic k-d tree로 변환하는 방법에 대해 제안한 바 있다. 이 dynamic k-d tree는 insertion만 지원하고 delet를 지원하지 않아 nearest search 시간이 tree가 증가함에 따라 증가한다.&lt;/li&gt;
+  &lt;li&gt;Galperin et al.은 scapegoat k-d tree를 제안하였으며, 이는 unbalance된 sub-tree를 re-building함으로써 re-balancing하는 알고리즘이다.&lt;/li&gt;
+  &lt;li&gt;Bkd Ttree는 외부 memory 사용에 집중한 k-D-B tree를 확장한 dynamic data structure이다. static k-d tree set들 내에서 re-balance와 re-building이 특정 구간에서 이루어지는 방식이다.&lt;/li&gt;
+  &lt;li&gt;잘 알려진 PCL은 FLANN search를 사용한다. Point insertion과 delete는 FLANN에서 제공되나, re-balancing은 일정량의 insertion과 delete 이후 모든 tree를 rebuilding하는 매우 비효율적인 방법을 사용한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;ikd-Tree는 효율적으로 incremental operation과 dynamic re-balacing을 수행한다. Bentley et al. 과 비교했을 때 ikd-Tree는 delete를 지원한다. 기존 연구와 비교했을 때 ikd-Tree는 point, box의 incremental operation을 지원하며, 동시에 point down sampling도 지원한다. ikd-Tree의 dynamic tree re-balancing 기법은 unbalance된 sub tree만 rebuild하는 scapegoat tree 기법을 따른다. ikd-Tree는 특히 real-time LiDAR mapping이나 motion planning과 같이 데이터가 연속적으로 들어오고 빠른 incremental update가 요구되는 robotic application에 유용하다.&lt;/p&gt;
+
+&lt;h3 id=&quot;ikd-tree-design-and-implementation&quot;&gt;ikd-Tree design and implementation&lt;/h3&gt;
+
+&lt;h4 id=&quot;data-structure&quot;&gt;Data structure&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&quot;/papers/images/20211223/DataStructure1.png&quot; alt=&quot;Data structure&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;2~4번쨰 줄은 기존 k-d tree에 사용되는 attribute들이다. leftson과 rightson은 좌우 자식 노드에 대한 pointer이며 point coordinate, intensity와 같은 값들이 point에 저장된다. Point 하나가 node 하나에 대응됨으로 이를 혼용하여 사용한다. Division axis는 axis에 저장된다. 5~7번째 줄이 ikd-Tree에서 새로 사용하는 attribute들이다.&lt;/p&gt;
+
+&lt;h4 id=&quot;building-an-incremental-k-d-tree&quot;&gt;Building an incremental k-d tree&lt;/h4&gt;
+
+&lt;p&gt;Incremental k-d tree를 만드는 과정은 static k-d tree를 만드는 과정과 비슷하나, incremental update를 위해 추가적인 정보를 유지하는 차이가 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/papers/images/20211223/Algorithm1.png&quot; alt=&quot;Build a balancede k-d tree&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;주어진 point array V에 대해서 point들은 먼저 maximal covarinace를 가진 division axis로 나뉘다. (4~5번째 줄) (이 covariance 뭔뜻임?) 그 후 median point가 새로운 tree node T에 저장된다. (6~8번째 줄). Medain point의 상하에 있는 점들은 T의 left and right son node로 전달된다 (9~10번째 줄). 11~12번째 줄의 lazylabelinit과 pullup은 Data structure의 5~7번째의 attribute들을 update한다.&lt;/p&gt;
+
+&lt;p&gt;TBW
+(와 생각보다 복잡한데..)&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">ikd-Tre: An Inceremtnal K-D Tree for Robotic Applications</summary></entry><entry><title type="html">Dataset for USV</title><link href="http://localhost:4000/logging/programming/2021-12-18-USV_dataset/" rel="alternate" type="text/html" title="Dataset for USV" /><published>2021-12-18T00:00:00+09:00</published><updated>2021-12-18T00:00:00+09:00</updated><id>http://localhost:4000/logging/programming/USV_dataset</id><content type="html" xml:base="http://localhost:4000/logging/programming/2021-12-18-USV_dataset/">&lt;p&gt;USV용 데이터셋을 정리하는 중이다..만
+정말 너무 할게 많음을 다시 깨닫는 중이다.&lt;/p&gt;
+
+&lt;p&gt;OpenGL로 데이터에 대한 요약(?)본을 만들려고 하는데, 우선 라이다 3개, 영상 9개 (스테레오 2개, 옴니 6개, IR 1개), 레이다, GPS, IMU 로 처리할게 너무 많다.&lt;/p&gt;
+
+&lt;p&gt;OpenGL도 일단 threading 없이 그냥 Rendering 하고 있는데, 실시간으로 보여주려면 threading으로 해야 되는데 이게 생각보다 일이 커지는 것 같다. (물론 뭐 알아두면 좋겠지만 지금은 시간이 없으니)&lt;/p&gt;
+
+&lt;p&gt;그냥 cpp에다가 한개의 thread하면 mouse나 keyboard input이 먹지를 않는데, 신기하게 QT를 사용하면 QThread를 사용하지 않아도 동시에 처리가 가능하다. (Widget별로 thread가 따로 돌아가는 모양)&lt;/p&gt;
+
+&lt;p&gt;그래서, 일단 영상 만드는건 cpp에다가 추가하는 형식으로 진행하고, 나중에 필요하면 구현한 library를 가져다가 사용할 예정.&lt;/p&gt;
+
+&lt;p&gt;일단 working version을 만들어놓고 추가하는 형식으로 해봐야겠다.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="programming" /><summary type="html">USV용 데이터셋을 정리하는 중이다..만 정말 너무 할게 많음을 다시 깨닫는 중이다.</summary></entry><entry><title type="html">I need to study about threading!!!</title><link href="http://localhost:4000/programming/2021-12-10-threading/" rel="alternate" type="text/html" title="I need to study about threading!!!" /><published>2021-12-10T00:00:00+09:00</published><updated>2021-12-10T00:00:00+09:00</updated><id>http://localhost:4000/programming/threading</id><content type="html" xml:base="http://localhost:4000/programming/2021-12-10-threading/">&lt;p&gt;SLAM 공부를 하며 직접 구현을 하면서 threading을 잘 모르니 여러 어려움이 있어 내용을 정리할 겸 실습을 진행해봤다.&lt;/p&gt;
+
+&lt;p&gt;일단 테스트를 위해 현재 구현하고자 하는 프로그램을 대상으로 진행해봤다.&lt;/p&gt;
+
+&lt;p&gt;기본적으로 sensor sequence에 대해 재생하는 프로그램을 만들어야 되는데, 여기서는 일단 영상에 대해서만 진행하고자 한다. 시나리오는 다음과 같다. 영상을 불러오고 처리하는 과정에서 불러오는 부분과 처리하는 부분을 다른 thread로 만드는 과정이다. 이부분을 한개의 thread만 사용하여 처리하면 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/programming/images/20211210/OneThread.png&quot; alt=&quot;One Thread&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;여기서 image loading에 \(t_1\)의 시간을, image processing에 \(t_2\)의 시간이 요구된다면, 전체 process에 \(t_1 + t_2\)의 시간이 소요된다.&lt;/p&gt;
+
+&lt;p&gt;각각을 thread로 처리하면 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/programming/images/20211210/MultiThread.png&quot; alt=&quot;Two Thread&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이런 구조로 진행한다면 image processing 하는 시간에 image loading이 진행이 되어 시간은 \(t_1 + t_2\)에서 \(t_2\)로 짧아진다.&lt;/p&gt;
+
+&lt;p&gt;여기서 Keyword는 각각 thread가 input이 없을 때 쓸데 없이 돌아가는 것을 방지하기 위한 condition_variable과 공통으로 사용되는 variable에 대해 thread가 동시에 접근하는 것을 막는 mutex이다.&lt;/p&gt;
+
+&lt;p&gt;Mutex란 mutual exclusive의 준말로 각기 다른 thread에서 동시에 같은 variable에 대한 access를 방지하기 위해 사용된다.&lt;/p&gt;
+
+&lt;p&gt;c++ unix에서 프로그래밍 할때는&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;thread&amp;gt;
+#include &amp;lt;mutex&amp;gt;
+#include &amp;lt;condition_variable&amp;gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;로 include해주면 된다.&lt;/p&gt;
+
+&lt;p&gt;QT는 자신만의 thread, mutex, condition_variable을 사용하는데, 이는&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;QThread&amp;gt;
+#include &amp;lt;QMutex&amp;gt;
+#include &amp;lt;QWaitCondition&amp;gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;을 사용하는 모양이다.&lt;/p&gt;
+
+&lt;p&gt;일단 이 포스트는 나중에 다시 써야겠다. 구현은 다 했는데, 너무 바빠서 @_@&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="programming" /><summary type="html">SLAM 공부를 하며 직접 구현을 하면서 threading을 잘 모르니 여러 어려움이 있어 내용을 정리할 겸 실습을 진행해봤다.</summary></entry><entry><title type="html">DeepVO (2017 ICRA)</title><link href="http://localhost:4000/papers/2021-12-02-DeepVO/" rel="alternate" type="text/html" title="DeepVO (2017 ICRA)" /><published>2021-12-02T00:00:00+09:00</published><updated>2021-12-02T00:00:00+09:00</updated><id>http://localhost:4000/papers/DeepVO</id><content type="html" xml:base="http://localhost:4000/papers/2021-12-02-DeepVO/">&lt;h2 id=&quot;deepvo-towards-end-to-end-visual-odometry-with-deep-recuurent-convolutional-neural-networks-2017-icra&quot;&gt;DeepVO: Towards End-to-End Visual Odometry with Deep Recuurent Convolutional Neural Networks (2017 ICRA)&lt;/h2&gt;
 
 &lt;p&gt;&lt;img src=&quot;/papers/images/20211202/DeepVOOverview.png&quot; alt=&quot;Overview&quot; /&gt;&lt;/p&gt;
 
@@ -177,7 +289,7 @@
 
 &lt;p&gt;&lt;img src=&quot;/papers/images/20211202/DeepVODynamicObjects.png&quot; alt=&quot;Comparison with LIBVISO2&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;단조로운 환경에서 Dynamic object가 있는 경우 성능이 저하된다고 한다. 그림 (b)의 sequence 12에서 error가 커지는 것을 볼 수 있는데, 이때 환경이 단조롭고 반대 차선에 차량이 움직이는 상황이다.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">DeepVO: Towards End-to-End Visual Odometry with Deep Recuurent Convolutional Neural Networks (2017 ICRA)</summary></entry><entry><title type="html">Bundle Adjustment</title><link href="http://localhost:4000/log/2021-11-15-BundleAdjustment/" rel="alternate" type="text/html" title="Bundle Adjustment" /><published>2021-11-15T00:00:00+09:00</published><updated>2021-11-15T00:00:00+09:00</updated><id>http://localhost:4000/log/BundleAdjustment</id><content type="html" xml:base="http://localhost:4000/log/2021-11-15-BundleAdjustment/">&lt;p&gt;Bundle adjustment from scratch.&lt;/p&gt;
+&lt;p&gt;단조로운 환경에서 Dynamic object가 있는 경우 성능이 저하된다고 한다. 그림 (b)의 sequence 12에서 error가 커지는 것을 볼 수 있는데, 이때 환경이 단조롭고 반대 차선에 차량이 움직이는 상황이다.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">DeepVO: Towards End-to-End Visual Odometry with Deep Recuurent Convolutional Neural Networks (2017 ICRA)</summary></entry><entry><title type="html">Bundle Adjustment</title><link href="http://localhost:4000/logging/2021-11-15-BundleAdjustment/" rel="alternate" type="text/html" title="Bundle Adjustment" /><published>2021-11-15T00:00:00+09:00</published><updated>2021-11-15T00:00:00+09:00</updated><id>http://localhost:4000/logging/BundleAdjustment</id><content type="html" xml:base="http://localhost:4000/logging/2021-11-15-BundleAdjustment/">&lt;p&gt;Bundle adjustment from scratch.&lt;/p&gt;
 
 &lt;p&gt;Bundle adjustment. 하 진짜. VO 한다는 사람이 이제서야 제대로 BA에 대해 공부하기 시작한 웃지 못할 상황이다. 사실 &lt;a href=&quot;../posts/2020-11-../../papers/_posts/2020-11-30-Bundle_Adjustment_PT1.md&quot;&gt;Bundle Adjustment&lt;/a&gt; (와 딱 1년전이네 ㄷㄷ)에서 좀 다뤄볼려고 했는데, 그땐 거의 Cyrill 교수님 강의 베낀 수준이라 완벽히 이해하진 못한거 같다. 이번에 직접 implementation까지 하면서 좀 제대로 이해해보려고 한다.&lt;/p&gt;
 
@@ -225,7 +337,7 @@
 
 &lt;p&gt;여기서 \(P(\mathbf{p},\mathbf{r},\mathbf{t})=\) \(K(\mathbf{p})[R(\mathbf{r})~\vert~\mathbf{t}]\) 로 intrinsic parameter \(\mathbf{p}\)에 대한 함수인 camera matrix \(K\)와 카메라의 위치 및 자세 정보 \(\mathbf{t}, \mathbf{r}\)로 구성된다.&lt;/p&gt;
 
-&lt;p&gt;대부분의 computer vision 강의에선 카메라 자세 및 위치를 반대로 표현했는데, 회전이랑 변위를 각각 다르게 표현해서 헷갈려서 그냥 로보틱스에서 주로 쓰는 방법 기준으로 작성했다. (&lt;a href=&quot;/log/2021-10-20-EssentialFundamental/&quot;&gt;Essential &amp;amp; Fundamental Matrix&lt;/a&gt;의 Rotataion matrix &amp;amp; translation 참고) 여기서 주의해야 할 점은, 여기서의 R과 t는 카메라 좌표계에서 바라본 WC의 rotation 및 translation이라는 점이다. 카메라의 회전 및 자세를 구하기 위해선 구해진 R과 t에 대한 inverse를 취해야 된다.&lt;/p&gt;
+&lt;p&gt;대부분의 computer vision 강의에선 카메라 자세 및 위치를 반대로 표현했는데, 회전이랑 변위를 각각 다르게 표현해서 헷갈려서 그냥 로보틱스에서 주로 쓰는 방법 기준으로 작성했다. (&lt;a href=&quot;../../log/_posts/2021-10-20-EssentialFundamental.md&quot;&gt;Essential &amp;amp; Fundamental Matrix&lt;/a&gt;의 Rotataion matrix &amp;amp; translation 참고) 여기서 주의해야 할 점은, 여기서의 R과 t는 카메라 좌표계에서 바라본 WC의 rotation 및 translation이라는 점이다. 카메라의 회전 및 자세를 구하기 위해선 구해진 R과 t에 대한 inverse를 취해야 된다.&lt;/p&gt;
 
 \[[R_{cam} ~ \vert ~ \mathbf{t}_{cam}] = [R^\top ~ \vert -R^\top \mathbf{t}]\]
 
@@ -342,12 +454,137 @@
 
 \[\frac{\partial \Omega}{\partial \omega_z}=\begin{bmatrix}0 &amp;amp;&amp;amp; -1 &amp;amp;&amp;amp; 0\\ 1 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; 0 \\ 0 &amp;amp;&amp;amp; 0 &amp;amp;&amp;amp; 0\end{bmatrix}\]
 
-&lt;p&gt;최종적으로 이들을 넣어 Jacobian을 계산하면 된다.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="log" /><summary type="html">Bundle adjustment from scratch.</summary></entry><entry><title type="html">[2017 TRO] ORB-SLAM2</title><link href="http://localhost:4000/papers/2021-11-11-ORBSLAM2/" rel="alternate" type="text/html" title="[2017 TRO] ORB-SLAM2" /><published>2021-11-11T00:00:00+09:00</published><updated>2021-11-11T00:00:00+09:00</updated><id>http://localhost:4000/papers/ORBSLAM2</id><content type="html" xml:base="http://localhost:4000/papers/2021-11-11-ORBSLAM2/">&lt;h3 id=&quot;researchers-at-universidad-de-zaragoza-first-author-raúl-mur-artal-author-of-orb-slam&quot;&gt;Researchers at Universidad de Zaragoza. First Author: Raúl Mur-Artal (Author of ORB-SLAM)&lt;/h3&gt;
+&lt;p&gt;최종적으로 이들을 넣어 Jacobian을 계산하면 된다.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="logging" /><summary type="html">Bundle adjustment from scratch.</summary></entry><entry><title type="html">[2017 TRO] ORB-SLAM2</title><link href="http://localhost:4000/papers/2021-11-11-ORBSLAM2/" rel="alternate" type="text/html" title="[2017 TRO] ORB-SLAM2" /><published>2021-11-11T00:00:00+09:00</published><updated>2021-11-11T00:00:00+09:00</updated><id>http://localhost:4000/papers/ORBSLAM2</id><content type="html" xml:base="http://localhost:4000/papers/2021-11-11-ORBSLAM2/">&lt;h3 id=&quot;researchers-at-universidad-de-zaragoza-first-author-raúl-mur-artal-author-of-orb-slam&quot;&gt;Researchers at Universidad de Zaragoza. First Author: Raúl Mur-Artal (Author of ORB-SLAM)&lt;/h3&gt;
 &lt;h3 id=&quot;juan-d-tardós-corresponding-author-of-dbow2&quot;&gt;Juan D. Tardós: Corresponding author of DBoW2&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=ufvPS5wJAx0&quot;&gt;Related Video&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;TBW&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">Researchers at Universidad de Zaragoza. First Author: Raúl Mur-Artal (Author of ORB-SLAM) Juan D. Tardós: Corresponding author of DBoW2</summary></entry><entry><title type="html">Essential Matrix &amp;amp; Fundamental Matrix</title><link href="http://localhost:4000/log/2021-10-20-EssentialFundamental/" rel="alternate" type="text/html" title="Essential Matrix &amp;amp; Fundamental Matrix" /><published>2021-10-20T00:00:00+09:00</published><updated>2021-10-20T00:00:00+09:00</updated><id>http://localhost:4000/log/EssentialFundamental</id><content type="html" xml:base="http://localhost:4000/log/2021-10-20-EssentialFundamental/">&lt;h2 id=&quot;rotation-matrix--translation&quot;&gt;Rotation matrix &amp;amp; translation&lt;/h2&gt;
+&lt;p&gt;TBW&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">Researchers at Universidad de Zaragoza. First Author: Raúl Mur-Artal (Author of ORB-SLAM) Juan D. Tardós: Corresponding author of DBoW2</summary></entry><entry><title type="html">Essential Matrix &amp;amp; Fundamental Matrix</title><link href="http://localhost:4000/etc/2021-10-20-Photommetry/" rel="alternate" type="text/html" title="Essential Matrix &amp;amp; Fundamental Matrix" /><published>2021-10-20T00:00:00+09:00</published><updated>2021-10-20T00:00:00+09:00</updated><id>http://localhost:4000/etc/Photommetry</id><content type="html" xml:base="http://localhost:4000/etc/2021-10-20-Photommetry/">&lt;h2 id=&quot;rotation-matrix--translation&quot;&gt;Rotation matrix &amp;amp; translation&lt;/h2&gt;
+
+&lt;p&gt;MVG pg.155에서, camera calibration matrix \(K\)는 \(\mathbf{x} = K[I~\vert ~\mathbf{0}]\mathbf{X}_{cam}\)&lt;/p&gt;
+
+&lt;p&gt;Camera rotation과 translation을 고려하면 \(\mathbf{x} = KR[I~\vert ~-\tilde{\mathbf{C}}]\mathbf{X}\)가 된다.&lt;/p&gt;
+
+&lt;p&gt;여기서 \(\tilde{\mathbf{C}}\)는 camera center를 world coordinate frame에서 표현한거고&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;where \(\tilde{\mathbf{C}}\) represents the coordinates of the camera center in the world coordinate system&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;\(R\)은 camera coordinate frame의 orientation을 표현하는 rotation matrix이다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;and \(R\) is an \(3 \times 3\) rotation matrix representing the orientation of the camera coordinate system&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;그럼 결국 \(\mathbf{X}_{cam} = \begin{bmatrix} R &amp;amp; -R\tilde{\mathbf{C}} \\ 0 &amp;amp; 1 \end{bmatrix}\mathbf{X}\)가 된다는 뜻으로, 이는 world coordinate system상의 점 \(\mathbf{X}\)가 camera coordinate system에서 \(\mathbf{X}_{cam}\)로 표현이 되는 것을 나타낸다.&lt;/p&gt;
+
+&lt;p&gt;여기서 잠깐, 우리가 기존에 알던 것이랑 좀 많이 다르다. 우리가 일반적으로 사용하는 translation matrix를 생각해보면, 기준 좌표계 (world coordinate system)에서 rotation이 \(R\)이고 translation이 \(\mathbf{t}\)인 어떤 좌표계 A에 대해서 기준좌표계의 점 \(\mathbf{X}\)는 A 좌표계에서 다음과 같이 보여진다.&lt;/p&gt;
+
+&lt;p&gt;(여기서 모두 homogeneous coordinate임을 고려하자)&lt;/p&gt;
+
+&lt;p&gt;\(\mathbf{X}_{A} =\) \(\begin{bmatrix} R^{\top} &amp;amp; - R^{\top}\mathbf{t} \\ 0 &amp;amp; 1 \end{bmatrix} \mathbf{X}\)&lt;/p&gt;
+
+&lt;p&gt;\(-R\tilde{\mathbf{C}}=\mathbf{t}\)로 하면 camera matrix \(P\)는 다음과 같이 표현된다.&lt;/p&gt;
+
+&lt;p&gt;\(P=\) \(K[R~\vert~\mathbf{t}]\)&lt;/p&gt;
+
+&lt;p&gt;위의 식과 좀 다르다는 것을 알 수 있다. 어떤 이유에서인지 모르겠지만, 여기서 사용된 \(R\)은 내가 알던 \(R\)의 행렬로 camera coordinate system에서 바라본 world coordinate system의 rotation matrix인거 같다.&lt;/p&gt;
+
+&lt;p&gt;결국, 여기서의 \(R\)과 \(\mathbf{t}\)를 world coordinate system에서 바라본 camera coordinate system의 rotation 및 translation이 아니라 그 반대로 &lt;strong&gt;camera coordinate system에서 바라본 world coordinate system의 rotation 및 translation&lt;/strong&gt;으로 생각한다면 식이 이해가 된다.&lt;/p&gt;
+
+&lt;p&gt;(솔직히 이게 맞는지 모르겠다. googling을 해봤는데 나랑 같이 의문을 표한 내용을 찾을 수가 없네)&lt;/p&gt;
+
+&lt;h2 id=&quot;fundamental-matrix&quot;&gt;Fundamental matrix&lt;/h2&gt;
+&lt;p&gt;3차원 공간의 1개의 점에 대해 두개의 image plane에 맻힌 상을 각각 \(\mathbf{x}\)와 \(\mathbf{x}'\)라 했을 때 fundamental matrix \(F\)는 \(\mathbf{x}'^{\top}F\mathbf{x}=0\)를 만족하는 matrix이며 다음을 만족한다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Transpose: \(F\)가 카메라 \((P, P')\)에 대해 만족한다면 \(F^{\top}\)은 카메라 \({P', P}\)에 대해 만족
+    &lt;ol&gt;
+      &lt;li&gt;i.e. \(\mathbf{x}'^{\top}F\mathbf{x}=0, \mathbf{x}^{\top}F^{\top}\mathbf{x}'\)&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Epipolar lines: 첫번째 영상에 대해 아무 점 \(\mathbf{x}\)에 대해 대응하는 epipolar line은 \(\mathbf{l}' = F\mathbf{x}\)이다.&lt;/li&gt;
+  &lt;li&gt;Epipole: epipole(\(\mathbf{e}\))를 제외한 아무 점 \(\mathbf{x}\)에 대해 epipolar line \(\mathbf{l}' = F\mathbf{x}\)은 epipole \(\mathbf{e}'\)을 지난다.
+    &lt;ol&gt;
+      &lt;li&gt;이는 곧 \(\mathbf{e}'F\mathbf{x} = (\mathbf{e}'F)x = 0\)이 된다.&lt;/li&gt;
+      &lt;li&gt;결국 이를 만족하기 위해선 \(mathbf{e}'F=0\)이 되야 하며 \(mathbf{e}'\)는 F의 left nullspace와 같다.&lt;/li&gt;
+      &lt;li&gt;비슷하게 \(\mathbf{e}F^{\top}=0\)인데 이를 transpose하면 \(Fmathbf{e}=0\)가 되어 \(\mathbf{e}\)는 F의 right nullspace가 된다.&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;특징들은, 한번 정리하면 좋을 것 같으니 다 써놓자.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;F는 rank 2의 homogeneous matrix로 7DoF를 가진다.&lt;/li&gt;
+  &lt;li&gt;Point Correspondence: \(\mathbf{x}'^{\top}F\mathbf{x}=0\)&lt;/li&gt;
+  &lt;li&gt;Epipolar lines:
+    &lt;ol&gt;
+      &lt;li&gt;\(\mathbf{l}'=\) \(F\mathbf{x}\)&lt;/li&gt;
+      &lt;li&gt;\(\mathbf{l} =\) \(F^{\top}\mathbf{x}'\)&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Epipoles
+    &lt;ol&gt;
+      &lt;li&gt;\(F\mathbf{e}=\) \(0\)&lt;/li&gt;
+      &lt;li&gt;\(F^{\top}\mathbf{e}'=\) \(0\)&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Computtation from camera matrices \(P, P'\):
+    &lt;ol&gt;
+      &lt;li&gt;General Cameras:
+        &lt;ol&gt;
+          &lt;li&gt;\(F=[\mathbf{e}']_{\times}P'P^{+}\) where \(P^{+}\) is pseudo-inverse of \(P\), and \(\mathbf{e}' = P'\mathbf{C}\) with \(P\mathbf{C}=0\) (여기서 \(\mathbf{C}\)는 첫번째 camera centre in 3D)&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Canonical cameras, \(P=K[I~\vert~0]\), \(P'=[M~\vert~\mathbf{m}]\)
+        &lt;ol&gt;
+          &lt;li&gt;\(F=[\mathbf{e}']_{\times}M=M^{-\top}[\mathbf{e}]_{\times}\), where \(\mathbf{e}'=\mathbf{m}\) and \(\mathbf{e}=M^{-1}\mathbf{m}\)&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Cameras not at infinity: \(P = K[I~\vert~0]\), \(P' = K'[R~\vert~\mathbf{t}]\)
+        &lt;ol&gt;
+          &lt;li&gt;\(F=\) \(K'^{-\top}[\mathbf{t}]_{\times} R K^{-1} = [K'\mathbf{t}]_{\times} K'RK^{-1} = K'^{-\top} RK^{\top}[KR^{\top}\mathbf{t}]_{\times}\)&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Epipolar line에 대한 homography는 다음과 같다.
+\(\mathbf{l}'= F[\mathbf{e}]_{\times}\mathbf{l}\), \(\mathbf{l}= F^{\top}[\mathbf{e}']_{\times}\mathbf{l}'\)&lt;/p&gt;
+
+&lt;h2 id=&quot;essential-matrix&quot;&gt;Essential matrix&lt;/h2&gt;
+
+&lt;p&gt;3차원 공간의 1개의 점에 대해 두개의 image plane에 맻힌 상의 &lt;strong&gt;normalized coordinate&lt;/strong&gt;을 각각 \(\hat{\mathbf{x}}\)와 \(\hat{\mathbf{x}}'\)라 했을 때  Essential matrix \(E\)는 \(\hat{\mathbf{x}}'^{\top}E\hat{\mathbf{x}}=0\)를 만족하는 matrix로서 \(E = [\mathbf{t}]_{\times}R\)로 계산할 수 있는데 이는 point transformation에서 유도할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;한가지 설명을 빠뜨린 것이 있는데, \(\hat{\mathbf{x}}\)는 &lt;strong&gt;normalized coordinate&lt;/strong&gt;로서 이미지 좌표에 camera calibration matrix의 inverse를 취해 나타낸 것으로 \(\hat{\mathbf{x}} = K^{-1}\mathbf{x}\)이다.&lt;/p&gt;
+
+&lt;p&gt;Point transformation을 간략히 나타내면 \(\mathbf{X}_{A} = R\mathbf{X}+\mathbf{t}_{B}\)가 된다.&lt;/p&gt;
+
+&lt;p&gt;(여기선 homogeneous coordinate가 아니다!!)&lt;/p&gt;
+
+&lt;p&gt;앞서 말한 것과 같이 여기서의 \(R\)과 \(\mathbf{t}\)는 A coordinate system에서 바라본 B의 rotation 및 translation이다.&lt;/p&gt;
+
+&lt;p&gt;양변을 transpose한 후 \(E\)를 우측에 곱하면&lt;/p&gt;
+
+&lt;p&gt;\(\mathbf{X}_{A}^{\top}[\mathbf{t}]_{\times}R = (\mathbf{X}_{B}^{\top}R^{\top}+\mathbf{t}^{\top})([\mathbf{t}]_{\times}R)\)이 되고&lt;/p&gt;
+
+&lt;p&gt;양변에 \(\mathbf{X}_{B}\)를 곱하게 되면 \(\mathbf{X}_{A}^{\top}[\mathbf{t}]_{\times}R \mathbf{X}_{B}= (\mathbf{X}_{B}^{\top}R^{\top}+\mathbf{t}^{\top})([\mathbf{t}]_{\times}R)\mathbf{X}_{B}\)가 된다.&lt;/p&gt;
+
+&lt;p&gt;여기서 우현을 보면 \(\mathbf{t}^{\top}[\mathbf{t}]_{\times}\)는 0이 되고, 남은 \(\mathbf{X}_{B}^{\top} R^{\top} [\mathbf{t}]_{\times} R\mathbf{X}_{B}\)를 살펴보자&lt;/p&gt;
+
+&lt;p&gt;어떤 vector \(R\mathbf{X}_{B}\)에 대해 \([\mathbf{t}]_{\times}\) 를 곱한 것은 결국 \(\mathbf{t} \times R\mathbf{X}_{B}\)와 같아 이는 \(R\mathbf{X}_{B}\)와 직교하게 된다. 결국 직교하는 vector간 내적이 되어 이것도 0이 된다.&lt;/p&gt;
+
+&lt;p&gt;결국 \(\mathbf{X}_{A}^{\top}E\mathbf{X}_{B}=0\)이 된다.&lt;/p&gt;
+
+&lt;p&gt;사실, \(\mathbf{X} = \begin{bmatrix}x &amp;amp; y &amp;amp; z\end{bmatrix}^{\top}\)라 했을 때 \(\hat{\mathbf{x}} = \begin{bmatrix} x/z &amp;amp; y/z &amp;amp; 1 \end{bmatrix}^{\top}\)이기에 양변을 각각의 \(z\)값으로 나누면 처음 식 \(\hat{\mathbf{x}}'^{\top}E\hat{\mathbf{x}}=0\)이 만족된다.&lt;/p&gt;
+
+&lt;p&gt;여기서 Fundamental matrix를 생각해보면 이는 \(\mathbf{x}'^{\top}F\mathbf{x}=0\)를 만족하는 matrix F이기에&lt;/p&gt;
+
+&lt;p&gt;다시 쓰면 \(\mathbf{x}'^{\top}K'^{-\top}EK^{-1}\mathbf{x}=0\)이 되어 \(E = K'^{\top}FK\)가 된다.&lt;/p&gt;
+
+&lt;p&gt;Essential matrix는 5DoF이다. (scale ambiguity)&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">Rotation matrix &amp;amp; translation</summary></entry><entry><title type="html">Essential Matrix &amp;amp; Fundamental Matrix</title><link href="http://localhost:4000/logging/2021-10-20-EssentialFundamental/" rel="alternate" type="text/html" title="Essential Matrix &amp;amp; Fundamental Matrix" /><published>2021-10-20T00:00:00+09:00</published><updated>2021-10-20T00:00:00+09:00</updated><id>http://localhost:4000/logging/EssentialFundamental</id><content type="html" xml:base="http://localhost:4000/logging/2021-10-20-EssentialFundamental/">&lt;h2 id=&quot;rotation-matrix--translation&quot;&gt;Rotation matrix &amp;amp; translation&lt;/h2&gt;
 
 &lt;p&gt;MVG pg.155에서, camera calibration matrix \(K\)는 \(\mathbf{x} = K[I~\vert ~\mathbf{0}]\mathbf{X}_{cam}\)&lt;/p&gt;
 
@@ -474,11 +711,11 @@
 
 &lt;p&gt;다시 쓰면 \(\mathbf{x}'^{\top}K'^{-\top}EK^{-1}\mathbf{x}=0\)이 되어 \(E = K'^{\top}FK\)가 된다.&lt;/p&gt;
 
-&lt;p&gt;Essential matrix는 5DoF이다. (scale ambiguity)&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="log" /><summary type="html">Rotation matrix &amp;amp; translation</summary></entry><entry><title type="html">Kitti Object Dataset</title><link href="http://localhost:4000/log/2021-10-16-KittiObject/" rel="alternate" type="text/html" title="Kitti Object Dataset" /><published>2021-10-16T00:00:00+09:00</published><updated>2021-10-16T00:00:00+09:00</updated><id>http://localhost:4000/log/KittiObject</id><content type="html" xml:base="http://localhost:4000/log/2021-10-16-KittiObject/">&lt;p&gt;이번 포스트에서는 PointPillars 및 기타 Object detection learning을 위한 dataset에 있어 Kitti를 사용하는 방법에 대해서 알아볼 예정이다.&lt;/p&gt;
+&lt;p&gt;Essential matrix는 5DoF이다. (scale ambiguity)&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="logging" /><summary type="html">Rotation matrix &amp;amp; translation</summary></entry><entry><title type="html">Kitti Object Dataset</title><link href="http://localhost:4000/logging/2021-10-16-KittiObject/" rel="alternate" type="text/html" title="Kitti Object Dataset" /><published>2021-10-16T00:00:00+09:00</published><updated>2021-10-16T00:00:00+09:00</updated><id>http://localhost:4000/logging/KittiObject</id><content type="html" xml:base="http://localhost:4000/logging/2021-10-16-KittiObject/">&lt;p&gt;이번 포스트에서는 PointPillars 및 기타 Object detection learning을 위한 dataset에 있어 Kitti를 사용하는 방법에 대해서 알아볼 예정이다.&lt;/p&gt;
 
 &lt;p&gt;일단 Kitti dataset으로 &lt;a href=&quot;http://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=3d&quot;&gt;3D object benchmark&lt;/a&gt;을 사용하였으며, 아래와 같이 여섯개의 데이터를 다운받았다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/log/images/20211016/kitti_page.png&quot; alt=&quot;Kitti_image&quot; /&gt;&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="log" /><summary type="html">이번 포스트에서는 PointPillars 및 기타 Object detection learning을 위한 dataset에 있어 Kitti를 사용하는 방법에 대해서 알아볼 예정이다.</summary></entry><entry><title type="html">[2019 CVPR] PointPillars</title><link href="http://localhost:4000/papers/2021-10-12-PointPillar/" rel="alternate" type="text/html" title="[2019 CVPR] PointPillars" /><published>2021-10-12T00:00:00+09:00</published><updated>2021-10-12T00:00:00+09:00</updated><id>http://localhost:4000/papers/PointPillar</id><content type="html" xml:base="http://localhost:4000/papers/2021-10-12-PointPillar/">&lt;h3 id=&quot;researchers-at-nutonomy-spinned-off-from-mit-first-author-alex-h-lang&quot;&gt;Researchers at nuTonomy (spinned off from MIT). First Author: Alex H. Lang&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/logging/images/20211016/kitti_page.png&quot; alt=&quot;Kitti_image&quot; /&gt;&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="logging" /><summary type="html">이번 포스트에서는 PointPillars 및 기타 Object detection learning을 위한 dataset에 있어 Kitti를 사용하는 방법에 대해서 알아볼 예정이다.</summary></entry><entry><title type="html">[2019 CVPR] PointPillars</title><link href="http://localhost:4000/papers/2021-10-12-PointPillar/" rel="alternate" type="text/html" title="[2019 CVPR] PointPillars" /><published>2021-10-12T00:00:00+09:00</published><updated>2021-10-12T00:00:00+09:00</updated><id>http://localhost:4000/papers/PointPillar</id><content type="html" xml:base="http://localhost:4000/papers/2021-10-12-PointPillar/">&lt;h3 id=&quot;researchers-at-nutonomy-spinned-off-from-mit-first-author-alex-h-lang&quot;&gt;Researchers at nuTonomy (spinned off from MIT). First Author: Alex H. Lang&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=sOLCgRkWlWQ&quot;&gt;Related Video&lt;/a&gt;&lt;/p&gt;
 
@@ -734,447 +971,4 @@
 &lt;h4 id=&quot;point-decorations&quot;&gt;Point Decorations&lt;/h4&gt;
 &lt;h4 id=&quot;encoding-1&quot;&gt;Encoding&lt;/h4&gt;
 
-&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">Researchers at nuTonomy (spinned off from MIT). First Author: Alex H. Lang</summary></entry><entry><title type="html">[2014 RSS] LOAM</title><link href="http://localhost:4000/papers/2021-10-03-LOAM/" rel="alternate" type="text/html" title="[2014 RSS] LOAM" /><published>2021-10-03T00:00:00+09:00</published><updated>2021-10-03T00:00:00+09:00</updated><id>http://localhost:4000/papers/LOAM</id><content type="html" xml:base="http://localhost:4000/papers/2021-10-03-LOAM/">&lt;h3 id=&quot;researchers-at-carnegie-mellon-university-first-author-ji-zhang&quot;&gt;Researchers at Carnegie Mellon University. First Author: Ji Zhang&lt;/h3&gt;
-
-&lt;p&gt;저자 Ji Zhang님은 현재 CMU Field Robotics Center에 Systems Scientist로 재직중이시다.&lt;/p&gt;
-
-&lt;p&gt;LOAM의 geometrical feature matching 기법은 많은 알고리즘들에 사용될 정도로 efficient함을 보여줬다. (LeGO-LOAM, LIO-SAM 등)&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://youtu.be/8ezyhTAEyHs&quot;&gt;Related Video&lt;/a&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Lidar 기반 odometry 추정 및 Map 생성 알고리즘을 위한 geometrical feature extraction &amp;amp; matching.&lt;/li&gt;
-  &lt;li&gt;Odometry 추정 및 Map generation으로 이루어진 2 stage 기법.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;related-work&quot;&gt;Related work&lt;/h3&gt;
-&lt;p&gt;라이다는 카메라와는 달리(사실 카메라고 rolling shutter의 경우 distortion이 생기지만..) 하나의 스캔이 동시에 이뤄지지 않기에 정확한 point cloud를 얻기 위해선 external motion에 대한 compasation이 요구된다. 기존 연구들에서는 IMU, GPS/INS 등 odometry sensor 정보를 이용하여 deskew 및 state estimation에 활용이 되었음.&lt;/p&gt;
-
-&lt;p&gt;Lidar intensity값을 통해 visual matching으로 motion을 추정한 경우도 있음&lt;/p&gt;
-
-&lt;p&gt;Velocity model의 경우 constant velocity 또는 Gaussian process를 이용한 경우들이 있음 (본 논문은 constant velocity model 사용)&lt;/p&gt;
-
-&lt;p&gt;본 논문과 가장 유사한 내용 : Bosse &amp;amp; Zlot의 경우 Geometrical structure matching기법을 이용하였으며, IMU와 incorporation함 (대표적인 예: Zebedee). 하지만 Map 생성에 시간이 오래 걸림&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;본 논문의 map 생성은 Bosse &amp;amp; Zlot의 알고리즘을 통해 얻어진 map과 비슷하나 real-time으로 생성 가능.&lt;/li&gt;
-  &lt;li&gt;Lidar scan pattern 및 point cloud distribution을 이용함&lt;/li&gt;
-  &lt;li&gt;Odometry 및 mapping을 위한 Feature matching은 빠르고 정확하도록 설계됨&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;notation--task-description&quot;&gt;Notation &amp;amp; task description&lt;/h3&gt;
-
-&lt;p&gt;Lidar가 pre-calibrated되어있고, angular &amp;amp; linear velocity는 smooth하고 continuous하다고 가정 (이 가정은 IMU 사용을 통해 제거될 수 있음)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;right uppercase : coordiante system&lt;/li&gt;
-  &lt;li&gt;Sweep은 lidar가 one time of scan converage를 완료할때를 뜻함 (-90~90 다 돌았을때인듯?)&lt;/li&gt;
-  &lt;li&gt;right subscription : indicate the sweep&lt;/li&gt;
-  &lt;li&gt;\(\mathcal{P}_k\) : sweep \(k\)를 통해 얻어진 point cloud&lt;/li&gt;
-  &lt;li&gt;Lidar coordinate system : \(\{L\}\)
-    &lt;ul&gt;
-      &lt;li&gt;\(\mathcal{P}_k\)의 point \(i\)의 \(\{L_k\}\)에서의 coordinate는 \(\mathbf{X}_{(k,i)}^L\)로 표기됨&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;World coordinate system : \(\{W\}\)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Problem: 주어진 lidar cloud sequence에 대해 각 sweep에서의 egomotion을 계산하고 지나간 환경에 대한 map 생성&lt;/p&gt;
-
-&lt;h3 id=&quot;system-overview&quot;&gt;System Overview&lt;/h3&gt;
-
-&lt;h4 id=&quot;hardware-overview&quot;&gt;Hardware Overview&lt;/h4&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211003/20211003_1.png&quot; alt=&quot;2 axis lidar&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Hokuyo 2D laser scanner를 사용하였으며 -90도에서 90도까지 180도/s 로 돌아 전방향 coverage를 갖음 (하지만 이런 라이다 종류에만 적용이 제한된건 아님)&lt;/p&gt;
-
-&lt;h4 id=&quot;software-overview&quot;&gt;Software Overview&lt;/h4&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211003/20211003_2.png&quot; alt=&quot;Algorithm overview&quot; /&gt;
-&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Laser Scan \(\hat{\mathcal{P}}\) 은 Lidar coordinate system \(\{L\}\)에 register되어 sweep \(k\)를 통해 \(\mathcal{P}_k\)를 형성&lt;/li&gt;
-  &lt;li&gt;\(\mathcal{P}_k\)는 두가지의 알고리즘으로 처리됨
-    &lt;ul&gt;
-      &lt;li&gt;연속적인 두 sweep간의 point cloud를 통해 motion estimation을 함
-        &lt;ul&gt;
-          &lt;li&gt;추정된 motion을 통해 \(\mathcal{P}_k\)의 distortion correction을 진행 (10Hz)&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;Output은 Lidar mapping에서 undistorted cloud를 map과 matching함 (1Hz)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;두 알고리즘을 통해 얻어진 pose transforms를 융합해 transform output를 생성 (10Hz)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;lidar-odometry&quot;&gt;Lidar Odometry&lt;/h3&gt;
-
-&lt;h4 id=&quot;feature-point-extraction&quot;&gt;Feature Point Extraction&lt;/h4&gt;
-
-&lt;p&gt;처음에는 1 sweep으로 만들어진 point cloud에 대해서 nearest point를 통해 얻어지는 줄 알았지만, 1 scan에서 feature point를 뽑는다.&lt;/p&gt;
-
-&lt;p&gt;1 sweep point cloud \(\mathcal{P}_k\)에 대해 (1 sweep은 lidar 1 scan이 아니라 2번째 axis에 대한 -90에서 90도, 90에서 -90도 회전할동안을 뜻함) \(i\)를 point중 하나라 하고, \(\mathcal{S}\)를 \(i\) 의 전후로 측정된 point(연속적인 배열)들이라 하면 smoothness는 다음과 같이 정의된다.&lt;/p&gt;
-
-\[c = \frac{1}{\lvert S \rvert \cdot \lVert \mathbf{X}_{(k,i)}^{L} \rVert} \lVert \sum_{j \in \mathcal{S}, j \neq i} (\mathbf{X}_{(k,i)}^L - \mathbf{X}_{(k,j)}^L) \rVert\]
-
-&lt;p&gt;여기서 \(\lvert S \rvert\)가 의미하는 바를 모르겠다…&lt;/p&gt;
-
-&lt;p&gt;여기서 \(c\)가 어떤 threshold를 넘으면 coner point, 그리고 어떤 threshold보다 낮으면 planar point로 명명한다. 너무 많을 것을 대비해 scan에 대해 정확히 4분할 하여 각 분할에 대해 최대 2 edge, 4 planar point를 가질 수 있게 한다. (아마 \(c\)값으로 판단할듯)&lt;/p&gt;
-
-&lt;p&gt;여기서 reduntent한 point를 고르지 않도록 한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211003/20211003_3.png&quot; alt=&quot;Points to avoid&quot; /&gt;
-&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Avoid points whose surrounded points are selected&lt;/li&gt;
-  &lt;li&gt;Avoid points on local planar surfaces that are roughly parallel to the laser beams
-    &lt;ul&gt;
-      &lt;li&gt;Unreliable하기 때문에&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Avoid points on that are on boundary of occluded surfaces
-    &lt;ul&gt;
-      &lt;li&gt;Occulusion으로 인해 생긴 fake edge일 수 있기에&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;finding-feature-point-correspondence&quot;&gt;Finding feature point correspondence&lt;/h4&gt;
-
-&lt;p&gt;Sweep \(k\)의 시작 시간을 \(t_k\)라 하면 sweep \(k\)에 얻은 point cloud \(\mathcal{P}_k\)는 \(t_{k+1}\)에 “reprojected”된다. (여기선 데이터를 얻은 시간을 표기할 때 시간을 reproject했다라고 표현한 것 같다.) 이 reproject된 point cloud는 \(\bar{\mathcal{P}}_k\)로 표기한다. 이 \(\bar{\mathcal{P}}_k\)와 새로 얻어진 point cloud \(\mathcal{P}_{k+1}\)간의 매칭을 통해 lidar motion을 진행한다.&lt;/p&gt;
-
-&lt;p&gt;여기까지 읽으면서 생각이 드는게, \(\mathcal{P}\)는 scan에 따라 점들이 추가되는것이고, 하나의 sweep이 끝난 것을 \(\bar{\mathcal{P}}\)로 표현하는 것 같다. (jekyll mathjack에선 잘 안보이는데 두번째는 bar가 추가됨)&lt;/p&gt;
-
-&lt;p&gt;여튼, \(\mathcal{P}_{k+1}\)의 edge와 planar feature points의 set을 각각 \(\mathcal{E}_{k+1}\)와 \(\mathcal{H}_{k+1}\)이라 하자.&lt;/p&gt;
-
-&lt;p&gt;\(\mathcal{P}_{k+1}\)에서 \(\mathcal{E}_{k+1}\)와 \(\mathcal{H}_{k+1}\)가 scan에 따라 점차 늘어나게 되는데, 현재 추정된 transform에 따라 초기 scan의 coordinate에 reprojection된 것을 \(\tilde{\mathcal{E}_{k+1}}\)와 \(\tilde{\mathcal{H}}_{k+1}\)라 하자.&lt;/p&gt;
-
-&lt;p&gt;\(\bar{\mathcal{P}}_k\)는 3D KD-tree에 저장이 되어 \(\tilde{\mathcal{E}}_{k+1}\)와 \(\tilde{\mathcal{H}}_{k+1}\)와 빠른 nn search를 수행한다.&lt;/p&gt;
-
-&lt;p&gt;Correspondence를 찾기 위해 선택되는 점은 다음 그림과 같다. (사실 좀 이해하기 어렵게 그려져있음)&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211003/20211003_4.png&quot; alt=&quot;Points to avoid&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;위의 그림에서 주황색은 \(\bar{\mathcal{P}}_k\), 파란색은 \(\mathcal{P}_{k+1}\) 위의 점이다.&lt;/p&gt;
-
-&lt;p&gt;Edge correspondence (2개의 점으로 구성됨)&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;\(i \in \tilde{\mathcal{E}}_{k+1}\)에 대해서 같은 scan이 아닌(연속적인?) \(i\)와 nn 인 \(j, l \in \bar{\mathcal{P}}_{k}\)을 찾는다.&lt;/li&gt;
-  &lt;li&gt;\(j, l\)을 smoothness 계산을 통해 edge임을 확인한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Plane correspondence (3개의 점으로 구성됨)&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;\(i \in \tilde{\mathcal{H}}_{k+1}\)에 대해서 \(j, l, m \in \bar{\mathcal{P}}_{k}\)을 찾되, \(j\)는 \(i\)의 nn, \(l\)은 \(j\)와 same scan에서, \(l\)은 \(j\)의 two consecutive scan상에서 찾는다. (non-colinear를 보장하기 위해)&lt;/li&gt;
-  &lt;li&gt;\(j, l, m\)의 smoothness 계산을 통해 planar임을 확인 (근데, 그냥 smoothness를 다시 계산하기 않고 같이 저장하면 안되나?)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;각 Distance to correspondence는 점과 선과의 거리, 점과 평면간의 거리로 계산됨&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Edge feature point distance:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211003/20211003_edge.png&quot; alt=&quot;Edge feature point distance&quot; /&gt;
-&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Planar feature point distance:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211003/20211003_plane.png&quot; alt=&quot;Planar feature point distance&quot; /&gt;
-&lt;/p&gt;
-
-&lt;h4 id=&quot;motion-estimation&quot;&gt;Motion Estimation&lt;/h4&gt;
-
-&lt;p&gt;Lidar motion이 constant angular &amp;amp; linear velocity로 modeling되어있다는 가정을 통해 pose transfrom을 linear interpolation을 하여 각 점에 대해 pose transform을 할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;\(\mathbf{T}_{k+1}^L = [t_x, t_y, t_z, \theta_x, \theta_y, \theta_z]\)을 \([t_{k+1}, t]\)의 lidar의 6-DOF tranform이라 하자.&lt;/p&gt;
-
-&lt;p&gt;앞서 말한 것처럼 linear transform에 따라 다음과 같이 된다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211003/20211003_5.png&quot; alt=&quot;Linear interpolation of transformation&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Angle 부분에서는 조금 이해가 안되는 게 있긴 한데.. 여튼, 그냥 일반적인 linear interpolation하는게 아니라 rotation을 따로 분리해서 rotation direction까지 고려는 해주는 것 같다.&lt;/p&gt;
-
-&lt;p&gt;나머지 부분은 적으려다가, 그냥 optimization하는 방식이라 생략한다. 대충 위의 식을 edge 및 planar feature distance에 넣어서 jacobian을 계산해 optimize하는 내용이다.&lt;/p&gt;
-
-&lt;h4 id=&quot;lidar-odometry-algorithm&quot;&gt;Lidar Odometry Algorithm&lt;/h4&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20211003/20211003_algorithm.png&quot; alt=&quot;Lidar Odometry Algorithm&quot; /&gt;
-&lt;/p&gt;
-
-&lt;h3 id=&quot;lidar-mapping&quot;&gt;Lidar Mapping&lt;/h3&gt;
-
-&lt;p&gt;기존의 mapping 결과(여기선 point cloud로 map 생성) \(\mathcal{Q}_k\)와 앞선 motion estimation으로 deskew된 결과 \(\tilde{\mathcal{Q}}_{k+1}\)를 matching함으로서 mapping이 이루어진다.&lt;/p&gt;
-
-&lt;p&gt;여기서 \({\mathcal{Q}}_{k+1}\)와 intersect(어떻게 intersection을 측정하는지 알려줬으면 ㅜ)하는 \(\mathcal{Q}_k\)를 3D KD-tree로 만들어 edge point와 planar point간 매칭을 하는데, 여기서는 기존보다 더 나아가 eigenvalue 및 eigen vector를 계산하여 3차원에서의 edge 및 plane에 대한 구분을 한다. 나머지는 비슷한듯.&lt;/p&gt;
-
-&lt;p&gt;이후 map은 voxelization을 통해 downsize된다.&lt;/p&gt;
-
-&lt;p&gt;아무래도 여기선 smoothing하지는 않으니까, 기존 pose를 고친다기보단 mapping시 transpose를 한번 고쳐주는 방식으로 pose estimation이 합성된다.&lt;/p&gt;
-
-&lt;h3 id=&quot;experiments&quot;&gt;Experiments&lt;/h3&gt;
-
-&lt;p&gt;TBW&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">Researchers at Carnegie Mellon University. First Author: Ji Zhang</summary></entry><entry><title type="html">Restart Logging!</title><link href="http://localhost:4000/log/2021-09-24-logging/" rel="alternate" type="text/html" title="Restart Logging!" /><published>2021-09-24T00:00:00+09:00</published><updated>2021-09-24T00:00:00+09:00</updated><id>http://localhost:4000/log/logging</id><content type="html" xml:base="http://localhost:4000/log/2021-09-24-logging/">&lt;p&gt;이래 저래 많이 늦었지만.. 다시 시작!&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="log" /><summary type="html">이래 저래 많이 늦었지만.. 다시 시작!</summary></entry><entry><title type="html">[2018 IROS] Scan Context: Egocentric Spatial Descriptor for Place Recognition within 3D Point Cloud Map</title><link href="http://localhost:4000/papers/2021-09-24-ScanContext/" rel="alternate" type="text/html" title="[2018 IROS] Scan Context: Egocentric Spatial Descriptor for Place Recognition within 3D Point Cloud Map" /><published>2021-09-24T00:00:00+09:00</published><updated>2021-09-24T00:00:00+09:00</updated><id>http://localhost:4000/papers/ScanContext</id><content type="html" xml:base="http://localhost:4000/papers/2021-09-24-ScanContext/">&lt;h3 id=&quot;researchers-at-kaist-korea-first-author-giseop-kim&quot;&gt;Researchers at KAIST, Korea. First Author: Giseop Kim&lt;/h3&gt;
-
-&lt;p&gt;이 논문은 Lidar 기반 Loop detection에 대한 논문이며, LiDAR Odometry SOTA algorithm 들과 융합한 코드를 만드셨는데 (&lt;a href=&quot;https://youtu.be/Uv6_BRmxJho&quot;&gt;SC-A-LOAM&lt;/a&gt;, &lt;a href=&quot;https://youtu.be/bEqCehMJ_Hk&quot;&gt;SC-LeGO-LOAM&lt;/a&gt;, &lt;a href=&quot;https://youtu.be/jmR3DH_A4Co&quot;&gt;SC-LIO-SAM&lt;/a&gt;, &lt;a href=&quot;https://youtu.be/Fw9S6D6HozA&quot;&gt;FAST-LIO-SLAM&lt;/a&gt;) 이젠 기본적으로 Lidar SLAM에서 포함된 알고리즘이 나오고 있다 &lt;a href=&quot;/papers/2021-09-21-GPU_Lidar/&quot;&gt;VGICP&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;이 알고리즘에 intensity값을 추가해 만든 &lt;a href=&quot;https://arxiv.org/abs/2003.05656&quot;&gt;Intensity Scan Context&lt;/a&gt;나 최근 나온 semantic 정보를 입힌 &lt;a href=&quot;https://arxiv.org/abs/2107.00382&quot;&gt;Semantic Scan Context&lt;/a&gt; 도 읽어봐야겠다.&lt;/p&gt;
-
-&lt;p&gt;최근 TRO에 &lt;a href=&quot;https://arxiv.org/pdf/2109.13494.pdf&quot;&gt;ScanContext++&lt;/a&gt;가 나왔다.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://youtu.be/_etNafgQXoY&quot;&gt;Related Video&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;영상 기반 recognition은 유명하나 illumination variance 및 environmental change에 민감하다.
-Lidar는 strong invariance to perceptual variance 함&lt;/p&gt;
-
-&lt;p&gt;초기에는 computer graphics에서의 3D model에 사용된 local keypoint descriptor들이 noise에 대한 vulnerability를 가짐에도 많이 사용됨. 이런 일들은 주로 local 그리고 global한 descriptor를 개발하는데 연구가 진행됨.&lt;/p&gt;
-
-&lt;p&gt;Lidar 기반 place recognition의 두가지 이슈:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Descriptor는 rotational invariance를 가져야함&lt;/li&gt;
-  &lt;li&gt;Noise handling issue&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;기존 방법에는 histogram을 이용하여 이 두가지 이슈를 해결하고자 하였으나, 이는 scene의 stocastic index를 제공할 뿐 detailed structure를 묘사하지는 않아 인식하기 힘들어 false positive를 야기시킬 수 있다.&lt;/p&gt;
-
-&lt;p&gt;Scan Context는 다음 그림과 같이 3D scan을 2.5D 정보를 가지고 있는 행렬로 표현한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20210924/20210924_1.png&quot; alt=&quot;Scan Context&quot; /&gt;
-&lt;/p&gt;
-
-&lt;!-- ![Scan Context](/papers/images/20210924/20210924_1.png){: width=&quot;100%&quot; height=&quot;100%&quot;}{: .center} --&gt;
-
-&lt;p&gt;Contributions are:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Efficient bin encoding function&lt;/li&gt;
-  &lt;li&gt;Preservation of internal structure of a point cloud&lt;/li&gt;
-  &lt;li&gt;Effective two-phase matching algorithm&lt;/li&gt;
-  &lt;li&gt;Thorough validation against other SOTA spatial discriptors
-    &lt;ul&gt;
-      &lt;li&gt;M2DP, ESF, Z-projection 과 비교&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;related-work&quot;&gt;Related work&lt;/h3&gt;
-
-&lt;p&gt;Visual methods&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;FAB-MAP
-    &lt;ul&gt;
-      &lt;li&gt;increased robustness with probablistic approach by learning a generative model for the bag of visual words&lt;/li&gt;
-      &lt;li&gt;하지만, liight condition change에 vulnerable하다&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;SeqSLAM
-    &lt;ul&gt;
-      &lt;li&gt;proposed route-based approach&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;SRAL
-    &lt;ul&gt;
-      &lt;li&gt;Long-term visual recognition을 위해 색, GIST, HOG를 섞음&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Lidar-based methods&lt;/p&gt;
-
-&lt;p&gt;Lidar 기반 방법들은 local한 방법과 global한 방법으로 나뉘어짐&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Local Descriptors
-    &lt;ul&gt;
-      &lt;li&gt;PFH, SHOT, shape context, spin image는 keypoint를 찾아 주변 점들을 bin으로 나누고 둘러싼 bin들의 pattern을 histogram으로 encodding한다.&lt;/li&gt;
-      &lt;li&gt;Steder et al은 point feature와 gestalt descriptor를 이용해 bag of words 방식으로 만듦&lt;/li&gt;
-      &lt;li&gt;이러한 방법들은 기존 3D model기반이지 place recognition에 적합하지 않다.
-        &lt;ul&gt;
-          &lt;li&gt;거리에 따라 density 변화, normal direction noise&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Global Descriptors
-    &lt;ul&gt;
-      &lt;li&gt;Keypoint detecting phase를 포함 안함&lt;/li&gt;
-      &lt;li&gt;GLARE와 그 변종들은 point들의 기하학적 관계를 histogram에 encoding함&lt;/li&gt;
-      &lt;li&gt;ESF는 shape function으로 만들어진 histogram을 concatenation함&lt;/li&gt;
-      &lt;li&gt;Z-projection은 normal vector의 histogram이고, two distance function의 double threshold scheme을 사용함&lt;/li&gt;
-      &lt;li&gt;M2DP는 3D point들을 2D plane으로 projection하여 192 dimensional compact global representation을 추출함
-        &lt;ul&gt;
-          &lt;li&gt;기존 방법들 중 가장 좋은 성능을 나타내고 noise와 resolution change에 강인함&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;SegMatch는 segment-based matching을 사용하였으며 이는 high-level perception으로 training이 필요하고 global reference frame에서 point가 나타내져야함&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Scan context은 Shape context에 기반하였으며 세가지 phase로 이루어짐&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;the representation that preserves absolute location information of a point cloud in each bin&lt;/li&gt;
-  &lt;li&gt;efficient bin encoding function&lt;/li&gt;
-  &lt;li&gt;two-step search algorithm&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;methodology&quot;&gt;Methodology&lt;/h3&gt;
-
-&lt;h4 id=&quot;scan-context&quot;&gt;Scan Context&lt;/h4&gt;
-
-&lt;p&gt;Scan context는 Shape context에 영향을 받았다고 하는데, Shape context 내용을 대충 보니 Text recognition 등에 사용할 수 있도록 어떤 point cloud에 대해 n개의 점을 뽑고 그 점들 각각에 대해 descriptor를 만들어 matching하는 형식이다.&lt;/p&gt;
-
-&lt;p&gt;차이점 :&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;여기서 shape context는 각 bin에 해당되는 점들의 갯수를 이용했다면 scan context는 bin에 해당되는 점들의 maximum height를 사용하였다.&lt;/li&gt;
-  &lt;li&gt;Shape context는 여러 점을 뽑아서 그에 해당되는 descriptor들을 만들지만, scan context는 로봇의 위치(또는 라이더 기준)을 기반으로 제작하여 egocentric하게 만든다.
-    &lt;ul&gt;
-      &lt;li&gt;Egocentric visibility has been a well-known concept in urban design literature for analyzing an identy of a place&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Shape context와 비슷하게 3D scan을 azimuth와 radial bin으로 동일하게 나눈다.(여기선 azimuth 방향으로 60개를, radial 방향으로 20개를 이용)&lt;/p&gt;
-
-&lt;p&gt;Bin의 모양이 멀리갈수록 넓어지는데 이는 먼 point의 sparcity를 보완하고 근처의 dynamic object를 sparse noise로 취급한다. (후자가 이해가 안됨)&lt;/p&gt;
-
-&lt;p&gt;수식으로 나타내면 다음과 같다.&lt;/p&gt;
-
-&lt;p&gt;i번째 ring(radial), j번째 sector(azimuth)에 대한 point set을 \(\mathcal{P}_{ij}\) 라 하면&lt;/p&gt;
-
-&lt;p&gt;\(\phi(\mathcal{P}_{ij})\) \(= \max_{\mathbf{p}\in\mathcal{P}_{ij}} z(\mathbf{p})\) 라는 가장 높은 height값을 리턴하는 함수를 정의하고&lt;/p&gt;
-
-&lt;p&gt;이미지에 대해 \(I=(a_{ij})\in \mathbb{R}^{N_r \times N_s}\), \(a_{ij} = \phi(\mathcal{P}_{ij})\)&lt;/p&gt;
-
-&lt;p&gt;위치에 따라 Scan context image가 변할 것을 대비해 \(N_{tans}\)개의 위치를 선정해 거기서의 Scan context image를 만든다. (Lane 변하는 것을 기준.. 아마 Horizontal 방향으로 앞 뒤 좌 우 대각선들 아닐까)&lt;/p&gt;
-
-&lt;h4 id=&quot;similarity-score-between-scan-contexts&quot;&gt;Similarity Score between Scan Contexts&lt;/h4&gt;
-
-&lt;p&gt;Scan context image \(I^q\) 와 \(I^c\)에 대해 column별 비교를 하게 되는데 이때 각 이미지의 j번째 column vector를 \(c_j^q\), \(c_j^c\)라 하면 (query의 q, candidate의 c인가) distance metric은 다음과 같다.&lt;/p&gt;
-
-&lt;p&gt;\(d(I^{q}, I^{c})\) \(= \frac{1}{N_s} \sum_{j=1}^{N_s} \left( 1- \frac{c_j^q \cdot c_j^c }{\lVert c_j^q \rVert \lVert c_j^c \rVert} \right)\)&lt;/p&gt;
-
-&lt;p&gt;여기서 \(\frac{c_j^q \cdot c_j^c }{\lVert c_j^q \rVert \lVert c_j^c \rVert}\)는 cosine distance라 부른다.&lt;/p&gt;
-
-&lt;p&gt;Column-wise shift는 같은 위치에 대한 viewpoint change (yaw change?)에 의해 발생할 수 있다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20210924/20210924_2.png&quot; alt=&quot;Column-wise shift&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;이를 위해 모든 shift possibility에 대해 최소의 distance matric을 가지는 값을 찾는다고 한다. (방위각 예측)&lt;/p&gt;
-
-&lt;p&gt;\(D(I^q, I^c)\) \(= \min_{n\in [N_s]} d(I^q, I_n^c)\)&lt;/p&gt;
-
-&lt;p&gt;\(n^*\) \(= \text{argmin}_{n\in [N_s]} d(I^q, I_n^c)\)&lt;/p&gt;
-&lt;h4 id=&quot;two-phase-search-algorithm&quot;&gt;Two-phase Search Algorithm&lt;/h4&gt;
-
-&lt;p&gt;Place recognition에서는 주로 3단계로 이루어짐&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;Pairwise similarity scoring&lt;/li&gt;
-  &lt;li&gt;Nearest Neighbor search&lt;/li&gt;
-  &lt;li&gt;Sparse optimization&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;여기서는 reasonable search time을 위해 1.와 2.를 융합한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-  &lt;img src=&quot;../images/20210924/20210924_3.png&quot; alt=&quot;Two-phase search&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;앞서 말한 \(n^*\) \(= \text{argmin}_{n\in [N_s]} d(I^q, I_n^c)\) 이 식이 시간이 오래 걸려 2가지 hierarchical search 알고리즘을 도입한다.&lt;/p&gt;
-
-&lt;p&gt;Ring key 는 rotation invariant descriptor로서 이번엔 row vector들의 값의 특성들에 대해서 다룬다.&lt;/p&gt;
-
-&lt;p&gt;column-wise하게 순서만 다를뿐 row vector는 같은 위치에 대해 비슷한 값을 encoding 하고 있다.&lt;/p&gt;
-
-&lt;p&gt;이는 즉 같은 거리에 대한 높이 정보들이라 생각하면 되는데, 여기서는 각 row vector에 대한 occupancy ratio를 계산하여 radial한 방향으로 각 하나의 값을 추출하여 vector \(\mathbf{k}\)를 정의한다.&lt;/p&gt;
-
-&lt;p&gt;\(\mathbf{k}\) \(=(\psi(r_1), ..., \psi(r_{N_r}))\)&lt;/p&gt;
-
-&lt;p&gt;\(\psi(r_i)\) \(= \frac{\lVert r_i \rVert_0}{N_s}\)&lt;/p&gt;
-
-&lt;p&gt;여기서 \(\lVert r_i \rVert_0\)은 L0 norm&lt;/p&gt;
-
-&lt;p&gt;이러한 ring key는 scan context보다는 정보가 덜하나, candidate loop을 빨리 찾을 수 있는 장점이 있다. 이 \(\mathbf{k}\)는 KD-tree를 구성하는데 사용되며, candidate에서 선별을 다시 distance metric으로 진행한다.&lt;/p&gt;
-
-&lt;p&gt;\(c^*\) \(= \text{argmin}_{c_k \in \mathcal{C}} D(I^q, I^{c_k}), \text{s.t} D &amp;lt; \tau\)&lt;/p&gt;
-
-&lt;p&gt;여기서 2 stage에서 두번째가 앞서 말한 \(D(I^q, I^c)\)이고, 첫번쨰가 \(\mathbf{k}\)를 이용한 KD-tree search인가? 아마도 그게 논리적으로 맞겠지.. 코드를 한번 봐야겠다.&lt;/p&gt;
-
-&lt;h3 id=&quot;experimental-validation&quot;&gt;Experimental Validation&lt;/h3&gt;
-
-&lt;p&gt;TBW&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">Researchers at KAIST, Korea. First Author: Giseop Kim</summary></entry><entry><title type="html">Publishing extra information using pcl Pointcloud and ros Pointcloud2</title><link href="http://localhost:4000/etc/2021-09-23-PCL_ROS/" rel="alternate" type="text/html" title="Publishing extra information using pcl Pointcloud and ros Pointcloud2" /><published>2021-09-23T00:00:00+09:00</published><updated>2021-09-23T00:00:00+09:00</updated><id>http://localhost:4000/etc/PCL_ROS</id><content type="html" xml:base="http://localhost:4000/etc/2021-09-23-PCL_ROS/">&lt;p&gt;Pohang Dataset으로 LIO-SAM을 돌리려다보니 안되길래 들여다보니 LIO-SAM은 ring value를 이용해 이미지로 만들어 이를 통해 각 feature를 뽑아 내는 것을 발견하게 되었다.&lt;/p&gt;
-
-&lt;p&gt;처음에는 그냥 대충 이미지로 projection 해보고 저장된 point sequence가 어떤식으로 저장되나 보면서 해보려고 했지만, 2048 * 32 혹은 * 64 의 점들을 파악하기가 여간 쉬운 일이 아닐꺼라 예상되어 실험 마지막날 ring value를 포함한 logging data를 만들었다.&lt;/p&gt;
-
-&lt;p&gt;ros::Pointcloud2 message를 읽어 여기에 해당되는 각 값들을 저장하는 &lt;a href=&quot;https://github.com/dhchung/multi_ouster_lidar2bin&quot;&gt;방법&lt;/a&gt;(이거에 대해서는 따로 써야겠다)에서 읽혀지는 ring값을 보니 처음에는 scan 순서대로 vertical하게 먼저 저장될 줄 알았으나 (예로 32체널의 경우 0,1,…,31,0,1,…,31,…) 예상과는 다르게 horizontal 방향으로 먼저 저장되는 모습을 볼 수 있었다 (0,0,…,0,1,1,..1,…31,31,…31). 아마 한 스캔을 다 만들어놓은 후 처리하는 것이라 읽는건 ring별로 먼저 읽는 모양인다.&lt;/p&gt;
-
-&lt;p&gt;기존에 만들어둔 ros message player에서는 그냥 point cloud의 x, y, z, intensity만 사용하여 ros message를 내보내기 위해 googling을 통해 그냥 pcl::PointCloud&amp;lt;pcl::PointXYZI&amp;gt; 형식으로 해서&lt;/p&gt;
-
-&lt;p&gt;pcl::PointXYZI 객체 형성하고 push_back 함으로서 점들을 넣어주고&lt;/p&gt;
-
-&lt;p&gt;sensor_msgs::PointCloud2 에 pcl::toROSMsg(pcl객체, PointCloud2객체)로&lt;/p&gt;
-
-&lt;p&gt;메세지를 생성했다.&lt;/p&gt;
-
-&lt;p&gt;그럼 이 ring값을 어떻게 넣는가..&lt;/p&gt;
-
-&lt;p&gt;일단 binary에서 읽는 순서는 binary에 쓰는 순서랑 다른 듯 보였다. (이부분 좀 이해가 안됨. 다시 검증해야 할듯)&lt;/p&gt;
-
-&lt;p&gt;Point 순서에 따라 채널수로 나눈 몫을 ring값으로 해주면 되는데 (point_no % channel_no) 여기서 pcl::PointXYZI는 ring값을 지원하지 않는다.&lt;/p&gt;
-
-&lt;p&gt;(열심히 구글링 하다 보니 예전에 있었는데 왜 없앴냐는 말 비슷하게 본거 같다.)&lt;/p&gt;
-
-&lt;p&gt;그래서 어쩌지 어쩌지 하다가 LIO-SAM에서 아예 struct를 새로 만들어서 ‘읽어’오는 것을 보게 되었다.&lt;/p&gt;
-
-&lt;p&gt;뭐 어쨌든 다음과 같은 struct를 생성했다.&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;PointXYZIR&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;PCL_ADD_POINT4D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;intensity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;uint8_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;EIGEN_MAKE_ALIGNED_OPERATOR_NEW&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EIGEN_ALIGN16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;POINT_CLOUD_REGISTER_POINT_STRUCT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PointXYZIR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;intensity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;intensity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;uint8_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;여기서 t는 time으로 cloud deskew때 필요하다 해서 추가적으로 넣게 되었다.&lt;/p&gt;
-
-&lt;p&gt;여튼 이렇게 만든 struct로 다시&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;pcl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PointCloud&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PointXYZIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;에 각 점들에 대한&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;PointXYZIR&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;struct을 push back하여 이를 다시&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;pcl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;toROSMsg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pcl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PointCloud&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PointXYZIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ros&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Pointcloud2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;형식으로 넣어주면 된다.&lt;/p&gt;
-
-&lt;p&gt;여기서.. 뭔가 모르겠지만, 이 struct이 그대로 전달돼 함부로 변수명을 바꾸면 (예를 들어 ring을 r로 표기하거나) 안될 것 같다.&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">Pohang Dataset으로 LIO-SAM을 돌리려다보니 안되길래 들여다보니 LIO-SAM은 ring value를 이용해 이미지로 만들어 이를 통해 각 feature를 뽑아 내는 것을 발견하게 되었다.</summary></entry></feed>
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">Researchers at nuTonomy (spinned off from MIT). First Author: Alex H. Lang</summary></entry></feed>

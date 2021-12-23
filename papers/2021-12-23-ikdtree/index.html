@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en"><!--
+ __  __                __                                     __
+/\ \/\ \              /\ \             __                    /\ \
+\ \ \_\ \   __  __    \_\ \      __   /\_\      __       ___ \ \ \/'\
+ \ \  _  \ /\ \/\ \   /'_` \   /'__`\ \/\ \   /'__`\    /'___\\ \ , <
+  \ \ \ \ \\ \ \_\ \ /\ \L\ \ /\  __/  \ \ \ /\ \L\.\_ /\ \__/ \ \ \\`\
+   \ \_\ \_\\/`____ \\ \___,_\\ \____\ _\ \ \\ \__/.\_\\ \____\ \ \_\ \_\
+    \/_/\/_/ `/___/> \\/__,_ / \/____//\ \_\ \\/__/\/_/ \/____/  \/_/\/_/
+                /\___/                \ \____/
+                \/__/                  \/___/
+
+Powered by Hydejack v9.0.5 <https://hydejack.com/>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<head>
+  
+
+
+
+
+
+
+  
+    
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>ikd-Tree (2021 arxiv) | Dongha Chung</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="ikd-Tree (2021 arxiv)" />
+<meta name="author" content="<Dongha> <Chung>" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="ikd-Tre: An Inceremtnal K-D Tree for Robotic Applications" />
+<meta property="og:description" content="ikd-Tre: An Inceremtnal K-D Tree for Robotic Applications" />
+<link rel="canonical" href="http://localhost:4000/papers/2021-12-23-ikdtree/" />
+<meta property="og:url" content="http://localhost:4000/papers/2021-12-23-ikdtree/" />
+<meta property="og:site_name" content="Dongha Chung" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-12-23T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="ikd-Tree (2021 arxiv)" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/papers/2021-12-23-ikdtree/","headline":"ikd-Tree (2021 arxiv)","dateModified":"2021-12-23T00:00:00+09:00","datePublished":"2021-12-23T00:00:00+09:00","author":{"@type":"Person","name":"<Dongha> <Chung>"},"description":"ikd-Tre: An Inceremtnal K-D Tree for Robotic Applications","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/papers/2021-12-23-ikdtree/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+  
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Dongha Chung">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<meta name="application-name" content="Dongha Chung">
+
+
+  <meta name="theme-color" content="rgb(8,46,57)">
+
+
+<meta name="generator" content="Hydejack v9.0.5" />
+
+
+<link rel="alternate" href="http://localhost:4000/papers/2020-04-09-Estimating_Uncertain/" hreflang="en">
+
+<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Dongha Chung" />
+
+
+<link rel="shortcut icon"    href="/assets/icons/favicon.ico">
+<link rel="apple-touch-icon" href="/assets/icons/icon-192x192.png">
+
+<link rel="manifest" href="/assets/site.webmanifest">
+
+
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+
+
+
+<link rel="preload" href="/assets/img/swipe.svg" as="image" id="_hrefSwipeSVG">
+
+
+
+
+
+
+<script>!function(e,t){"use strict";function n(e,t,n,o){e.addEventListener?e.addEventListener(t,n,o):e.attachEvent?e.attachEvent("on"+t,n):e["on"+t]=n}e.loadJS=function(e,o){var r=t.createElement("script");r.src=e,o&&n(r,"load",o,{once:!0});var a=t.scripts[0];return a.parentNode.insertBefore(r,a),r},e._loaded=!1,e.loadJSDeferred=function(o,r){function a(){e._loaded=!0,r&&n(c,"load",r,{once:!0});var o=t.scripts[0];o.parentNode.insertBefore(c,o)}var c=t.createElement("script");return c.src=o,e._loaded?a():n(e,"load",a,{once:!0}),c},e.setRel=e.setRelStylesheet=function(e){function o(){this.rel="stylesheet"}n(t.getElementById(e),"load",o,{once:!0})}}(window,document);
+!function(a){"use strict";var b=function(b,c,d){function e(a){return h.body?a():void setTimeout(function(){e(a)})}function f(){i.addEventListener&&i.removeEventListener("load",f),i.media=d||"all"}var g,h=a.document,i=h.createElement("link");if(c)g=c;else{var j=(h.body||h.getElementsByTagName("head")[0]).childNodes;g=j[j.length-1]}var k=h.styleSheets;i.rel="stylesheet",i.href=b,i.media="only x",e(function(){g.parentNode.insertBefore(i,c?g:g.nextSibling)});var l=function(a){for(var b=i.href,c=k.length;c--;)if(k[c].href===b)return a();setTimeout(function(){l(a)})};return i.addEventListener&&i.addEventListener("load",f),i.onloadcssdefined=l,l(f),i};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);
+!function(a){if(a.loadCSS){var b=loadCSS.relpreload={};if(b.support=function(){try{return a.document.createElement("link").relList.supports("preload")}catch(b){return!1}},b.poly=function(){for(var b=a.document.getElementsByTagName("link"),c=0;c<b.length;c++){var d=b[c];"preload"===d.rel&&"style"===d.getAttribute("as")&&(a.loadCSS(d.href,d,d.getAttribute("media")),d.rel=null)}},!b.support()){b.poly();var c=a.setInterval(b.poly,300);a.addEventListener&&a.addEventListener("load",function(){b.poly(),a.clearInterval(c)}),a.attachEvent&&a.attachEvent("onload",function(){a.clearInterval(c)})}}}(this);
+!function(w) {
+  w._baseURL = '/';
+  w._publicPath = '/assets/js/';
+  w._noPushState = false;
+  w._noDrawer = true;
+  w._noNavbar = true;
+  w._noToc = false;
+  w._noSearch = true;
+}(window);
+</script>
+
+
+<script async src="/assets/bower_components/MathJax/es5/tex-mml-chtml.js" id="_MathJax"></script>
+
+
+<!--[if gt IE 8]><!---->
+
+  
+
+
+
+
+<link rel="stylesheet" href="/assets/css/hydejack-9.0.5.css" id="_stylePreload">
+<link rel="stylesheet" href="/assets/icomoon/style.css" id="_iconsPreload">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:700%7CNoto+Sans:400,400i,700,700i&display=swap" id="_fontsPreload">
+
+
+
+  <style id="_pageStyle">
+
+html{--accent-color: rgb(79,177,186);--accent-color-faded: rgba(79,177,186,0.5);--accent-color-darkened: #409ba3;--theme-color: rgb(8,46,57)}
+
+</style>
+
+
+<!--<![endif]-->
+
+
+<!--
+Code used for embedding Gumroad on the Hydejack Site. 
+Left here for reference, feel free to delete.
+-->
+<link rel="dns-prefetch" href="https://assets.gumroad.com">
+<script type="module">
+  let p;
+  const promisify = f => x => new Promise(r => f(x).addEventListener('load', r));
+  const loadJS = promisify(window.loadJS);
+  document.querySelector('hy-push-state').addEventListener('load', () => {
+    const io = new IntersectionObserver(async (entries) => {
+      if (entries.some(x => x.isIntersecting)) {
+        p = p || loadJS('https://gumroad.com/js/gumroad-embed.js');
+        await p;
+        if (!window.GumroadEmbed) {
+          await new Promise(function check1(res) {
+            if ('createGumroadEmbed' in window) res(window.createGumroadEmbed());
+            else setTimeout(() => check1(res), 200);
+          });
+        }
+        await new Promise(function check2(res) {
+          if ('GumroadEmbed' in window) res(GumroadEmbed.reload());
+          else setTimeout(() => check2(res), 200);
+        });
+      }
+    }, { rootMargin: '1440px' });
+    document.querySelectorAll('.gumroad-product-embed').forEach(el => io.observe(el));
+  });
+</script>
+<script type="module">
+  let p;
+  const promisify = f => x => new Promise(r => f(x).addEventListener('load', r));
+  const loadJS = promisify(window.loadJS);
+  document.querySelector('hy-push-state').addEventListener('load', () => {
+    const io = new IntersectionObserver(async (entries) => {
+      if (entries.some(x => x.isIntersecting)) {
+        p = p || loadJS('https://gumroad.com/js/gumroad.js');
+        await p;
+        if (!window.GumroadOverlay) {
+          await new Promise(function check(res) {
+            if ('createGumroadOverlay' in window) res(window.createGumroadOverlay());
+            else setTimeout(() => check(res), 200);
+          });
+        }
+      }
+    }, { rootMargin: '300px' });
+    document.querySelectorAll('.gumroad-button').forEach(el => io.observe(el));
+  });
+</script>
+
+
+</head>
+
+<body class="no-break-layout no-drawer">
+  
+
+
+<hy-push-state
+  id="_pushState"
+  replace-selector="#_main"
+  link-selector="a[href]:not([href^='/assets/']):not(.external):not(.no-push-state)"
+  script-selector="script"
+  duration="500"
+  hashchange
+>
+  
+  <div id="_navbar" class="navbar fixed-top">
+  <div class="content">
+    <span class="sr-only">Jump to:</span>
+    <div class="nav-btn-bar">
+      <a id="_menu" class="nav-btn no-hover" href="#_drawer--opened">
+        <span class="sr-only">Navigation</span>
+        <span class="icon-menu"></span>
+      </a>
+      <div class="nav-span"></div>
+    </div>
+  </div>
+</div>
+<hr class="sr-only" hidden />
+
+  <main
+  id="_main"
+  class="content layout-post"
+  role="main"
+>
+  
+
+
+
+
+
+<article id="post-papers-ikdtree" class="page post mb6" role="article">
+  <header>
+    <h1 class="post-title flip-project-title">
+      
+        ikd-Tree (2021 arxiv)
+      
+    </h1>
+
+    <div class="post-date">
+      
+      <time datetime="2021-12-23T00:00:00+09:00">23 Dec 2021</time>
+      
+      
+      
+      
+      
+
+
+
+
+
+
+
+
+
+in <a href="/papers/" class="flip-title">Paper Review</a>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+
+    
+
+
+
+  <div class="hr pb0"></div>
+
+
+  </header>
+
+  
+    <h2 id="ikd-tre-an-inceremtnal-k-d-tree-for-robotic-applications">ikd-Tre: An Inceremtnal K-D Tree for Robotic Applications</h2>
+
+<p>저자는 홍콩대의 MaRS Lab 연구진들이다. Fast-LIO, Fast-LIO2를 보며 알게 된건데 ikd-tree 기반으로 제작되었다고 해서 일단 알아보고자 논문을 읽게 되었다.</p>
+
+<p><img src="/papers/images/20211223/Overview.png" alt="Overview" /></p>
+
+<h3 id="abstract">Abstract</h3>
+
+<p>Dynamic space partition을 위한 ikd-tree를 제안한다. ikd-Tree 는 incremental하게 k-d tree를 새로운 점들만 가지고 update 함으로서 기존 static k-d tree보다 훨씬 적은량의 연산이 요구된다. point-wise operation 외에도 robotic application에 자주 사용되는 box-wise operation이나 down-sampling도 제공한다. Incremental operation (insert, re-insert, delete)와 병행으로 ikd-Tree는 능동적으로 tree 구조를 모니터링 하며 tree를 부분적으로 balancing하여 나중에 nearest search가 효율적으로 진행되도록 한다. ikd-Tree는 세세히 engineering 되었으며 전반적인 효율을 극대화 하기 위해 multi-thread parallel computing을 지원한다. 제안하는 알고리즘의 고효율성을 나타내기 위해 이론적인 해석을 하였으며, 실험으로 무작위적인 데이터와 실제 LiDAR-inertial SLAM에서의 LiDAR point cloud에 적용하였으며 모든 테스트에서 기존 k-d tree 연산속도의 4%만 걸리는 것을 확인하였다.</p>
+
+<h3 id="introduction">Introduction</h3>
+
+<p>k-d Tree는 nn point를 찾는데 있어 빠른 속도를 보여 LiDAR odometry나 obstacle collision check에 사용된다. 여기서 주로 사용되는 k-d tree는 처음부터 모든 점들을 가지고 structure를 만드는 ‘static’한 방식으로 진행된다. 이는 데이터가 주로 연속적으로 들어오는 상황에 알맞지 않다. 따라서 k-d tree는 몇번에 한번씩 업데이트되거나 새로운 포인트에서만 다시 만들어지는 방식으로 진행되어왔다.</p>
+
+<p>더 자연스러운 k-d tree update 방식으로는 국소적으로 업데이트 하는 방법이 될 수 있다. Local update는 전체 tree를 업데이트하는 불필요한 작업을 줄여 효과적인 연산을 수행할 수 있다. 이러한 dynamic k-d tree는 새로운 데이터가 기존 tree 보다 월씬 적을 때 매우 효과적이다.</p>
+
+<p>하지만 이러한 dynamic k-d tree는 robotic application에 다양한 문제가 있다:</p>
+<ol>
+  <li>Point operation 뿐만 아니라 down-sampling과 같은 space operation도 지원해야 한다.</li>
+  <li>Tree를 쉽게 unbalance하게 만들어 애초의 목적과는 다르게 효율적인 search를 방해하기에 re-building이 요구된다.</li>
+  <li>Re-building은 real-time application에 맞게 효율적이어야 한다.</li>
+</ol>
+
+<p>이 논문에선, k-d tree를 새로운 point로만 update하며 동시에 원하는 resolution으롷 downsampling이 가능한 ikd-Tree라는 dynamic k-d tree 구조를 제시한다. 이는 insertion, re-insertion, delete와 같은 point-wise operation이나 box-wise operation을 포함한 incremnetal operation을 지원한다. Tree는 부분적인 re-building을 통해 자동으로 re-balance를 수행한다. Real-time update를 위해 ikd-Tree는 필요에 따라 tree re-building을 두개의 thread로 나눠서 진행한다. 본 논문에서는 전체 tree update에 대한 incremental operation와 re-balance에 대한 복잡도 해석을 한다. ikd-Tree의 time complexity는 random data와 LiDAR point cloud에 대해 획기적으로 줄어든 것을 확인하였다.</p>
+
+<h3 id="related-work">Related work</h3>
+
+<p>k-d tree는 binary search tree (BST)로 볼 수 있으며 AVL, treaps, splay trees와 같은 incermental operation을 inherit한다. 이러한 기법들에서 re-balancing은 tree node rotation을 통해 쉽게 이뤄질 수 있다. 하지만 이런 tree node rotation은 1-D 데이터에서만 가능하며, multi dimension의 경우 좀더 복잡한 reorganization이 요구된다.</p>
+
+<p>k-d tree의 빠른 re-balancing에 대한 전략은 두가지로 나뉜다:</p>
+<ol>
+  <li>하드웨어 기반 acceleration</li>
+  <li>특별히 제작된 structure를 통한 dynamic re-balancing</li>
+</ol>
+
+<p>하드웨어 기반 acceleration은 computing hardware를 새로운 k-d tree를 만듧으로서 re-balancing한다. (그냥 새로 만드는거 아님?) 이는 dynamic scene에서의 ray-tracing와 같은 문제를 해결하기 위해 깊게 연구된 바 있다. 3D Graphics에서 CPU, multi-core CPU, GPU에 대한 연구가 진행된 바 있으나, computing power에 의존하여 onboard computer에선 한계가 있다.</p>
+
+<p>다음은 후자에 대한 내용이다:</p>
+<ul>
+  <li>Bentley et at.은 static k-d tree를 dynamic k-d tree로 변환하는 방법에 대해 제안한 바 있다. 이 dynamic k-d tree는 insertion만 지원하고 delet를 지원하지 않아 nearest search 시간이 tree가 증가함에 따라 증가한다.</li>
+  <li>Galperin et al.은 scapegoat k-d tree를 제안하였으며, 이는 unbalance된 sub-tree를 re-building함으로써 re-balancing하는 알고리즘이다.</li>
+  <li>Bkd Ttree는 외부 memory 사용에 집중한 k-D-B tree를 확장한 dynamic data structure이다. static k-d tree set들 내에서 re-balance와 re-building이 특정 구간에서 이루어지는 방식이다.</li>
+  <li>잘 알려진 PCL은 FLANN search를 사용한다. Point insertion과 delete는 FLANN에서 제공되나, re-balancing은 일정량의 insertion과 delete 이후 모든 tree를 rebuilding하는 매우 비효율적인 방법을 사용한다.</li>
+</ul>
+
+<p>ikd-Tree는 효율적으로 incremental operation과 dynamic re-balacing을 수행한다. Bentley et al. 과 비교했을 때 ikd-Tree는 delete를 지원한다. 기존 연구와 비교했을 때 ikd-Tree는 point, box의 incremental operation을 지원하며, 동시에 point down sampling도 지원한다. ikd-Tree의 dynamic tree re-balancing 기법은 unbalance된 sub tree만 rebuild하는 scapegoat tree 기법을 따른다. ikd-Tree는 특히 real-time LiDAR mapping이나 motion planning과 같이 데이터가 연속적으로 들어오고 빠른 incremental update가 요구되는 robotic application에 유용하다.</p>
+
+<h3 id="ikd-tree-design-and-implementation">ikd-Tree design and implementation</h3>
+
+<h4 id="data-structure">Data structure</h4>
+<p><img src="/papers/images/20211223/DataStructure1.png" alt="Data structure" /></p>
+
+<p>2~4번쨰 줄은 기존 k-d tree에 사용되는 attribute들이다. leftson과 rightson은 좌우 자식 노드에 대한 pointer이며 point coordinate, intensity와 같은 값들이 point에 저장된다. Point 하나가 node 하나에 대응됨으로 이를 혼용하여 사용한다. Division axis는 axis에 저장된다. 5~7번째 줄이 ikd-Tree에서 새로 사용하는 attribute들이다.</p>
+
+<h4 id="building-an-incremental-k-d-tree">Building an incremental k-d tree</h4>
+
+<p>Incremental k-d tree를 만드는 과정은 static k-d tree를 만드는 과정과 비슷하나, incremental update를 위해 추가적인 정보를 유지하는 차이가 있다.</p>
+
+<p><img src="/papers/images/20211223/Algorithm1.png" alt="Build a balancede k-d tree" /></p>
+
+<p>주어진 point array V에 대해서 point들은 먼저 maximal covarinace를 가진 division axis로 나뉘다. (4~5번째 줄) (이 covariance 뭔뜻임?) 그 후 median point가 새로운 tree node T에 저장된다. (6~8번째 줄). Medain point의 상하에 있는 점들은 T의 left and right son node로 전달된다 (9~10번째 줄). 11~12번째 줄의 lazylabelinit과 pullup은 Data structure의 5~7번째의 attribute들을 update한다.</p>
+
+<p>TBW
+(와 생각보다 복잡한데..)</p>
+
+  
+</article>
+
+
+<hr class="dingbat related" />
+
+
+
+
+  
+     
+
+
+  <aside class="about related mt4 mb4" role="complementary">
+    
+    
+
+<div class="author mt4">
+  
+
+  
+    
+
+
+<img
+  
+    src="/assets/img/dh.jpg"
+    
+    
+  
+  alt="<Dongha> <Chung>"
+  class="avatar"
+  
+  width="120"
+  height="120"
+  loading="lazy"
+/>
+
+  
+
+  
+  
+  <h2  class="page-title hr-bottom">
+    About
+  </h2>
+
+  <p><strong>Dongha Chung</strong></p>
+
+<p>A robotics perception engineer</p>
+
+
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/dhchung" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.youtube.com/channel/UC2MeUdGRQws1YhdQt0wf_vA/" title="YouTube" class="no-mark-external">
+      <span class="icon-youtube"></span>
+      <span class="sr-only">YouTube</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.linkedin.com/in/dongha-chung-b7a538bb" title="LinkedIn" class="no-mark-external">
+      <span class="icon-linkedin2"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+
+  </aside>
+
+
+  
+
+  
+  
+
+  
+    
+
+
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/logging/programming/2021-12-18-USV_dataset/" class="flip-title"><span>Dataset for USV</span></a>  <time class="faded fine" datetime="2021-12-18T00:00:00+09:00">18 Dec 2021</time></li>                        <li class="h4">  <a href="/programming/2021-12-10-threading/" class="flip-title"><span>I need to study about threading!!!</span></a>  <time class="faded fine" datetime="2021-12-10T00:00:00+09:00">10 Dec 2021</time></li>                        <li class="h4">  <a href="/papers/2021-12-02-DeepVO/" class="flip-title"><span>DeepVO (2017 ICRA)</span></a>  <time class="faded fine" datetime="2021-12-02T00:00:00+09:00">02 Dec 2021</time></li>            </ul></aside>
+
+  
+
+  
+  
+
+  
+    
+
+  
+
+
+  
+<footer class="content" role="contentinfo">
+  <hr/>
+  
+    <p><small class="copyright">© 2020. All rights reserved.
+</small></p>
+  
+  
+    <p><small>Powered by <a class="external" href="https://hydejack.com/">Hydejack</a> v<span id="_version">9.0.5</span></small></p>
+  <hr class="sr-only"/>
+</footer>
+
+
+</main>
+
+  <hy-drawer
+  id="_drawer"
+  class=""
+  side="left"
+  threshold="10"
+  noscroll
+  
+>
+  <header id="_sidebar" class="sidebar" role="banner">
+    
+
+
+
+
+<div class="sidebar-bg sidebar-overlay" style="background-color:rgb(8,46,57);background-image:url(/assets/img/side.jpg)"></div>
+
+    <div class="sidebar-sticky">
+  <div class="sidebar-about">
+    
+      <a class="no-hover" href="/" tabindex="-1">
+        <img src="/assets/img/dh.jpg" class="avatar" alt="Dongha Chung" width="120" height="120" loading="lazy" />
+      </a>
+    
+    <a class="sidebar-title" href="/"><h2 class="h1">Dongha Chung</h2></a>
+    
+    
+      <p class="">
+        Scribbling stuffs
+
+      </p>
+    
+  </div>
+
+  <nav class="sidebar-nav heading" role="navigation">
+    <span class="sr-only">Navigation:</span>
+<ul>
+  
+    
+      
+      <li>
+        <a
+          id="_drawer--opened"
+          href="/about/"
+          class="sidebar-nav-item "
+          
+        >
+          About
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/cv"
+          class="sidebar-nav-item "
+          
+        >
+          Curriculum Vitae
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/papers/"
+          class="sidebar-nav-item "
+          
+        >
+          Paper Review
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/slam/"
+          class="sidebar-nav-item "
+          
+        >
+          SLAM
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/programming/"
+          class="sidebar-nav-item "
+          
+        >
+          Programming
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/logging/"
+          class="sidebar-nav-item "
+          
+        >
+          Logging
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/allposts/"
+          class="sidebar-nav-item "
+          
+        >
+          All Posts
+        </a>
+      </li>
+    
+  
+</ul>
+
+  </nav>
+
+  
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/dhchung" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.youtube.com/channel/UC2MeUdGRQws1YhdQt0wf_vA/" title="YouTube" class="no-mark-external">
+      <span class="icon-youtube"></span>
+      <span class="sr-only">YouTube</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.linkedin.com/in/dongha-chung-b7a538bb" title="LinkedIn" class="no-mark-external">
+      <span class="icon-linkedin2"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+  </header>
+</hy-drawer>
+<hr class="sr-only" hidden />
+
+</hy-push-state>
+
+
+  <!--[if gt IE 10]><!---->
+  <script nomodule>!function(){var e=document.createElement("script");if(!("noModule"in e)&&"onbeforeload"in e){var t=!1;document.addEventListener("beforeload",function(n){if(n.target===e)t=!0;else if(!n.target.hasAttribute("nomodule")||!t)return;n.preventDefault()},!0),e.type="module",e.src=".",document.head.appendChild(e),e.remove()}}();
+</script>
+  <script src="/assets/js/hydejack-9.0.5.js" type="module"></script>
+  <script src="/assets/js/LEGACY-hydejack-9.0.5.js" nomodule defer></script>
+  
+
+  
+
+<!--<![endif]-->
+  <!--
+Code for integrating CloudFlare's email protection with Hydejack's single page app loading.
+-->
+<script>
+  document.getElementById('_pushState').addEventListener('hy-push-state-after', function (e) {
+    function e(e){
+      (console.error?console.error:console.log).call(console,e)
+    }
+
+    function t(e){
+      return l.innerHTML='<a href="'+e.replace(/"/g,"&quot;")+'"></a>',l.childNodes[0].getAttribute("href")
+    }
+
+    function r(e,t){
+      var r=e.substr(t,2);return parseInt(r,16)
+    }
+
+    function n(e,n){
+      for(var o="",c=r(e,n),a=n+2;a<e.length;a+=2){
+        var l=r(e,a)^c;
+        o+=String.fromCharCode(l)
+      }
+      return t(o)
+    }
+
+    var o="/cdn-cgi/l/email-protection#",
+        c=".__cf_email__",
+        a="data-cfemail",
+        l=document.createElement("div");
+
+    !function(){
+      for(var t=document.getElementsByTagName("a"),r=0;r<t.length;r++)
+        try{
+          var c=t[r],a=c.href.indexOf(o);
+          a>-1&&(c.href="mailto:"+n(c.href,a+o.length))
+        }catch(t){
+          e(t)
+        }
+    }(),
+    function(){
+      for(var t=document.querySelectorAll(c),r=0;r<t.length;r++)
+        try{
+          var o=t[r],l=n(o.getAttribute(a),0),i=document.createTextNode(l);
+          o.parentNode.replaceChild(i,o)
+        }catch(t){
+          e(t)
+        }
+    }()
+  });
+</script>
+
+
+
+
+
+<div hidden>
+  
+  <h2 class="sr-only">Templates (for web app):</h2>
+
+  <template id="_animation-template">
+  <div class="animation-main fixed-top">
+    <div class="content">
+      <div class="page"></div>
+    </div>
+  </div>
+</template>
+
+  <template id="_loading-template">
+  <div class="loading nav-btn fr">
+    <span class="sr-only">Loading…</span>
+    <span class="icon-cog"></span>
+  </div>
+</template>
+
+  <template id="_error-template">
+  <div class="page">
+    <h1 class="page-title">Error</h1>
+    
+    
+    <p class="lead">
+      Sorry, an error occurred while loading <a class="this-link" href=""></a>.
+
+    </p>
+  </div>
+</template>
+
+  <template id="_forward-template">
+  <button id="_forward" class="forward nav-btn no-hover">
+    <span class="sr-only">Forward</span>
+    <span class="icon-arrow-right2"></span>
+  </button>
+</template>
+
+  <template id="_back-template">
+  <button id="_back" class="back nav-btn no-hover">
+    <span class="sr-only">Back</span>
+    <span class="icon-arrow-left2"></span>
+  </button>
+</template>
+
+  <template id="_permalink-template">
+  <a href="#" class="permalink">
+    <span class="sr-only">Permalink</span>
+    <span class="content-hash"></span>
+  </a>
+</template>
+
+</div>
+
+
+</body>
+</html>
