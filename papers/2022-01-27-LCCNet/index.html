@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en"><!--
+ __  __                __                                     __
+/\ \/\ \              /\ \             __                    /\ \
+\ \ \_\ \   __  __    \_\ \      __   /\_\      __       ___ \ \ \/'\
+ \ \  _  \ /\ \/\ \   /'_` \   /'__`\ \/\ \   /'__`\    /'___\\ \ , <
+  \ \ \ \ \\ \ \_\ \ /\ \L\ \ /\  __/  \ \ \ /\ \L\.\_ /\ \__/ \ \ \\`\
+   \ \_\ \_\\/`____ \\ \___,_\\ \____\ _\ \ \\ \__/.\_\\ \____\ \ \_\ \_\
+    \/_/\/_/ `/___/> \\/__,_ / \/____//\ \_\ \\/__/\/_/ \/____/  \/_/\/_/
+                /\___/                \ \____/
+                \/__/                  \/___/
+
+Powered by Hydejack v9.0.5 <https://hydejack.com/>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<head>
+  
+
+
+
+
+
+
+  
+    
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>LCCNet (2021 CVPR) | Dongha Chung</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="LCCNet (2021 CVPR)" />
+<meta name="author" content="<Dongha> <Chung>" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="LCCNet: LiDAR and Camera Self-Calibration using Cost Volume Network" />
+<meta property="og:description" content="LCCNet: LiDAR and Camera Self-Calibration using Cost Volume Network" />
+<link rel="canonical" href="http://localhost:4000/papers/2022-01-27-LCCNet/" />
+<meta property="og:url" content="http://localhost:4000/papers/2022-01-27-LCCNet/" />
+<meta property="og:site_name" content="Dongha Chung" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-01-27T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="LCCNet (2021 CVPR)" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/dh.jpg"},"name":"<Dongha> <Chung>"},"url":"http://localhost:4000/papers/2022-01-27-LCCNet/","headline":"LCCNet (2021 CVPR)","dateModified":"2022-01-27T00:00:00+09:00","datePublished":"2022-01-27T00:00:00+09:00","author":{"@type":"Person","name":"<Dongha> <Chung>"},"description":"LCCNet: LiDAR and Camera Self-Calibration using Cost Volume Network","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/papers/2022-01-27-LCCNet/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+  
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Dongha Chung">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<meta name="application-name" content="Dongha Chung">
+
+
+  <meta name="theme-color" content="rgb(8,46,57)">
+
+
+<meta name="generator" content="Hydejack v9.0.5" />
+
+
+<link rel="alternate" href="http://localhost:4000/papers/2020-04-09-Estimating_Uncertain/" hreflang="en">
+
+<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Dongha Chung" />
+
+
+<link rel="shortcut icon"    href="/assets/icons/favicon.ico">
+<link rel="apple-touch-icon" href="/assets/icons/icon-192x192.png">
+
+<link rel="manifest" href="/assets/site.webmanifest">
+
+
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+
+
+
+<link rel="preload" href="/assets/img/swipe.svg" as="image" id="_hrefSwipeSVG">
+
+
+
+
+
+
+<script>!function(e,t){"use strict";function n(e,t,n,o){e.addEventListener?e.addEventListener(t,n,o):e.attachEvent?e.attachEvent("on"+t,n):e["on"+t]=n}e.loadJS=function(e,o){var r=t.createElement("script");r.src=e,o&&n(r,"load",o,{once:!0});var a=t.scripts[0];return a.parentNode.insertBefore(r,a),r},e._loaded=!1,e.loadJSDeferred=function(o,r){function a(){e._loaded=!0,r&&n(c,"load",r,{once:!0});var o=t.scripts[0];o.parentNode.insertBefore(c,o)}var c=t.createElement("script");return c.src=o,e._loaded?a():n(e,"load",a,{once:!0}),c},e.setRel=e.setRelStylesheet=function(e){function o(){this.rel="stylesheet"}n(t.getElementById(e),"load",o,{once:!0})}}(window,document);
+!function(a){"use strict";var b=function(b,c,d){function e(a){return h.body?a():void setTimeout(function(){e(a)})}function f(){i.addEventListener&&i.removeEventListener("load",f),i.media=d||"all"}var g,h=a.document,i=h.createElement("link");if(c)g=c;else{var j=(h.body||h.getElementsByTagName("head")[0]).childNodes;g=j[j.length-1]}var k=h.styleSheets;i.rel="stylesheet",i.href=b,i.media="only x",e(function(){g.parentNode.insertBefore(i,c?g:g.nextSibling)});var l=function(a){for(var b=i.href,c=k.length;c--;)if(k[c].href===b)return a();setTimeout(function(){l(a)})};return i.addEventListener&&i.addEventListener("load",f),i.onloadcssdefined=l,l(f),i};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);
+!function(a){if(a.loadCSS){var b=loadCSS.relpreload={};if(b.support=function(){try{return a.document.createElement("link").relList.supports("preload")}catch(b){return!1}},b.poly=function(){for(var b=a.document.getElementsByTagName("link"),c=0;c<b.length;c++){var d=b[c];"preload"===d.rel&&"style"===d.getAttribute("as")&&(a.loadCSS(d.href,d,d.getAttribute("media")),d.rel=null)}},!b.support()){b.poly();var c=a.setInterval(b.poly,300);a.addEventListener&&a.addEventListener("load",function(){b.poly(),a.clearInterval(c)}),a.attachEvent&&a.attachEvent("onload",function(){a.clearInterval(c)})}}}(this);
+!function(w) {
+  w._baseURL = '/';
+  w._publicPath = '/assets/js/';
+  w._noPushState = false;
+  w._noDrawer = true;
+  w._noNavbar = true;
+  w._noToc = false;
+  w._noSearch = true;
+}(window);
+</script>
+
+
+<script async src="/assets/bower_components/MathJax/es5/tex-mml-chtml.js" id="_MathJax"></script>
+
+
+<!--[if gt IE 8]><!---->
+
+  
+
+
+
+
+<link rel="stylesheet" href="/assets/css/hydejack-9.0.5.css" id="_stylePreload">
+<link rel="stylesheet" href="/assets/icomoon/style.css" id="_iconsPreload">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:700%7CNoto+Sans:400,400i,700,700i&display=swap" id="_fontsPreload">
+
+
+
+  <style id="_pageStyle">
+
+html{--accent-color: rgb(79,177,186);--accent-color-faded: rgba(79,177,186,0.5);--accent-color-darkened: #409ba3;--theme-color: rgb(8,46,57)}
+
+</style>
+
+
+<!--<![endif]-->
+
+
+<!--
+Code used for embedding Gumroad on the Hydejack Site. 
+Left here for reference, feel free to delete.
+-->
+<link rel="dns-prefetch" href="https://assets.gumroad.com">
+<script type="module">
+  let p;
+  const promisify = f => x => new Promise(r => f(x).addEventListener('load', r));
+  const loadJS = promisify(window.loadJS);
+  document.querySelector('hy-push-state').addEventListener('load', () => {
+    const io = new IntersectionObserver(async (entries) => {
+      if (entries.some(x => x.isIntersecting)) {
+        p = p || loadJS('https://gumroad.com/js/gumroad-embed.js');
+        await p;
+        if (!window.GumroadEmbed) {
+          await new Promise(function check1(res) {
+            if ('createGumroadEmbed' in window) res(window.createGumroadEmbed());
+            else setTimeout(() => check1(res), 200);
+          });
+        }
+        await new Promise(function check2(res) {
+          if ('GumroadEmbed' in window) res(GumroadEmbed.reload());
+          else setTimeout(() => check2(res), 200);
+        });
+      }
+    }, { rootMargin: '1440px' });
+    document.querySelectorAll('.gumroad-product-embed').forEach(el => io.observe(el));
+  });
+</script>
+<script type="module">
+  let p;
+  const promisify = f => x => new Promise(r => f(x).addEventListener('load', r));
+  const loadJS = promisify(window.loadJS);
+  document.querySelector('hy-push-state').addEventListener('load', () => {
+    const io = new IntersectionObserver(async (entries) => {
+      if (entries.some(x => x.isIntersecting)) {
+        p = p || loadJS('https://gumroad.com/js/gumroad.js');
+        await p;
+        if (!window.GumroadOverlay) {
+          await new Promise(function check(res) {
+            if ('createGumroadOverlay' in window) res(window.createGumroadOverlay());
+            else setTimeout(() => check(res), 200);
+          });
+        }
+      }
+    }, { rootMargin: '300px' });
+    document.querySelectorAll('.gumroad-button').forEach(el => io.observe(el));
+  });
+</script>
+
+
+</head>
+
+<body class="no-break-layout no-drawer">
+  
+
+
+<hy-push-state
+  id="_pushState"
+  replace-selector="#_main"
+  link-selector="a[href]:not([href^='/assets/']):not(.external):not(.no-push-state)"
+  script-selector="script"
+  duration="500"
+  hashchange
+>
+  
+  <div id="_navbar" class="navbar fixed-top">
+  <div class="content">
+    <span class="sr-only">Jump to:</span>
+    <div class="nav-btn-bar">
+      <a id="_menu" class="nav-btn no-hover" href="#_drawer--opened">
+        <span class="sr-only">Navigation</span>
+        <span class="icon-menu"></span>
+      </a>
+      <div class="nav-span"></div>
+    </div>
+  </div>
+</div>
+<hr class="sr-only" hidden />
+
+  <main
+  id="_main"
+  class="content layout-post"
+  role="main"
+>
+  
+
+
+
+
+
+<article id="post-papers-LCCNet" class="page post mb6" role="article">
+  <header>
+    <h1 class="post-title flip-project-title">
+      
+        LCCNet (2021 CVPR)
+      
+    </h1>
+
+    <div class="post-date">
+      
+      <time datetime="2022-01-27T00:00:00+09:00">27 Jan 2022</time>
+      
+      
+      
+      
+      
+
+
+
+
+
+
+
+
+
+in <a href="/papers/" class="flip-title">Paper Review</a>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+
+    
+
+
+
+  <div class="hr pb0"></div>
+
+
+  </header>
+
+  
+    <h2 id="lccnet-lidar-and-camera-self-calibration-using-cost-volume-network">LCCNet: LiDAR and Camera Self-Calibration using Cost Volume Network</h2>
+
+<p>하얼빈 공과대</p>
+
+<p><img src="/papers/images/20220127/Overview.png" alt="Overview" /></p>
+
+<p>Overview에 나온 것처럼 RGB와 LiDAR projection을 통한 Depth map을 이용해 Iterative한 방법으로 Calibration 한다.</p>
+
+<h3 id="abstract">Abstract</h3>
+
+<p>Multi-sensor fusion은 self-driving 및 robot navigation에서 3D reconstruction 및 perception을 향상한다. Sensor간 calibration은 효과적인 multi-sensor fusion을 위한 기저조건이다. 기존에는 LiDAR-camera간 calibration을 위해 수동적이고 힘들며 복잡한 calibration 환경이 요구되어왔다. 우리는 기존 CNN 기반과는 다른 online LiDAR-Camera Self-calibration Network (LCCNet)을 제안한다. LCCNet은 end-to-end로 training이 될 수 있으며 extrinsic parameter를 real-time으로 추정할 수 있다. LCCNet에서 우리는 RGB image feature들과 Depth image간 correlation을 나타내는 cost volume layer를 사용한다. 추정된 extrinsic parameter의 supervised signal인 smooth L1-loss 외에도 self-supervised signal인 point cloud distance loss가 training 단계에서 도입된다. Extrinsic parameter를 직접 regress하는 대신 decalibrated deviation을 ground truth와 initial calibration에서 추정한다 (decalibrated deviation이 뭐지). Calibration error는 iterative refinement와 inference stage에서 temporal filtering approach를 통해 감소한다. 각 iteration에서 단일 GPU에서 24ms의 시간이 소요된다. LCCNet은 KITTI에서 miscalibration이 최대 \(\pm\) 1.5m 와 \(\pm\) 20°인 상황에서 평균 0.297m와 0.017°의 에러를 나타내 SOTA CNN 기반 알고리즘보다 더 나은 결과를 보인다. <a href="https://github.com/LvXudong-HIT/LCCNet">코드</a></p>
+
+<h3 id="introduction">Introduction</h3>
+
+<p>지난 몇년간 autonomous driving 기술은 급속도로 발전해왔다. Autonomous driving 환경은 복잡하고 매우 동적이기에 센서 하나로는 모든 시나리오에서 안정된 perception을 제공할 수 없다. LiDAR-camera fusion은 주변 환경에 대해 안정되고 정확한 perception 및 3D reconstruction 결과를 가질 수 있게 한다. 이는 정밀한 extrinsic calibration에 근간을 두고 있다. LiDAR point cloud와 camera image는 heterogeneous 이종의 데이터이다. Point cloud는 sparse 3D data인 반변 image는 dense 2D data이기에 정밀한 calibration을 통한 2D-3D matching이 요구된다.</p>
+
+<p>기존 체커보드와 같은 인공적인 마커를 이용한 calibration 기법은 노동력 및 시간이 소요되고 offline 방식으로 진행돼 self-driving car production에 적합하지 않다. Vehicle operation 중 sensor간 calibration이 틀어져 re-calibration이 요구된다. 최근 몇몇 연구들은 targetless 환경에서 fully autonomous calibration에 집중한다. 하지만 대부분의 self-calibration 기법들은 특정 환경이 요구되며 offline-calibration에 비해 정확도가 높지 않다. 몇몇 연구자들은 DL을 적용하여 6자유도 rigid body transformation을 추정하였다. 이러한 방법들은 image와 point cloud의 feature간 correlation을 고려하지 않고 바로 융합하는 방식으로 진행된다. 이 논문은 RGB camera-LiDAR calibration의 새로운 기법을 소개한다:</p>
+<ul>
+  <li>LCCNet은 novel end-to-end learning network임. 네트워크는 세가지로 나뉨: feature extraction network, feature matching layer, and global feature aggregation network. Quaternion이 training시 GT로 사용되었으며, GT와 calibration간 smooth L1-Loss 외에도 point cloud distance loss도 적용되었다.</li>
+  <li>Feature matching layer는 RGB와 depth map의 matching cost를 저장하는 const volume를 생성한다. LiDAR-camera elf-calibration에서 최초로 이종 센서의 feature간 correlation을 고려하였다.</li>
+  <li>Calibration accuracy를 높이기 위해 iterative refinement와 multiple frames analysis가 적용되었다. LCCNet은 다른 SOTA보다 최고의 accuracy-speed trade-off를 가지고 있다.</li>
+</ul>
+
+<h3 id="related-work">Related work</h3>
+
+<p>LiDAR와 camera간 calibration은 2D-3D registration problem으로 분류될 수 있다. Calibration은 세종류로 나뉜다.</p>
+
+<ol>
+  <li>Target-based methods
+    <ol>
+      <li>기존 calibration board를 사용한 기법들: 구멍을 뚫어서 하기도 했었구나</li>
+      <li>Spherical target이 빠르고 정확한 calibration에 용이하다고 한다.</li>
+    </ol>
+  </li>
+  <li>Target-less methods
+    <ol>
+      <li>Target 없이 Correspondence 또는 gradient direction으로 하는 기법들</li>
+    </ol>
+  </li>
+  <li>Learning-based methods
+    <ol>
+      <li>RegNet은 CNN을 통해 6자유도 extrinsic parameter를 찾는다.</li>
+      <li>CalibNet은 geometrically supervised deep network를 통해 실시간으로 6자유도 모션을 추정한다. End-to-end training은 geometric, photometric consistency를 최대화 한다.</li>
+      <li>RGGNet은 Rimmaninan geometry와 deep generative model을 통해 tolerance-aware loss function을 생성한다.</li>
+      <li>SOIC은 이를 Semantic centroid의 PNP문제로 해석하였다.</li>
+      <li>Zhu et al은 extrinsic calibration을 semantic feature를 통한 optimization problem으로 해석하였다. 뭔소리지</li>
+    </ol>
+  </li>
+</ol>
+
+<h3 id="method">Method</h3>
+
+<p><img src="/papers/images/20220127/Method.png" alt="Method" /></p>
+
+<p>CNN을 사용한 LiDAR-camera간 6자유도 extrinsic calibration</p>
+
+<h4 id="input-processing">Input Processing</h4>
+
+<p>Initial extrinsic \(T_{init}\)과 camera intrinsic \(K\)를 통해 Depth image를 생성한다. 여기서 Z-buffer (depth buffer?) 기법을 이용해 보이지 않은 depth 값들은 쳐내는듯.</p>
+
+<h4 id="network-architecture">Network Architecture</h4>
+
+<p>네트워크는 feature extraction network, matching layer, global aggregation으로 나뉘는데, 각 parameter가 differentiable하기에 end-to-end가 가능하다.</p>
+
+<ol>
+  <li>Feature Extraction Network
+Feature extraction network은 RGB image와 depth image feature extraction을 위한 두개의 symmetric branch를 가지고 있다:
+    <ul>
+      <li>RGB Branch: pre-trained ResNet-18 without FCN</li>
+      <li>Depth branch: RGB랑 같으나 RELU에서 Leaky RELU를 activation function으로 사용 (이유 안나옴)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Feature Matching Layer
+RGB feature map \(x_{rgb}\)와 depth feature map \(x_{lidar}\)간 matching cost를 계산하기 위해 feature matching layer가 적용됨. PWC-Net에서 영감을 받아 correlation layer를 사용해 feature matching함. cost volume을 \(x_{rgb}\)와 \(x_{lidar}\)의 correlation으로 만듦:
+\(cv(p_1, p_2) = \frac{1}{N}(c(x_{rgb}(p_1)))^\top c(x_{lidar}(p_2))\)
+여기서 \(c(x)\)는 feature map \(x\)의 flatten vector이며 \(N\)은 column vector \(c(x)\)의 길이임. 피쳐들에 대한 cost volume은 limited range of d pixel에서 이루어져야함 (왜인지는 안나옴) i.e., \(\vert p_1 - p_2 \vert _{\infty} \leq d\)</p>
+
+    <p>Input feature map이 굉장히 작기 때문에 (Original image의 1/32) d=2로 설정됨. (결국 initial calibration이 잘 되어있어야 되는거 아님?) 3D cost volume의 dimension은 \(d^2 \times H \times W\)이며, \(H\)와 \(W\)는 feature map \(x_{rgb}\)와 \(x_{lidar}\)의 height와 width임.</p>
+  </li>
+  <li>Feature Global Aggregation
+LCCNet은 6자유도 rigid body transformation을 cost volume feature를 통해 regress한다. 이 네트워크는 512 neuron을 가진 FCN과 두개의 roatation과 translation을 대표하는 stacked FCN branch로 이루어졌다. 네트워크 output은 \(1\times 3\) tranlation vector와 \(1 \times 4\) quaternion이다.</li>
+</ol>
+
+<h4 id="loss-function">Loss Function</h4>
+<p>RGB 이미지와 Depth image에 대해 두가지 loss를 사용한다: regression loss \(L_{T}\), point cloud distance loss \(L_{P}\)
+\(L = \lambda_T L_T + \lambda_P L_P\)</p>
+
+<ol>
+  <li>
+    <p>Regreassion Loss
+Translation vector에 대해 smmoth L1 loss가 적용됨. L1 loss의 미분은 0에서 unique하지 않은 반면 smooth L1 loss는 제곱을 통해 near zero에서 더 부드럽다. 회전에 대한 loss에 대해 quaternion은 기본적으로 방향 정보이므로 Euclidean distance은 두개의 quaternion에 대해 정확히 설명할 수 없다. 따라서 angular distance를 이용해 두 quaternion의 차이를 설명하였다:
+\(L_R = D_a (q_{gt}, q_{pred})\)
+\(D_a\)는 angular distance이다.</p>
+
+    <p>전체 regression loss는 다음과 같다:
+\(L_T = \lambda_t L_t + \lambda_q L_q\)</p>
+  </li>
+  <li>
+    <p>Point Cloud Distance Loss
+Point cloud distance constrain도 추가되었다. LiDAR point cloud들 (\(P = \{ P_1, P_2, \dots, P_N \}\))에 대해 loss \(L_P\)는 다음과 같이 정의한다.
+\(L_P = \frac{1}{N} \sum_{i=1}^{N} \lVert T_{LC}^{-1} \cdot T_{pred}^{-1} \cdot T_{init} \cdot P_i - P_i\rVert_2\)</p>
+
+    <p>이부분이 이해가 안되늗데, 찬찬히 봐보자.</p>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">point_clouds</span><span class="p">)):</span>
+         <span class="n">point_cloud_gt</span> <span class="o">=</span> <span class="n">point_clouds</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">to</span><span class="p">(</span><span class="n">transl_err</span><span class="p">.</span><span class="n">device</span><span class="p">)</span>
+         <span class="n">point_cloud_out</span> <span class="o">=</span> <span class="n">point_clouds</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">clone</span><span class="p">()</span>
+
+         <span class="n">R_target</span> <span class="o">=</span> <span class="n">quat2mat</span><span class="p">(</span><span class="n">target_rot</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+         <span class="n">T_target</span> <span class="o">=</span> <span class="n">tvector2mat</span><span class="p">(</span><span class="n">target_transl</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+         <span class="n">RT_target</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">mm</span><span class="p">(</span><span class="n">T_target</span><span class="p">,</span> <span class="n">R_target</span><span class="p">)</span>
+
+         <span class="n">R_predicted</span> <span class="o">=</span> <span class="n">quat2mat</span><span class="p">(</span><span class="n">rot_err</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+         <span class="n">T_predicted</span> <span class="o">=</span> <span class="n">tvector2mat</span><span class="p">(</span><span class="n">transl_err</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+         <span class="n">RT_predicted</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">mm</span><span class="p">(</span><span class="n">T_predicted</span><span class="p">,</span> <span class="n">R_predicted</span><span class="p">)</span>
+
+         <span class="n">RT_total</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">mm</span><span class="p">(</span><span class="n">RT_target</span><span class="p">.</span><span class="n">inverse</span><span class="p">(),</span> <span class="n">RT_predicted</span><span class="p">)</span>
+
+         <span class="n">point_cloud_out</span> <span class="o">=</span> <span class="n">rotate_forward</span><span class="p">(</span><span class="n">point_cloud_out</span><span class="p">,</span> <span class="n">RT_total</span><span class="p">)</span>
+
+         <span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="n">point_cloud_out</span> <span class="o">-</span> <span class="n">point_cloud_gt</span><span class="p">).</span><span class="n">norm</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+         <span class="n">error</span><span class="p">.</span><span class="n">clamp</span><span class="p">(</span><span class="mf">100.</span><span class="p">)</span>
+         <span class="n">total_loss</span> <span class="o">+=</span> <span class="n">error</span><span class="p">.</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div>    </div>
+    <p>코드에서 나오는 point_cloud_out이 \(T_{LC}^{-1} \cdot T_{pred}^{-1} \cdot T_{init} \cdot P_i\)라는 건데, 이걸 point_cloud_gt랑 빼는 것을 보니.. 그냥 카메라 coordinate에서 바라본 point cloud의 prediction - gt인가? 오타인듯? 모르겠다.</p>
+  </li>
+</ol>
+
+<h4 id="calibration-inference-and-refinement">Calibration Inference and Refinement</h4>
+<p>Extrinsic parameter는 다음과 같다:
+\(\hat{T}_{LC} = T_{pred}^{-1}\cdot T_{init}\)</p>
+
+<p>여기서 다양한 range에 대해 다양한 network을 training시킨다.</p>
+
+<p>1.5m, 1.0m, 0.5, 0.2m, 0.1m, 그리고 20°, 10°, 5°, 2°, 1°까지 range를 만들고, 나중의 작은 range는 maximum mean absolute error (MAE)를 통해 결정했다고 한다 (결과에 따라 정밀한 calibration을 위한 training인듯).</p>
+
+<p>여튼 1.5m, 20°로 train된 network를 시작으로 다음 range, 다음 range로 다시 넣어 최종 extrinsic calibration은 다음과 같다:
+\(\hat{T}_{LC} = (T_0 \cdot T_1 \dots T_5)^{-1}\cdot T_{init}\)</p>
+<h3 id="experiments-and-discussion">Experiments and Discussion</h3>
+
+<h4 id="data-preparation">Data Preparation</h4>
+<p>KITTI odometry data를 이용했음. LiDAR와 left color camera 사용 01~20까지 train &amp; validation, 00을 testset. 200프래임 제외 모두 spatially independent함. Random deviation을 추가해서 data 추가:
+\(T_{init} = \Delta T \cdot T_{LC}\)</p>
+
+<h4 id="evaluation-metrics">Evaluation Metrics</h4>
+<p>Translation: L2 norm 사용</p>
+
+<p>Rotation: Quaternion angle distance 사용</p>
+
+<h4 id="traiing-details">Traiing Details</h4>
+<p>Adam Optimizer with initial learning rate of \(3e^{-4}\). Two Nvidia GP100 GPU with batch size 120 and total epochs 120. Large-range model이 pre-trained model로 사용됨. largest는 120, 작은 것들은 50으로 epoch가 설정됨.</p>
+
+<h4 id="results-and-discussion">Results and Discussion</h4>
+
+<p><img src="/papers/images/20220127/Result1.png" alt="Result1" /></p>
+
+<p>작은 네트워크로 진행될 수록 작아지는 것을 볼 수 있음.</p>
+
+<p><img src="/papers/images/20220127/Result2.png" alt="Result2" /></p>
+
+<p>Random initial parameter에 대해 calibration이 잘 됨을 알 수 있음.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+  
+</article>
+
+
+<hr class="dingbat related" />
+
+
+
+
+  
+     
+
+
+  <aside class="about related mt4 mb4" role="complementary">
+    
+    
+
+<div class="author mt4">
+  
+
+  
+    
+
+
+<img
+  
+    src="/assets/img/dh.jpg"
+    
+    
+  
+  alt="<Dongha> <Chung>"
+  class="avatar"
+  
+  width="120"
+  height="120"
+  loading="lazy"
+/>
+
+  
+
+  
+  
+  <h2  class="page-title hr-bottom">
+    About
+  </h2>
+
+  <p><strong>Dongha Chung</strong></p>
+
+<p>A robotics perception engineer</p>
+
+
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/dhchung" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.youtube.com/channel/UC2MeUdGRQws1YhdQt0wf_vA/" title="YouTube" class="no-mark-external">
+      <span class="icon-youtube"></span>
+      <span class="sr-only">YouTube</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.linkedin.com/in/dongha-chung-b7a538bb" title="LinkedIn" class="no-mark-external">
+      <span class="icon-linkedin2"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+
+  </aside>
+
+
+  
+
+  
+  
+
+  
+    
+
+
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/programming/2022-03-08-OmniCalib/" class="flip-title"><span>Extrinsic calibration of omnidirectional camera using factor graph</span></a>  <time class="faded fine" datetime="2022-03-08T00:00:00+09:00">08 Mar 2022</time></li>                        <li class="h4">  <a href="/programming/2021-12-30-lidar_projection/" class="flip-title"><span>LiDAR Projection</span></a>  <time class="faded fine" datetime="2021-12-30T00:00:00+09:00">30 Dec 2021</time></li>                        <li class="h4">  <a href="/papers/2021-12-23-ikdtree/" class="flip-title"><span>ikd-Tree (2021 arxiv)</span></a>  <time class="faded fine" datetime="2021-12-23T00:00:00+09:00">23 Dec 2021</time></li>            </ul></aside>
+
+  
+
+  
+  
+
+  
+    
+
+  
+
+
+  
+<footer class="content" role="contentinfo">
+  <hr/>
+  
+    <p><small class="copyright">© 2020. All rights reserved.
+</small></p>
+  
+  
+    <p><small>Powered by <a class="external" href="https://hydejack.com/">Hydejack</a> v<span id="_version">9.0.5</span></small></p>
+  <hr class="sr-only"/>
+</footer>
+
+
+</main>
+
+  <hy-drawer
+  id="_drawer"
+  class=""
+  side="left"
+  threshold="10"
+  noscroll
+  
+>
+  <header id="_sidebar" class="sidebar" role="banner">
+    
+
+
+
+
+<div class="sidebar-bg sidebar-overlay" style="background-color:rgb(8,46,57);background-image:url(/assets/img/side.jpg)"></div>
+
+    <div class="sidebar-sticky">
+  <div class="sidebar-about">
+    
+      <a class="no-hover" href="/" tabindex="-1">
+        <img src="/assets/img/dh.jpg" class="avatar" alt="Dongha Chung" width="120" height="120" loading="lazy" />
+      </a>
+    
+    <a class="sidebar-title" href="/"><h2 class="h1">Dongha Chung</h2></a>
+    
+    
+      <p class="">
+        Scribbling stuffs
+
+      </p>
+    
+  </div>
+
+  <nav class="sidebar-nav heading" role="navigation">
+    <span class="sr-only">Navigation:</span>
+<ul>
+  
+    
+      
+      <li>
+        <a
+          id="_drawer--opened"
+          href="/about/"
+          class="sidebar-nav-item "
+          
+        >
+          About
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/cv"
+          class="sidebar-nav-item "
+          
+        >
+          Curriculum Vitae
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/papers/"
+          class="sidebar-nav-item "
+          
+        >
+          Paper Review
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/slam/"
+          class="sidebar-nav-item "
+          
+        >
+          SLAM
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/programming/"
+          class="sidebar-nav-item "
+          
+        >
+          Programming
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/logging/"
+          class="sidebar-nav-item "
+          
+        >
+          Logging
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/allposts/"
+          class="sidebar-nav-item "
+          
+        >
+          All Posts
+        </a>
+      </li>
+    
+  
+</ul>
+
+  </nav>
+
+  
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/dhchung" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.youtube.com/channel/UC2MeUdGRQws1YhdQt0wf_vA/" title="YouTube" class="no-mark-external">
+      <span class="icon-youtube"></span>
+      <span class="sr-only">YouTube</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://www.linkedin.com/in/dongha-chung-b7a538bb" title="LinkedIn" class="no-mark-external">
+      <span class="icon-linkedin2"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+  </header>
+</hy-drawer>
+<hr class="sr-only" hidden />
+
+</hy-push-state>
+
+
+  <!--[if gt IE 10]><!---->
+  <script nomodule>!function(){var e=document.createElement("script");if(!("noModule"in e)&&"onbeforeload"in e){var t=!1;document.addEventListener("beforeload",function(n){if(n.target===e)t=!0;else if(!n.target.hasAttribute("nomodule")||!t)return;n.preventDefault()},!0),e.type="module",e.src=".",document.head.appendChild(e),e.remove()}}();
+</script>
+  <script src="/assets/js/hydejack-9.0.5.js" type="module"></script>
+  <script src="/assets/js/LEGACY-hydejack-9.0.5.js" nomodule defer></script>
+  
+
+  
+
+<!--<![endif]-->
+  <!--
+Code for integrating CloudFlare's email protection with Hydejack's single page app loading.
+-->
+<script>
+  document.getElementById('_pushState').addEventListener('hy-push-state-after', function (e) {
+    function e(e){
+      (console.error?console.error:console.log).call(console,e)
+    }
+
+    function t(e){
+      return l.innerHTML='<a href="'+e.replace(/"/g,"&quot;")+'"></a>',l.childNodes[0].getAttribute("href")
+    }
+
+    function r(e,t){
+      var r=e.substr(t,2);return parseInt(r,16)
+    }
+
+    function n(e,n){
+      for(var o="",c=r(e,n),a=n+2;a<e.length;a+=2){
+        var l=r(e,a)^c;
+        o+=String.fromCharCode(l)
+      }
+      return t(o)
+    }
+
+    var o="/cdn-cgi/l/email-protection#",
+        c=".__cf_email__",
+        a="data-cfemail",
+        l=document.createElement("div");
+
+    !function(){
+      for(var t=document.getElementsByTagName("a"),r=0;r<t.length;r++)
+        try{
+          var c=t[r],a=c.href.indexOf(o);
+          a>-1&&(c.href="mailto:"+n(c.href,a+o.length))
+        }catch(t){
+          e(t)
+        }
+    }(),
+    function(){
+      for(var t=document.querySelectorAll(c),r=0;r<t.length;r++)
+        try{
+          var o=t[r],l=n(o.getAttribute(a),0),i=document.createTextNode(l);
+          o.parentNode.replaceChild(i,o)
+        }catch(t){
+          e(t)
+        }
+    }()
+  });
+</script>
+
+
+
+
+
+<div hidden>
+  
+  <h2 class="sr-only">Templates (for web app):</h2>
+
+  <template id="_animation-template">
+  <div class="animation-main fixed-top">
+    <div class="content">
+      <div class="page"></div>
+    </div>
+  </div>
+</template>
+
+  <template id="_loading-template">
+  <div class="loading nav-btn fr">
+    <span class="sr-only">Loading…</span>
+    <span class="icon-cog"></span>
+  </div>
+</template>
+
+  <template id="_error-template">
+  <div class="page">
+    <h1 class="page-title">Error</h1>
+    
+    
+    <p class="lead">
+      Sorry, an error occurred while loading <a class="this-link" href=""></a>.
+
+    </p>
+  </div>
+</template>
+
+  <template id="_forward-template">
+  <button id="_forward" class="forward nav-btn no-hover">
+    <span class="sr-only">Forward</span>
+    <span class="icon-arrow-right2"></span>
+  </button>
+</template>
+
+  <template id="_back-template">
+  <button id="_back" class="back nav-btn no-hover">
+    <span class="sr-only">Back</span>
+    <span class="icon-arrow-left2"></span>
+  </button>
+</template>
+
+  <template id="_permalink-template">
+  <a href="#" class="permalink">
+    <span class="sr-only">Permalink</span>
+    <span class="content-hash"></span>
+  </a>
+</template>
+
+</div>
+
+
+</body>
+</html>

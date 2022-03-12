@@ -305,25 +305,11 @@ Ouster OS2 128채널 기준 point 수: 262144</p>
 
 <p>LiDAR Extrinsic parameter: \(R_{LiDAR}, t_{LiDAR}\)</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>LiDAR Transformation matrix: $$T_{LiDAR} = \left[ R</td>
-      <td>t; \left[0, 0, 0, 1 \right] \right]$$</td>
-    </tr>
-  </tbody>
-</table>
+<p>LiDAR Transformation matrix: \(T_{LiDAR} = \left[ R\; \vert \; t; \left[ 0, 0, 0, 1 \right] \right]\)</p>
 
 <p>Camera Extrinsic parameter: \(R_{cam}, t_{cam}\)</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>Camera Projection matrix: $$P = C \left [ R’</td>
-      <td>-R’t \right]$$</td>
-    </tr>
-  </tbody>
-</table>
+<p>Camera Projection matrix: \(P = C \left [ R' \; \vert \; -R't \right]\)</p>
 
 <p>위와 같이 되고, LiDAR point cloud를 \(\mathbf{X}_{LiDAR}\)로 표현하게 되면:</p>
 
@@ -341,7 +327,7 @@ Ouster OS2 128채널 기준 point 수: 262144</p>
 
 <p>Projected Lidar point cloud:</p>
 
-\[\mathbf{X}h_{cam} = C \left [ R' | -R't \right] T_{LiDAR}P_{LiDAR}\]
+\[\mathbf{X}h_{cam} = C \left[ R' \; \vert \; -R't \right] T_{LiDAR}P_{LiDAR}\]
 
 <p>만약 LiDAR point cloud를 먼저 global reference frame로 바꿔주고 projection matrix를 다시 곱해준다면 연산이 2배 이상으로 드는 것을 확인할 수 있다.</p>
 
@@ -562,7 +548,7 @@ OS1 64ch Total time: 0.000388105s</p>
     
 
 
-  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/papers/2021-12-23-ikdtree/" class="flip-title"><span>ikd-Tree (2021 arxiv)</span></a>  <time class="faded fine" datetime="2021-12-23T00:00:00+09:00">23 Dec 2021</time></li>                        <li class="h4">  <a href="/logging/programming/2021-12-18-USV_dataset/" class="flip-title"><span>Dataset for USV</span></a>  <time class="faded fine" datetime="2021-12-18T00:00:00+09:00">18 Dec 2021</time></li>                        <li class="h4">  <a href="/programming/2021-12-10-threading/" class="flip-title"><span>I need to study about threading!!!</span></a>  <time class="faded fine" datetime="2021-12-10T00:00:00+09:00">10 Dec 2021</time></li>            </ul></aside>
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/programming/2022-03-08-OmniCalib/" class="flip-title"><span>Extrinsic calibration of omnidirectional camera using factor graph</span></a>  <time class="faded fine" datetime="2022-03-08T00:00:00+09:00">08 Mar 2022</time></li>                        <li class="h4">  <a href="/papers/2022-01-27-LCCNet/" class="flip-title"><span>LCCNet (2021 CVPR)</span></a>  <time class="faded fine" datetime="2022-01-27T00:00:00+09:00">27 Jan 2022</time></li>                        <li class="h4">  <a href="/papers/2021-12-23-ikdtree/" class="flip-title"><span>ikd-Tree (2021 arxiv)</span></a>  <time class="faded fine" datetime="2021-12-23T00:00:00+09:00">23 Dec 2021</time></li>            </ul></aside>
 
   
 

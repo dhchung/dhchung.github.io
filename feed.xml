@@ -1,5 +1,276 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-12-30T10:46:15+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
-</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">LiDAR Projection</title><link href="http://localhost:4000/programming/2021-12-30-lidar_projection/" rel="alternate" type="text/html" title="LiDAR Projection" /><published>2021-12-30T00:00:00+09:00</published><updated>2021-12-30T00:00:00+09:00</updated><id>http://localhost:4000/programming/lidar_projection</id><content type="html" xml:base="http://localhost:4000/programming/2021-12-30-lidar_projection/">&lt;p&gt;LiDAR - camera calibration program을 제작하던 중, projection에 해당되는 픽셀값을 가져와 LiDAR color에 적용시키는데 시간이 많이 드는 것을 확인했다.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-03-12T22:24:24+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dongha Chung</title><subtitle>Hola
+</subtitle><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><entry><title type="html">Extrinsic calibration of omnidirectional camera using factor graph</title><link href="http://localhost:4000/programming/2022-03-08-OmniCalib/" rel="alternate" type="text/html" title="Extrinsic calibration of omnidirectional camera using factor graph" /><published>2022-03-08T00:00:00+09:00</published><updated>2022-03-08T00:00:00+09:00</updated><id>http://localhost:4000/programming/OmniCalib</id><content type="html" xml:base="http://localhost:4000/programming/2022-03-08-OmniCalib/">&lt;p&gt;Omnidirectional camera (이하 omni camera) 의 extrinsic calibration 을 하는데 있어 “대충 겹치겠지” 생각을 하고 진행을 했으나.. 생각보다 많이 겹쳐지지 않고, 또한 기존 OpenCV나 Caltech calibration toolbox에서 multi-camera system에서 이러한 경우에 대해 calibration하는 방법에 대해 많이 나와있지 않은 것 같아 개인적으로 개발하게 되었다. 우선 사용한 omni camera는 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/programming/images/20220312/ladybug5p.jpg&quot; alt=&quot;Ladybug 5+&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Omni camera는 Flir사의 Ladybug 5+ 모델로, horizontal 방향으로 5개의 camera가 있으며, 각각 광각 렌즈를 탑재하여 조금씩 겹쳐지게 되어있으며 원본 영상은 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/20220312/omni_imgs.jpg&quot; alt=&quot;Omnidirectional camera images&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위의 영상의 첫번째 행 왼쪽부터 오른쪽까지 camera 0, 1, 2의 영상이며 두번째 행의 왼쪽부터 오른쪽까지가 3, 4, 5의 영상이다. camera 0, 1, 2, 3, 4가 horizontal camera들이며, camera 5가 위를 바라보고 있다.&lt;/p&gt;
+
+&lt;p&gt;이를 이대로 사용하게 되면 광각렌즈로부터 오는 distortion이 심해 두 camera가 겹쳐지는 부분에 대한 marker 인식이 잘 안될 뿐더러 인식이 되더라도 잘못된 값을 나타내었다. 따라서 우선 undistort를 진행하고 calibration을 하기로 하였다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/20220312/omni_imgs_undistort.jpg&quot; alt=&quot;Undistorted omnidirectional camera images&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;각 camera에 대해 intrinsic calibration을 진행한 후 undistortion을 한 결과이다. 생각보다 겹쳐지는 부분이 거의 없다! OpenCV의 getOptimalNewCameraMatrix 함수를 통해 잘리지 않은 부분도 나타나게 해주는 새로운 camera matrix를 구할 수 있었다.&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;n&quot;&gt;cv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getOptimalNewCameraMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Camera&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matrix&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;intrinsic&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;calibration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+                              &lt;span class=&quot;n&quot;&gt;Distortion&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;coefficient&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;intrinsic&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;calibration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+                              &lt;span class=&quot;n&quot;&gt;Input&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                              &lt;span class=&quot;n&quot;&gt;alpha&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                              &lt;span class=&quot;n&quot;&gt;Output&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                              &lt;span class=&quot;n&quot;&gt;Valid&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ROI&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                              &lt;span class=&quot;n&quot;&gt;Center&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;principal&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;point&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위의 코드에서 alpha값은 0에서 1 사이의 수인데, 0에 가까워질수록 distortion이 없는 부분만 잘라서 보여주며, 1에 가까워질수록 원본 영상이 모두 나타난다. 위의 영상이 0일때의 영상이며 1일때의 영상은 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/20220312/omni_images_undistorted_all.jpg&quot; alt=&quot;Undistorted omnidirectional camera images with alpha=1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;각 camera가 비슷할꺼라 생각했는데 아니었다! (생각해보면 당연하다. 위를 보는 것은 각 camera와 90도나 차이나니… horizontal 방향으로도 모두 차이가 있음을 알 수 있다.) 각 영상에서 네모로 쳐진 부분이 위의 코드에서 valid roi에 대한 부분이며, 이를 잘라내면 0일때의 영상이 나타난다.&lt;/p&gt;
+
+&lt;p&gt;여튼, 일단 겹쳐지는 부분이 있어야 했기에 울며 겨자먹기로 distortion effect가 조금 덜하기를 바라며 alpha를 0.3으로 해서 calibration을 진행했다. 영상간 overlapping region이 굉장히 작았기에, 기존의 checkerboard 기반으로 진행하면 각 영상에서 checkerboard가 모두 보이지 않아 영상간 correspondence가 나타나지 않아 대신 Aruco marker를 기반으로 marker detection을 통해 correspondence를 찾기로 하였다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../imaes/../images/20220312/first_calibration_board.jpg&quot; alt=&quot;First calibration board&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/20220312/extrinsic_with_0point3.jpg&quot; alt=&quot;First extrinsic calibration&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;각기 다른 marker id를 가진 Aruco marker 8개를 평평한 판에 부착하여 영상을 취득하였다. Valid ROI 내부에 아주 조금이나마 겹쳐지는 것으로 보이지만, 광각이 더 넓은 top view와 겹쳐지는 부분을 찾는건 아래 이미지와 같이 더 답이 없었다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/20220312/extrinsic_with_0point3_with_topview.jpg&quot; alt=&quot;First extrinsic calibration&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Camera 5와 다른 camera간의 extrinsic calibration을 위해 마커를 겹쳐지게 하는건 valid roi 외부로 겹쳐지게 하는 수 밖에 없었다. 여하튼 이렇게 얻어진 correspondence들을 통해 extrinsic calibration을 진행해야 되는데, OpenCV를 이용해 extrinsic calibration을 하는 방법은 stereo camera calibration에 대한 방법만 친절히 설명되어있으며, 3대 이상의 camera에 대해 calibration하는 방법에 대해 진행한 경우는 많이 보지 못하였다. 그 또한 모든 camera가 동시에 calibration board를 detect한 경우에만 가능한 것 처럼 보였다.&lt;/p&gt;
+
+&lt;p&gt;그래서 Factor graph를 사용해보기로 하였다. SLAM에서 measurement를 기반으로 state와 landmark를 update를 하는 방법과 비슷하면서도 다르게, state는 6개의 camera로 고정해놓고 observation들을 다 때려 넣은 뒤 optimization하는 방식이다. (Bundle adjustment에 더 가깝다고 볼 수 있다. tool만 factor graph를 사용한거지..) Factor graph는 gtsam을 사용하여 구현하였다.&lt;/p&gt;
+
+&lt;p&gt;Initial들은 다음과 같다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Camera state initials: 초기 camera state들은 camera centre가 모두 겹쳐져있고, camera 0을 (1, 0, 0) 향하게 한 뒤 0부터 4까지 360도를 5로 나누어 각각 5개 방향으로 보게 한 뒤 camera 5를 (0, 0, 1)로 향하게 하였다. 각 camera의 z 방향을 앞서 언급한 것과 같이 설정한 뒤 x, y 방향은 camera 영상을 보며 맞춰줬다. (gtsam::Pose3)&lt;/li&gt;
+  &lt;li&gt;Landmark initials: Landmark들은 marker의 각 corner점들의 3차원 point로 사용하였다 (gtsam::Point3). 먼저 영상에서 detect된 마커를 기반으로 solvepnp를 통해 마커의 camera 상대위치를 구한 다음, camera pose를 이용해 global 좌표계에서의 marker corner점들을 계산해 initial 로 넣었다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Factor들은 다음과 같다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Projection factor: Landmark들이 각 camera 영상에 어디에 위치했는지의 measurement를 이용해 factor를 구성하였다. (gtsam::GenericProjectionFactor)&lt;/li&gt;
+  &lt;li&gt;Range factor: 한개의 marker에 대해 4개의 corner점간의 거리를 알기에 range factor를 사용하였다. 각 마커마다 6개의 factor를 사용했는데, corner 0부터 3에 대해 0-1, 1-2, 2-3, 3-0, 0-2, 1-3 이런식으로 global space에서의 거리를 지정해주었다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Range factor를 사용하기 전, Vladlen Koltun 박사님 아래에서 일하시는 &lt;a href=&quot;https://rachithp.github.io/&quot;&gt;이분&lt;/a&gt;이 하신 &lt;a href=&quot;https://rachithp.github.io/projects/slam/report.pdf&quot;&gt;일&lt;/a&gt;의 방법에서 BetweenFactorPoint3를 이용해봤는데, 이는 world 좌표계에서 각 점들의 상대위치를 fix해버리는 방식이라 적합하지 않았다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/20220312/first_calibration_result.jpg&quot; alt=&quot;First calibration result&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Camera 0부터 5는 각각 빨간색 초록색 파란색 보라색 검은색 시안(Cyan)색으로 표현되어있으며, 선분의 끝의 점들이 camera centre를 나타낸다. Camera centre가 겹쳐지지 않기에 완벽한 panorama image가 생성되지 않음을 알 수 있다.&lt;/p&gt;
+
+&lt;p&gt;여기까지 결과가 대충 잘 나온거 같은데, 아무래도 valid roi 밖에서 detect된 부분이 여전히 찝찝했다. 그래서 camera가 겹쳐지지 않는 경우에도 calibration을 진행할 수 있을까 라는 아이디어로부터 출발해 다음과 같이 실행하였다.&lt;/p&gt;
+
+&lt;p&gt;우선 calibration board의 길이를 조금 더 늘려봤다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/20220312/second_calibration_board.jpg&quot; alt=&quot;Second calibration board&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위에서부터 0, 1, 2, …, 9의 code를 가진 marker들로 만들었는데, A4용지 두개로 하다보니 중간에 치수가 안맞게 나와 4와 5는 화이트로 지웠다.&lt;/p&gt;
+
+&lt;p&gt;Camera FOV가 겹쳐지지 않더라도, 치수를 알고 있는 board를 사용함으로서 같은 점을 보지 않더라도 marker간 거리를 이용해 factor를 걸어주는 방식으로 하였으며, 예시로 camera 0에서 marker 0, camera 5에서 marker 9만 보인다고 하더라도 camera간 extrinsic parameter를 추정할 수 있게 하였다.&lt;/p&gt;
+
+&lt;p&gt;전체 6개 camera에서 마커가 detect된 camera의 갯수가 2개 이상일 경우 measurement를 넣는 방식으로 진행하였다.&lt;/p&gt;
+
+&lt;p&gt;여기서 marker간 거리로만 distance factor를 줄 경우 같은 평면에 있다라는 점을 활용하지 못하기에, camera pose 이와의 board pose를 노드로 추가하고 board pose에서 바라본 각 marker corner의 점의 3차원 위치에 대한 factor를 추가하는 방식으로 진행하였다.&lt;/p&gt;
+
+&lt;p&gt;Measurement가 3차원 coordinates인 factor가 없기에 새로 만들까 싶었지만, 시간상 원래 존재하는 BearingRangeFactor를 활용해 board와 landmark (marker corner)간 factor를 형성하였다. 여기서 정확히 BearingRangeFactor가 아닌 뭔가 solid한 constraint를 주는게 원해 맞는데, 일단 measurement noise를 아주 작게 설정하고 진행하였다.&lt;/p&gt;
+
+&lt;p&gt;Initial들은 다음과 같다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Camera state initials&lt;/li&gt;
+  &lt;li&gt;Landmark Initials&lt;/li&gt;
+  &lt;li&gt;(new) Board pose initials: 각 camera에서 detect된 marker의 relative pose를 활용해 camera에서 바라본 board 중앙의 relative pose를 계산하였다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Factor들은 다음과 같다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Projection factor&lt;/li&gt;
+  &lt;li&gt;(new) Landmark measurement factors from the board : board 좌표계에서 각 corner point들이 z=0이라는 점을 활용해 BearingRangeFactor를 이용하여 factor로 연결하였다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;따라서 이전에는 camera 노드와 landmark들이 직접적으로 연결된 반면, 이번에는 camera-board 간 relative pose factor, board-landmark 간 bearing range factor, landmark-camera간 projection factor로 형성하였다.&lt;/p&gt;
+
+&lt;p&gt;이번에는 alpha값을 0으로 하여 distortion이 없는 부분만 활용하여 진행했다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/20220312/second_calibration_topview.jpg&quot; alt=&quot;Second calibration with alpha=0&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Calibration board를 길게 함으로서 첫번째와 다르게 measurement들이 모두 distortion이 없는 부분들에만 있음을 볼 수 있다.(편안)&lt;/p&gt;
+
+&lt;p&gt;결과는 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/20220312/second_calibration_results.jpg&quot; alt=&quot;Second calibration result&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;영상을 더 찍어야 되는데, 1000장이 넘어가는 첫번째 실험에 비해 두번째 실험은 300장정도밖에 찍지 못해 landmark 수가 훨씬 적다.&lt;/p&gt;
+
+&lt;p&gt;다음 단계로 각 방법에 대한 reprojection error에 대해 분석을 해볼 예정&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="programming" /><summary type="html">Omnidirectional camera (이하 omni camera) 의 extrinsic calibration 을 하는데 있어 “대충 겹치겠지” 생각을 하고 진행을 했으나.. 생각보다 많이 겹쳐지지 않고, 또한 기존 OpenCV나 Caltech calibration toolbox에서 multi-camera system에서 이러한 경우에 대해 calibration하는 방법에 대해 많이 나와있지 않은 것 같아 개인적으로 개발하게 되었다. 우선 사용한 omni camera는 다음과 같다.</summary></entry><entry><title type="html">LCCNet (2021 CVPR)</title><link href="http://localhost:4000/papers/2022-01-27-LCCNet/" rel="alternate" type="text/html" title="LCCNet (2021 CVPR)" /><published>2022-01-27T00:00:00+09:00</published><updated>2022-01-27T00:00:00+09:00</updated><id>http://localhost:4000/papers/LCCNet</id><content type="html" xml:base="http://localhost:4000/papers/2022-01-27-LCCNet/">&lt;h2 id=&quot;lccnet-lidar-and-camera-self-calibration-using-cost-volume-network&quot;&gt;LCCNet: LiDAR and Camera Self-Calibration using Cost Volume Network&lt;/h2&gt;
+
+&lt;p&gt;하얼빈 공과대&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/papers/images/20220127/Overview.png&quot; alt=&quot;Overview&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Overview에 나온 것처럼 RGB와 LiDAR projection을 통한 Depth map을 이용해 Iterative한 방법으로 Calibration 한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;abstract&quot;&gt;Abstract&lt;/h3&gt;
+
+&lt;p&gt;Multi-sensor fusion은 self-driving 및 robot navigation에서 3D reconstruction 및 perception을 향상한다. Sensor간 calibration은 효과적인 multi-sensor fusion을 위한 기저조건이다. 기존에는 LiDAR-camera간 calibration을 위해 수동적이고 힘들며 복잡한 calibration 환경이 요구되어왔다. 우리는 기존 CNN 기반과는 다른 online LiDAR-Camera Self-calibration Network (LCCNet)을 제안한다. LCCNet은 end-to-end로 training이 될 수 있으며 extrinsic parameter를 real-time으로 추정할 수 있다. LCCNet에서 우리는 RGB image feature들과 Depth image간 correlation을 나타내는 cost volume layer를 사용한다. 추정된 extrinsic parameter의 supervised signal인 smooth L1-loss 외에도 self-supervised signal인 point cloud distance loss가 training 단계에서 도입된다. Extrinsic parameter를 직접 regress하는 대신 decalibrated deviation을 ground truth와 initial calibration에서 추정한다 (decalibrated deviation이 뭐지). Calibration error는 iterative refinement와 inference stage에서 temporal filtering approach를 통해 감소한다. 각 iteration에서 단일 GPU에서 24ms의 시간이 소요된다. LCCNet은 KITTI에서 miscalibration이 최대 \(\pm\) 1.5m 와 \(\pm\) 20°인 상황에서 평균 0.297m와 0.017°의 에러를 나타내 SOTA CNN 기반 알고리즘보다 더 나은 결과를 보인다. &lt;a href=&quot;https://github.com/LvXudong-HIT/LCCNet&quot;&gt;코드&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+
+&lt;p&gt;지난 몇년간 autonomous driving 기술은 급속도로 발전해왔다. Autonomous driving 환경은 복잡하고 매우 동적이기에 센서 하나로는 모든 시나리오에서 안정된 perception을 제공할 수 없다. LiDAR-camera fusion은 주변 환경에 대해 안정되고 정확한 perception 및 3D reconstruction 결과를 가질 수 있게 한다. 이는 정밀한 extrinsic calibration에 근간을 두고 있다. LiDAR point cloud와 camera image는 heterogeneous 이종의 데이터이다. Point cloud는 sparse 3D data인 반변 image는 dense 2D data이기에 정밀한 calibration을 통한 2D-3D matching이 요구된다.&lt;/p&gt;
+
+&lt;p&gt;기존 체커보드와 같은 인공적인 마커를 이용한 calibration 기법은 노동력 및 시간이 소요되고 offline 방식으로 진행돼 self-driving car production에 적합하지 않다. Vehicle operation 중 sensor간 calibration이 틀어져 re-calibration이 요구된다. 최근 몇몇 연구들은 targetless 환경에서 fully autonomous calibration에 집중한다. 하지만 대부분의 self-calibration 기법들은 특정 환경이 요구되며 offline-calibration에 비해 정확도가 높지 않다. 몇몇 연구자들은 DL을 적용하여 6자유도 rigid body transformation을 추정하였다. 이러한 방법들은 image와 point cloud의 feature간 correlation을 고려하지 않고 바로 융합하는 방식으로 진행된다. 이 논문은 RGB camera-LiDAR calibration의 새로운 기법을 소개한다:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;LCCNet은 novel end-to-end learning network임. 네트워크는 세가지로 나뉨: feature extraction network, feature matching layer, and global feature aggregation network. Quaternion이 training시 GT로 사용되었으며, GT와 calibration간 smooth L1-Loss 외에도 point cloud distance loss도 적용되었다.&lt;/li&gt;
+  &lt;li&gt;Feature matching layer는 RGB와 depth map의 matching cost를 저장하는 const volume를 생성한다. LiDAR-camera elf-calibration에서 최초로 이종 센서의 feature간 correlation을 고려하였다.&lt;/li&gt;
+  &lt;li&gt;Calibration accuracy를 높이기 위해 iterative refinement와 multiple frames analysis가 적용되었다. LCCNet은 다른 SOTA보다 최고의 accuracy-speed trade-off를 가지고 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;related-work&quot;&gt;Related work&lt;/h3&gt;
+
+&lt;p&gt;LiDAR와 camera간 calibration은 2D-3D registration problem으로 분류될 수 있다. Calibration은 세종류로 나뉜다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Target-based methods
+    &lt;ol&gt;
+      &lt;li&gt;기존 calibration board를 사용한 기법들: 구멍을 뚫어서 하기도 했었구나&lt;/li&gt;
+      &lt;li&gt;Spherical target이 빠르고 정확한 calibration에 용이하다고 한다.&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Target-less methods
+    &lt;ol&gt;
+      &lt;li&gt;Target 없이 Correspondence 또는 gradient direction으로 하는 기법들&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Learning-based methods
+    &lt;ol&gt;
+      &lt;li&gt;RegNet은 CNN을 통해 6자유도 extrinsic parameter를 찾는다.&lt;/li&gt;
+      &lt;li&gt;CalibNet은 geometrically supervised deep network를 통해 실시간으로 6자유도 모션을 추정한다. End-to-end training은 geometric, photometric consistency를 최대화 한다.&lt;/li&gt;
+      &lt;li&gt;RGGNet은 Rimmaninan geometry와 deep generative model을 통해 tolerance-aware loss function을 생성한다.&lt;/li&gt;
+      &lt;li&gt;SOIC은 이를 Semantic centroid의 PNP문제로 해석하였다.&lt;/li&gt;
+      &lt;li&gt;Zhu et al은 extrinsic calibration을 semantic feature를 통한 optimization problem으로 해석하였다. 뭔소리지&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;method&quot;&gt;Method&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/papers/images/20220127/Method.png&quot; alt=&quot;Method&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;CNN을 사용한 LiDAR-camera간 6자유도 extrinsic calibration&lt;/p&gt;
+
+&lt;h4 id=&quot;input-processing&quot;&gt;Input Processing&lt;/h4&gt;
+
+&lt;p&gt;Initial extrinsic \(T_{init}\)과 camera intrinsic \(K\)를 통해 Depth image를 생성한다. 여기서 Z-buffer (depth buffer?) 기법을 이용해 보이지 않은 depth 값들은 쳐내는듯.&lt;/p&gt;
+
+&lt;h4 id=&quot;network-architecture&quot;&gt;Network Architecture&lt;/h4&gt;
+
+&lt;p&gt;네트워크는 feature extraction network, matching layer, global aggregation으로 나뉘는데, 각 parameter가 differentiable하기에 end-to-end가 가능하다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Feature Extraction Network
+Feature extraction network은 RGB image와 depth image feature extraction을 위한 두개의 symmetric branch를 가지고 있다:
+    &lt;ul&gt;
+      &lt;li&gt;RGB Branch: pre-trained ResNet-18 without FCN&lt;/li&gt;
+      &lt;li&gt;Depth branch: RGB랑 같으나 RELU에서 Leaky RELU를 activation function으로 사용 (이유 안나옴)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Feature Matching Layer
+RGB feature map \(x_{rgb}\)와 depth feature map \(x_{lidar}\)간 matching cost를 계산하기 위해 feature matching layer가 적용됨. PWC-Net에서 영감을 받아 correlation layer를 사용해 feature matching함. cost volume을 \(x_{rgb}\)와 \(x_{lidar}\)의 correlation으로 만듦:
+\(cv(p_1, p_2) = \frac{1}{N}(c(x_{rgb}(p_1)))^\top c(x_{lidar}(p_2))\)
+여기서 \(c(x)\)는 feature map \(x\)의 flatten vector이며 \(N\)은 column vector \(c(x)\)의 길이임. 피쳐들에 대한 cost volume은 limited range of d pixel에서 이루어져야함 (왜인지는 안나옴) i.e., \(\vert p_1 - p_2 \vert _{\infty} \leq d\)&lt;/p&gt;
+
+    &lt;p&gt;Input feature map이 굉장히 작기 때문에 (Original image의 1/32) d=2로 설정됨. (결국 initial calibration이 잘 되어있어야 되는거 아님?) 3D cost volume의 dimension은 \(d^2 \times H \times W\)이며, \(H\)와 \(W\)는 feature map \(x_{rgb}\)와 \(x_{lidar}\)의 height와 width임.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Feature Global Aggregation
+LCCNet은 6자유도 rigid body transformation을 cost volume feature를 통해 regress한다. 이 네트워크는 512 neuron을 가진 FCN과 두개의 roatation과 translation을 대표하는 stacked FCN branch로 이루어졌다. 네트워크 output은 \(1\times 3\) tranlation vector와 \(1 \times 4\) quaternion이다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;loss-function&quot;&gt;Loss Function&lt;/h4&gt;
+&lt;p&gt;RGB 이미지와 Depth image에 대해 두가지 loss를 사용한다: regression loss \(L_{T}\), point cloud distance loss \(L_{P}\)
+\(L = \lambda_T L_T + \lambda_P L_P\)&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Regreassion Loss
+Translation vector에 대해 smmoth L1 loss가 적용됨. L1 loss의 미분은 0에서 unique하지 않은 반면 smooth L1 loss는 제곱을 통해 near zero에서 더 부드럽다. 회전에 대한 loss에 대해 quaternion은 기본적으로 방향 정보이므로 Euclidean distance은 두개의 quaternion에 대해 정확히 설명할 수 없다. 따라서 angular distance를 이용해 두 quaternion의 차이를 설명하였다:
+\(L_R = D_a (q_{gt}, q_{pred})\)
+\(D_a\)는 angular distance이다.&lt;/p&gt;
+
+    &lt;p&gt;전체 regression loss는 다음과 같다:
+\(L_T = \lambda_t L_t + \lambda_q L_q\)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Point Cloud Distance Loss
+Point cloud distance constrain도 추가되었다. LiDAR point cloud들 (\(P = \{ P_1, P_2, \dots, P_N \}\))에 대해 loss \(L_P\)는 다음과 같이 정의한다.
+\(L_P = \frac{1}{N} \sum_{i=1}^{N} \lVert T_{LC}^{-1} \cdot T_{pred}^{-1} \cdot T_{init} \cdot P_i - P_i\rVert_2\)&lt;/p&gt;
+
+    &lt;p&gt;이부분이 이해가 안되늗데, 찬찬히 봐보자.&lt;/p&gt;
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;     &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;point_clouds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+         &lt;span class=&quot;n&quot;&gt;point_cloud_gt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;point_clouds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transl_err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+         &lt;span class=&quot;n&quot;&gt;point_cloud_out&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;point_clouds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+         &lt;span class=&quot;n&quot;&gt;R_target&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;quat2mat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_rot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+         &lt;span class=&quot;n&quot;&gt;T_target&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tvector2mat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_transl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+         &lt;span class=&quot;n&quot;&gt;RT_target&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T_target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;R_target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+         &lt;span class=&quot;n&quot;&gt;R_predicted&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;quat2mat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rot_err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+         &lt;span class=&quot;n&quot;&gt;T_predicted&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tvector2mat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transl_err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+         &lt;span class=&quot;n&quot;&gt;RT_predicted&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T_predicted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;R_predicted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+         &lt;span class=&quot;n&quot;&gt;RT_total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RT_target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inverse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RT_predicted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+         &lt;span class=&quot;n&quot;&gt;point_cloud_out&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rotate_forward&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;point_cloud_out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RT_total&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+         &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;point_cloud_out&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;point_cloud_gt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;norm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dim&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+         &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clamp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;100.&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+         &lt;span class=&quot;n&quot;&gt;total_loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;코드에서 나오는 point_cloud_out이 \(T_{LC}^{-1} \cdot T_{pred}^{-1} \cdot T_{init} \cdot P_i\)라는 건데, 이걸 point_cloud_gt랑 빼는 것을 보니.. 그냥 카메라 coordinate에서 바라본 point cloud의 prediction - gt인가? 오타인듯? 모르겠다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;calibration-inference-and-refinement&quot;&gt;Calibration Inference and Refinement&lt;/h4&gt;
+&lt;p&gt;Extrinsic parameter는 다음과 같다:
+\(\hat{T}_{LC} = T_{pred}^{-1}\cdot T_{init}\)&lt;/p&gt;
+
+&lt;p&gt;여기서 다양한 range에 대해 다양한 network을 training시킨다.&lt;/p&gt;
+
+&lt;p&gt;1.5m, 1.0m, 0.5, 0.2m, 0.1m, 그리고 20°, 10°, 5°, 2°, 1°까지 range를 만들고, 나중의 작은 range는 maximum mean absolute error (MAE)를 통해 결정했다고 한다 (결과에 따라 정밀한 calibration을 위한 training인듯).&lt;/p&gt;
+
+&lt;p&gt;여튼 1.5m, 20°로 train된 network를 시작으로 다음 range, 다음 range로 다시 넣어 최종 extrinsic calibration은 다음과 같다:
+\(\hat{T}_{LC} = (T_0 \cdot T_1 \dots T_5)^{-1}\cdot T_{init}\)&lt;/p&gt;
+&lt;h3 id=&quot;experiments-and-discussion&quot;&gt;Experiments and Discussion&lt;/h3&gt;
+
+&lt;h4 id=&quot;data-preparation&quot;&gt;Data Preparation&lt;/h4&gt;
+&lt;p&gt;KITTI odometry data를 이용했음. LiDAR와 left color camera 사용 01~20까지 train &amp;amp; validation, 00을 testset. 200프래임 제외 모두 spatially independent함. Random deviation을 추가해서 data 추가:
+\(T_{init} = \Delta T \cdot T_{LC}\)&lt;/p&gt;
+
+&lt;h4 id=&quot;evaluation-metrics&quot;&gt;Evaluation Metrics&lt;/h4&gt;
+&lt;p&gt;Translation: L2 norm 사용&lt;/p&gt;
+
+&lt;p&gt;Rotation: Quaternion angle distance 사용&lt;/p&gt;
+
+&lt;h4 id=&quot;traiing-details&quot;&gt;Traiing Details&lt;/h4&gt;
+&lt;p&gt;Adam Optimizer with initial learning rate of \(3e^{-4}\). Two Nvidia GP100 GPU with batch size 120 and total epochs 120. Large-range model이 pre-trained model로 사용됨. largest는 120, 작은 것들은 50으로 epoch가 설정됨.&lt;/p&gt;
+
+&lt;h4 id=&quot;results-and-discussion&quot;&gt;Results and Discussion&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/papers/images/20220127/Result1.png&quot; alt=&quot;Result1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;작은 네트워크로 진행될 수록 작아지는 것을 볼 수 있음.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/papers/images/20220127/Result2.png&quot; alt=&quot;Result2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Random initial parameter에 대해 calibration이 잘 됨을 알 수 있음.&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="papers" /><summary type="html">LCCNet: LiDAR and Camera Self-Calibration using Cost Volume Network</summary></entry><entry><title type="html">LiDAR Projection</title><link href="http://localhost:4000/programming/2021-12-30-lidar_projection/" rel="alternate" type="text/html" title="LiDAR Projection" /><published>2021-12-30T00:00:00+09:00</published><updated>2021-12-30T00:00:00+09:00</updated><id>http://localhost:4000/programming/lidar_projection</id><content type="html" xml:base="http://localhost:4000/programming/2021-12-30-lidar_projection/">&lt;p&gt;LiDAR - camera calibration program을 제작하던 중, projection에 해당되는 픽셀값을 가져와 LiDAR color에 적용시키는데 시간이 많이 드는 것을 확인했다.&lt;/p&gt;
 
 &lt;p&gt;Ouster OS1 64채널 기준 point 수: 65536
 Ouster OS2 128채널 기준 point 수: 262144&lt;/p&gt;
@@ -8,25 +279,11 @@ Ouster OS2 128채널 기준 point 수: 262144&lt;/p&gt;
 
 &lt;p&gt;LiDAR Extrinsic parameter: \(R_{LiDAR}, t_{LiDAR}\)&lt;/p&gt;
 
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;LiDAR Transformation matrix: $$T_{LiDAR} = \left[ R&lt;/td&gt;
-      &lt;td&gt;t; \left[0, 0, 0, 1 \right] \right]$$&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
+&lt;p&gt;LiDAR Transformation matrix: \(T_{LiDAR} = \left[ R\; \vert \; t; \left[ 0, 0, 0, 1 \right] \right]\)&lt;/p&gt;
 
 &lt;p&gt;Camera Extrinsic parameter: \(R_{cam}, t_{cam}\)&lt;/p&gt;
 
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Camera Projection matrix: $$P = C \left [ R’&lt;/td&gt;
-      &lt;td&gt;-R’t \right]$$&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
+&lt;p&gt;Camera Projection matrix: \(P = C \left [ R' \; \vert \; -R't \right]\)&lt;/p&gt;
 
 &lt;p&gt;위와 같이 되고, LiDAR point cloud를 \(\mathbf{X}_{LiDAR}\)로 표현하게 되면:&lt;/p&gt;
 
@@ -44,7 +301,7 @@ Ouster OS2 128채널 기준 point 수: 262144&lt;/p&gt;
 
 &lt;p&gt;Projected Lidar point cloud:&lt;/p&gt;
 
-\[\mathbf{X}h_{cam} = C \left [ R' | -R't \right] T_{LiDAR}P_{LiDAR}\]
+\[\mathbf{X}h_{cam} = C \left[ R' \; \vert \; -R't \right] T_{LiDAR}P_{LiDAR}\]
 
 &lt;p&gt;만약 LiDAR point cloud를 먼저 global reference frame로 바꿔주고 projection matrix를 다시 곱해준다면 연산이 2배 이상으로 드는 것을 확인할 수 있다.&lt;/p&gt;
 
@@ -702,135 +959,4 @@ OS1 64ch Total time: 0.000388105s&lt;/p&gt;
 
 &lt;p&gt;다시 쓰면 \(\mathbf{x}'^{\top}K'^{-\top}EK^{-1}\mathbf{x}=0\)이 되어 \(E = K'^{\top}FK\)가 된다.&lt;/p&gt;
 
-&lt;p&gt;Essential matrix는 5DoF이다. (scale ambiguity)&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">Rotation matrix &amp;amp; translation</summary></entry><entry><title type="html">Essential Matrix &amp;amp; Fundamental Matrix</title><link href="http://localhost:4000/logging/2021-10-20-EssentialFundamental/" rel="alternate" type="text/html" title="Essential Matrix &amp;amp; Fundamental Matrix" /><published>2021-10-20T00:00:00+09:00</published><updated>2021-10-20T00:00:00+09:00</updated><id>http://localhost:4000/logging/EssentialFundamental</id><content type="html" xml:base="http://localhost:4000/logging/2021-10-20-EssentialFundamental/">&lt;h2 id=&quot;rotation-matrix--translation&quot;&gt;Rotation matrix &amp;amp; translation&lt;/h2&gt;
-
-&lt;p&gt;MVG pg.155에서, camera calibration matrix \(K\)는 \(\mathbf{x} = K[I~\vert ~\mathbf{0}]\mathbf{X}_{cam}\)&lt;/p&gt;
-
-&lt;p&gt;Camera rotation과 translation을 고려하면 \(\mathbf{x} = KR[I~\vert ~-\tilde{\mathbf{C}}]\mathbf{X}\)가 된다.&lt;/p&gt;
-
-&lt;p&gt;여기서 \(\tilde{\mathbf{C}}\)는 camera center를 world coordinate frame에서 표현한거고&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;where \(\tilde{\mathbf{C}}\) represents the coordinates of the camera center in the world coordinate system&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;\(R\)은 camera coordinate frame의 orientation을 표현하는 rotation matrix이다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;and \(R\) is an \(3 \times 3\) rotation matrix representing the orientation of the camera coordinate system&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;그럼 결국 \(\mathbf{X}_{cam} = \begin{bmatrix} R &amp;amp; -R\tilde{\mathbf{C}} \\ 0 &amp;amp; 1 \end{bmatrix}\mathbf{X}\)가 된다는 뜻으로, 이는 world coordinate system상의 점 \(\mathbf{X}\)가 camera coordinate system에서 \(\mathbf{X}_{cam}\)로 표현이 되는 것을 나타낸다.&lt;/p&gt;
-
-&lt;p&gt;여기서 잠깐, 우리가 기존에 알던 것이랑 좀 많이 다르다. 우리가 일반적으로 사용하는 translation matrix를 생각해보면, 기준 좌표계 (world coordinate system)에서 rotation이 \(R\)이고 translation이 \(\mathbf{t}\)인 어떤 좌표계 A에 대해서 기준좌표계의 점 \(\mathbf{X}\)는 A 좌표계에서 다음과 같이 보여진다.&lt;/p&gt;
-
-&lt;p&gt;(여기서 모두 homogeneous coordinate임을 고려하자)&lt;/p&gt;
-
-&lt;p&gt;\(\mathbf{X}_{A} =\) \(\begin{bmatrix} R^{\top} &amp;amp; - R^{\top}\mathbf{t} \\ 0 &amp;amp; 1 \end{bmatrix} \mathbf{X}\)&lt;/p&gt;
-
-&lt;p&gt;\(-R\tilde{\mathbf{C}}=\mathbf{t}\)로 하면 camera matrix \(P\)는 다음과 같이 표현된다.&lt;/p&gt;
-
-&lt;p&gt;\(P=\) \(K[R~\vert~\mathbf{t}]\)&lt;/p&gt;
-
-&lt;p&gt;위의 식과 좀 다르다는 것을 알 수 있다. 어떤 이유에서인지 모르겠지만, 여기서 사용된 \(R\)은 내가 알던 \(R\)의 행렬로 camera coordinate system에서 바라본 world coordinate system의 rotation matrix인거 같다.&lt;/p&gt;
-
-&lt;p&gt;결국, 여기서의 \(R\)과 \(\mathbf{t}\)를 world coordinate system에서 바라본 camera coordinate system의 rotation 및 translation이 아니라 그 반대로 &lt;strong&gt;camera coordinate system에서 바라본 world coordinate system의 rotation 및 translation&lt;/strong&gt;으로 생각한다면 식이 이해가 된다.&lt;/p&gt;
-
-&lt;p&gt;(솔직히 이게 맞는지 모르겠다. googling을 해봤는데 나랑 같이 의문을 표한 내용을 찾을 수가 없네)&lt;/p&gt;
-
-&lt;h2 id=&quot;fundamental-matrix&quot;&gt;Fundamental matrix&lt;/h2&gt;
-&lt;p&gt;3차원 공간의 1개의 점에 대해 두개의 image plane에 맻힌 상을 각각 \(\mathbf{x}\)와 \(\mathbf{x}'\)라 했을 때 fundamental matrix \(F\)는 \(\mathbf{x}'^{\top}F\mathbf{x}=0\)를 만족하는 matrix이며 다음을 만족한다.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Transpose: \(F\)가 카메라 \((P, P')\)에 대해 만족한다면 \(F^{\top}\)은 카메라 \({P', P}\)에 대해 만족
-    &lt;ol&gt;
-      &lt;li&gt;i.e. \(\mathbf{x}'^{\top}F\mathbf{x}=0, \mathbf{x}^{\top}F^{\top}\mathbf{x}'\)&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Epipolar lines: 첫번째 영상에 대해 아무 점 \(\mathbf{x}\)에 대해 대응하는 epipolar line은 \(\mathbf{l}' = F\mathbf{x}\)이다.&lt;/li&gt;
-  &lt;li&gt;Epipole: epipole(\(\mathbf{e}\))를 제외한 아무 점 \(\mathbf{x}\)에 대해 epipolar line \(\mathbf{l}' = F\mathbf{x}\)은 epipole \(\mathbf{e}'\)을 지난다.
-    &lt;ol&gt;
-      &lt;li&gt;이는 곧 \(\mathbf{e}'F\mathbf{x} = (\mathbf{e}'F)x = 0\)이 된다.&lt;/li&gt;
-      &lt;li&gt;결국 이를 만족하기 위해선 \(mathbf{e}'F=0\)이 되야 하며 \(mathbf{e}'\)는 F의 left nullspace와 같다.&lt;/li&gt;
-      &lt;li&gt;비슷하게 \(\mathbf{e}F^{\top}=0\)인데 이를 transpose하면 \(Fmathbf{e}=0\)가 되어 \(\mathbf{e}\)는 F의 right nullspace가 된다.&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;특징들은, 한번 정리하면 좋을 것 같으니 다 써놓자.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;F는 rank 2의 homogeneous matrix로 7DoF를 가진다.&lt;/li&gt;
-  &lt;li&gt;Point Correspondence: \(\mathbf{x}'^{\top}F\mathbf{x}=0\)&lt;/li&gt;
-  &lt;li&gt;Epipolar lines:
-    &lt;ol&gt;
-      &lt;li&gt;\(\mathbf{l}'=\) \(F\mathbf{x}\)&lt;/li&gt;
-      &lt;li&gt;\(\mathbf{l} =\) \(F^{\top}\mathbf{x}'\)&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Epipoles
-    &lt;ol&gt;
-      &lt;li&gt;\(F\mathbf{e}=\) \(0\)&lt;/li&gt;
-      &lt;li&gt;\(F^{\top}\mathbf{e}'=\) \(0\)&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Computtation from camera matrices \(P, P'\):
-    &lt;ol&gt;
-      &lt;li&gt;General Cameras:
-        &lt;ol&gt;
-          &lt;li&gt;\(F=[\mathbf{e}']_{\times}P'P^{+}\) where \(P^{+}\) is pseudo-inverse of \(P\), and \(\mathbf{e}' = P'\mathbf{C}\) with \(P\mathbf{C}=0\) (여기서 \(\mathbf{C}\)는 첫번째 camera centre in 3D)&lt;/li&gt;
-        &lt;/ol&gt;
-      &lt;/li&gt;
-      &lt;li&gt;Canonical cameras, \(P=K[I~\vert~0]\), \(P'=[M~\vert~\mathbf{m}]\)
-        &lt;ol&gt;
-          &lt;li&gt;\(F=[\mathbf{e}']_{\times}M=M^{-\top}[\mathbf{e}]_{\times}\), where \(\mathbf{e}'=\mathbf{m}\) and \(\mathbf{e}=M^{-1}\mathbf{m}\)&lt;/li&gt;
-        &lt;/ol&gt;
-      &lt;/li&gt;
-      &lt;li&gt;Cameras not at infinity: \(P = K[I~\vert~0]\), \(P' = K'[R~\vert~\mathbf{t}]\)
-        &lt;ol&gt;
-          &lt;li&gt;\(F=\) \(K'^{-\top}[\mathbf{t}]_{\times} R K^{-1} = [K'\mathbf{t}]_{\times} K'RK^{-1} = K'^{-\top} RK^{\top}[KR^{\top}\mathbf{t}]_{\times}\)&lt;/li&gt;
-        &lt;/ol&gt;
-      &lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Epipolar line에 대한 homography는 다음과 같다.
-\(\mathbf{l}'= F[\mathbf{e}]_{\times}\mathbf{l}\), \(\mathbf{l}= F^{\top}[\mathbf{e}']_{\times}\mathbf{l}'\)&lt;/p&gt;
-
-&lt;h2 id=&quot;essential-matrix&quot;&gt;Essential matrix&lt;/h2&gt;
-
-&lt;p&gt;3차원 공간의 1개의 점에 대해 두개의 image plane에 맻힌 상의 &lt;strong&gt;normalized coordinate&lt;/strong&gt;을 각각 \(\hat{\mathbf{x}}\)와 \(\hat{\mathbf{x}}'\)라 했을 때  Essential matrix \(E\)는 \(\hat{\mathbf{x}}'^{\top}E\hat{\mathbf{x}}=0\)를 만족하는 matrix로서 \(E = [\mathbf{t}]_{\times}R\)로 계산할 수 있는데 이는 point transformation에서 유도할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;한가지 설명을 빠뜨린 것이 있는데, \(\hat{\mathbf{x}}\)는 &lt;strong&gt;normalized coordinate&lt;/strong&gt;로서 이미지 좌표에 camera calibration matrix의 inverse를 취해 나타낸 것으로 \(\hat{\mathbf{x}} = K^{-1}\mathbf{x}\)이다.&lt;/p&gt;
-
-&lt;p&gt;(그럼 다시 \(K\hat{\mathbf{x}}\) 하면 \(\mathbf{x}\)가 되니까, 이 normalized coordinate로 변환된 \(\hat{\mathbf{x}}\)는 \(\mathbf{x}\)로 투영되는 3차원의 어떤 점 이라고 이해하면 될 것 같다.)&lt;/p&gt;
-
-&lt;p&gt;Point transformation을 간략히 나타내면 \(\mathbf{X}_{A} = R\mathbf{X}_{B}+\mathbf{t}_{B}\)가 된다.&lt;/p&gt;
-
-&lt;p&gt;(갑자기 바뀌긴 했는데, \(\mathbf{X}_{A}, \mathbf{X}_{B}\)는 normalized coordinate는 아니고 일반적인 3차원 point이다. 아래 내려가면 갑자기 왜 나왔는지 이해됨. 여기선 homogeneous coordinate가 아니다!!)&lt;/p&gt;
-
-&lt;p&gt;앞서 말한 것과 같이 여기서의 \(R\)과 \(\mathbf{t}\)는 A coordinate system에서 바라본 B의 rotation 및 translation이다.&lt;/p&gt;
-
-&lt;p&gt;양변을 transpose한 후 \(E\)를 우측에 곱하면&lt;/p&gt;
-
-&lt;p&gt;\(\mathbf{X}_{A}^{\top}[\mathbf{t}]_{\times}R = (\mathbf{X}_{B}^{\top}R^{\top}+\mathbf{t}^{\top})([\mathbf{t}]_{\times}R)\)이 되고&lt;/p&gt;
-
-&lt;p&gt;양변에 \(\mathbf{X}_{B}\)를 곱하게 되면 \(\mathbf{X}_{A}^{\top}[\mathbf{t}]_{\times}R \mathbf{X}_{B}= (\mathbf{X}_{B}^{\top}R^{\top}+\mathbf{t}^{\top})([\mathbf{t}]_{\times}R)\mathbf{X}_{B}\)가 된다.&lt;/p&gt;
-
-&lt;p&gt;여기서 우현을 보면 \(\mathbf{t}^{\top}[\mathbf{t}]_{\times}\)는 0이 되고, 남은 \(\mathbf{X}_{B}^{\top} R^{\top} [\mathbf{t}]_{\times} R\mathbf{X}_{B}\)를 살펴보자&lt;/p&gt;
-
-&lt;p&gt;어떤 vector \(R\mathbf{X}_{B}\)에 대해 \([\mathbf{t}]_{\times}\) 를 곱한 것은 결국 \(\mathbf{t} \times R\mathbf{X}_{B}\)와 같아 이는 \(R\mathbf{X}_{B}\)와 직교하게 된다. 결국 직교하는 vector간 내적이 되어 이것도 0이 된다.&lt;/p&gt;
-
-&lt;p&gt;결국 \(\mathbf{X}_{A}^{\top}E\mathbf{X}_{B}=0\)이 된다.&lt;/p&gt;
-
-&lt;p&gt;사실, \(\mathbf{X} = \begin{bmatrix}x &amp;amp; y &amp;amp; z\end{bmatrix}^{\top}\)라 했을 때 \(\hat{\mathbf{x}} = \begin{bmatrix} x/z &amp;amp; y/z &amp;amp; 1 \end{bmatrix}^{\top}\)이기에 양변을 각각의 \(z\)값으로 나누면 처음 식 \(\hat{\mathbf{x}}'^{\top}E\hat{\mathbf{x}}=0\)이 만족된다.&lt;/p&gt;
-
-&lt;p&gt;여기서 Fundamental matrix를 생각해보면 이는 \(\mathbf{x}'^{\top}F\mathbf{x}=0\)를 만족하는 matrix F이기에&lt;/p&gt;
-
-&lt;p&gt;다시 쓰면 \(\mathbf{x}'^{\top}K'^{-\top}EK^{-1}\mathbf{x}=0\)이 되어 \(E = K'^{\top}FK\)가 된다.&lt;/p&gt;
-
-&lt;p&gt;Essential matrix는 5DoF이다. (scale ambiguity)&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="logging" /><summary type="html">Rotation matrix &amp;amp; translation</summary></entry><entry><title type="html">Kitti Object Dataset</title><link href="http://localhost:4000/logging/2021-10-16-KittiObject/" rel="alternate" type="text/html" title="Kitti Object Dataset" /><published>2021-10-16T00:00:00+09:00</published><updated>2021-10-16T00:00:00+09:00</updated><id>http://localhost:4000/logging/KittiObject</id><content type="html" xml:base="http://localhost:4000/logging/2021-10-16-KittiObject/">&lt;p&gt;이번 포스트에서는 PointPillars 및 기타 Object detection learning을 위한 dataset에 있어 Kitti를 사용하는 방법에 대해서 알아볼 예정이다.&lt;/p&gt;
-
-&lt;p&gt;일단 Kitti dataset으로 &lt;a href=&quot;http://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=3d&quot;&gt;3D object benchmark&lt;/a&gt;을 사용하였으며, 아래와 같이 여섯개의 데이터를 다운받았다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/logging/images/20211016/kitti_page.png&quot; alt=&quot;Kitti_image&quot; /&gt;&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="logging" /><summary type="html">이번 포스트에서는 PointPillars 및 기타 Object detection learning을 위한 dataset에 있어 Kitti를 사용하는 방법에 대해서 알아볼 예정이다.</summary></entry></feed>
+&lt;p&gt;Essential matrix는 5DoF이다. (scale ambiguity)&lt;/p&gt;</content><author><name>&lt;Dongha&gt; &lt;Chung&gt;</name><email>&lt;haetae.dongha@gmail.com&gt;</email></author><category term="etc" /><summary type="html">Rotation matrix &amp;amp; translation</summary></entry></feed>
