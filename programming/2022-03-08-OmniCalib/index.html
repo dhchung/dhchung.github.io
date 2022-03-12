@@ -297,13 +297,13 @@ in <a href="/programming/" class="flip-title">programming</a>
 
 <p>Omni camera는 Flir사의 Ladybug 5+ 모델로, horizontal 방향으로 5개의 camera가 있으며, 각각 광각 렌즈를 탑재하여 조금씩 겹쳐지게 되어있으며 원본 영상은 다음과 같다.</p>
 
-<p><img src="../images/20220312/omni_imgs.jpg" alt="Omnidirectional camera images" /></p>
+<p><img src="/programming/images/20220312/omni_imgs.jpg" alt="Omnidirectional camera images" /></p>
 
 <p>위의 영상의 첫번째 행 왼쪽부터 오른쪽까지 camera 0, 1, 2의 영상이며 두번째 행의 왼쪽부터 오른쪽까지가 3, 4, 5의 영상이다. camera 0, 1, 2, 3, 4가 horizontal camera들이며, camera 5가 위를 바라보고 있다.</p>
 
 <p>이를 이대로 사용하게 되면 광각렌즈로부터 오는 distortion이 심해 두 camera가 겹쳐지는 부분에 대한 marker 인식이 잘 안될 뿐더러 인식이 되더라도 잘못된 값을 나타내었다. 따라서 우선 undistort를 진행하고 calibration을 하기로 하였다.</p>
 
-<p><img src="../images/20220312/omni_imgs_undistort.jpg" alt="Undistorted omnidirectional camera images" /></p>
+<p><img src="/programming/images/20220312/omni_imgs_undistort.jpg" alt="Undistorted omnidirectional camera images" /></p>
 
 <p>각 camera에 대해 intrinsic calibration을 진행한 후 undistortion을 한 결과이다. 생각보다 겹쳐지는 부분이 거의 없다! OpenCV의 getOptimalNewCameraMatrix 함수를 통해 잘리지 않은 부분도 나타나게 해주는 새로운 camera matrix를 구할 수 있었다.</p>
 
@@ -319,23 +319,23 @@ in <a href="/programming/" class="flip-title">programming</a>
 
 <p>위의 코드에서 alpha값은 0에서 1 사이의 수인데, 0에 가까워질수록 distortion이 없는 부분만 잘라서 보여주며, 1에 가까워질수록 원본 영상이 모두 나타난다. 위의 영상이 0일때의 영상이며 1일때의 영상은 다음과 같다.</p>
 
-<p><img src="../images/20220312/omni_images_undistorted_all.jpg" alt="Undistorted omnidirectional camera images with alpha=1" /></p>
+<p><img src="/programming/images/20220312/omni_images_undistorted_all.jpg" alt="Undistorted omnidirectional camera images with alpha=1" /></p>
 
 <p>각 camera가 비슷할꺼라 생각했는데 아니었다! (생각해보면 당연하다. 위를 보는 것은 각 camera와 90도나 차이나니… horizontal 방향으로도 모두 차이가 있음을 알 수 있다.) 각 영상에서 네모로 쳐진 부분이 위의 코드에서 valid roi에 대한 부분이며, 이를 잘라내면 0일때의 영상이 나타난다.</p>
 
 <p>여튼, 일단 겹쳐지는 부분이 있어야 했기에 울며 겨자먹기로 distortion effect가 조금 덜하기를 바라며 alpha를 0.3으로 해서 calibration을 진행했다. 영상간 overlapping region이 굉장히 작았기에, 기존의 checkerboard 기반으로 진행하면 각 영상에서 checkerboard가 모두 보이지 않아 영상간 correspondence가 나타나지 않아 대신 Aruco marker를 기반으로 marker detection을 통해 correspondence를 찾기로 하였다.</p>
 
-<p><img src="../imaes/../images/20220312/first_calibration_board.jpg" alt="First calibration board" /></p>
+<p><img src="/programming/images/20220312/first_calibration_board.jpg" alt="First calibration board" /></p>
 
-<p><img src="../images/20220312/extrinsic_with_0point3.jpg" alt="First extrinsic calibration" /></p>
+<p><img src="/programming/images/20220312/extrinsic_with_0point3.jpg" alt="First extrinsic calibration" /></p>
 
 <p>각기 다른 marker id를 가진 Aruco marker 8개를 평평한 판에 부착하여 영상을 취득하였다. Valid ROI 내부에 아주 조금이나마 겹쳐지는 것으로 보이지만, 광각이 더 넓은 top view와 겹쳐지는 부분을 찾는건 아래 이미지와 같이 더 답이 없었다.</p>
 
-<p><img src="../images/20220312/extrinsic_with_0point3_with_topview.jpg" alt="First extrinsic calibration" /></p>
+<p><img src="/programming/images/20220312/extrinsic_with_0point3_with_topview.jpg" alt="First extrinsic calibration" /></p>
 
-<p>Camera 5와 다른 camera간의 extrinsic calibration을 위해 마커를 겹쳐지게 하는건 valid roi 외부로 겹쳐지게 하는 수 밖에 없었다. 여하튼 이렇게 얻어진 correspondence들을 통해 extrinsic calibration을 진행해야 되는데, OpenCV를 이용해 extrinsic calibration을 하는 방법은 stereo camera calibration에 대한 방법만 친절히 설명되어있으며, 3대 이상의 camera에 대해 calibration하는 방법에 대해 진행한 경우는 많이 보지 못하였다. 그 또한 모든 camera가 동시에 calibration board를 detect한 경우에만 가능한 것 처럼 보였다.</p>
+<p>Camera 5와 다른 camera간의 extrinsic calibration을 위해 마커를 겹쳐지게 하는건 valid roi 외부로 겹쳐지게 하는 수 밖에 없었다. 여하튼 이렇게 얻어진 correspondence들을 통해 extrinsic calibration을 진행해야 되는데, OpenCV를 이용해 extrinsic calibration을 하는 방법은 stereo camera calibration에 대한 방법만 친절히 설명되어있으며, 3대 이상의 camera에 대해 calibration하는 방법에 대해 진행한 경우는 많이 보지 못하였다. cv::omnidir::calibrate도 있기는 한데, factor graph로 먼저 한번 시도해보고 이용해보기로 하였다.</p>
 
-<p>그래서 Factor graph를 사용해보기로 하였다. SLAM에서 measurement를 기반으로 state와 landmark를 update를 하는 방법과 비슷하면서도 다르게, state는 6개의 camera로 고정해놓고 observation들을 다 때려 넣은 뒤 optimization하는 방식이다. (Bundle adjustment에 더 가깝다고 볼 수 있다. tool만 factor graph를 사용한거지..) Factor graph는 gtsam을 사용하여 구현하였다.</p>
+<p>SLAM에서 measurement를 기반으로 state와 landmark를 update를 하는 방법과 비슷하면서도 다르게, state는 6개의 camera로 고정해놓고 observation들을 다 때려 넣은 뒤 optimization하는 방식이다. (Bundle adjustment에 더 가깝다고 볼 수 있다. tool만 factor graph를 사용한거지..) Factor graph는 gtsam을 사용하여 구현하였다.</p>
 
 <p>Initial들은 다음과 같다.</p>
 
@@ -352,7 +352,7 @@ in <a href="/programming/" class="flip-title">programming</a>
 
 <p>Range factor를 사용하기 전, Vladlen Koltun 박사님 아래에서 일하시는 <a href="https://rachithp.github.io/">이분</a>이 하신 <a href="https://rachithp.github.io/projects/slam/report.pdf">일</a>의 방법에서 BetweenFactorPoint3를 이용해봤는데, 이는 world 좌표계에서 각 점들의 상대위치를 fix해버리는 방식이라 적합하지 않았다.</p>
 
-<p><img src="../images/20220312/first_calibration_result.jpg" alt="First calibration result" /></p>
+<p><img src="/programming/images/20220312/first_calibration_result.jpg" alt="First calibration result" /></p>
 
 <p>Camera 0부터 5는 각각 빨간색 초록색 파란색 보라색 검은색 시안(Cyan)색으로 표현되어있으며, 선분의 끝의 점들이 camera centre를 나타낸다. Camera centre가 겹쳐지지 않기에 완벽한 panorama image가 생성되지 않음을 알 수 있다.</p>
 
@@ -360,7 +360,7 @@ in <a href="/programming/" class="flip-title">programming</a>
 
 <p>우선 calibration board의 길이를 조금 더 늘려봤다.</p>
 
-<p><img src="../images/20220312/second_calibration_board.jpg" alt="Second calibration board" /></p>
+<p><img src="/programming/images/20220312/second_calibration_board.jpg" alt="Second calibration board" /></p>
 
 <p>위에서부터 0, 1, 2, …, 9의 code를 가진 marker들로 만들었는데, A4용지 두개로 하다보니 중간에 치수가 안맞게 나와 4와 5는 화이트로 지웠다.</p>
 
@@ -390,13 +390,13 @@ in <a href="/programming/" class="flip-title">programming</a>
 
 <p>이번에는 alpha값을 0으로 하여 distortion이 없는 부분만 활용하여 진행했다.</p>
 
-<p><img src="../images/20220312/second_calibration_topview.jpg" alt="Second calibration with alpha=0" /></p>
+<p><img src="/programming/images/20220312/second_calibration_topview.jpg" alt="Second calibration with alpha=0" /></p>
 
 <p>Calibration board를 길게 함으로서 첫번째와 다르게 measurement들이 모두 distortion이 없는 부분들에만 있음을 볼 수 있다.(편안)</p>
 
 <p>결과는 다음과 같다.</p>
 
-<p><img src="../images/20220312/second_calibration_results.jpg" alt="Second calibration result" /></p>
+<p><img src="/programming/images/20220312/second_calibration_results.jpg" alt="Second calibration result" /></p>
 
 <p>영상을 더 찍어야 되는데, 1000장이 넘어가는 첫번째 실험에 비해 두번째 실험은 300장정도밖에 찍지 못해 landmark 수가 훨씬 적다.</p>
 
