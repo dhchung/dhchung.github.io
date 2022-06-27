@@ -2,11 +2,11 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://localhost:4000/about/</loc>
-<lastmod>2022-03-12T22:34:04+09:00</lastmod>
+<lastmod>2022-06-27T15:38:12+09:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/slam/</loc>
-<lastmod>2022-03-12T22:34:04+09:00</lastmod>
+<lastmod>2022-06-27T15:38:12+09:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/papers/2020-04-09-Estimating_Uncertain/</loc>
@@ -125,6 +125,14 @@
 <lastmod>2022-03-08T00:00:00+09:00</lastmod>
 </url>
 <url>
+<loc>http://localhost:4000/papers/2022-05-12-Quatro/</loc>
+<lastmod>2022-05-12T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/papers/2022-06-15-A-LOAMCode/</loc>
+<lastmod>2022-06-15T00:00:00+09:00</lastmod>
+</url>
+<url>
 <loc>http://localhost:4000/temp/2021-10-16-KittiObject/</loc>
 </url>
 <url>
@@ -158,6 +166,10 @@
 </url>
 <url>
 <loc>http://localhost:4000/3/</loc>
+<lastmod>2018-08-03T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/4/</loc>
 <lastmod>2018-08-03T00:00:00+09:00</lastmod>
 </url>
 </urlset>
