@@ -55,7 +55,13 @@ body {
     max-width: 640px;
     width: 100%;
     height: auto;
-
+    pointer-events: none;  /* 클릭 이벤트 차단 */
+    user-drag: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .map_container {
@@ -262,7 +268,7 @@ body {
 .splash-content {
     width: 100%;
     max-width: 640px;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
     color: #066f24; 
     font-family: "Gowun Dodum", sans-serif;
