@@ -14,10 +14,11 @@ header {
     max-width: 640px;
     margin: auto;
     overflow: hidden;
+    touch-action: pan-y;
 }
 .slider {
     display: flex;
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.3s ease-out;
 }
 .slide {
     min-width: 100%;

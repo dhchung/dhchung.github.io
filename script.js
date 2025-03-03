@@ -1,19 +1,48 @@
+document.addEventListener("DOMContentLoaded", function() {
+    setupSlider();
+});
+
+// 이미지 슬라이더 스와이프 기능
 let currentIndex = 0;
-const slides = document.querySelectorAll(".slide");
+const slider = document.getElementById("slider");
+let startX = 0;
+let isDragging = false;
+
+slider.addEventListener("touchstart", function (e) {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+});
+
+slider.addEventListener("touchmove", function (e) {
+    if (!isDragging) return;
+    let moveX = e.touches[0].clientX - startX;
+    slider.style.transform = `translateX(${moveX - currentIndex * 100}%)`;
+});
+
+slider.addEventListener("touchend", function (e) {
+    isDragging = false;
+    let endX = e.changedTouches[0].clientX;
+    let diff = startX - endX;
+    if (diff > 50) {
+        nextSlide();
+    } else if (diff < -50) {
+        prevSlide();
+    } else {
+        showSlide(currentIndex);
+    }
+});
 
 function showSlide(index) {
-    slides.forEach((slide, i) => {
-        slide.style.display = (i === index) ? "block" : "none";
-    });
+    slider.style.transform = `translateX(${-index * 100}%)`;
 }
 
 function prevSlide() {
-    currentIndex = (currentIndex > 0) ? currentIndex - 1 : slides.length - 1;
+    currentIndex = Math.max(0, currentIndex - 1);
     showSlide(currentIndex);
 }
 
 function nextSlide() {
-    currentIndex = (currentIndex < slides.length - 1) ? currentIndex + 1 : 0;
+    currentIndex = Math.min(slider.children.length - 1, currentIndex + 1);
     showSlide(currentIndex);
 }
 
