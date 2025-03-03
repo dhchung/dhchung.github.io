@@ -42,7 +42,7 @@ function copyToClipboardBroom_1() {
     document.execCommand("copy");
     document.body.removeChild(textarea);
 
-    const toast = document.getElementById("copy-toast2");
+    const toast = document.getElementById("copy-toast");
     toast.classList.add("show");
 
 
@@ -60,7 +60,7 @@ function copyToClipboardBroom_2() {
     document.execCommand("copy");
     document.body.removeChild(textarea);
 
-    const toast = document.getElementById("copy-toast2");
+    const toast = document.getElementById("copy-toast");
     toast.classList.add("show");
 
 
@@ -78,7 +78,7 @@ function copyToClipboardBroom_3() {
     document.execCommand("copy");
     document.body.removeChild(textarea);
 
-    const toast = document.getElementById("copy-toast2");
+    const toast = document.getElementById("copy-toast");
     toast.classList.add("show");
 
 
@@ -110,7 +110,7 @@ function copyToClipboardBride_1() {
     document.execCommand("copy");
     document.body.removeChild(textarea);
 
-    const toast = document.getElementById("copy-toast2");
+    const toast = document.getElementById("copy-toast");
     toast.classList.add("show");
 
 
@@ -130,7 +130,7 @@ function copyToClipboardBride_2() {
     document.execCommand("copy");
     document.body.removeChild(textarea);
 
-    const toast = document.getElementById("copy-toast2");
+    const toast = document.getElementById("copy-toast");
     toast.classList.add("show");
 
 
@@ -150,9 +150,8 @@ function copyToClipboardBride_3() {
     document.execCommand("copy");
     document.body.removeChild(textarea);
 
-    const toast = document.getElementById("copy-toast2");
+    const toast = document.getElementById("copy-toast");
     toast.classList.add("show");
-
 
     setTimeout(() => {
         toast.classList.remove("show");
