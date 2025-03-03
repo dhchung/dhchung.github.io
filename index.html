@@ -98,15 +98,18 @@
 
     <div class="bank-account-container">
         <button class="toggle-account-btn" onclick="toggleAccount()">신랑측 계좌번호 보기</button>
-        <p id="bank-account" class="hidden">우리은행 1002-738-254319 (정동하)</p>
+        <p id="bank-account" class="hidden" onclick="copyToClipboard()">우리은행 1002-738-254319 (정동하)</p>
+        <span id="copy-message" class="copy-message hidden">📋 복사되었습니다!</span>
     </div>
 
     <div class="bank-account-container">
         <button class="toggle-account-btn" onclick="toggleAccount2()">신부측 계좌번호 보기</button>
-        <p id="bank-account2" class="hidden">국민은행 07980204187671 (김해리)</p>
+        <p id="bank-account2" class="hidden" onclick="copyToClipboard2()">국민은행 07980204187671 (김해리)</p>
+        <span id="copy-message2" class="copy-message hidden">📋 복사되었습니다!</span>
     </div>
 
-
+    <footer>
+    </footer>
 
 </body>
 

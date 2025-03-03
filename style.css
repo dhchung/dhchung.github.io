@@ -115,6 +115,8 @@ header {
     color: rgb(0, 0, 0);
     font-size: 16px;
     border: none;
+    width: 100%;
+    max-width: 640px;
     padding: 10px 60px;
     cursor: pointer;
     border-radius: 5px;
@@ -136,10 +138,33 @@ header {
     font-size: 15px;
     margin-top: 10px;
     color: #333;
+    cursor: pointer; /* 클릭 가능하도록 변경 */
+    transition: color 0.3s;
+}
+
+#bank-account:hover {
+    color: #007bff; /* 마우스 오버 시 색상 변경 */
+}
+
+.copy-message {
+    font-size: 14px;
+    color: green;
+    margin-top: 5px;
 }
 
 #bank-account2 {
     font-size: 15px;
     margin-top: 10px;
     color: #333;
+    cursor: pointer; /* 클릭 가능하도록 변경 */
+    transition: color 0.3s;
+}
+
+#bank-account2:hover {
+    color: #007bff; /* 마우스 오버 시 색상 변경 */
+}
+.copy-message2 {
+    font-size: 14px;
+    color: green;
+    margin-top: 5px;
 }
