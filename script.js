@@ -33,81 +33,92 @@ function toggleAccount() {
 }
 
 function copyToClipboard() {
-    const accountText = document.getElementById("bank-account").innerText;
+    const customText = "우리은행 1002-738-254319 (정동하)"; // 원하는 텍스트 작성
     const textarea = document.createElement("textarea");
-    textarea.value = accountText;
+    textarea.value = customText; // JS에서 지정한 커스텀 텍스트 설정
     document.body.appendChild(textarea);
     textarea.select();
     document.execCommand("copy");
     document.body.removeChild(textarea);
 
-    // 복사 완료 메시지 표시
-    const copyMessage = document.getElementById("copy-message");
-    copyMessage.classList.remove("hidden");
+    const toast = document.getElementById("copy-toast2");
+    toast.classList.add("show");
 
     // 2초 후 메시지 숨기기
     setTimeout(() => {
-        copyMessage.classList.add("hidden");
+        toast.classList.remove("show");
     }, 2000);
+
 }
 
 function toggleAccount2() {
-    const account = document.getElementById("bank-account2");
+    const accounts = document.getElementsByClassName("bank-account2");
 
-    // 보이게 설정
-    if (account.classList.contains("hidden")) {
-        account.classList.remove("hidden");
-    } else {
-        account.classList.add("hidden");
-    }
+    Array.from(accounts).forEach(account => {
+        if (account.classList.contains("hidden")) {
+            account.classList.remove("hidden"); // 보이게 설정
+        } else {
+            account.classList.add("hidden"); // 숨김 처리
+        }
+    });
 }
 
-function copyToClipboard2() {
-    const accountText = document.getElementById("bank-account2").innerText;
+function copyToClipboard2_1() {
+    const customText = "국민은행 804602-04-116994 (김영재)"; // 원하는 텍스트 작성
+
     const textarea = document.createElement("textarea");
-    textarea.value = accountText;
+    textarea.value = customText; // JS에서 지정한 커스텀 텍스트 설정
     document.body.appendChild(textarea);
     textarea.select();
     document.execCommand("copy");
     document.body.removeChild(textarea);
 
-    // // 복사 완료 메시지 표시
-    // const copyMessage = document.getElementById("copy-message2");
-    // copyMessage.classList.remove("hidden");
+    const toast = document.getElementById("copy-toast2");
+    toast.classList.add("show");
 
-    // // 2초 후 메시지 숨기기
-    // setTimeout(() => {
-    //     copyMessage.classList.add("hidden");
-    // }, 2000);
+    // 2초 후 메시지 숨기기
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2000);
 
-    // 팝업 창 열기 (폭 300px, 높이 150px, 가운데 정렬)
-    const popupWidth = 300;
-    const popupHeight = 150;
-    const screenWidth = window.screen.width;
-    const screenHeight = window.screen.height;
-    const left = (screenWidth - popupWidth) / 2;
-    const top = (screenHeight - popupHeight) / 2;
+}
 
-    window.open(
-        "",
-        "복사완료",
-        `width=${popupWidth},height=${popupHeight},left=${left},top=${top}`
-    ).document.write(`
-        <html>
-        <head>
-            <title>복사 완료</title>
-            <style>
-                body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-                .message { font-size: 16px; font-weight: bold; color: #333; }
-                .close-btn { margin-top: 20px; padding: 8px 12px; background: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px; }
-                .close-btn:hover { background: #0056b3; }
-            </style>
-        </head>
-        <body>
-            <p class="message">📋 계좌번호가 복사되었습니다!</p>
-            <button class="close-btn" onclick="window.close()">닫기</button>
-        </body>
-        </html>
-    `);
+function copyToClipboard2_2() {
+    const customText = "농협은행 217060-52-102956 (송미양)"; // 원하는 텍스트 작성
+
+    const textarea = document.createElement("textarea");
+    textarea.value = customText; // JS에서 지정한 커스텀 텍스트 설정
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+
+    const toast = document.getElementById("copy-toast2");
+    toast.classList.add("show");
+
+    // 2초 후 메시지 숨기기
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2000);
+
+}
+
+function copyToClipboard2_3() {
+    const customText = "국민은행 079802-04-187671 (김해리)"; // 원하는 텍스트 작성
+
+    const textarea = document.createElement("textarea");
+    textarea.value = customText; // JS에서 지정한 커스텀 텍스트 설정
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+
+    const toast = document.getElementById("copy-toast2");
+    toast.classList.add("show");
+
+    // 2초 후 메시지 숨기기
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2000);
 
 }

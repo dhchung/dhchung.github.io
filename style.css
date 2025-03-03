@@ -7,7 +7,6 @@ body {
 
 header {
     background-color: #f8b400;
-    /* padding: 20px; */
     color: white;
 }
 
@@ -107,7 +106,7 @@ header {
     margin-top: 0px;
 }
 
-/* 버튼 스타일 */
+
 .toggle-account-btn {
     background-color: #e4e4e4;
     color: rgb(0, 0, 0);
@@ -126,22 +125,22 @@ header {
     background-color: #b1b1b1;
 }
 
-/* 계좌번호 숨김 스타일 */
+
 .hidden {
     display: none;
 }
 
-/* 계좌번호 스타일 */
-#bank-account {
+
+.bank-account {
     font-size: 15px;
     margin-top: 10px;
     color: #333;
-    cursor: pointer; /* 클릭 가능하도록 변경 */
+    cursor: pointer; 
     transition: color 0.3s;
 }
 
-#bank-account:hover {
-    color: #007bff; /* 마우스 오버 시 색상 변경 */
+.bank-account:hover {
+    color: #007bff; 
 }
 
 .copy-message {
@@ -150,19 +149,35 @@ header {
     margin-top: 5px;
 }
 
-#bank-account2 {
+.bank-account2 {
     font-size: 15px;
     margin-top: 10px;
     color: #333;
-    cursor: pointer; /* 클릭 가능하도록 변경 */
+    cursor: pointer; 
     transition: color 0.3s;
 }
 
-#bank-account2:hover {
-    color: #007bff; /* 마우스 오버 시 색상 변경 */
+.bank-account2:hover {
+    color: #007bff; 
 }
-.copy-message2 {
+
+.copy-toast {
+    position: fixed;
+    bottom: 20px; 
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8); 
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
     font-size: 14px;
-    color: green;
-    margin-top: 5px;
+    font-weight: bold;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s, visibility 0.5s;
+}
+
+.copy-toast.show {
+    opacity: 1;
+    visibility: visible;
 }
