@@ -184,6 +184,7 @@ body {
 
 .calendar #calendar_header{
     font-family: "Gowun Dodum", sans-serif;
+    font-weight: bold;
     color: #00693E;
     margin-top: 30px;
     font-size: 25px;
