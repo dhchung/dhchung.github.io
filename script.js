@@ -3,16 +3,16 @@ document.addEventListener("DOMContentLoaded", function() {
         let splashScreen = document.getElementById("splash-screen");
         let mainContent = document.getElementById("main-content");
 
-        // 스플래시 화면을 서서히 사라지게 함
+        
         splashScreen.style.opacity = "0";
 
-        // 1.5초 후 스플래시 화면을 완전히 숨기고 본문을 나타나게 함
+        
         setTimeout(function() {
-            splashScreen.style.display = "none"; // 완전히 숨기기
-            mainContent.style.opacity = "1"; // 본문 나타나게 하기
+            splashScreen.style.display = "none"; 
+            mainContent.style.opacity = "1"; 
             mainContent.style.visibility = "visible";
-        }, 500); // CSS transition 시간과 맞춤
-    }, 4500); // 5초 후 실행
+        }, 500); 
+    }, 4500); 
 });
 
 const swiper = new Swiper('.swiper-container', {
