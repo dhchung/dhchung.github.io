@@ -182,3 +182,47 @@ header {
     opacity: 1;
     visibility: visible;
 }
+
+.calendar #calendar_header{
+    margin-top: 30px;
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+.calendar{
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.calendar table {
+    width: 100%;
+    height: 250px;
+}
+
+.calendar tr td {
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    height: 40px;
+    width: 40px;
+    font-size: 18px;
+}
+
+.calendar .sun{
+    color:#ee331a;
+}
+
+.wedding_day{
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:#007bff;
+    color: #ffffff;
+    border-radius: 100%;
+    margin: auto;
+}
