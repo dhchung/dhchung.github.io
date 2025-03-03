@@ -22,52 +22,21 @@ const swiper = new Swiper('.swiper-container', {
   });
 
 function toggleAccount() {
-    const account = document.getElementById("bank-account");
-
-    // 보이게 설정
-    if (account.classList.contains("hidden")) {
-        account.classList.remove("hidden");
-    } else {
-        account.classList.add("hidden");
-    }
-}
-
-function copyToClipboard() {
-    const customText = "우리은행 1002-738-254319 (정동하)"; // 원하는 텍스트 작성
-    const textarea = document.createElement("textarea");
-    textarea.value = customText; // JS에서 지정한 커스텀 텍스트 설정
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textarea);
-
-    const toast = document.getElementById("copy-toast2");
-    toast.classList.add("show");
-
-    // 2초 후 메시지 숨기기
-    setTimeout(() => {
-        toast.classList.remove("show");
-    }, 2000);
-
-}
-
-function toggleAccount2() {
-    const accounts = document.getElementsByClassName("bank-account2");
+    const accounts = document.getElementsByClassName("bank-account-broom");
 
     Array.from(accounts).forEach(account => {
         if (account.classList.contains("hidden")) {
-            account.classList.remove("hidden"); // 보이게 설정
+            account.classList.remove("hidden");
         } else {
-            account.classList.add("hidden"); // 숨김 처리
+            account.classList.add("hidden");
         }
     });
 }
 
-function copyToClipboard2_1() {
-    const customText = "국민은행 804602-04-116994 (김영재)"; // 원하는 텍스트 작성
-
+function copyToClipboardBroom_1() {
+    const customText = "하나은행 285-890028-86607 (정환식)";
     const textarea = document.createElement("textarea");
-    textarea.value = customText; // JS에서 지정한 커스텀 텍스트 설정
+    textarea.value = customText;
     document.body.appendChild(textarea);
     textarea.select();
     document.execCommand("copy");
@@ -76,18 +45,86 @@ function copyToClipboard2_1() {
     const toast = document.getElementById("copy-toast2");
     toast.classList.add("show");
 
-    // 2초 후 메시지 숨기기
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2000);
+}
+
+function copyToClipboardBroom_2() {
+    const customText = "국민은행 634502-96-107637 (권희자)";
+    const textarea = document.createElement("textarea");
+    textarea.value = customText;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+
+    const toast = document.getElementById("copy-toast2");
+    toast.classList.add("show");
+
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2000);
+}
+
+function copyToClipboardBroom_3() {
+    const customText = "우리은행 1002-738-254319 (정동하)";
+    const textarea = document.createElement("textarea");
+    textarea.value = customText;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+
+    const toast = document.getElementById("copy-toast2");
+    toast.classList.add("show");
+
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2000);
+}
+
+
+function toggleAccount2() {
+    const accounts = document.getElementsByClassName("bank-account-bride");
+
+    Array.from(accounts).forEach(account => {
+        if (account.classList.contains("hidden")) {
+            account.classList.remove("hidden");
+        } else {
+            account.classList.add("hidden");
+        }
+    });
+}
+
+function copyToClipboardBride_1() {
+    const customText = "국민은행 804602-04-116994 (김영재)";
+
+    const textarea = document.createElement("textarea");
+    textarea.value = customText;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+
+    const toast = document.getElementById("copy-toast2");
+    toast.classList.add("show");
+
+
     setTimeout(() => {
         toast.classList.remove("show");
     }, 2000);
 
 }
 
-function copyToClipboard2_2() {
-    const customText = "농협은행 217060-52-102956 (송미양)"; // 원하는 텍스트 작성
+function copyToClipboardBride_2() {
+    const customText = "농협은행 217060-52-102956 (송미양)";
 
     const textarea = document.createElement("textarea");
-    textarea.value = customText; // JS에서 지정한 커스텀 텍스트 설정
+    textarea.value = customText;
     document.body.appendChild(textarea);
     textarea.select();
     document.execCommand("copy");
@@ -96,18 +133,18 @@ function copyToClipboard2_2() {
     const toast = document.getElementById("copy-toast2");
     toast.classList.add("show");
 
-    // 2초 후 메시지 숨기기
+
     setTimeout(() => {
         toast.classList.remove("show");
     }, 2000);
 
 }
 
-function copyToClipboard2_3() {
-    const customText = "국민은행 079802-04-187671 (김해리)"; // 원하는 텍스트 작성
+function copyToClipboardBride_3() {
+    const customText = "국민은행 079802-04-187671 (김해리)";
 
     const textarea = document.createElement("textarea");
-    textarea.value = customText; // JS에서 지정한 커스텀 텍스트 설정
+    textarea.value = customText;
     document.body.appendChild(textarea);
     textarea.select();
     document.execCommand("copy");
@@ -116,7 +153,7 @@ function copyToClipboard2_3() {
     const toast = document.getElementById("copy-toast2");
     toast.classList.add("show");
 
-    // 2초 후 메시지 숨기기
+
     setTimeout(() => {
         toast.classList.remove("show");
     }, 2000);

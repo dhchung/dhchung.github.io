@@ -131,7 +131,7 @@ header {
 }
 
 
-.bank-account {
+.bank-account-broom {
     font-size: 15px;
     margin-top: 10px;
     color: #333;
@@ -139,7 +139,7 @@ header {
     transition: color 0.3s;
 }
 
-.bank-account:hover {
+.bank-account-broom:hover {
     color: #007bff; 
 }
 
@@ -149,7 +149,8 @@ header {
     margin-top: 5px;
 }
 
-.bank-account2 {
+
+.bank-account-bride {
     font-size: 15px;
     margin-top: 10px;
     color: #333;
@@ -157,7 +158,7 @@ header {
     transition: color 0.3s;
 }
 
-.bank-account2:hover {
+.bank-account-bride:hover {
     color: #007bff; 
 }
 
