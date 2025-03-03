@@ -43,11 +43,19 @@ header {
     justify-content: center;
     flex-wrap: wrap;
 }
-
 .main_photo_container img {
     max-width: 640px;
     width: 100%;
     height: auto;
     /* border-radius: 10px; */
 }
-
+.map_container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.map_container img{
+    max-width: 640px;
+    width: 100%;
+    height: auto;
+}
