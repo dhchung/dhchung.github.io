@@ -20,3 +20,25 @@ const swiper = new Swiper('.swiper-container', {
       hide: true,
     },
   });
+
+function toggleAccount() {
+    const account = document.getElementById("bank-account");
+
+    // 보이게 설정
+    if (account.classList.contains("hidden")) {
+        account.classList.remove("hidden");
+    } else {
+        account.classList.add("hidden");
+    }
+}
+
+function toggleAccount2() {
+    const account = document.getElementById("bank-account2");
+
+    // 보이게 설정
+    if (account.classList.contains("hidden")) {
+        account.classList.remove("hidden");
+    } else {
+        account.classList.add("hidden");
+    }
+}

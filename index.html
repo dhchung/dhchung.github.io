@@ -22,7 +22,10 @@
     </div>
 
 
-    <h2>Gallery</h2>
+    <div class="dividing-section">
+        <h2>Album</h2>
+    </div>
+
 
     <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -62,15 +65,48 @@
         <div class="swiper-button-next"></div>
     </div>
 
-    <h2>오시는 길</h2>
-    <p>서울특별시 중구 퇴계로36길 10<br>한국의 집</p>
+    <div class="dividing-section">
+        <h2>오시는 길</h2>
+    </div>
 
     <div class="map_container">
         <a href="https://map.kakao.com/?urlX=498827.0&amp;urlY=1127962.0&amp;itemId=13050574&amp;q=%ED%95%9C%EA%B5%AD%EC%9D%98%EC%A7%91&amp;srcid=13050574&amp;map_type=TYPE_MAP&amp;from=roughmap"
             target="_blank"><img class="map"
                 src="http://t1.daumcdn.net/roughmap/imgmap/4ffb6a0f82ff42023193090f5c4fdacf581b154ae9f5d488b6557e8f43270e25">
         </a>
+        <p>서울특별시 중구 퇴계로36길 10<br>한국의 집</p>
+    
+        <p class="sub_title">
+            지하철: 
+        </p>
+        <p class="sub_content">
+            3, 4호선 충무로역 하차, 3번 출구
+        </p>
+
+        <p class="sub_title">
+            버스: 
+        </p>
+        <p class="sub_content">
+            간선: 104, 105, 140, 263, 421, 507, 604번<br>지선: 7011번
+        </p>
     </div>
+
+    <div class="dividing-section">
+        <h2>마음을 전하는 곳</h2>
+    </div>
+
+
+    <div class="bank-account-container">
+        <button class="toggle-account-btn" onclick="toggleAccount()">신랑측 계좌번호 보기</button>
+        <p id="bank-account" class="hidden">우리은행 1002-738-254319 (정동하)</p>
+    </div>
+
+    <div class="bank-account-container">
+        <button class="toggle-account-btn" onclick="toggleAccount2()">신부측 계좌번호 보기</button>
+        <p id="bank-account2" class="hidden">국민은행 07980204187671 (김해리)</p>
+    </div>
+
+
 
 </body>
 

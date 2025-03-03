@@ -27,7 +27,6 @@ header {
     align-items: center;
 }
 
-/* 각 슬라이드 스타일 */
 .swiper-slide {
     display: flex;
     justify-content: center;
@@ -41,11 +40,11 @@ header {
 
 .swiper-button-prev,
 .swiper-button-next {
-    color: #000 !important;
+    color: #ffffff !important;
 }
 
 .swiper-pagination-bullet-active {
-    background-color: #000 !important;
+    background-color: #6e6e6e !important;
 }
 
 .main_photo_container {
@@ -61,17 +60,86 @@ header {
     max-width: 640px;
     width: 100%;
     height: auto;
-    /* border-radius: 10px; */
+
 }
 
 .map_container {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 640px;
 }
 
 .map_container img {
+    display: block;
     max-width: 640px;
     width: 100%;
     height: auto;
+}
+
+.dividing-section {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.dividing-section h2 {
+    color: #2d9a21;
+}
+
+.sub_title {
+    font-size: 18px;
+    color: #000000;
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+    padding-left: 20px;
+    margin-bottom: 0px;
+}
+
+.sub_content {
+    font-size: 16px;
+    color: #000000;
+    text-align: left;
+    width: 100%;
+    padding-left: 50px;
+    margin-top: 0px;
+}
+
+/* 버튼 스타일 */
+.toggle-account-btn {
+    background-color: #e4e4e4;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    border: none;
+    padding: 10px 60px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.toggle-account-btn:hover {
+    background-color: #b1b1b1;
+}
+
+/* 계좌번호 숨김 스타일 */
+.hidden {
+    display: none;
+}
+
+/* 계좌번호 스타일 */
+#bank-account {
+    font-size: 15px;
+    margin-top: 10px;
+    color: #333;
+}
+
+#bank-account2 {
+    font-size: 15px;
+    margin-top: 10px;
+    color: #333;
 }
