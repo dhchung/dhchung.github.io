@@ -5,48 +5,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>2025년 4월 25일 결혼합니다.</title>
+
+    <link rel="stylesheet" href="assets/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="style.css">
     <script defer src="script.js"></script>
 </head>
 
 <body>
 
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
     <div class="main_photo_container">
         <img src="photos/title_page.png" alt="사진 1">
-        <img src="photos/2ndPage_small.png" alt="사진 1">
+        <img src="photos/2ndPage_small.png" alt="사진 2">
     </div>
 
 
     <h2>Gallery</h2>
 
-    <section id="gallery">
-        <!-- <h2>우리의 추억</h2> -->
-        <div class="slider-container">
-            <button class="prev" onclick="prevSlide()">&#10094;</button>
-            <div class="slider">
-                <img src="photos/collage/img_01.png" alt="사진 1" class="slide active">
-                <img src="photos/collage/img_02.png" alt="사진 2" class="slide">
-                <img src="photos/collage/img_03.png" alt="사진 3" class="slide">
-                <img src="photos/collage/img_04.png" alt="사진 3" class="slide">
-                <img src="photos/collage/img_05.png" alt="사진 3" class="slide">
-                <img src="photos/collage/img_06.png" alt="사진 3" class="slide">
-                <img src="photos/collage/img_07.png" alt="사진 3" class="slide">
-                <img src="photos/collage/img_08.png" alt="사진 3" class="slide">
-                <img src="photos/collage/img_09.png" alt="사진 3" class="slide">
-                <img src="photos/collage/img_10.png" alt="사진 3" class="slide">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="photos/collage/img_01.png" alt="사진 1">
             </div>
-            <button class="next" onclick="nextSlide()">&#10095;</button>
+            <div class="swiper-slide">
+                <img src="photos/collage/img_02.png" alt="사진 2">
+            </div>
+            <div class="swiper-slide">
+                <img src="photos/collage/img_03.png" alt="사진 3">
+            </div>
+            <div class="swiper-slide">
+                <img src="photos/collage/img_04.png" alt="사진 4">
+            </div>
+            <div class="swiper-slide">
+                <img src="photos/collage/img_05.png" alt="사진 5">
+            </div>
+            <div class="swiper-slide">
+                <img src="photos/collage/img_06.png" alt="사진 6">
+            </div>
+            <div class="swiper-slide">
+                <img src="photos/collage/img_07.png" alt="사진 7">
+            </div>
+            <div class="swiper-slide">
+                <img src="photos/collage/img_08.png" alt="사진 8">
+            </div>
+            <div class="swiper-slide">
+                <img src="photos/collage/img_09.png" alt="사진 9">
+            </div>
+            <div class="swiper-slide">
+                <img src="photos/collage/img_10.png" alt="사진 10">
+            </div>
         </div>
-    </section>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
 
     <h2>오시는 길</h2>
-    <p>서울특별시 중구 퇴계로36길 10</p>
-    <p>한국의 집</p>
+    <p>서울특별시 중구 퇴계로36길 10<br>한국의 집</p>
 
     <div class="map_container">
         <a href="https://map.kakao.com/?urlX=498827.0&amp;urlY=1127962.0&amp;itemId=13050574&amp;q=%ED%95%9C%EA%B5%AD%EC%9D%98%EC%A7%91&amp;srcid=13050574&amp;map_type=TYPE_MAP&amp;from=roughmap"
-        target="_blank"><img class="map"
-            src="http://t1.daumcdn.net/roughmap/imgmap/4ffb6a0f82ff42023193090f5c4fdacf581b154ae9f5d488b6557e8f43270e25">
+            target="_blank"><img class="map"
+                src="http://t1.daumcdn.net/roughmap/imgmap/4ffb6a0f82ff42023193090f5c4fdacf581b154ae9f5d488b6557e8f43270e25">
         </a>
     </div>
 
