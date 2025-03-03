@@ -7,7 +7,7 @@ body {
 
 header {
     background-color: #f8b400;
-    padding: 20px;
+    /* padding: 20px; */
     color: white;
 }
 
@@ -95,8 +95,7 @@ header {
     color: #000000;
     font-weight: bold;
     text-align: left;
-    width: 100%;
-    padding-left: 20px;
+    width: 90%;
     margin-bottom: 0px;
 }
 
@@ -104,8 +103,7 @@ header {
     font-size: 16px;
     color: #000000;
     text-align: left;
-    width: 100%;
-    padding-left: 50px;
+    width: 80%;
     margin-top: 0px;
 }
 
