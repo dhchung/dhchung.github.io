@@ -1,19 +1,18 @@
-document.addEventListener("DOMContentLoaded", function() {
-    setTimeout(function() {
-        let splashScreen = document.getElementById("splash-screen");
-        let mainContent = document.getElementById("main-content");
+document.addEventListener("DOMContentLoaded", function () {
+    const overlay = document.getElementById("scroll-overlay");
 
-        
-        splashScreen.style.opacity = "0";
+    window.addEventListener("scroll", function () {
+        let scrollY = window.scrollY;
 
-        
-        setTimeout(function() {
-            splashScreen.style.display = "none"; 
-            mainContent.style.opacity = "1"; 
-            mainContent.style.visibility = "visible";
-        }, 500); 
-    }, 4500); 
+        // 스크롤 값에 따라 점점 투명해짐
+        if (scrollY < 50) {
+            overlay.style.opacity = 1 - scrollY / 50;
+        } else {
+            overlay.classList.add("fade-out");
+        }
+    });
 });
+
 
 const swiper = new Swiper('.swiper-container', {
     direction: 'horizontal',
