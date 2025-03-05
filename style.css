@@ -89,13 +89,13 @@ body {
 
 .dividing-section h2 {
     font-family: "Gowun Dodum", sans-serif;
-    color: #00693E;
+    color: #8bc34a;
 }
 
 .sub_title {
     font-family: "Gowun Dodum", sans-serif;
     font-size: 18px;
-    color: #00693E;
+    color: #8bc34a;
     font-weight: bold;
     text-align: left;
     width: 90%;
@@ -150,7 +150,7 @@ body {
 
 .copy-message {
     font-size: 14px;
-    color: #00693E;
+    color: #8bc34a;
     margin-top: 5px;
 }
 
@@ -191,7 +191,7 @@ body {
 .calendar #calendar_header{
     font-family: "Gowun Dodum", sans-serif;
     font-weight: bold;
-    color: #00693E;
+    color: #8bc34a;
     margin-top: 30px;
     font-size: 25px;
     margin-bottom: 30px;
@@ -230,7 +230,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color:#00693E;
+    background-color:#8bc34a;
     color: #ffffff;
     border-radius: 100%;
     margin: auto;
